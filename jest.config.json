@@ -1,0 +1,14 @@
+{
+  "moduleNameMapper": {
+    "^@lib/(.*)$": "<rootDir>/src/$1",
+    "^@test/(.*)$": "<rootDir>/tests/$1"
+  },
+  "transform": {
+    "^.+\\.ts$": "ts-jest"
+  },
+  "testRegex": "(/tests/.*)(test|spec)\\.ts$",
+  "moduleFileExtensions": [
+    "js",
+    "ts"
+  ]
+}

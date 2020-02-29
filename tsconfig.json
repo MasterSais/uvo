@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictFunctionTypes": true,
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "esModuleInterop": true,
+    "incremental": true,
+    "preserveConstEnums": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "baseUrl": ".",
+    "paths": {
+      "@lib/*": [
+        "src/*"
+      ],
+      "@test/*": [
+        "tests/*"
+      ]
+    }
+  },
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 2
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./dist/**/*.ts",
+    "./tests/**/*.ts"
+  ]
+}

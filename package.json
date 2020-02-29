@@ -1,0 +1,51 @@
+{
+  "name": "usov",
+  "version": "1.0.0",
+  "description": "Universal Single Object Validator",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/es/index.js",
+  "scripts": {
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "yarn run lint --fix",
+    "test": "jest --silent --detectOpenHandles --passWithNoTests --config ./jest.config.json",
+    "test:changed": "yarn run test -o",
+    "build": "yarn run build:bundle && yarn run build:modules && yarn run build:minify",
+    "build:bundle": "node merge-plugin-node.js",
+    "build:modules": "concurrently --kill-others-on-fail \"yarn run build:umd\" \"yarn run build:es\" \"yarn run build:types\"",
+    "build:minify": "concurrently --kill-others-on-fail \"yarn run build:umd-min\" \"yarn run build:es-min\"",
+    "build:umd": "tsc -p tsconfig.umd.json",
+    "build:umd-min": "terser --config-file ./terser.config.json -o ./dist/umd/index.min.js -- ./dist/umd/index.js",
+    "build:es": "tsc -p tsconfig.es.json",
+    "build:es-min": "terser --config-file ./terser.config.json -o ./dist/es/index.min.js -- ./dist/es/index.js",
+    "build:types": "tsc -p tsconfig.types.json",
+    "predeploy": "yarn run lint && yarn run test && yarn run build"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://MasterSais@bitbucket.org/MasterSais/single-object-validator.git"
+  },
+  "keywords": [
+    "ES6",
+    "ES2015",
+    "Validator"
+  ],
+  "author": "MasterSais",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/MasterSais/single-object-validator#readme",
+  "devDependencies": {
+    "@types/jest": "25.1.3",
+    "@types/node": "13.7.7",
+    "@typescript-eslint/eslint-plugin": "2.21.0",
+    "@typescript-eslint/parser": "2.21.0",
+    "concurrently": "5.1.0",
+    "eslint": "6.8.0",
+    "eslint-plugin-optimize-regex": "1.1.7",
+    "eslint-plugin-sonarjs": "0.5.0",
+    "jest": "25.1.0",
+    "terser": "4.6.4",
+    "ts-jest": "25.2.1",
+    "typescript": "3.8.3"
+  },
+  "typings": "./dist/types/index.d.ts"
+}

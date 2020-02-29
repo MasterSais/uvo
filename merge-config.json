@@ -1,0 +1,28 @@
+{
+  "outDir": "./dist",
+  "outFile": "index.ts",
+  "include": [
+    {
+      "file": "./src/types.ts"
+    },
+    {
+      "file": "./src/names.ts"
+    },
+    {
+      "file": "./src/utilities.ts",
+      "removeExports": true
+    },
+    {
+      "dir": "./src/grouping-substitution"
+    },
+    {
+      "dir": "./src/validators"
+    },
+    {
+      "dir": "./src/processors"
+    },
+    {
+      "dir": "./src/containers"
+    }
+  ]
+}
