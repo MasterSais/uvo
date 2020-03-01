@@ -337,7 +337,6 @@ export const oneOf = (candidates, error) => (isArray(candidates)
         && candidates.indexOf(value) >= 0)
         ? value : applyError(error, onError, setMetaValidator(meta, V_OOF, [candidates])))
     : validatorParamsError(V_OOF));
-const isRegEx = (value) => value && value.constructor === RegExp;
 /**
  * Type: validator. Checks value to match a pattern.
  *
@@ -347,7 +346,7 @@ const isRegEx = (value) => value && value.constructor === RegExp;
  * @return {Validator} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'match' is invalid.
  */
-export const regex = (match, error) => (isRegEx(match)
+export const regex = (match, error) => ((match && match.constructor === RegExp)
     ? ((value, onError, meta) => (match.test(value))
         ? value : applyError(error, onError, setMetaValidator(meta, V_REG, [match])))
     : validatorParamsError(V_REG));

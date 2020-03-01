@@ -661,8 +661,6 @@ export const oneOf = <T>(candidates: Array<T>, error?: Error): Validator<T> =>
       : validatorParamsError(V_OOF)
   );
 
-const isRegEx = (value: any) => value && value.constructor === RegExp;
-
 /**
  * Type: validator. Checks value to match a pattern.
  * 
@@ -674,7 +672,7 @@ const isRegEx = (value: any) => value && value.constructor === RegExp;
  */
 export const regex = <T extends unknown>(match: RegExp, error?: Error): Validator<T> =>
   (
-    isRegEx(match)
+    (match && match.constructor === RegExp)
       ? (
         (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
           (

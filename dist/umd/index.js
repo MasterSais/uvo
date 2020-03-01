@@ -373,9 +373,8 @@ var __assign = (this && this.__assign) || function () {
             })
             : validatorParamsError(exports.V_OOF));
     };
-    var isRegEx = function (value) { return value && value.constructor === RegExp; };
     exports.regex = function (match, error) {
-        return (isRegEx(match)
+        return ((match && match.constructor === RegExp)
             ? (function (value, onError, meta) {
                 return (match.test(value))
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_REG, [match]));
