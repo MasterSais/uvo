@@ -1,10 +1,11 @@
-import { G_CONS } from '@lib/names';
+import { G_CONS } from '../names';
 import { ErrorCallback, MetaData, Validator } from '../types';
 import { isValidatorsSequence, validatorParamsError } from '../utilities';
 
 /**
  * Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.
+ * Uses by default in 'object' validator's scheme for fields.
  * 
  * Type: grouper. Groups validators into one.
  * 

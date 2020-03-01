@@ -2,7 +2,7 @@ import { isArray } from 'util';
 import { consecutive } from '../groupers/consecutive';
 import { V_OBJ } from '../names';
 import { Error, ErrorCallback, MetaData, ObjectLike, Processor } from '../types';
-import { applyError, isObject, isValidatorsSequence, setMetaPath, setMetaValidator, toArray, validatorParamsError } from '../utilities';
+import { applyError, isObject, setMetaPath, setMetaValidator, toArray, validatorParamsError } from '../utilities';
 
 const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
   value.reduce((result, item) => result && isArray(item), true)
@@ -29,7 +29,7 @@ export const object2 = <T extends ObjectLike, R extends ObjectLike>(spec?: Array
   );
 
   const isSpecValid = isSpecArray && specList.reduce(
-    (result: boolean, [key, validators]) => result && isValidatorsSequence(validators) && key.length > 0, true
+    (result: boolean, [key]) => result && key.length > 0, true
   );
 
   if (isSpecValid || !spec) {

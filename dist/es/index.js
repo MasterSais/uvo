@@ -34,6 +34,8 @@ export const V_OBJ = 'object';
 export const G_CONS = 'consecutive';
 /** @type {string} */
 export const G_PRLL = 'parallel';
+/** @type {string} */
+export const G_OR = 'or';
 const toArray = (params) => Array.isArray(params) ? params : [params];
 const setMetaPath = (meta, path) => (meta && {
     ...meta,
@@ -66,6 +68,7 @@ const isValidatorsSequence = (validators) => validators.reduce((result, validato
 /**
  * Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.
+ * Uses by default in 'object' validator's scheme for fields.
  *
  * Type: grouper. Groups validators into one.
  *
@@ -76,16 +79,28 @@ const isValidatorsSequence = (validators) => validators.reduce((result, validato
 export const consecutive = (...validators) => (isValidatorsSequence(validators)
     ? ((value, onError, meta) => validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value))
     : validatorParamsError(G_CONS));
-export const or = (...validators) => (value, onError, meta) => {
-    let processed = null;
-    const relevance = { value: false };
-    validators.find((nextValidator) => (processed = nextValidator(value, onError ? (error, meta) => onError(error, meta, relevance) : null, meta),
-        processed !== null));
-    if (processed === null) {
-        relevance.value = true;
-    }
-    return processed;
-};
+/**
+ * Groups validators sequentially.
+ * Searches for first successful validator's result.
+ *
+ * Type: grouper. Groups validators into one.
+ *
+ * @param {...Validator} validators Validators list.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
+export const or = (...validators) => (isValidatorsSequence(validators)
+    ? ((value, onError, meta) => {
+        let processed = null;
+        const relevance = { value: false };
+        validators.find((nextValidator) => (processed = nextValidator(value, onError ? (error, meta) => onError(error, meta, relevance) : null, meta),
+            processed !== null));
+        if (processed === null) {
+            relevance.value = true;
+        }
+        return processed;
+    })
+    : validatorParamsError(G_OR));
 /**
  * Groups validators in parallel.
  * The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).
@@ -339,8 +354,7 @@ export const object = (spec, error) => {
     isSpecObject && (Object
         .keys(spec)
         .forEach((key) => specList.push([key, toArray(spec[key])])));
-    const isSpecValid = isSpecObject && specList.reduce((result, [_, validators]) => result && isValidatorsSequence(validators), true);
-    if (isSpecValid || !spec) {
+    if (isSpecObject || !spec) {
         const validators = spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
         return (data, onError, meta) => (data !== null
             && isObject(data))
@@ -369,7 +383,7 @@ export const object2 = (spec, error) => {
     const specList = [];
     const isSpecArray = isNestedArrays(spec);
     isSpecArray && (spec.forEach(([key, ...validators]) => specList.push([key, toArray(validators)])));
-    const isSpecValid = isSpecArray && specList.reduce((result, [key, validators]) => result && isValidatorsSequence(validators) && key.length > 0, true);
+    const isSpecValid = isSpecArray && specList.reduce((result, [key]) => result && key.length > 0, true);
     if (isSpecValid || !spec) {
         const validators = spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
         return (data, onError, meta) => (data !== null

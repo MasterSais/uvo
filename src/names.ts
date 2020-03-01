@@ -51,3 +51,6 @@ export const G_CONS: string = 'consecutive';
 
 /** @type {string} */
 export const G_PRLL: string = 'parallel';
+
+/** @type {string} */
+export const G_OR: string = 'or';

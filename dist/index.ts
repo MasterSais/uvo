@@ -143,6 +143,9 @@ export const G_CONS: string = 'consecutive';
 /** @type {string} */
 export const G_PRLL: string = 'parallel';
 
+/** @type {string} */
+export const G_OR: string = 'or';
+
 const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
 
@@ -202,6 +205,7 @@ const isValidatorsSequence = (validators: Array<Processor<any, any>>): boolean =
 /**
  * Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.
+ * Uses by default in 'object' validator's scheme for fields.
  * 
  * Type: grouper. Groups validators into one.
  * 
@@ -220,25 +224,41 @@ export const consecutive = <T>(...validators: Array<Validator<T>>): Validator<T>
       : validatorParamsError(G_CONS)
   );
 
+/**
+ * Groups validators sequentially.
+ * Searches for first successful validator's result.
+ * 
+ * Type: grouper. Groups validators into one.
+ * 
+ * @param {...Validator} validators Validators list.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
 export const or = (...validators: Array<Processor<any, any>>): Processor<any, any> =>
-  (value: any, onError?: ErrorCallback, meta?: MetaData): any => {
-    let processed = null;
+  (
+    isValidatorsSequence(validators)
+      ? (
+        (value: any, onError?: ErrorCallback, meta?: MetaData): any => {
+          let processed = null;
 
-    const relevance: Relevance = { value: false };
+          const relevance: Relevance = { value: false };
 
-    validators.find((nextValidator: Processor<any, any>) =>
-      (
-        processed = nextValidator(value, onError ? (error: Error, meta?: MetaData) => onError(error, meta, relevance) : null, meta),
-        processed !== null
+          validators.find((nextValidator: Processor<any, any>) =>
+            (
+              processed = nextValidator(value, onError ? (error: Error, meta?: MetaData) => onError(error, meta, relevance) : null, meta),
+              processed !== null
+            )
+          );
+
+          if (processed === null) {
+            relevance.value = true;
+          }
+
+          return processed;
+        }
       )
-    );
-
-    if (processed === null) {
-      relevance.value = true;
-    }
-
-    return processed;
-  };
+      : validatorParamsError(G_OR)
+  );
 
 /**
  * Groups validators in parallel.
@@ -637,11 +657,7 @@ export const object = <T extends ObjectLike, R extends ObjectLike>(spec?: Object
       .forEach((key) => specList.push([key, toArray(spec[key])]))
   );
 
-  const isSpecValid = isSpecObject && specList.reduce(
-    (result: boolean, [_, validators]) => result && isValidatorsSequence(validators), true
-  );
-
-  if (isSpecValid || !spec) {
+  if (isSpecObject || !spec) {
     const validators: Array<[string, Processor<any, any>]> =
       spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
 
@@ -688,7 +704,7 @@ export const object2 = <T extends ObjectLike, R extends ObjectLike>(spec?: Array
   );
 
   const isSpecValid = isSpecArray && specList.reduce(
-    (result: boolean, [key, validators]) => result && isValidatorsSequence(validators) && key.length > 0, true
+    (result: boolean, [key]) => result && key.length > 0, true
   );
 
   if (isSpecValid || !spec) {

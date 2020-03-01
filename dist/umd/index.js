@@ -38,6 +38,7 @@ var __assign = (this && this.__assign) || function () {
     exports.V_OBJ = 'object';
     exports.G_CONS = 'consecutive';
     exports.G_PRLL = 'parallel';
+    exports.G_OR = 'or';
     var toArray = function (params) {
         return Array.isArray(params) ? params : [params];
     };
@@ -89,18 +90,20 @@ var __assign = (this && this.__assign) || function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             validators[_i] = arguments[_i];
         }
-        return function (value, onError, meta) {
-            var processed = null;
-            var relevance = { value: false };
-            validators.find(function (nextValidator) {
-                return (processed = nextValidator(value, onError ? function (error, meta) { return onError(error, meta, relevance); } : null, meta),
-                    processed !== null);
-            });
-            if (processed === null) {
-                relevance.value = true;
-            }
-            return processed;
-        };
+        return (isValidatorsSequence(validators)
+            ? (function (value, onError, meta) {
+                var processed = null;
+                var relevance = { value: false };
+                validators.find(function (nextValidator) {
+                    return (processed = nextValidator(value, onError ? function (error, meta) { return onError(error, meta, relevance); } : null, meta),
+                        processed !== null);
+                });
+                if (processed === null) {
+                    relevance.value = true;
+                }
+                return processed;
+            })
+            : validatorParamsError(exports.G_OR));
     };
     exports.parallel = function () {
         var validators = [];
@@ -315,11 +318,7 @@ var __assign = (this && this.__assign) || function () {
         isSpecObject && (Object
             .keys(spec)
             .forEach(function (key) { return specList.push([key, toArray(spec[key])]); }));
-        var isSpecValid = isSpecObject && specList.reduce(function (result, _a) {
-            var _ = _a[0], validators = _a[1];
-            return result && isValidatorsSequence(validators);
-        }, true);
-        if (isSpecValid || !spec) {
+        if (isSpecObject || !spec) {
             var validators_1 = spec && specList.map(function (_a) {
                 var key = _a[0], processors = _a[1];
                 return [key, exports.consecutive.apply(void 0, processors)];
@@ -349,8 +348,8 @@ var __assign = (this && this.__assign) || function () {
             return specList.push([key, toArray(validators)]);
         }));
         var isSpecValid = isSpecArray && specList.reduce(function (result, _a) {
-            var key = _a[0], validators = _a[1];
-            return result && isValidatorsSequence(validators) && key.length > 0;
+            var key = _a[0];
+            return result && key.length > 0;
         }, true);
         if (isSpecValid || !spec) {
             var validators_2 = spec && specList.map(function (_a) {

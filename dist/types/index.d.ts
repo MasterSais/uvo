@@ -114,9 +114,12 @@ export declare const V_OBJ: string;
 export declare const G_CONS: string;
 /** @type {string} */
 export declare const G_PRLL: string;
+/** @type {string} */
+export declare const G_OR: string;
 /**
  * Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.
+ * Uses by default in 'object' validator's scheme for fields.
  *
  * Type: grouper. Groups validators into one.
  *
@@ -125,6 +128,16 @@ export declare const G_PRLL: string;
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
 export declare const consecutive: <T>(...validators: Validator<T>[]) => Validator<T>;
+/**
+ * Groups validators sequentially.
+ * Searches for first successful validator's result.
+ *
+ * Type: grouper. Groups validators into one.
+ *
+ * @param {...Validator} validators Validators list.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
 export declare const or: (...validators: Processor<any, any>[]) => Processor<any, any>;
 /**
  * Groups validators in parallel.

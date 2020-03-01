@@ -1,4 +1,4 @@
-import { V_OBJ as VALIDATOR_NAME } from '@lib/names';
+import { G_CONS, V_OBJ as VALIDATOR_NAME } from '@lib/names';
 import { gte } from '@lib/validators/gte';
 import { len } from '@lib/validators/len';
 import { maxLen } from '@lib/validators/max-len';
@@ -27,15 +27,23 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [1],
         ['1'],
         [true],
-        [[['f1', 1]]],
         [{ f1: '1' }],
         [[['f1', number()], ['', string()]]],
         [['f1', number()]],
-        [[['f1', number()], ['f2', string(), null]]],
-        [[['f1', number()], ['f2', string(), undefined]]],
         [emptyObject()]
       ],
       VALIDATOR_NAME
+    );
+
+    paramsCases(
+      validator,
+      [],
+      [
+        [[['f1', 1]]],
+        [[['f1', number()], ['f2', string(), null]]],
+        [[['f1', number()], ['f2', string(), undefined]]]
+      ],
+      G_CONS
     );
   });
 
