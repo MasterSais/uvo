@@ -48,3 +48,6 @@ export const V_OBJ: string = 'object';
 
 /** @type {string} */
 export const G_CONS: string = 'consecutive';
+
+/** @type {string} */
+export const G_PRLL: string = 'parallel';

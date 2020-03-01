@@ -8,7 +8,7 @@
     "lint": "eslint src/**/*.ts",
     "lint:fix": "yarn run lint --fix",
     "test": "jest --silent --detectOpenHandles --passWithNoTests --config ./jest.config.json",
-    "test:changed": "yarn run test -o",
+    "test:watch": "yarn run test --watch",
     "build": "yarn run build:bundle && yarn run build:modules && yarn run build:minify",
     "build:bundle": "node merge-plugin-node.js",
     "build:modules": "concurrently --kill-others-on-fail \"yarn run build:umd\" \"yarn run build:es\" \"yarn run build:types\"",

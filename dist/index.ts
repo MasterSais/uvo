@@ -140,6 +140,9 @@ export const V_OBJ: string = 'object';
 /** @type {string} */
 export const G_CONS: string = 'consecutive';
 
+/** @type {string} */
+export const G_PRLL: string = 'parallel';
+
 const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
 
@@ -198,6 +201,7 @@ const isValidatorsSequence = (validators: Array<Processor<any, any>>): boolean =
 
 /**
  * Groups validators sequentially.
+ * Passes value through a sequence of validators until an error occurs.
  * 
  * Type: grouper. Groups validators into one.
  * 
@@ -236,10 +240,31 @@ export const or = (...validators: Array<Processor<any, any>>): Processor<any, an
     return processed;
   };
 
+/**
+ * Groups validators in parallel.
+ * The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).
+ * Beware of using processors inside.
+ * 
+ * Type: grouper. Groups validators into one.
+ * 
+ * @param {...Validator} validators Validators list.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
 export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
-  (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-    validators.reduce((validated: T, nextValidator: Validator<T>) =>
-      (validated !== null ? nextValidator(validated, onError, meta) : (nextValidator(value, onError, meta), null)), value);
+  (
+    isValidatorsSequence(validators)
+      ? (
+        (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
+          validators.reduce((validated: T, nextValidator: Validator<T>) =>
+            (
+              validated !== null
+                ? nextValidator(value, onError, meta)
+                : (nextValidator(value, onError, meta), null)
+            ), value)
+      )
+      : validatorParamsError(G_PRLL)
+  );
 
 export const transform = <T, R>(...transformers: Array<Processor<T | R, T | R>>): Processor<T | R, T | R> =>
   (value: T | R, onError?: ErrorCallback, meta?: MetaData): T | R =>

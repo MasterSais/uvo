@@ -32,6 +32,8 @@ export const V_ARR = 'array';
 export const V_OBJ = 'object';
 /** @type {string} */
 export const G_CONS = 'consecutive';
+/** @type {string} */
+export const G_PRLL = 'parallel';
 const toArray = (params) => Array.isArray(params) ? params : [params];
 const setMetaPath = (meta, path) => (meta && {
     ...meta,
@@ -63,6 +65,7 @@ const isArray = (value) => Array.isArray(value);
 const isValidatorsSequence = (validators) => validators.reduce((result, validator) => result && isFunction(validator), true);
 /**
  * Groups validators sequentially.
+ * Passes value through a sequence of validators until an error occurs.
  *
  * Type: grouper. Groups validators into one.
  *
@@ -83,7 +86,22 @@ export const or = (...validators) => (value, onError, meta) => {
     }
     return processed;
 };
-export const parallel = (...validators) => (value, onError, meta) => validators.reduce((validated, nextValidator) => (validated !== null ? nextValidator(validated, onError, meta) : (nextValidator(value, onError, meta), null)), value);
+/**
+ * Groups validators in parallel.
+ * The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).
+ * Beware of using processors inside.
+ *
+ * Type: grouper. Groups validators into one.
+ *
+ * @param {...Validator} validators Validators list.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
+export const parallel = (...validators) => (isValidatorsSequence(validators)
+    ? ((value, onError, meta) => validators.reduce((validated, nextValidator) => (validated !== null
+        ? nextValidator(value, onError, meta)
+        : (nextValidator(value, onError, meta), null)), value))
+    : validatorParamsError(G_PRLL));
 export const transform = (...transformers) => (value, onError, meta) => transformers.reduce((value, processor) => processor(value, onError, meta), value);
 export const getDep = (field, preValidator) => (value, onError, meta) => toArray(preValidator(getFromMeta(field, meta)))
     .reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value);

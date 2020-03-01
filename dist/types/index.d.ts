@@ -112,8 +112,11 @@ export declare const V_ARR: string;
 export declare const V_OBJ: string;
 /** @type {string} */
 export declare const G_CONS: string;
+/** @type {string} */
+export declare const G_PRLL: string;
 /**
  * Groups validators sequentially.
+ * Passes value through a sequence of validators until an error occurs.
  *
  * Type: grouper. Groups validators into one.
  *
@@ -123,6 +126,17 @@ export declare const G_CONS: string;
  */
 export declare const consecutive: <T>(...validators: Validator<T>[]) => Validator<T>;
 export declare const or: (...validators: Processor<any, any>[]) => Processor<any, any>;
+/**
+ * Groups validators in parallel.
+ * The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).
+ * Beware of using processors inside.
+ *
+ * Type: grouper. Groups validators into one.
+ *
+ * @param {...Validator} validators Validators list.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
 export declare const parallel: <T>(...validators: Validator<T>[]) => Validator<T>;
 export declare const transform: <T, R>(...transformers: Processor<T | R, T | R>[]) => Processor<T | R, T | R>;
 export declare const getDep: <T>(field: string, preValidator: (dep: T) => Validator<T> | Validator<T>[]) => Validator<T>;

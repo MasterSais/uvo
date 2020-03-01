@@ -37,6 +37,7 @@ var __assign = (this && this.__assign) || function () {
     exports.V_ARR = 'array';
     exports.V_OBJ = 'object';
     exports.G_CONS = 'consecutive';
+    exports.G_PRLL = 'parallel';
     var toArray = function (params) {
         return Array.isArray(params) ? params : [params];
     };
@@ -106,11 +107,15 @@ var __assign = (this && this.__assign) || function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             validators[_i] = arguments[_i];
         }
-        return function (value, onError, meta) {
-            return validators.reduce(function (validated, nextValidator) {
-                return (validated !== null ? nextValidator(validated, onError, meta) : (nextValidator(value, onError, meta), null));
-            }, value);
-        };
+        return (isValidatorsSequence(validators)
+            ? (function (value, onError, meta) {
+                return validators.reduce(function (validated, nextValidator) {
+                    return (validated !== null
+                        ? nextValidator(value, onError, meta)
+                        : (nextValidator(value, onError, meta), null));
+                }, value);
+            })
+            : validatorParamsError(exports.G_PRLL));
     };
     exports.transform = function () {
         var transformers = [];

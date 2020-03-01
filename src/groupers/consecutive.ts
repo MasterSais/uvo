@@ -4,6 +4,7 @@ import { isValidatorsSequence, validatorParamsError } from '../utilities';
 
 /**
  * Groups validators sequentially.
+ * Passes value through a sequence of validators until an error occurs.
  * 
  * Type: grouper. Groups validators into one.
  * 
