@@ -1,7 +1,5 @@
 import { Error, ErrorCallback, MetaData, Processor } from './types';
 
-export const isEmpty = (value: any) => (value === null) || (value === undefined) || (value === '');
-
 export const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
 
@@ -31,7 +29,11 @@ export const validatorParamsError = (validator: string) => {
   throw validator;
 };
 
+export const isEmpty = (value: any) => (value === null) || (value === undefined) || (value === '');
+
 export const isOneType = (a: any, b: any): boolean => typeof a === typeof b;
+
+export const isDefined = (value: any): boolean => value !== undefined;
 
 export const isFinite = (value: any): boolean => (global || window).isFinite(value);
 

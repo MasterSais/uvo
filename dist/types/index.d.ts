@@ -110,12 +110,23 @@ export declare const V_BLN: string;
 export declare const V_ARR: string;
 /** @type {string} */
 export declare const V_OBJ: string;
+/** @type {string} */
+export declare const G_CONS: string;
+/**
+ * Groups validators sequentially.
+ *
+ * Type: grouper. Groups validators into one.
+ *
+ * @param {...Validator} validators Validators list.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
 export declare const consecutive: <T>(...validators: Validator<T>[]) => Validator<T>;
 export declare const getDep: <T>(field: string, preValidator: (dep: T) => Validator<T> | Validator<T>[]) => Validator<T>;
 export declare const mergeDep: <T>(field: string) => Validator<T>;
 export declare const or: (...validators: Processor<any, any>[]) => Processor<any, any>;
 export declare const parallel: <T>(...validators: Validator<T>[]) => Validator<T>;
-export declare const setDep: <T>(field: string) => Validator<T>;
+export declare const setDep: <T>(field: string, extValue?: T) => Validator<T>;
 export declare const setVDep: <T>(field: string, ...validators: Validator<T>[]) => Validator<T>;
 export declare const transform: <T, R>(...transformers: Processor<T | R, T | R>[]) => Processor<T | R, T | R>;
 export declare const useDefault: <T extends unknown>(defaultValue: T, ...validators: Processor<any, any>[]) => Processor<any, any>;

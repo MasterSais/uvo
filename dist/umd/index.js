@@ -36,7 +36,7 @@ var __assign = (this && this.__assign) || function () {
     exports.V_BLN = 'bool';
     exports.V_ARR = 'array';
     exports.V_OBJ = 'object';
-    var isEmpty = function (value) { return (value === null) || (value === undefined) || (value === ''); };
+    exports.G_CONS = 'consecutive';
     var toArray = function (params) {
         return Array.isArray(params) ? params : [params];
     };
@@ -55,7 +55,9 @@ var __assign = (this && this.__assign) || function () {
     var validatorParamsError = function (validator) {
         throw validator;
     };
+    var isEmpty = function (value) { return (value === null) || (value === undefined) || (value === ''); };
     var isOneType = function (a, b) { return typeof a === typeof b; };
+    var isDefined = function (value) { return value !== undefined; };
     var isFinite = function (value) { return (global || window).isFinite(value); };
     var isFiniteNumber = function (value) { return Number.isFinite(value); };
     var isNumber = function (value) { return typeof value === 'number'; };
@@ -73,11 +75,13 @@ var __assign = (this && this.__assign) || function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             validators[_i] = arguments[_i];
         }
-        return function (value, onError, meta) {
-            return validators.reduce(function (value, nextValidator) {
-                return (value !== null ? nextValidator(value, onError, meta) : null);
-            }, value);
-        };
+        return (isValidatorsSequence(validators)
+            ? (function (value, onError, meta) {
+                return validators.reduce(function (value, nextValidator) {
+                    return (value !== null ? nextValidator(value, onError, meta) : null);
+                }, value);
+            })
+            : validatorParamsError(exports.G_CONS));
     };
     exports.getDep = function (field, preValidator) {
         return function (value, onError, meta) {
@@ -121,9 +125,9 @@ var __assign = (this && this.__assign) || function () {
             }, value);
         };
     };
-    exports.setDep = function (field) {
+    exports.setDep = function (field, extValue) {
         return function (value, _onError, meta) {
-            return postToMeta(value, field, meta);
+            return postToMeta(isDefined(extValue) ? extValue : value, field, meta);
         };
     };
     exports.setVDep = function (field) {
@@ -383,7 +387,7 @@ var __assign = (this && this.__assign) || function () {
     };
     exports.string = function (error) {
         return function (value, onError, meta) {
-            return (value !== undefined
+            return (isDefined(value)
                 && !isObjectLike(value)
                 && !isFunction(value))
                 ? String(value) : applyError(error, onError, setMetaValidator(meta, exports.V_STR));

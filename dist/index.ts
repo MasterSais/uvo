@@ -137,7 +137,8 @@ export const V_ARR: string = 'array';
 /** @type {string} */
 export const V_OBJ: string = 'object';
 
-const isEmpty = (value: any) => (value === null) || (value === undefined) || (value === '');
+/** @type {string} */
+export const G_CONS: string = 'consecutive';
 
 const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
@@ -168,7 +169,11 @@ const validatorParamsError = (validator: string) => {
   throw validator;
 };
 
+const isEmpty = (value: any) => (value === null) || (value === undefined) || (value === '');
+
 const isOneType = (a: any, b: any): boolean => typeof a === typeof b;
+
+const isDefined = (value: any): boolean => value !== undefined;
 
 const isFinite = (value: any): boolean => (global || window).isFinite(value);
 
@@ -191,10 +196,25 @@ const isArray = (value: any): boolean => Array.isArray(value);
 const isValidatorsSequence = (validators: Array<Processor<any, any>>): boolean =>
   validators.reduce((result: boolean, validator) => result && isFunction(validator), true);
 
+/**
+ * Groups validators sequentially.
+ * 
+ * Type: grouper. Groups validators into one.
+ * 
+ * @param {...Validator} validators Validators list.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
 export const consecutive = <T>(...validators: Array<Validator<T>>): Validator<T> =>
-  (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-    validators.reduce((value: any, nextValidator: Validator<T>) =>
-      (value !== null ? nextValidator(value, onError, meta) : null), value);
+  (
+    isValidatorsSequence(validators)
+      ? (
+        (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
+          validators.reduce((value: any, nextValidator: Validator<T>) =>
+            (value !== null ? nextValidator(value, onError, meta) : null), value)
+      )
+      : validatorParamsError(G_CONS)
+  );
 
 export const getDep = <T>(field: string, preValidator: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
   (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
@@ -231,9 +251,9 @@ export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
     validators.reduce((validated: T, nextValidator: Validator<T>) =>
       (validated !== null ? nextValidator(validated, onError, meta) : (nextValidator(value, onError, meta), null)), value);
 
-export const setDep = <T>(field: string): Validator<T> =>
+export const setDep = <T>(field: string, extValue?: T): Validator<T> =>
   (value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
-    postToMeta(value, field, meta);
+    postToMeta(isDefined(extValue) ? extValue : value, field, meta);
 
 export const setVDep = <T>(field: string, ...validators: Array<Validator<T>>): Validator<T> =>
   (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
@@ -727,7 +747,7 @@ export const regex = <T extends unknown>(match: RegExp, error?: Error): Validato
 export const string = <T>(error?: Error): Processor<T, string> =>
   (value: T, onError?: ErrorCallback, meta?: MetaData): string =>
     (
-      value !== undefined
+      isDefined(value)
       && !isObjectLike(value)
       && !isFunction(value)
     )

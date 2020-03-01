@@ -1,6 +1,6 @@
 import { ErrorCallback, MetaData, Validator } from '../types';
-import { postToMeta } from '../utilities';
+import { isDefined, postToMeta } from '../utilities';
 
-export const setDep = <T>(field: string): Validator<T> =>
+export const setDep = <T>(field: string, extValue?: T): Validator<T> =>
   (value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
-    postToMeta(value, field, meta);
+    postToMeta(isDefined(extValue) ? extValue : value, field, meta);

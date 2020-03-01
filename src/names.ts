@@ -45,3 +45,6 @@ export const V_ARR: string = 'array';
 
 /** @type {string} */
 export const V_OBJ: string = 'object';
+
+/** @type {string} */
+export const G_CONS: string = 'consecutive';

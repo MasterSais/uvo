@@ -1,6 +1,6 @@
 import { V_STR } from '../names';
 import { Error, ErrorCallback, MetaData, Processor } from '../types';
-import { applyError, isFunction, isObjectLike, setMetaValidator } from '../utilities';
+import { applyError, isDefined, isFunction, isObjectLike, setMetaValidator } from '../utilities';
 
 /**
  * Checks value to be a string compatible.
@@ -14,7 +14,7 @@ import { applyError, isFunction, isObjectLike, setMetaValidator } from '../utili
 export const string = <T>(error?: Error): Processor<T, string> =>
   (value: T, onError?: ErrorCallback, meta?: MetaData): string =>
     (
-      value !== undefined
+      isDefined(value)
       && !isObjectLike(value)
       && !isFunction(value)
     )

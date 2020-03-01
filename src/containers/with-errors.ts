@@ -1,5 +1,5 @@
-import { isFunction } from '@lib/utilities';
 import { Error, ErrorCallback, MetaData, Processor, Relevance, Result } from '../types';
+import { isFunction } from '../utilities';
 
 export const withErrors = <T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>> =>
   (value: T, _onError?: ErrorCallback, meta?: MetaData): Result<R> => {

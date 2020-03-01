@@ -30,7 +30,8 @@ export const V_BLN = 'bool';
 export const V_ARR = 'array';
 /** @type {string} */
 export const V_OBJ = 'object';
-const isEmpty = (value) => (value === null) || (value === undefined) || (value === '');
+/** @type {string} */
+export const G_CONS = 'consecutive';
 const toArray = (params) => Array.isArray(params) ? params : [params];
 const setMetaPath = (meta, path) => (meta && {
     ...meta,
@@ -47,7 +48,9 @@ const applyError = (error, onError, meta) => (onError && onError(error, meta), n
 const validatorParamsError = (validator) => {
     throw validator;
 };
+const isEmpty = (value) => (value === null) || (value === undefined) || (value === '');
 const isOneType = (a, b) => typeof a === typeof b;
+const isDefined = (value) => value !== undefined;
 const isFinite = (value) => (global || window).isFinite(value);
 const isFiniteNumber = (value) => Number.isFinite(value);
 const isNumber = (value) => typeof value === 'number';
@@ -58,7 +61,18 @@ const isObjectLike = (value) => typeof value === 'object';
 const isObject = (value) => value && typeof value === 'object' && value.constructor === Object;
 const isArray = (value) => Array.isArray(value);
 const isValidatorsSequence = (validators) => validators.reduce((result, validator) => result && isFunction(validator), true);
-export const consecutive = (...validators) => (value, onError, meta) => validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value);
+/**
+ * Groups validators sequentially.
+ *
+ * Type: grouper. Groups validators into one.
+ *
+ * @param {...Validator} validators Validators list.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
+export const consecutive = (...validators) => (isValidatorsSequence(validators)
+    ? ((value, onError, meta) => validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value))
+    : validatorParamsError(G_CONS));
 export const getDep = (field, preValidator) => (value, onError, meta) => toArray(preValidator(getFromMeta(field, meta)))
     .reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value);
 export const mergeDep = (field) => (_value, _onError, meta) => getFromMeta(field, meta);
@@ -73,7 +87,7 @@ export const or = (...validators) => (value, onError, meta) => {
     return processed;
 };
 export const parallel = (...validators) => (value, onError, meta) => validators.reduce((validated, nextValidator) => (validated !== null ? nextValidator(validated, onError, meta) : (nextValidator(value, onError, meta), null)), value);
-export const setDep = (field) => (value, _onError, meta) => postToMeta(value, field, meta);
+export const setDep = (field, extValue) => (value, _onError, meta) => postToMeta(isDefined(extValue) ? extValue : value, field, meta);
 export const setVDep = (field, ...validators) => (value, onError, meta) => (postToMeta(validators, field, meta), validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value));
 export const transform = (...transformers) => (value, onError, meta) => transformers.reduce((value, processor) => processor(value, onError, meta), value);
 export const useDefault = (defaultValue, ...validators) => (value, onError, meta) => !isEmpty(value)
@@ -391,7 +405,7 @@ export const regex = (match, error) => ((match && match.constructor === RegExp)
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
  * @return {Processor} Function that takes: value, error callback and custom metadata.
  */
-export const string = (error) => (value, onError, meta) => (value !== undefined
+export const string = (error) => (value, onError, meta) => (isDefined(value)
     && !isObjectLike(value)
     && !isFunction(value))
     ? String(value) : applyError(error, onError, setMetaValidator(meta, V_STR));
