@@ -1,7 +1,7 @@
 {
   "name": "usov",
   "version": "1.0.0",
-  "description": "Universal Single Object Validator",
+  "description": "JS Universal Single Object Validator",
   "main": "./dist/umd/index.js",
   "module": "./dist/es/index.js",
   "scripts": {
@@ -40,8 +40,6 @@
     "@typescript-eslint/parser": "2.21.0",
     "concurrently": "5.1.0",
     "eslint": "6.8.0",
-    "eslint-plugin-optimize-regex": "1.1.7",
-    "eslint-plugin-sonarjs": "0.5.0",
     "jest": "25.1.0",
     "terser": "4.6.4",
     "ts-jest": "25.2.1",

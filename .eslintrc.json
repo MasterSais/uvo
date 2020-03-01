@@ -1,7 +1,6 @@
 {
   "extends": [
     "eslint:recommended",
-		"plugin:sonarjs/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
@@ -11,7 +10,7 @@
     "project": "tsconfig.json",
     "tsconfigRootDir": "."
   },
-  "plugins": ["optimize-regex", "sonarjs", "@typescript-eslint"],
+  "plugins": ["@typescript-eslint"],
   "rules": {
     "indent": ["warn", 2],
     "eqeqeq": "warn",
