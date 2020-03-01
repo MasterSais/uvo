@@ -1,5 +1,5 @@
 import { isArray } from 'util';
-import { consecutive } from '../grouping-substitution/consecutive';
+import { consecutive } from '../groupers/consecutive';
 import { V_OBJ } from '../names';
 import { Error, ErrorCallback, MetaData, ObjectLike, Processor } from '../types';
 import { applyError, isObject, isValidatorsSequence, setMetaPath, setMetaValidator, toArray, validatorParamsError } from '../utilities';

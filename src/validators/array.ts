@@ -1,4 +1,4 @@
-import { consecutive } from '../grouping-substitution/consecutive';
+import { consecutive } from '../groupers/consecutive';
 import { V_ARR } from '../names';
 import { Error, ErrorCallback, MetaData, Processor } from '../types';
 import { applyError, isArray, isValidatorsSequence, setMetaPath, setMetaValidator, toArray, validatorParamsError } from '../utilities';

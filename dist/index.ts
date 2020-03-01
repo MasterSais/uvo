@@ -216,16 +216,6 @@ export const consecutive = <T>(...validators: Array<Validator<T>>): Validator<T>
       : validatorParamsError(G_CONS)
   );
 
-export const getDep = <T>(field: string, preValidator: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
-  (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-    toArray(preValidator(getFromMeta(field, meta)))
-      .reduce((value: any, nextValidator: Validator<T>) =>
-        (value !== null ? nextValidator(value, onError, meta) : null), value);
-
-export const mergeDep = <T>(field: string): Validator<T> =>
-  (_value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
-    getFromMeta(field, meta);
-
 export const or = (...validators: Array<Processor<any, any>>): Processor<any, any> =>
   (value: any, onError?: ErrorCallback, meta?: MetaData): any => {
     let processed = null;
@@ -251,6 +241,20 @@ export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
     validators.reduce((validated: T, nextValidator: Validator<T>) =>
       (validated !== null ? nextValidator(validated, onError, meta) : (nextValidator(value, onError, meta), null)), value);
 
+export const transform = <T, R>(...transformers: Array<Processor<T | R, T | R>>): Processor<T | R, T | R> =>
+  (value: T | R, onError?: ErrorCallback, meta?: MetaData): T | R =>
+    transformers.reduce((value, processor) => processor(value, onError, meta), value);
+
+export const getDep = <T>(field: string, preValidator: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
+  (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
+    toArray(preValidator(getFromMeta(field, meta)))
+      .reduce((value: any, nextValidator: Validator<T>) =>
+        (value !== null ? nextValidator(value, onError, meta) : null), value);
+
+export const mergeDep = <T>(field: string): Validator<T> =>
+  (_value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
+    getFromMeta(field, meta);
+
 export const setDep = <T>(field: string, extValue?: T): Validator<T> =>
   (value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
     postToMeta(isDefined(extValue) ? extValue : value, field, meta);
@@ -259,10 +263,6 @@ export const setVDep = <T>(field: string, ...validators: Array<Validator<T>>): V
   (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
     (postToMeta(validators, field, meta), validators.reduce((value: any, nextValidator: Validator<T>) =>
       (value !== null ? nextValidator(value, onError, meta) : null), value));
-
-export const transform = <T, R>(...transformers: Array<Processor<T | R, T | R>>): Processor<T | R, T | R> =>
-  (value: T | R, onError?: ErrorCallback, meta?: MetaData): T | R =>
-    transformers.reduce((value, processor) => processor(value, onError, meta), value);
 
 export const useDefault = <T extends unknown>(defaultValue: T, ...validators: Array<Processor<any, any>>): Processor<any, any> =>
   (value: any, onError?: ErrorCallback, meta?: MetaData): any =>

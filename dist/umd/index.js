@@ -83,19 +83,6 @@ var __assign = (this && this.__assign) || function () {
             })
             : validatorParamsError(exports.G_CONS));
     };
-    exports.getDep = function (field, preValidator) {
-        return function (value, onError, meta) {
-            return toArray(preValidator(getFromMeta(field, meta)))
-                .reduce(function (value, nextValidator) {
-                return (value !== null ? nextValidator(value, onError, meta) : null);
-            }, value);
-        };
-    };
-    exports.mergeDep = function (field) {
-        return function (_value, _onError, meta) {
-            return getFromMeta(field, meta);
-        };
-    };
     exports.or = function () {
         var validators = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -125,6 +112,28 @@ var __assign = (this && this.__assign) || function () {
             }, value);
         };
     };
+    exports.transform = function () {
+        var transformers = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            transformers[_i] = arguments[_i];
+        }
+        return function (value, onError, meta) {
+            return transformers.reduce(function (value, processor) { return processor(value, onError, meta); }, value);
+        };
+    };
+    exports.getDep = function (field, preValidator) {
+        return function (value, onError, meta) {
+            return toArray(preValidator(getFromMeta(field, meta)))
+                .reduce(function (value, nextValidator) {
+                return (value !== null ? nextValidator(value, onError, meta) : null);
+            }, value);
+        };
+    };
+    exports.mergeDep = function (field) {
+        return function (_value, _onError, meta) {
+            return getFromMeta(field, meta);
+        };
+    };
     exports.setDep = function (field, extValue) {
         return function (value, _onError, meta) {
             return postToMeta(isDefined(extValue) ? extValue : value, field, meta);
@@ -139,15 +148,6 @@ var __assign = (this && this.__assign) || function () {
             return (postToMeta(validators, field, meta), validators.reduce(function (value, nextValidator) {
                 return (value !== null ? nextValidator(value, onError, meta) : null);
             }, value));
-        };
-    };
-    exports.transform = function () {
-        var transformers = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            transformers[_i] = arguments[_i];
-        }
-        return function (value, onError, meta) {
-            return transformers.reduce(function (value, processor) { return processor(value, onError, meta); }, value);
         };
     };
     exports.useDefault = function (defaultValue) {

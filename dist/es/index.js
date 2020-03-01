@@ -73,9 +73,6 @@ const isValidatorsSequence = (validators) => validators.reduce((result, validato
 export const consecutive = (...validators) => (isValidatorsSequence(validators)
     ? ((value, onError, meta) => validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value))
     : validatorParamsError(G_CONS));
-export const getDep = (field, preValidator) => (value, onError, meta) => toArray(preValidator(getFromMeta(field, meta)))
-    .reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value);
-export const mergeDep = (field) => (_value, _onError, meta) => getFromMeta(field, meta);
 export const or = (...validators) => (value, onError, meta) => {
     let processed = null;
     const relevance = { value: false };
@@ -87,9 +84,12 @@ export const or = (...validators) => (value, onError, meta) => {
     return processed;
 };
 export const parallel = (...validators) => (value, onError, meta) => validators.reduce((validated, nextValidator) => (validated !== null ? nextValidator(validated, onError, meta) : (nextValidator(value, onError, meta), null)), value);
+export const transform = (...transformers) => (value, onError, meta) => transformers.reduce((value, processor) => processor(value, onError, meta), value);
+export const getDep = (field, preValidator) => (value, onError, meta) => toArray(preValidator(getFromMeta(field, meta)))
+    .reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value);
+export const mergeDep = (field) => (_value, _onError, meta) => getFromMeta(field, meta);
 export const setDep = (field, extValue) => (value, _onError, meta) => postToMeta(isDefined(extValue) ? extValue : value, field, meta);
 export const setVDep = (field, ...validators) => (value, onError, meta) => (postToMeta(validators, field, meta), validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value));
-export const transform = (...transformers) => (value, onError, meta) => transformers.reduce((value, processor) => processor(value, onError, meta), value);
 export const useDefault = (defaultValue, ...validators) => (value, onError, meta) => !isEmpty(value)
     ? validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value)
     : (isFunction(defaultValue)

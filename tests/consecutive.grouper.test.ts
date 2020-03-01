@@ -1,4 +1,4 @@
-import { consecutive as validator } from '@lib/grouping-substitution/consecutive';
+import { consecutive as validator } from '@lib/groupers/consecutive';
 import { G_CONS as VALIDATOR_NAME, V_NUM } from '@lib/names';
 import { gte } from '@lib/validators/gte';
 import { integer } from '@lib/validators/integer';

@@ -13,7 +13,10 @@
       "removeExports": true
     },
     {
-      "dir": "./src/grouping-substitution"
+      "dir": "./src/groupers"
+    },
+    {
+      "dir": "./src/spreaders"
     },
     {
       "dir": "./src/validators"
