@@ -315,7 +315,8 @@ var __assign = (this && this.__assign) || function () {
                 return [key, exports.consecutive.apply(void 0, processors)];
             });
             return function (data, onError, meta) {
-                return (isObject(data) && data !== null)
+                return (data !== null
+                    && isObject(data))
                     ? (validators_1
                         ? validators_1.reduce(function (result, _a) {
                             var key = _a[0], validator = _a[1];
@@ -329,21 +330,38 @@ var __assign = (this && this.__assign) || function () {
             return validatorParamsError(exports.V_OBJ);
         }
     };
-    exports.object2 = function (params, error) {
-        var validators = params && params.reduce(function (data, _a) {
-            var key = _a[0], processors = _a.slice(1);
-            return (data.push([key, exports.consecutive.apply(void 0, processors)]), data);
-        }, []);
-        return function (data, onError, meta) {
-            return (isObject(data) && data !== null)
-                ? (validators
-                    ? validators.reduce(function (result, _a) {
-                        var key = _a[0], processor = _a[1];
-                        return (result[key] = processor(data[key], onError, setMetaPath(meta, key)), result);
-                    }, {})
-                    : data)
-                : applyError(error, onError, setMetaValidator(meta, exports.V_OBJ));
-        };
+    var isNestedArrays = function (value) { return isArray(value) && (value.reduce(function (result, item) { return result && isArray(item); }, true)); };
+    exports.object2 = function (spec, error) {
+        var specList = [];
+        var isSpecArray = isNestedArrays(spec);
+        isSpecArray && (spec.forEach(function (_a) {
+            var key = _a[0], validators = _a.slice(1);
+            return specList.push([key, toArray(validators)]);
+        }));
+        var isSpecValid = isSpecArray && specList.reduce(function (result, _a) {
+            var key = _a[0], validators = _a[1];
+            return result && isValidatorsSequence(validators) && key.length > 0;
+        }, true);
+        if (isSpecValid || !spec) {
+            var validators_2 = spec && specList.map(function (_a) {
+                var key = _a[0], processors = _a[1];
+                return [key, exports.consecutive.apply(void 0, processors)];
+            });
+            return function (data, onError, meta) {
+                return (data !== null
+                    && isObject(data))
+                    ? (validators_2
+                        ? validators_2.reduce(function (result, _a) {
+                            var key = _a[0], processor = _a[1];
+                            return (result[key] = processor(data[key], onError, setMetaPath(meta, key)), result);
+                        }, {})
+                        : data)
+                    : applyError(error, onError, setMetaValidator(meta, exports.V_OBJ, [spec]));
+            };
+        }
+        else {
+            return validatorParamsError(exports.V_OBJ);
+        }
     };
     exports.oneOf = function (candidates, error) {
         return (isArray(candidates)

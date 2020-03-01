@@ -282,7 +282,8 @@ export const object = (spec, error) => {
     const isSpecValid = isSpecObject && specList.reduce((result, [_, validators]) => result && isValidatorsSequence(validators), true);
     if (isSpecValid || !spec) {
         const validators = spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
-        return (data, onError, meta) => (isObject(data) && data !== null)
+        return (data, onError, meta) => (data !== null
+            && isObject(data))
             ? (validators
                 ? validators.reduce((result, [key, validator]) => (result[key] = validator(data[key], onError, setMetaPath(meta, key)), result), {})
                 : data)
@@ -292,13 +293,33 @@ export const object = (spec, error) => {
         return validatorParamsError(V_OBJ);
     }
 };
-export const object2 = (params, error) => {
-    const validators = params && params.reduce((data, [key, ...processors]) => (data.push([key, consecutive(...processors)]), data), []);
-    return (data, onError, meta) => (isObject(data) && data !== null)
-        ? (validators
-            ? validators.reduce((result, [key, processor]) => (result[key] = processor(data[key], onError, setMetaPath(meta, key)), result), {})
-            : data)
-        : applyError(error, onError, setMetaValidator(meta, V_OBJ));
+const isNestedArrays = (value) => isArray(value) && (value.reduce((result, item) => result && isArray(item), true));
+/**
+ * Type: semi validator, semi processor. Checks value to be an object.
+ *
+ * @param {Array=} spec Validators scheme for object in form of array. Provides strict ordering.
+ * @param {Error=} error (Optional) Any type's error.
+ * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'spec' is invalid.
+ */
+export const object2 = (spec, error) => {
+    const specList = [];
+    const isSpecArray = isNestedArrays(spec);
+    isSpecArray && (spec.forEach(([key, ...validators]) => specList.push([key, toArray(validators)])));
+    const isSpecValid = isSpecArray && specList.reduce((result, [key, validators]) => result && isValidatorsSequence(validators) && key.length > 0, true);
+    if (isSpecValid || !spec) {
+        const validators = spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
+        return (data, onError, meta) => (data !== null
+            && isObject(data))
+            ? (validators
+                ? validators.reduce((result, [key, processor]) => (result[key] = processor(data[key], onError, setMetaPath(meta, key)), result), {})
+                : data)
+            : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
+    }
+    else {
+        return validatorParamsError(V_OBJ);
+    }
 };
 /**
  * Type: validator. Checks value to be one of expected. Shallow comparison.

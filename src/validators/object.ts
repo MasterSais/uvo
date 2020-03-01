@@ -32,7 +32,10 @@ export const object = <T extends ObjectLike, R extends ObjectLike>(spec?: Object
       spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
 
     return (data: T, onError?: ErrorCallback, meta?: MetaData): R =>
-      (isObject(data) && data !== null)
+      (
+        data !== null
+        && isObject(data)
+      )
         ? (
           validators
             ? validators.reduce((result: R, [key, validator]) => (

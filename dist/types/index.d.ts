@@ -241,7 +241,16 @@ export declare const number: <T extends unknown>(error?: Error) => Processor<T, 
  * @throws {string} Will throw an error if 'spec' is invalid.
  */
 export declare const object: <T extends ObjectLike, R extends ObjectLike>(spec?: Record<string, Processor<any, any> | Processor<any, any>[]>, error?: Error) => Processor<T, R>;
-export declare const object2: <T extends ObjectLike, R extends ObjectLike>(params?: [string, ...Processor<any, any>[]][], error?: Error) => Processor<T, R>;
+/**
+ * Type: semi validator, semi processor. Checks value to be an object.
+ *
+ * @param {Array=} spec Validators scheme for object in form of array. Provides strict ordering.
+ * @param {Error=} error (Optional) Any type's error.
+ * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'spec' is invalid.
+ */
+export declare const object2: <T extends ObjectLike, R extends ObjectLike>(spec?: [string, ...Processor<any, any>[]][], error?: Error) => Processor<T, R>;
 /**
  * Type: validator. Checks value to be one of expected. Shallow comparison.
  *

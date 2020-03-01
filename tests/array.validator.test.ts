@@ -29,6 +29,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [[false]],
         [emptyObject()],
         [[1, emptyFunction()]],
+        [[emptyFunction(), emptyFunction(), null]],
         [[emptyFunction(), emptyFunction(), undefined]]
       ],
       VALIDATOR_NAME
