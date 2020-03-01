@@ -1,6 +1,6 @@
 import { V_LTE } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, isBoolean, isFiniteNumber, isOneType, isString, setMetaValidator, validatorParamsError } from '../utilities';
+import { applyError, isBoolean, isFiniteNumber, isOneType, isString, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * Checks value to be lower or equal to 'match' param. Requires the same type.
@@ -24,5 +24,5 @@ export const lte = <T>(bound: T, error?: Error): Validator<T> =>
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_LTE, [bound]))
       )
-      : validatorParamsError(V_LTE)
+      : throwValidatorError(V_LTE)
   );

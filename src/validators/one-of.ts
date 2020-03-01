@@ -1,6 +1,6 @@
 import { V_OOF } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, isArray, setMetaValidator, validatorParamsError } from '../utilities';
+import { applyError, isArray, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * Checks value to be one of expected. Shallow comparison.
@@ -24,5 +24,5 @@ export const oneOf = <T>(candidates: Array<T>, error?: Error): Validator<T> =>
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_OOF, [candidates]))
       )
-      : validatorParamsError(V_OOF)
+      : throwValidatorError(V_OOF)
   );

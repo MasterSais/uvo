@@ -1,7 +1,7 @@
 import { consecutive } from '../groupers/consecutive';
 import { V_ARR } from '../names';
 import { Error, ErrorCallback, MetaData, Processor } from '../types';
-import { applyError, isArray, isValidatorsSequence, setMetaPath, setMetaValidator, toArray, validatorParamsError } from '../utilities';
+import { applyError, isArray, isValidatorsSequence, setMetaPath, setMetaValidator, toArray, throwValidatorError } from '../utilities';
 
 /**
  * Checks value to be an array.
@@ -33,6 +33,6 @@ export const array = <T, R>(itemSpec?: Array<Processor<T | R, R>> | Processor<T 
           : applyError(error, onError, setMetaValidator(meta, V_ARR, [data]))
     );
   } else {
-    return validatorParamsError(V_ARR);
+    return throwValidatorError(V_ARR);
   }
 };

@@ -151,7 +151,7 @@ export declare const or: <T>(...validators: Processor<T, unknown>[]) => Processo
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
 export declare const parallel: <T>(...validators: Validator<T>[]) => Validator<T>;
-export declare const transform: <T, R>(...transformers: Processor<T | R, R>[]) => Processor<T | R, R>;
+export declare const transform: <T, R>(...processors: Processor<T | R, R>[]) => Processor<T | R, R>;
 export declare const getDep: <T>(field: string, preValidator: (dep: T) => Validator<T> | Validator<T>[]) => Validator<T>;
 export declare const mergeDep: <T>(field: string) => Validator<T>;
 export declare const setDep: <T>(field: string, extValue?: T) => Validator<T>;

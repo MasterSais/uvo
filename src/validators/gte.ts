@@ -1,6 +1,6 @@
 import { V_GTE } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, isBoolean, isFiniteNumber, isOneType, isString, setMetaValidator, validatorParamsError } from '../utilities';
+import { applyError, isBoolean, isFiniteNumber, isOneType, isString, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * Checks value to be greater or equal to 'match' param. Requires the same type.
@@ -24,5 +24,5 @@ export const gte = <T>(bound: T, error?: Error): Validator<T> =>
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_GTE, [bound]))
       )
-      : validatorParamsError(V_GTE)
+      : throwValidatorError(V_GTE)
   );

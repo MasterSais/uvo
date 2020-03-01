@@ -1,7 +1,7 @@
 import { consecutive } from '../groupers/consecutive';
 import { V_OBJ } from '../names';
 import { Error, ErrorCallback, MetaData, ObjectLike, ObjectRecords, Processor } from '../types';
-import { applyError, isObject, setMetaPath, setMetaValidator, toArray, validatorParamsError } from '../utilities';
+import { applyError, isObject, setMetaPath, setMetaValidator, toArray, throwValidatorError } from '../utilities';
 
 /**
  * Checks value to be an object.
@@ -43,6 +43,6 @@ export const object = <T extends ObjectLike, R extends ObjectLike>(spec?: Object
         )
         : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
   } else {
-    return validatorParamsError(V_OBJ);
+    return throwValidatorError(V_OBJ);
   }
 };

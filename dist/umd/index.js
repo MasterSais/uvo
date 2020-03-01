@@ -54,7 +54,7 @@ var __assign = (this && this.__assign) || function () {
     var applyError = function (error, onError, meta) {
         return (onError && onError(error, meta), null);
     };
-    var validatorParamsError = function (validator) {
+    var throwValidatorError = function (validator) {
         throw validator;
     };
     var isEmpty = function (value) { return (value === null) || (value === undefined) || (value === ''); };
@@ -83,7 +83,7 @@ var __assign = (this && this.__assign) || function () {
                     return (value !== null ? nextValidator(value, onError, meta) : null);
                 }, value);
             })
-            : validatorParamsError(exports.G_CONS));
+            : throwValidatorError(exports.G_CONS));
     };
     exports.or = function () {
         var validators = [];
@@ -103,7 +103,7 @@ var __assign = (this && this.__assign) || function () {
                 }
                 return processed;
             })
-            : validatorParamsError(exports.G_OR));
+            : throwValidatorError(exports.G_OR));
     };
     exports.parallel = function () {
         var validators = [];
@@ -118,15 +118,15 @@ var __assign = (this && this.__assign) || function () {
                         : (nextValidator(value, onError, meta), null));
                 }, value);
             })
-            : validatorParamsError(exports.G_PRLL));
+            : throwValidatorError(exports.G_PRLL));
     };
     exports.transform = function () {
-        var transformers = [];
+        var processors = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            transformers[_i] = arguments[_i];
+            processors[_i] = arguments[_i];
         }
         return function (value, onError, meta) {
-            return transformers.reduce(function (value, processor) { return processor(value, onError, meta); }, value);
+            return processors.reduce(function (value, processor) { return processor(value, onError, meta); }, value);
         };
     };
     exports.getDep = function (field, preValidator) {
@@ -187,7 +187,7 @@ var __assign = (this && this.__assign) || function () {
             });
         }
         else {
-            return validatorParamsError(exports.V_ARR);
+            return throwValidatorError(exports.V_ARR);
         }
     };
     var possibleValues = [false, true, 0, 1, '0', '1', 'false', 'true'];
@@ -237,7 +237,7 @@ var __assign = (this && this.__assign) || function () {
                     && (fieldsMap.op(value, [spec]) > 0))
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_FIELDS, [spec]));
             })
-            : validatorParamsError(exports.V_FIELDS));
+            : throwValidatorError(exports.V_FIELDS));
     };
     exports.gte = function (bound, error) {
         return ((isFiniteNumber(bound) || isString(bound) || isBoolean(bound))
@@ -246,7 +246,7 @@ var __assign = (this && this.__assign) || function () {
                     && value >= bound)
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_GTE, [bound]));
             })
-            : validatorParamsError(exports.V_GTE));
+            : throwValidatorError(exports.V_GTE));
     };
     exports.integer = function (error) {
         return function (value, onError, meta) {
@@ -264,7 +264,7 @@ var __assign = (this && this.__assign) || function () {
                     && value.length === len)
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_LEN, [len]));
             })
-            : validatorParamsError(exports.V_LEN));
+            : throwValidatorError(exports.V_LEN));
     };
     exports.lte = function (bound, error) {
         return ((isFiniteNumber(bound) || isString(bound) || isBoolean(bound))
@@ -273,7 +273,7 @@ var __assign = (this && this.__assign) || function () {
                     && value <= bound)
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_LTE, [bound]));
             })
-            : validatorParamsError(exports.V_LTE));
+            : throwValidatorError(exports.V_LTE));
     };
     exports.maxLen = function (len, error) {
         return ((isFiniteNumber(len) && len >= 0)
@@ -284,7 +284,7 @@ var __assign = (this && this.__assign) || function () {
                     && value.length <= len)
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_MXLEN, [len]));
             })
-            : validatorParamsError(exports.V_MXLEN));
+            : throwValidatorError(exports.V_MXLEN));
     };
     exports.minLen = function (len, error) {
         return ((isFiniteNumber(len) && len >= 0)
@@ -295,7 +295,7 @@ var __assign = (this && this.__assign) || function () {
                     && value.length >= len)
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_MNLEN, [len]));
             })
-            : validatorParamsError(exports.V_MNLEN));
+            : throwValidatorError(exports.V_MNLEN));
     };
     exports.notEqual = function (match, error) {
         return function (value, onError, meta) {
@@ -336,7 +336,7 @@ var __assign = (this && this.__assign) || function () {
             };
         }
         else {
-            return validatorParamsError(exports.V_OBJ);
+            return throwValidatorError(exports.V_OBJ);
         }
     };
     var isNestedArrays = function (value) { return isArray(value) && (value.reduce(function (result, item) { return result && isArray(item); }, true)); };
@@ -369,7 +369,7 @@ var __assign = (this && this.__assign) || function () {
             };
         }
         else {
-            return validatorParamsError(exports.V_OBJ);
+            return throwValidatorError(exports.V_OBJ);
         }
     };
     exports.oneOf = function (candidates, error) {
@@ -379,7 +379,7 @@ var __assign = (this && this.__assign) || function () {
                     && candidates.indexOf(value) >= 0)
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_OOF, [candidates]));
             })
-            : validatorParamsError(exports.V_OOF));
+            : throwValidatorError(exports.V_OOF));
     };
     exports.regex = function (match, error) {
         return ((match && match.constructor === RegExp)
@@ -387,7 +387,7 @@ var __assign = (this && this.__assign) || function () {
                 return (match.test(value))
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_REG, [match]));
             })
-            : validatorParamsError(exports.V_REG));
+            : throwValidatorError(exports.V_REG));
     };
     exports.string = function (error) {
         return function (value, onError, meta) {

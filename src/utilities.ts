@@ -25,7 +25,7 @@ export const getFromMeta = <T>(field: string, meta: MetaData): T => (
 export const applyError = (error: Error, onError: ErrorCallback, meta: MetaData): null =>
   (onError && onError(error, meta), null);
 
-export const validatorParamsError = (validator: string) => {
+export const throwValidatorError = (validator: string) => {
   throw validator;
 };
 

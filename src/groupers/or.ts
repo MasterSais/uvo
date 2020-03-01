@@ -1,6 +1,6 @@
 import { G_OR } from '../names';
 import { Error, ErrorCallback, MetaData, Processor, Relevance } from '../types';
-import { isValidatorsSequence, validatorParamsError } from '../utilities';
+import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
  * Groups validators sequentially.
@@ -35,5 +35,5 @@ export const or = <T>(...validators: Array<Processor<T, unknown>>): Processor<T,
           return processed;
         }
       )
-      : validatorParamsError(G_OR)
+      : throwValidatorError(G_OR)
   );

@@ -1,6 +1,6 @@
 import { V_FIELDS } from '../names';
 import { Error, ErrorCallback, Fields, MetaData, ObjectLike, Validator } from '../types';
-import { applyError, isArray, isEmpty, isObject, isString, setMetaValidator, validatorParamsError } from '../utilities';
+import { applyError, isArray, isEmpty, isObject, isString, setMetaValidator, throwValidatorError } from '../utilities';
 
 const fieldsMap = {
   op: <T extends ObjectLike>(value: T, names: Array<Fields | string>): number =>
@@ -55,5 +55,5 @@ export const fields = <T extends ObjectLike>(spec: Fields, error?: Error): Valid
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_FIELDS, [spec]))
       )
-      : validatorParamsError(V_FIELDS)
+      : throwValidatorError(V_FIELDS)
   );

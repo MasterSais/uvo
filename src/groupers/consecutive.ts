@@ -1,6 +1,6 @@
 import { G_CONS } from '../names';
 import { ErrorCallback, MetaData, Processor } from '../types';
-import { isValidatorsSequence, validatorParamsError } from '../utilities';
+import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
  * Groups validators sequentially.
@@ -21,5 +21,5 @@ export const consecutive = <T, R>(...validators: Array<Processor<T | R, R>>): Pr
           validators.reduce((value: any, nextValidator: Processor<T | R, R>) =>
             (value !== null ? nextValidator(value, onError, meta) : null), value) as R
       )
-      : validatorParamsError(G_CONS)
+      : throwValidatorError(G_CONS)
   );

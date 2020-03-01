@@ -2,7 +2,7 @@ import { isArray } from 'util';
 import { consecutive } from '../groupers/consecutive';
 import { V_OBJ } from '../names';
 import { Error, ErrorCallback, MetaData, ObjectLike, Processor } from '../types';
-import { applyError, isObject, setMetaPath, setMetaValidator, toArray, validatorParamsError } from '../utilities';
+import { applyError, isObject, setMetaPath, setMetaValidator, toArray, throwValidatorError } from '../utilities';
 
 const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
   value.reduce((result, item) => result && isArray(item), true)
@@ -48,6 +48,6 @@ export const object2 = <T extends ObjectLike, R extends ObjectLike>(spec?: Array
           : data) as R
         : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
   } else {
-    return validatorParamsError(V_OBJ);
+    return throwValidatorError(V_OBJ);
   }
 };

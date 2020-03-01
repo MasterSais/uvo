@@ -1,6 +1,6 @@
 import { V_REG } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, setMetaValidator, validatorParamsError } from '../utilities';
+import { applyError, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * Checks value to match a pattern.
@@ -23,5 +23,5 @@ export const regex = <T extends unknown>(match: RegExp, error?: Error): Validato
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_REG, [match]))
       )
-      : validatorParamsError(V_REG)
+      : throwValidatorError(V_REG)
   );

@@ -1,6 +1,6 @@
 import { G_PRLL } from '../names';
 import { ErrorCallback, MetaData, Validator } from '../types';
-import { isValidatorsSequence, validatorParamsError } from '../utilities';
+import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
  * Groups validators in parallel.
@@ -25,5 +25,5 @@ export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
                 : (nextValidator(value, onError, meta), null)
             ), value)
       )
-      : validatorParamsError(G_PRLL)
+      : throwValidatorError(G_PRLL)
   );

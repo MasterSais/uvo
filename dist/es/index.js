@@ -49,7 +49,7 @@ const postToMeta = (value, field, meta) => (meta
     : value);
 const getFromMeta = (field, meta) => (meta && meta._deps[field] || null);
 const applyError = (error, onError, meta) => (onError && onError(error, meta), null);
-const validatorParamsError = (validator) => {
+const throwValidatorError = (validator) => {
     throw validator;
 };
 const isEmpty = (value) => (value === null) || (value === undefined) || (value === '');
@@ -78,7 +78,7 @@ const isValidatorsSequence = (validators) => validators.reduce((result, validato
  */
 export const consecutive = (...validators) => (isValidatorsSequence(validators)
     ? ((value, onError, meta) => validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value))
-    : validatorParamsError(G_CONS));
+    : throwValidatorError(G_CONS));
 /**
  * Groups validators sequentially.
  * Searches for first successful validator's result.
@@ -100,7 +100,7 @@ export const or = (...validators) => (isValidatorsSequence(validators)
         }
         return processed;
     })
-    : validatorParamsError(G_OR));
+    : throwValidatorError(G_OR));
 /**
  * Groups validators in parallel.
  * The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).
@@ -116,8 +116,8 @@ export const parallel = (...validators) => (isValidatorsSequence(validators)
     ? ((value, onError, meta) => validators.reduce((validated, nextValidator) => (validated !== null
         ? nextValidator(value, onError, meta)
         : (nextValidator(value, onError, meta), null)), value))
-    : validatorParamsError(G_PRLL));
-export const transform = (...transformers) => (value, onError, meta) => transformers.reduce((value, processor) => processor(value, onError, meta), value);
+    : throwValidatorError(G_PRLL));
+export const transform = (...processors) => (value, onError, meta) => processors.reduce((value, processor) => processor(value, onError, meta), value);
 export const getDep = (field, preValidator) => (value, onError, meta) => toArray(preValidator(getFromMeta(field, meta)))
     .reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value);
 export const mergeDep = (field) => (_value, _onError, meta) => getFromMeta(field, meta);
@@ -151,7 +151,7 @@ export const array = (itemSpec, error) => {
             : applyError(error, onError, setMetaValidator(meta, V_ARR, [data])));
     }
     else {
-        return validatorParamsError(V_ARR);
+        return throwValidatorError(V_ARR);
     }
 };
 const possibleValues = [false, true, 0, 1, '0', '1', 'false', 'true'];
@@ -212,7 +212,7 @@ export const fields = (spec, error) => (validateFieldsSpec(spec)
     ? ((value, onError, meta) => (isObject(value)
         && (fieldsMap.op(value, [spec]) > 0))
         ? value : applyError(error, onError, setMetaValidator(meta, V_FIELDS, [spec])))
-    : validatorParamsError(V_FIELDS));
+    : throwValidatorError(V_FIELDS));
 /**
  * Checks value to be greater or equal to 'match' param. Requires the same type.
  *
@@ -228,7 +228,7 @@ export const gte = (bound, error) => ((isFiniteNumber(bound) || isString(bound) 
     ? ((value, onError, meta) => (isOneType(value, bound)
         && value >= bound)
         ? value : applyError(error, onError, setMetaValidator(meta, V_GTE, [bound])))
-    : validatorParamsError(V_GTE));
+    : throwValidatorError(V_GTE));
 /**
  * Checks number to be an integer.
  *
@@ -258,7 +258,7 @@ export const len = (len, error) => ((isFiniteNumber(len) && len >= 0)
         && isFiniteNumber(value.length)
         && value.length === len)
         ? value : applyError(error, onError, setMetaValidator(meta, V_LEN, [len])))
-    : validatorParamsError(V_LEN));
+    : throwValidatorError(V_LEN));
 /**
  * Checks value to be lower or equal to 'match' param. Requires the same type.
  *
@@ -274,7 +274,7 @@ export const lte = (bound, error) => ((isFiniteNumber(bound) || isString(bound) 
     ? ((value, onError, meta) => (isOneType(value, bound)
         && value <= bound)
         ? value : applyError(error, onError, setMetaValidator(meta, V_LTE, [bound])))
-    : validatorParamsError(V_LTE));
+    : throwValidatorError(V_LTE));
 /**
  * Checks length to be equal to 'len' param. Requires to be object like.
  *
@@ -292,7 +292,7 @@ export const maxLen = (len, error) => ((isFiniteNumber(len) && len >= 0)
         && isFiniteNumber(value.length)
         && value.length <= len)
         ? value : applyError(error, onError, setMetaValidator(meta, V_MXLEN, [len])))
-    : validatorParamsError(V_MXLEN));
+    : throwValidatorError(V_MXLEN));
 /**
  * Checks length to be equal to 'len' param. Requires to be object like.
  *
@@ -310,7 +310,7 @@ export const minLen = (len, error) => ((isFiniteNumber(len) && len >= 0)
         && isFiniteNumber(value.length)
         && value.length >= len)
         ? value : applyError(error, onError, setMetaValidator(meta, V_MNLEN, [len])))
-    : validatorParamsError(V_MNLEN));
+    : throwValidatorError(V_MNLEN));
 /**
  * Checks value to be not equal to 'match' param. Requires the same type. Shallow comparison.
  *
@@ -364,7 +364,7 @@ export const object = (spec, error) => {
             : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
     }
     else {
-        return validatorParamsError(V_OBJ);
+        return throwValidatorError(V_OBJ);
     }
 };
 const isNestedArrays = (value) => isArray(value) && (value.reduce((result, item) => result && isArray(item), true));
@@ -394,7 +394,7 @@ export const object2 = (spec, error) => {
             : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
     }
     else {
-        return validatorParamsError(V_OBJ);
+        return throwValidatorError(V_OBJ);
     }
 };
 /**
@@ -412,7 +412,7 @@ export const oneOf = (candidates, error) => (isArray(candidates)
     ? ((value, onError, meta) => (value !== null
         && candidates.indexOf(value) >= 0)
         ? value : applyError(error, onError, setMetaValidator(meta, V_OOF, [candidates])))
-    : validatorParamsError(V_OOF));
+    : throwValidatorError(V_OOF));
 /**
  * Checks value to match a pattern.
  *
@@ -427,7 +427,7 @@ export const oneOf = (candidates, error) => (isArray(candidates)
 export const regex = (match, error) => ((match && match.constructor === RegExp)
     ? ((value, onError, meta) => (match.test(value))
         ? value : applyError(error, onError, setMetaValidator(meta, V_REG, [match])))
-    : validatorParamsError(V_REG));
+    : throwValidatorError(V_REG));
 /**
  * Checks value to be a string compatible.
  *

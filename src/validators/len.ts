@@ -1,6 +1,6 @@
 import { V_LEN } from '../names';
 import { Error, ErrorCallback, Lengthy, MetaData, Validator } from '../types';
-import { applyError, isFiniteNumber, isObjectLike, isString, setMetaValidator, validatorParamsError } from '../utilities';
+import { applyError, isFiniteNumber, isObjectLike, isString, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * Checks length to be equal to 'len' param. Requires to be object like.
@@ -26,5 +26,5 @@ export const len = <T extends Lengthy>(len: number, error?: Error): Validator<T>
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_LEN, [len]))
       )
-      : validatorParamsError(V_LEN)
+      : throwValidatorError(V_LEN)
   );

@@ -26,9 +26,11 @@
     "url": "git+https://MasterSais@bitbucket.org/MasterSais/single-object-validator.git"
   },
   "keywords": [
-    "ES6",
-    "ES2015",
-    "Validator"
+    "es6",
+    "es2015",
+    "usov",
+    "jsusov",
+    "validator"
   ],
   "author": "MasterSais",
   "license": "MIT",

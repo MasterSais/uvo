@@ -171,7 +171,7 @@ const getFromMeta = <T>(field: string, meta: MetaData): T => (
 const applyError = (error: Error, onError: ErrorCallback, meta: MetaData): null =>
   (onError && onError(error, meta), null);
 
-const validatorParamsError = (validator: string) => {
+const throwValidatorError = (validator: string) => {
   throw validator;
 };
 
@@ -221,7 +221,7 @@ export const consecutive = <T, R>(...validators: Array<Processor<T | R, R>>): Pr
           validators.reduce((value: any, nextValidator: Processor<T | R, R>) =>
             (value !== null ? nextValidator(value, onError, meta) : null), value) as R
       )
-      : validatorParamsError(G_CONS)
+      : throwValidatorError(G_CONS)
   );
 
 /**
@@ -257,7 +257,7 @@ export const or = <T>(...validators: Array<Processor<T, unknown>>): Processor<T,
           return processed;
         }
       )
-      : validatorParamsError(G_OR)
+      : throwValidatorError(G_OR)
   );
 
 /**
@@ -283,12 +283,12 @@ export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
                 : (nextValidator(value, onError, meta), null)
             ), value)
       )
-      : validatorParamsError(G_PRLL)
+      : throwValidatorError(G_PRLL)
   );
 
-export const transform = <T, R>(...transformers: Array<Processor<T | R, R>>): Processor<T | R, R> =>
+export const transform = <T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R> =>
   (value: T | R, onError?: ErrorCallback, meta?: MetaData): R =>
-    transformers.reduce((value, processor) => processor(value, onError, meta), value) as R;
+    processors.reduce((value, processor) => processor(value, onError, meta), value) as R;
 
 export const getDep = <T>(field: string, preValidator: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
   (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
@@ -350,7 +350,7 @@ export const array = <T, R>(itemSpec?: Array<Processor<T | R, R>> | Processor<T 
           : applyError(error, onError, setMetaValidator(meta, V_ARR, [data]))
     );
   } else {
-    return validatorParamsError(V_ARR);
+    return throwValidatorError(V_ARR);
   }
 };
 
@@ -448,7 +448,7 @@ export const fields = <T extends ObjectLike>(spec: Fields, error?: Error): Valid
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_FIELDS, [spec]))
       )
-      : validatorParamsError(V_FIELDS)
+      : throwValidatorError(V_FIELDS)
   );
 
 /**
@@ -473,7 +473,7 @@ export const gte = <T>(bound: T, error?: Error): Validator<T> =>
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_GTE, [bound]))
       )
-      : validatorParamsError(V_GTE)
+      : throwValidatorError(V_GTE)
   );
 
 /**
@@ -517,7 +517,7 @@ export const len = <T extends Lengthy>(len: number, error?: Error): Validator<T>
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_LEN, [len]))
       )
-      : validatorParamsError(V_LEN)
+      : throwValidatorError(V_LEN)
   );
 
 /**
@@ -542,7 +542,7 @@ export const lte = <T>(bound: T, error?: Error): Validator<T> =>
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_LTE, [bound]))
       )
-      : validatorParamsError(V_LTE)
+      : throwValidatorError(V_LTE)
   );
 
 /**
@@ -569,7 +569,7 @@ export const maxLen = <T extends Lengthy>(len: number, error?: Error): Validator
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_MXLEN, [len]))
       )
-      : validatorParamsError(V_MXLEN)
+      : throwValidatorError(V_MXLEN)
   );
 
 /**
@@ -596,7 +596,7 @@ export const minLen = <T extends Lengthy>(len: number, error?: Error): Validator
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_MNLEN, [len]))
       )
-      : validatorParamsError(V_MNLEN)
+      : throwValidatorError(V_MNLEN)
   );
 
 /**
@@ -675,7 +675,7 @@ export const object = <T extends ObjectLike, R extends ObjectLike>(spec?: Object
         )
         : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
   } else {
-    return validatorParamsError(V_OBJ);
+    return throwValidatorError(V_OBJ);
   }
 };
 
@@ -723,7 +723,7 @@ export const object2 = <T extends ObjectLike, R extends ObjectLike>(spec?: Array
           : data) as R
         : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
   } else {
-    return validatorParamsError(V_OBJ);
+    return throwValidatorError(V_OBJ);
   }
 };
 
@@ -749,7 +749,7 @@ export const oneOf = <T>(candidates: Array<T>, error?: Error): Validator<T> =>
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_OOF, [candidates]))
       )
-      : validatorParamsError(V_OOF)
+      : throwValidatorError(V_OOF)
   );
 
 /**
@@ -773,7 +773,7 @@ export const regex = <T extends unknown>(match: RegExp, error?: Error): Validato
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_REG, [match]))
       )
-      : validatorParamsError(V_REG)
+      : throwValidatorError(V_REG)
   );
 
 /**
