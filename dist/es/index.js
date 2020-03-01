@@ -3,6 +3,8 @@ export const V_INT = 'integer';
 /** @type {string} */
 export const V_EQ = 'equal';
 /** @type {string} */
+export const V_REG = 'regex';
+/** @type {string} */
 export const V_NEQ = 'notEqual';
 /** @type {string} */
 export const V_GTE = 'gte';
@@ -335,6 +337,20 @@ export const oneOf = (candidates, error) => (isArray(candidates)
         && candidates.indexOf(value) >= 0)
         ? value : applyError(error, onError, setMetaValidator(meta, V_OOF, [candidates])))
     : validatorParamsError(V_OOF));
+const isRegEx = (value) => value && value.constructor === RegExp;
+/**
+ * Type: validator. Checks value to match a pattern.
+ *
+ * @param {RegExp} match Pattern.
+ * @param {Error=} error (Optional) Any type's error.
+ * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'match' is invalid.
+ */
+export const regex = (match, error) => (isRegEx(match)
+    ? ((value, onError, meta) => (match.test(value))
+        ? value : applyError(error, onError, setMetaValidator(meta, V_REG, [match])))
+    : validatorParamsError(V_REG));
 /**
  * Type: semi validator, semi processor. Checks value to be a string compatible.
  *

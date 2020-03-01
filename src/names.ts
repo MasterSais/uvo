@@ -5,6 +5,9 @@ export const V_INT: string = 'integer';
 export const V_EQ: string = 'equal';
 
 /** @type {string} */
+export const V_REG: string = 'regex';
+
+/** @type {string} */
 export const V_NEQ: string = 'notEqual';
 
 /** @type {string} */

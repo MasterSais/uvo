@@ -83,6 +83,8 @@ export declare const V_INT: string;
 /** @type {string} */
 export declare const V_EQ: string;
 /** @type {string} */
+export declare const V_REG: string;
+/** @type {string} */
 export declare const V_NEQ: string;
 /** @type {string} */
 export declare const V_GTE: string;
@@ -261,6 +263,16 @@ export declare const object2: <T extends ObjectLike, R extends ObjectLike>(spec?
  * @throws {string} Will throw an error if 'candidates' is invalid.
  */
 export declare const oneOf: <T>(candidates: T[], error?: Error) => Validator<T>;
+/**
+ * Type: validator. Checks value to match a pattern.
+ *
+ * @param {RegExp} match Pattern.
+ * @param {Error=} error (Optional) Any type's error.
+ * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'match' is invalid.
+ */
+export declare const regex: <T extends unknown>(match: RegExp, error?: Error) => Validator<T>;
 /**
  * Type: semi validator, semi processor. Checks value to be a string compatible.
  *

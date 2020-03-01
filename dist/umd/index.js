@@ -22,6 +22,7 @@ var __assign = (this && this.__assign) || function () {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.V_INT = 'integer';
     exports.V_EQ = 'equal';
+    exports.V_REG = 'regex';
     exports.V_NEQ = 'notEqual';
     exports.V_GTE = 'gte';
     exports.V_LTE = 'lte';
@@ -371,6 +372,15 @@ var __assign = (this && this.__assign) || function () {
                     ? value : applyError(error, onError, setMetaValidator(meta, exports.V_OOF, [candidates]));
             })
             : validatorParamsError(exports.V_OOF));
+    };
+    var isRegEx = function (value) { return value && value.constructor === RegExp; };
+    exports.regex = function (match, error) {
+        return (isRegEx(match)
+            ? (function (value, onError, meta) {
+                return (match.test(value))
+                    ? value : applyError(error, onError, setMetaValidator(meta, exports.V_REG, [match]));
+            })
+            : validatorParamsError(exports.V_REG));
     };
     exports.string = function (error) {
         return function (value, onError, meta) {
