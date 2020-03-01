@@ -4,7 +4,9 @@ import { Error, ErrorCallback, MetaData, ObjectLike, ObjectRecords, Processor } 
 import { applyError, isObject, isValidatorsSequence, setMetaPath, setMetaValidator, toArray, validatorParamsError } from '../utilities';
 
 /**
- * Type: semi validator, semi processor. Checks value to be an object.
+ * Checks value to be an object.
+ * 
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  * 
  * @param {ObjectRecords=} spec Validators scheme for object. 
  * @param {Error=} error (Optional) Any type's error. 

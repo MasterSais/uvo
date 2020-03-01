@@ -3,7 +3,9 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, isBoolean, isFiniteNumber, isOneType, isString, setMetaValidator, validatorParamsError } from '../utilities';
 
 /**
- * Type: validator. Checks value to be lower or equal to 'match' param. Requires the same type.
+ * Checks value to be lower or equal to 'match' param. Requires the same type.
+ * 
+ * Type: validator. If validation is successful, then returns input value.
  * 
  * @param {number | string | boolean} bound Boundary value. One of three types: number, string, boolean.
  * @param {Error=} error (Optional) Any type's error. 

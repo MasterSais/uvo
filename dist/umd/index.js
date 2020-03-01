@@ -390,7 +390,7 @@ var __assign = (this && this.__assign) || function () {
         };
     };
     exports.clamp = function (min, max) {
-        return function (value) { return value < min && min || value > max && max || value; };
+        return function (value) { return value < min ? min : (value > max ? max : value); };
     };
     exports.withErrors = function (validator, commonErrorProcessor) {
         return function (value, _onError, meta) {

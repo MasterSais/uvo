@@ -9,7 +9,9 @@ const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
 );
 
 /**
- * Type: semi validator, semi processor. Checks value to be an object.
+ * Checks value to be an object.
+ * 
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  * 
  * @param {Array=} spec Validators scheme for object in form of array. Provides strict ordering. 
  * @param {Error=} error (Optional) Any type's error. 

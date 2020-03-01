@@ -120,7 +120,9 @@ export declare const setVDep: <T>(field: string, ...validators: Validator<T>[]) 
 export declare const transform: <T, R>(...transformers: Processor<T | R, T | R>[]) => Processor<T | R, T | R>;
 export declare const useDefault: <T extends unknown>(defaultValue: T, ...validators: Processor<any, any>[]) => Processor<any, any>;
 /**
- * Type: semi validator, semi processor. Checks value to be an array.
+ * Checks value to be an array.
+ *
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  *
  * @param {(Array<Processor> | Processor)=} itemSpec Validator(s) of array elements.
  * @param {Error=} error (Optional) Any type's error.
@@ -130,7 +132,9 @@ export declare const useDefault: <T extends unknown>(defaultValue: T, ...validat
  */
 export declare const array: <T, R>(itemSpec?: Processor<T, R> | Processor<T, R>[], error?: Error) => Processor<T[], R[]>;
 /**
- * Type: semi validator, semi processor. Checks value to be a boolean compatible.
+ * Checks value to be a boolean compatible.
+ *
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  *
  * @param {Error=} error (Optional) Any type's error.
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
@@ -138,7 +142,9 @@ export declare const array: <T, R>(itemSpec?: Processor<T, R> | Processor<T, R>[
  */
 export declare const bool: <T>(error?: Error) => Processor<T, boolean>;
 /**
- * Type: validator. Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
+ * Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {any} match Match.
  * @param {Error=} error (Optional) Any type's error.
@@ -147,7 +153,9 @@ export declare const bool: <T>(error?: Error) => Processor<T, boolean>;
  */
 export declare const equal: <T>(match: T, error?: Error) => Validator<T>;
 /**
- * Type: validator. Checks for fields in the input object.
+ * Checks for fields in the input object.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {Array|string} spec Fields specification.
  * If array, the first element represents a logical operation, otherwise a name of single field.
@@ -159,7 +167,9 @@ export declare const equal: <T>(match: T, error?: Error) => Validator<T>;
  */
 export declare const fields: <T extends ObjectLike>(spec: Fields, error?: Error) => Validator<T>;
 /**
- * Type: validator. Checks value to be greater or equal to 'match' param. Requires the same type.
+ * Checks value to be greater or equal to 'match' param. Requires the same type.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {number | string | boolean} bound Boundary value. One of three types: number, string, boolean.
  * @param {Error=} error (Optional) Any type's error.
@@ -169,7 +179,9 @@ export declare const fields: <T extends ObjectLike>(spec: Fields, error?: Error)
  */
 export declare const gte: <T>(bound: T, error?: Error) => Validator<T>;
 /**
- * Type: validator. Checks number to be an integer.
+ * Checks number to be an integer.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {Error=} error (Optional) Any type's error.
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
@@ -177,7 +189,9 @@ export declare const gte: <T>(bound: T, error?: Error) => Validator<T>;
  */
 export declare const integer: (error?: Error) => Validator<number>;
 /**
- * Type: validator. Checks length to be equal to 'len' param. Requires to be object like.
+ * Checks length to be equal to 'len' param. Requires to be object like.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {number} len Reference length. Positive finite number.
  * @param {Error=} error (Optional) Any type's error.
@@ -187,7 +201,9 @@ export declare const integer: (error?: Error) => Validator<number>;
  */
 export declare const len: <T extends Lengthy>(len: number, error?: Error) => Validator<T>;
 /**
- * Type: validator. Checks value to be lower or equal to 'match' param. Requires the same type.
+ * Checks value to be lower or equal to 'match' param. Requires the same type.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {number | string | boolean} bound Boundary value. One of three types: number, string, boolean.
  * @param {Error=} error (Optional) Any type's error.
@@ -197,7 +213,9 @@ export declare const len: <T extends Lengthy>(len: number, error?: Error) => Val
  */
 export declare const lte: <T>(bound: T, error?: Error) => Validator<T>;
 /**
- * Type: validator. Checks length to be equal to 'len' param. Requires to be object like.
+ * Checks length to be equal to 'len' param. Requires to be object like.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {number} len Reference length. Positive finite number.
  * @param {Error=} error (Optional) Any type's error.
@@ -207,7 +225,9 @@ export declare const lte: <T>(bound: T, error?: Error) => Validator<T>;
  */
 export declare const maxLen: <T extends Lengthy>(len: number, error?: Error) => Validator<T>;
 /**
- * Type: validator. Checks length to be equal to 'len' param. Requires to be object like.
+ * Checks length to be equal to 'len' param. Requires to be object like.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {number} len Reference length. Positive finite number.
  * @param {Error=} error (Optional) Any type's error.
@@ -217,7 +237,9 @@ export declare const maxLen: <T extends Lengthy>(len: number, error?: Error) => 
  */
 export declare const minLen: <T extends Lengthy>(len: number, error?: Error) => Validator<T>;
 /**
- * Type: validator. Checks value to be not equal to 'match' param. Requires the same type. Shallow comparison.
+ * Checks value to be not equal to 'match' param. Requires the same type. Shallow comparison.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {any} match Match.
  * @param {Error=} error (Optional) Any type's error.
@@ -226,7 +248,9 @@ export declare const minLen: <T extends Lengthy>(len: number, error?: Error) => 
  */
 export declare const notEqual: <T>(match: T, error?: Error) => Validator<T>;
 /**
- * Type: semi validator, semi processor. Checks value to be a number compatible.
+ * Checks value to be a number compatible.
+ *
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  *
  * @param {Error=} error (Optional) Any type's error.
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
@@ -234,7 +258,9 @@ export declare const notEqual: <T>(match: T, error?: Error) => Validator<T>;
  */
 export declare const number: <T extends unknown>(error?: Error) => Processor<T, number>;
 /**
- * Type: semi validator, semi processor. Checks value to be an object.
+ * Checks value to be an object.
+ *
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  *
  * @param {ObjectRecords=} spec Validators scheme for object.
  * @param {Error=} error (Optional) Any type's error.
@@ -244,7 +270,9 @@ export declare const number: <T extends unknown>(error?: Error) => Processor<T, 
  */
 export declare const object: <T extends ObjectLike, R extends ObjectLike>(spec?: Record<string, Processor<any, any> | Processor<any, any>[]>, error?: Error) => Processor<T, R>;
 /**
- * Type: semi validator, semi processor. Checks value to be an object.
+ * Checks value to be an object.
+ *
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  *
  * @param {Array=} spec Validators scheme for object in form of array. Provides strict ordering.
  * @param {Error=} error (Optional) Any type's error.
@@ -254,7 +282,9 @@ export declare const object: <T extends ObjectLike, R extends ObjectLike>(spec?:
  */
 export declare const object2: <T extends ObjectLike, R extends ObjectLike>(spec?: [string, ...Processor<any, any>[]][], error?: Error) => Processor<T, R>;
 /**
- * Type: validator. Checks value to be one of expected. Shallow comparison.
+ * Checks value to be one of expected. Shallow comparison.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {Array} candidates List of possible expected values.
  * @param {Error=} error (Optional) Any type's error.
@@ -264,7 +294,9 @@ export declare const object2: <T extends ObjectLike, R extends ObjectLike>(spec?
  */
 export declare const oneOf: <T>(candidates: T[], error?: Error) => Validator<T>;
 /**
- * Type: validator. Checks value to match a pattern.
+ * Checks value to match a pattern.
+ *
+ * Type: validator. If validation is successful, then returns input value.
  *
  * @param {RegExp} match Pattern.
  * @param {Error=} error (Optional) Any type's error.
@@ -274,14 +306,25 @@ export declare const oneOf: <T>(candidates: T[], error?: Error) => Validator<T>;
  */
 export declare const regex: <T extends unknown>(match: RegExp, error?: Error) => Validator<T>;
 /**
- * Type: semi validator, semi processor. Checks value to be a string compatible.
+ * Checks value to be a string compatible.
+ *
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  *
  * @param {Error=} error (Optional) Any type's error.
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
  * @return {Processor} Function that takes: value, error callback and custom metadata.
  */
 export declare const string: <T>(error?: Error) => Processor<T, string>;
-export declare const clamp: (min: number, max: number) => Processor<number, number>;
+/**
+ * Clamps value to required boundaries.
+ *
+ * Type: processor. Processors do not check params' and values' types. Escape usage without validators.
+ *
+ * @param {number|string|boolean} min Left bound to clamp to.
+ * @param {number|string|boolean} max Right bound to clamp to.
+ * @return {Processor} Function that takes value.
+ */
+export declare const clamp: <T extends string | number | boolean>(min: T, max: T) => Processor<T, T>;
 export declare const withErrors: <T, R>(validator: Processor<T, R>, commonErrorProcessor?: (meta?: MetaData) => Error) => Processor<T, Result<R>>;
 export declare const withMeta: <T, R>(validator: Processor<T, R>) => Processor<T, R>;
 export declare const withPromise: <T, R>(validator: Processor<T, Result<R>>) => Processor<T, Promise<R | Error[]>>;

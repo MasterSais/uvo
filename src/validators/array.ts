@@ -4,7 +4,9 @@ import { Error, ErrorCallback, MetaData, Processor } from '../types';
 import { applyError, isArray, isValidatorsSequence, setMetaPath, setMetaValidator, toArray, validatorParamsError } from '../utilities';
 
 /**
- * Type: semi validator, semi processor. Checks value to be an array.
+ * Checks value to be an array.
+ * 
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  * 
  * @param {(Array<Processor> | Processor)=} itemSpec Validator(s) of array elements. 
  * @param {Error=} error (Optional) Any type's error. 

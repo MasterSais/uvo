@@ -3,7 +3,9 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, isArray, setMetaValidator, validatorParamsError } from '../utilities';
 
 /**
- * Type: validator. Checks value to be one of expected. Shallow comparison.
+ * Checks value to be one of expected. Shallow comparison.
+ * 
+ * Type: validator. If validation is successful, then returns input value.
  * 
  * @param {Array} candidates List of possible expected values. 
  * @param {Error=} error (Optional) Any type's error. 

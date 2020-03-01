@@ -3,7 +3,9 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, isNumber, setMetaValidator } from '../utilities';
 
 /**
- * Type: validator. Checks number to be an integer.
+ * Checks number to be an integer.
+ * 
+ * Type: validator. If validation is successful, then returns input value.
  * 
  * @param {Error=} error (Optional) Any type's error. 
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.

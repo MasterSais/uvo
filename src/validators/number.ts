@@ -3,7 +3,9 @@ import { Error, ErrorCallback, MetaData, Processor } from '../types';
 import { applyError, isArray, isFinite, setMetaValidator } from '../utilities';
 
 /**
- * Type: semi validator, semi processor. Checks value to be a number compatible.
+ * Checks value to be a number compatible.
+ * 
+ * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  * 
  * @param {Error=} error (Optional) Any type's error. 
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.

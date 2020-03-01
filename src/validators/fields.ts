@@ -30,7 +30,9 @@ const validateFieldsSpec = (spec: Fields): boolean =>
   );
 
 /**
- * Type: validator. Checks for fields in the input object.
+ * Checks for fields in the input object.
+ * 
+ * Type: validator. If validation is successful, then returns input value.
  * 
  * @param {Array|string} spec Fields specification.
  * If array, the first element represents a logical operation, otherwise a name of single field.

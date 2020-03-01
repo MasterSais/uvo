@@ -3,7 +3,9 @@ import { Error, ErrorCallback, Lengthy, MetaData, Validator } from '../types';
 import { applyError, isFiniteNumber, isObjectLike, isString, setMetaValidator, validatorParamsError } from '../utilities';
 
 /**
- * Type: validator. Checks length to be equal to 'len' param. Requires to be object like.
+ * Checks length to be equal to 'len' param. Requires to be object like.
+ * 
+ * Type: validator. If validation is successful, then returns input value.
  * 
  * @param {number} len Reference length. Positive finite number.
  * @param {Error=} error (Optional) Any type's error. 

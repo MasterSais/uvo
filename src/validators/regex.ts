@@ -3,7 +3,9 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, setMetaValidator, validatorParamsError } from '../utilities';
 
 /**
- * Type: validator. Checks value to match a pattern.
+ * Checks value to match a pattern.
+ * 
+ * Type: validator. If validation is successful, then returns input value.
  * 
  * @param {RegExp} match Pattern.
  * @param {Error=} error (Optional) Any type's error. 

@@ -3,7 +3,9 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, setMetaValidator } from '../utilities';
 
 /**
- * Type: validator. Checks value to be not equal to 'match' param. Requires the same type. Shallow comparison.
+ * Checks value to be not equal to 'match' param. Requires the same type. Shallow comparison.
+ * 
+ * Type: validator. If validation is successful, then returns input value.
  * 
  * @param {any} match Match. 
  * @param {Error=} error (Optional) Any type's error. 
