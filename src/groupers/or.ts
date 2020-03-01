@@ -8,20 +8,20 @@ import { isValidatorsSequence, validatorParamsError } from '../utilities';
  * 
  * Type: grouper. Groups validators into one.
  * 
- * @param {...Validator} validators Validators list.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @param {...Processor} validators Validators list.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
-export const or = (...validators: Array<Processor<any, any>>): Processor<any, any> =>
+export const or = <T>(...validators: Array<Processor<T, unknown>>): Processor<T, unknown> =>
   (
     isValidatorsSequence(validators)
       ? (
-        (value: any, onError?: ErrorCallback, meta?: MetaData): any => {
+        (value: T, onError?: ErrorCallback, meta?: MetaData): unknown => {
           let processed = null;
 
           const relevance: Relevance = { value: false };
 
-          validators.find((nextValidator: Processor<any, any>) =>
+          validators.find((nextValidator: Processor<T, unknown>) =>
             (
               processed = nextValidator(value, onError ? (error: Error, meta?: MetaData) => onError(error, meta, relevance) : null, meta),
               processed !== null

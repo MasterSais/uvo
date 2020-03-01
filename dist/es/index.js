@@ -72,8 +72,8 @@ const isValidatorsSequence = (validators) => validators.reduce((result, validato
  *
  * Type: grouper. Groups validators into one.
  *
- * @param {...Validator} validators Validators list.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @param {...Processor} validators Validators list.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
 export const consecutive = (...validators) => (isValidatorsSequence(validators)
@@ -85,8 +85,8 @@ export const consecutive = (...validators) => (isValidatorsSequence(validators)
  *
  * Type: grouper. Groups validators into one.
  *
- * @param {...Validator} validators Validators list.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @param {...Processor} validators Validators list.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
 export const or = (...validators) => (isValidatorsSequence(validators)
@@ -133,7 +133,7 @@ export const useDefault = (defaultValue, ...validators) => (value, onError, meta
  *
  * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  *
- * @param {(Array<Processor> | Processor)=} itemSpec Validator(s) of array elements.
+ * @param {Array=} itemSpec Validator(s) of array elements.
  * @param {Error=} error (Optional) Any type's error.
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
  * @return {Processor} Function that takes: value, error callback and custom metadata.

@@ -209,17 +209,17 @@ const isValidatorsSequence = (validators: Array<Processor<any, any>>): boolean =
  * 
  * Type: grouper. Groups validators into one.
  * 
- * @param {...Validator} validators Validators list.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @param {...Processor} validators Validators list.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
-export const consecutive = <T>(...validators: Array<Validator<T>>): Validator<T> =>
+export const consecutive = <T, R>(...validators: Array<Processor<T | R, R>>): Processor<T | R, R> =>
   (
     isValidatorsSequence(validators)
       ? (
-        (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-          validators.reduce((value: any, nextValidator: Validator<T>) =>
-            (value !== null ? nextValidator(value, onError, meta) : null), value)
+        (value: T | R, onError?: ErrorCallback, meta?: MetaData): R =>
+          validators.reduce((value: any, nextValidator: Processor<T | R, R>) =>
+            (value !== null ? nextValidator(value, onError, meta) : null), value) as R
       )
       : validatorParamsError(G_CONS)
   );
@@ -230,20 +230,20 @@ export const consecutive = <T>(...validators: Array<Validator<T>>): Validator<T>
  * 
  * Type: grouper. Groups validators into one.
  * 
- * @param {...Validator} validators Validators list.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @param {...Processor} validators Validators list.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
-export const or = (...validators: Array<Processor<any, any>>): Processor<any, any> =>
+export const or = <T>(...validators: Array<Processor<T, unknown>>): Processor<T, unknown> =>
   (
     isValidatorsSequence(validators)
       ? (
-        (value: any, onError?: ErrorCallback, meta?: MetaData): any => {
+        (value: T, onError?: ErrorCallback, meta?: MetaData): unknown => {
           let processed = null;
 
           const relevance: Relevance = { value: false };
 
-          validators.find((nextValidator: Processor<any, any>) =>
+          validators.find((nextValidator: Processor<T, unknown>) =>
             (
               processed = nextValidator(value, onError ? (error: Error, meta?: MetaData) => onError(error, meta, relevance) : null, meta),
               processed !== null
@@ -286,9 +286,9 @@ export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
       : validatorParamsError(G_PRLL)
   );
 
-export const transform = <T, R>(...transformers: Array<Processor<T | R, T | R>>): Processor<T | R, T | R> =>
-  (value: T | R, onError?: ErrorCallback, meta?: MetaData): T | R =>
-    transformers.reduce((value, processor) => processor(value, onError, meta), value);
+export const transform = <T, R>(...transformers: Array<Processor<T | R, R>>): Processor<T | R, R> =>
+  (value: T | R, onError?: ErrorCallback, meta?: MetaData): R =>
+    transformers.reduce((value, processor) => processor(value, onError, meta), value) as R;
 
 export const getDep = <T>(field: string, preValidator: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
   (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
@@ -325,28 +325,28 @@ export const useDefault = <T extends unknown>(defaultValue: T, ...validators: Ar
  * 
  * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  * 
- * @param {(Array<Processor> | Processor)=} itemSpec Validator(s) of array elements. 
+ * @param {Array=} itemSpec Validator(s) of array elements. 
  * @param {Error=} error (Optional) Any type's error. 
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
  * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'itemSpec' is invalid.
  */
-export const array = <T, R>(itemSpec?: Array<Processor<T, R>> | Processor<T, R>, error?: Error): Processor<Array<T>, Array<R>> => {
+export const array = <T, R>(itemSpec?: Array<Processor<T | R, R>> | Processor<T | R, R>, error?: Error): Processor<Array<T | R>, Array<R>> => {
   const validators = toArray(itemSpec);
 
   const isValidSequence = isValidatorsSequence(validators);
 
   if (!itemSpec || isValidSequence) {
-    const validator = isValidSequence && consecutive<any>(...validators);
+    const validator = isValidSequence && consecutive(...validators);
 
     return (
-      (data: Array<T>, onError?: ErrorCallback, meta?: MetaData): Array<R> =>
+      (data: Array<T | R>, onError?: ErrorCallback, meta?: MetaData): Array<R> =>
         isArray(data)
           ? (
             validator
               ? data.map((value, index) => validator(value, onError, setMetaPath(meta, index)))
               : data
-          )
+          ) as Array<R>
           : applyError(error, onError, setMetaValidator(meta, V_ARR, [data]))
     );
   } else {

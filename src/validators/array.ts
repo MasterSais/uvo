@@ -8,28 +8,28 @@ import { applyError, isArray, isValidatorsSequence, setMetaPath, setMetaValidato
  * 
  * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  * 
- * @param {(Array<Processor> | Processor)=} itemSpec Validator(s) of array elements. 
+ * @param {Array=} itemSpec Validator(s) of array elements. 
  * @param {Error=} error (Optional) Any type's error. 
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
  * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'itemSpec' is invalid.
  */
-export const array = <T, R>(itemSpec?: Array<Processor<T, R>> | Processor<T, R>, error?: Error): Processor<Array<T>, Array<R>> => {
+export const array = <T, R>(itemSpec?: Array<Processor<T | R, R>> | Processor<T | R, R>, error?: Error): Processor<Array<T | R>, Array<R>> => {
   const validators = toArray(itemSpec);
 
   const isValidSequence = isValidatorsSequence(validators);
 
   if (!itemSpec || isValidSequence) {
-    const validator = isValidSequence && consecutive<any>(...validators);
+    const validator = isValidSequence && consecutive(...validators);
 
     return (
-      (data: Array<T>, onError?: ErrorCallback, meta?: MetaData): Array<R> =>
+      (data: Array<T | R>, onError?: ErrorCallback, meta?: MetaData): Array<R> =>
         isArray(data)
           ? (
             validator
               ? data.map((value, index) => validator(value, onError, setMetaPath(meta, index)))
               : data
-          )
+          ) as Array<R>
           : applyError(error, onError, setMetaValidator(meta, V_ARR, [data]))
     );
   } else {

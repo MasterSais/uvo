@@ -123,22 +123,22 @@ export declare const G_OR: string;
  *
  * Type: grouper. Groups validators into one.
  *
- * @param {...Validator} validators Validators list.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @param {...Processor} validators Validators list.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
-export declare const consecutive: <T>(...validators: Validator<T>[]) => Validator<T>;
+export declare const consecutive: <T, R>(...validators: Processor<T | R, R>[]) => Processor<T | R, R>;
 /**
  * Groups validators sequentially.
  * Searches for first successful validator's result.
  *
  * Type: grouper. Groups validators into one.
  *
- * @param {...Validator} validators Validators list.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @param {...Processor} validators Validators list.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
-export declare const or: (...validators: Processor<any, any>[]) => Processor<any, any>;
+export declare const or: <T>(...validators: Processor<T, unknown>[]) => Processor<T, unknown>;
 /**
  * Groups validators in parallel.
  * The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).
@@ -151,7 +151,7 @@ export declare const or: (...validators: Processor<any, any>[]) => Processor<any
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
 export declare const parallel: <T>(...validators: Validator<T>[]) => Validator<T>;
-export declare const transform: <T, R>(...transformers: Processor<T | R, T | R>[]) => Processor<T | R, T | R>;
+export declare const transform: <T, R>(...transformers: Processor<T | R, R>[]) => Processor<T | R, R>;
 export declare const getDep: <T>(field: string, preValidator: (dep: T) => Validator<T> | Validator<T>[]) => Validator<T>;
 export declare const mergeDep: <T>(field: string) => Validator<T>;
 export declare const setDep: <T>(field: string, extValue?: T) => Validator<T>;
@@ -162,13 +162,13 @@ export declare const useDefault: <T extends unknown>(defaultValue: T, ...validat
  *
  * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
  *
- * @param {(Array<Processor> | Processor)=} itemSpec Validator(s) of array elements.
+ * @param {Array=} itemSpec Validator(s) of array elements.
  * @param {Error=} error (Optional) Any type's error.
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
  * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'itemSpec' is invalid.
  */
-export declare const array: <T, R>(itemSpec?: Processor<T, R> | Processor<T, R>[], error?: Error) => Processor<T[], R[]>;
+export declare const array: <T, R>(itemSpec?: Processor<T | R, R> | Processor<T | R, R>[], error?: Error) => Processor<(T | R)[], R[]>;
 /**
  * Checks value to be a boolean compatible.
  *
