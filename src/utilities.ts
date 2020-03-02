@@ -19,7 +19,7 @@ export const postToMeta = <T>(value: T, field: string, meta: MetaData): T => (
 );
 
 export const getFromMeta = <T>(field: string, meta: MetaData): T => (
-  meta && meta._deps[field] || null
+  meta ? meta._deps[field] : null
 );
 
 export const applyError = (error: Error, onError: ErrorCallback, meta: MetaData): null =>

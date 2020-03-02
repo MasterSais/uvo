@@ -52,7 +52,7 @@ var __assign = (this && this.__assign) || function () {
     var postToMeta = function (value, field, meta) { return (meta
         ? (meta._deps[field] = value)
         : value); };
-    var getFromMeta = function (field, meta) { return (meta && meta._deps[field] || null); };
+    var getFromMeta = function (field, meta) { return (meta ? meta._deps[field] : null); };
     var applyError = function (error, onError, meta) {
         return (onError && onError(error, meta), null);
     };
@@ -134,24 +134,21 @@ var __assign = (this && this.__assign) || function () {
             : throwValidatorError(exports.G_TRM));
     };
     exports.getDep = function (field, preValidator) {
-        return ((isString(field) && field.length > 0 && isFunction(preValidator))
-            ? (function (value, onError, meta) {
-                var validators = preValidator(getFromMeta(field, meta));
-                if (!validators)
-                    return value;
-                var validatorsList = toArray(validators);
-                return isValidatorsSequence(validatorsList)
-                    ? (validatorsList.reduce(function (value, nextValidator) {
-                        return (value !== null ? nextValidator(value, onError, meta) : null);
-                    }, value))
-                    : throwValidatorError(exports.S_GDP);
-            })
+        return ((isString(field) && field.length > 0)
+            ? (isFunction(preValidator)
+                ? (function (value, onError, meta) {
+                    var validators = preValidator(getFromMeta(field, meta));
+                    if (!validators)
+                        return value;
+                    var validatorsList = toArray(validators);
+                    return isValidatorsSequence(validatorsList)
+                        ? (validatorsList.reduce(function (value, nextValidator) {
+                            return (value !== null ? nextValidator(value, onError, meta) : null);
+                        }, value))
+                        : throwValidatorError(exports.S_GDP);
+                })
+                : function (_value, _onError, meta) { return getFromMeta(field, meta); })
             : throwValidatorError(exports.S_GDP));
-    };
-    exports.mergeDep = function (field) {
-        return function (_value, _onError, meta) {
-            return getFromMeta(field, meta);
-        };
     };
     exports.setDep = function (field, extValue) {
         return function (value, _onError, meta) {

@@ -51,7 +51,7 @@ const setMetaValidator = (meta, validator, params = []) => (meta && {
 const postToMeta = (value, field, meta) => (meta
     ? (meta._deps[field] = value)
     : value);
-const getFromMeta = (field, meta) => (meta && meta._deps[field] || null);
+const getFromMeta = (field, meta) => (meta ? meta._deps[field] : null);
 const applyError = (error, onError, meta) => (onError && onError(error, meta), null);
 const throwValidatorError = (validator) => {
     throw validator;
@@ -138,26 +138,28 @@ export const transform = (...processors) => (isValidatorsSequence(processors)
 /**
  * Takes value from spreaded structure.
  * Might be used for dynamic validators creation.
+ * If 'preValidator' not provided, just replaces current value.
  *
  * Type: spreader. Spreads data through a validators scheme.
  *
- * @param {string} field Validators list.
+ * @param {string} field Spreaded value name.
  * @param {Function} preValidator Function that takes spreaded value and insert new validators into scheme.
  * @return {Validator} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'field' or 'preValidator' is invalid.
+ * @throws {string} Will throw an error if 'field' is invalid.
  */
-export const getDep = (field, preValidator) => ((isString(field) && field.length > 0 && isFunction(preValidator))
-    ? ((value, onError, meta) => {
-        const validators = preValidator(getFromMeta(field, meta));
-        if (!validators)
-            return value;
-        const validatorsList = toArray(validators);
-        return isValidatorsSequence(validatorsList)
-            ? (validatorsList.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value))
-            : throwValidatorError(S_GDP);
-    })
+export const getDep = (field, preValidator) => ((isString(field) && field.length > 0)
+    ? (isFunction(preValidator)
+        ? ((value, onError, meta) => {
+            const validators = preValidator(getFromMeta(field, meta));
+            if (!validators)
+                return value;
+            const validatorsList = toArray(validators);
+            return isValidatorsSequence(validatorsList)
+                ? (validatorsList.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value))
+                : throwValidatorError(S_GDP);
+        })
+        : (_value, _onError, meta) => getFromMeta(field, meta))
     : throwValidatorError(S_GDP));
-export const mergeDep = (field) => (_value, _onError, meta) => getFromMeta(field, meta);
 export const setDep = (field, extValue) => (value, _onError, meta) => postToMeta(isDefined(extValue) ? extValue : value, field, meta);
 export const setVDep = (field, ...validators) => (value, onError, meta) => (postToMeta(validators, field, meta), validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value));
 export const useDefault = (defaultValue, ...validators) => (value, onError, meta) => !isEmpty(value)

@@ -170,16 +170,16 @@ export declare const transform: <T, R>(...processors: Processor<T | R, R>[]) => 
 /**
  * Takes value from spreaded structure.
  * Might be used for dynamic validators creation.
+ * If 'preValidator' not provided, just replaces current value.
  *
  * Type: spreader. Spreads data through a validators scheme.
  *
- * @param {string} field Validators list.
+ * @param {string} field Spreaded value name.
  * @param {Function} preValidator Function that takes spreaded value and insert new validators into scheme.
  * @return {Validator} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'field' or 'preValidator' is invalid.
+ * @throws {string} Will throw an error if 'field' is invalid.
  */
-export declare const getDep: <T>(field: string, preValidator: (dep: T) => Validator<T> | Validator<T>[]) => Validator<T>;
-export declare const mergeDep: <T>(field: string) => Validator<T>;
+export declare const getDep: <T>(field: string, preValidator?: (dep: T) => Validator<T> | Validator<T>[]) => Validator<T>;
 export declare const setDep: <T>(field: string, extValue?: T) => Validator<T>;
 export declare const setVDep: <T>(field: string, ...validators: Validator<T>[]) => Validator<T>;
 export declare const useDefault: <T extends unknown>(defaultValue: T, ...validators: Processor<any, any>[]) => Processor<any, any>;

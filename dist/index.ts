@@ -171,7 +171,7 @@ const postToMeta = <T>(value: T, field: string, meta: MetaData): T => (
 );
 
 const getFromMeta = <T>(field: string, meta: MetaData): T => (
-  meta && meta._deps[field] || null
+  meta ? meta._deps[field] : null
 );
 
 const applyError = (error: Error, onError: ErrorCallback, meta: MetaData): null =>
@@ -316,39 +316,40 @@ export const transform = <T, R>(...processors: Array<Processor<T | R, R>>): Proc
 /**
  * Takes value from spreaded structure.
  * Might be used for dynamic validators creation.
+ * If 'preValidator' not provided, just replaces current value.
  * 
  * Type: spreader. Spreads data through a validators scheme.
  * 
- * @param {string} field Validators list.
+ * @param {string} field Spreaded value name.
  * @param {Function} preValidator Function that takes spreaded value and insert new validators into scheme.
  * @return {Validator} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'field' or 'preValidator' is invalid.
+ * @throws {string} Will throw an error if 'field' is invalid.
  */
-export const getDep = <T>(field: string, preValidator: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
+export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
   (
-    (isString(field) && field.length > 0 && isFunction(preValidator))
+    (isString(field) && field.length > 0)
       ? (
-        (value: T, onError?: ErrorCallback, meta?: MetaData): T => {
-          const validators = preValidator(getFromMeta(field, meta));
+        isFunction(preValidator)
+          ? (
+            (value: T, onError?: ErrorCallback, meta?: MetaData): T => {
+              const validators = preValidator(getFromMeta(field, meta));
 
-          if (!validators) return value;
+              if (!validators) return value;
 
-          const validatorsList = toArray(validators);
+              const validatorsList = toArray(validators);
 
-          return isValidatorsSequence(validatorsList)
-            ? (
-              validatorsList.reduce((value: any, nextValidator: Validator<T>) =>
-                (value !== null ? nextValidator(value, onError, meta) : null), value)
-            )
-            : throwValidatorError(S_GDP);
-        }
+              return isValidatorsSequence(validatorsList)
+                ? (
+                  validatorsList.reduce((value: any, nextValidator: Validator<T>) =>
+                    (value !== null ? nextValidator(value, onError, meta) : null), value)
+                )
+                : throwValidatorError(S_GDP);
+            }
+          )
+          : (_value: T, _onError?: ErrorCallback, meta?: MetaData): T => getFromMeta(field, meta)
       )
       : throwValidatorError(S_GDP)
   );
-
-export const mergeDep = <T>(field: string): Validator<T> =>
-  (_value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
-    getFromMeta(field, meta);
 
 export const setDep = <T>(field: string, extValue?: T): Validator<T> =>
   (value: T, _onError?: ErrorCallback, meta?: MetaData): T =>

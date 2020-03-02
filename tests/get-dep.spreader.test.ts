@@ -8,13 +8,15 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     paramsCases(
       validator,
       [
-        ['f1', emptyFunction()]
-      ],
-      [
-        ['', emptyFunction()],
-        ['', null],
+        ['f1', emptyFunction()],
+        ['f1', null],
+        ['f1', undefined],
+        ['f1', 0],
         ['f1', 1],
         ['f1', {}]
+      ],
+      [
+        ['', emptyFunction()]
       ],
       VALIDATOR_NAME
     );
@@ -34,6 +36,18 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     test('base › r_2', () => {
       expect(
         validator('f1', (f1: any) => null)('value', null, { ...emptyMeta(), _deps: { f1: '' } })
+      ).toEqual('value');
+    });
+
+    test('base › r_3', () => {
+      expect(
+        validator('f1')('value', null, { ...emptyMeta(), _deps: { f1: '' } })
+      ).toEqual('');
+    });
+
+    test('base › r_4', () => {
+      expect(
+        validator('f1')('', null, { ...emptyMeta(), _deps: { f1: 'value' } })
       ).toEqual('value');
     });
 
