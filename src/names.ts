@@ -54,3 +54,6 @@ export const G_PRLL: string = 'parallel';
 
 /** @type {string} */
 export const G_OR: string = 'or';
+
+/** @type {string} */
+export const G_TRM: string = 'transform';
