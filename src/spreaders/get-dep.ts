@@ -31,7 +31,11 @@ export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T>
                 isValidatorsSequence(validatorsList)
                   ? (
                     validatorsList.reduce((value: any, nextValidator: Validator<T>) =>
-                      (value !== null ? nextValidator(value, onError, meta) : null), value)
+                      (
+                        value !== null
+                          ? nextValidator(value, onError, meta)
+                          : null
+                      ), value)
                   )
                   : throwValidatorError(S_GDP)
               );

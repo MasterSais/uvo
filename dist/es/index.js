@@ -40,6 +40,8 @@ export const G_OR = 'or';
 export const G_TRM = 'transform';
 /** @type {string} */
 export const S_GDP = 'getDep';
+/** @type {string} */
+export const S_SDP = 'setDep';
 const toArray = (params) => Array.isArray(params) ? params : [params];
 const setMetaPath = (meta, path) => (meta && {
     ...meta,
@@ -154,13 +156,30 @@ export const getDep = (field, preValidator) => ((isString(field) && field.length
             if (!validators)
                 return value;
             const validatorsList = toArray(validators);
-            return isValidatorsSequence(validatorsList)
+            return (isValidatorsSequence(validatorsList)
                 ? (validatorsList.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value))
-                : throwValidatorError(S_GDP);
+                : throwValidatorError(S_GDP));
         })
         : (_value, _onError, meta) => getFromMeta(field, meta))
     : throwValidatorError(S_GDP));
-export const setDep = (field, extValue) => (value, _onError, meta) => postToMeta(isDefined(extValue) ? extValue : value, field, meta);
+/**
+ * Puts value into spreaded structure.
+ * If 'extValue' is provided, puts it instead of current value.
+ *
+ * Type: spreader. Spreads data through a validators scheme.
+ *
+ * @param {string} field Spreaded value name.
+ * @param {any} extValue External value or function that returns it.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'field' is invalid.
+ */
+export const setDep = (field, extValue) => ((isString(field) && field.length > 0)
+    ? ((value, _onError, meta) => postToMeta(isDefined(extValue)
+        ? (isFunction(extValue)
+            ? extValue(meta)
+            : extValue)
+        : value, field, meta))
+    : throwValidatorError(S_SDP));
 export const setVDep = (field, ...validators) => (value, onError, meta) => (postToMeta(validators, field, meta), validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value));
 export const useDefault = (defaultValue, ...validators) => (value, onError, meta) => !isEmpty(value)
     ? validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value)

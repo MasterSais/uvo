@@ -120,6 +120,8 @@ export declare const G_OR: string;
 export declare const G_TRM: string;
 /** @type {string} */
 export declare const S_GDP: string;
+/** @type {string} */
+export declare const S_SDP: string;
 /**
  * Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.
@@ -180,7 +182,18 @@ export declare const transform: <T, R>(...processors: Processor<T | R, R>[]) => 
  * @throws {string} Will throw an error if 'field' is invalid.
  */
 export declare const getDep: <T>(field: string, preValidator?: (dep: T) => Validator<T> | Validator<T>[]) => Validator<T>;
-export declare const setDep: <T>(field: string, extValue?: T) => Validator<T>;
+/**
+ * Puts value into spreaded structure.
+ * If 'extValue' is provided, puts it instead of current value.
+ *
+ * Type: spreader. Spreads data through a validators scheme.
+ *
+ * @param {string} field Spreaded value name.
+ * @param {any} extValue External value or function that returns it.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'field' is invalid.
+ */
+export declare const setDep: <T extends unknown>(field: string, extValue?: T | (() => T)) => Validator<T>;
 export declare const setVDep: <T>(field: string, ...validators: Validator<T>[]) => Validator<T>;
 export declare const useDefault: <T extends unknown>(defaultValue: T, ...validators: Processor<any, any>[]) => Processor<any, any>;
 /**

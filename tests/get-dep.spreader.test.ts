@@ -1,4 +1,4 @@
-import { S_GDP, S_GDP as VALIDATOR_NAME } from '@lib/names';
+import { S_GDP as VALIDATOR_NAME } from '@lib/names';
 import { getDep as validator } from '@lib/spreaders/get-dep';
 import { equal } from '@lib/validators/equal';
 import { emptyFunction, emptyMeta, paramsCases } from '@test/utilities';
@@ -54,7 +54,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     test('base › w_0', () => {
       expect(
         () => validator('f1', (_: any) => 1 as unknown as any)('value', null, { ...emptyMeta(), _deps: { f1: '' } })
-      ).toThrow(S_GDP);
+      ).toThrow(VALIDATOR_NAME);
     });
   });
 });

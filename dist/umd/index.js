@@ -41,6 +41,7 @@ var __assign = (this && this.__assign) || function () {
     exports.G_OR = 'or';
     exports.G_TRM = 'transform';
     exports.S_GDP = 'getDep';
+    exports.S_SDP = 'setDep';
     var toArray = function (params) {
         return Array.isArray(params) ? params : [params];
     };
@@ -141,19 +142,25 @@ var __assign = (this && this.__assign) || function () {
                     if (!validators)
                         return value;
                     var validatorsList = toArray(validators);
-                    return isValidatorsSequence(validatorsList)
+                    return (isValidatorsSequence(validatorsList)
                         ? (validatorsList.reduce(function (value, nextValidator) {
                             return (value !== null ? nextValidator(value, onError, meta) : null);
                         }, value))
-                        : throwValidatorError(exports.S_GDP);
+                        : throwValidatorError(exports.S_GDP));
                 })
                 : function (_value, _onError, meta) { return getFromMeta(field, meta); })
             : throwValidatorError(exports.S_GDP));
     };
     exports.setDep = function (field, extValue) {
-        return function (value, _onError, meta) {
-            return postToMeta(isDefined(extValue) ? extValue : value, field, meta);
-        };
+        return ((isString(field) && field.length > 0)
+            ? (function (value, _onError, meta) {
+                return postToMeta(isDefined(extValue)
+                    ? (isFunction(extValue)
+                        ? extValue(meta)
+                        : extValue)
+                    : value, field, meta);
+            })
+            : throwValidatorError(exports.S_SDP));
     };
     exports.setVDep = function (field) {
         var validators = [];

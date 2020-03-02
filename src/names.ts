@@ -60,3 +60,6 @@ export const G_TRM: string = 'transform';
 
 /** @type {string} */
 export const S_GDP: string = 'getDep';
+
+/** @type {string} */
+export const S_SDP: string = 'setDep';

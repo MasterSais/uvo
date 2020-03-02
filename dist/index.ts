@@ -152,6 +152,9 @@ export const G_TRM: string = 'transform';
 /** @type {string} */
 export const S_GDP: string = 'getDep';
 
+/** @type {string} */
+export const S_SDP: string = 'setDep';
+
 const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
 
@@ -338,12 +341,14 @@ export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T>
 
               const validatorsList = toArray(validators);
 
-              return isValidatorsSequence(validatorsList)
-                ? (
-                  validatorsList.reduce((value: any, nextValidator: Validator<T>) =>
-                    (value !== null ? nextValidator(value, onError, meta) : null), value)
-                )
-                : throwValidatorError(S_GDP);
+              return (
+                isValidatorsSequence(validatorsList)
+                  ? (
+                    validatorsList.reduce((value: any, nextValidator: Validator<T>) =>
+                      (value !== null ? nextValidator(value, onError, meta) : null), value)
+                  )
+                  : throwValidatorError(S_GDP)
+              );
             }
           )
           : (_value: T, _onError?: ErrorCallback, meta?: MetaData): T => getFromMeta(field, meta)
@@ -351,9 +356,35 @@ export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T>
       : throwValidatorError(S_GDP)
   );
 
-export const setDep = <T>(field: string, extValue?: T): Validator<T> =>
-  (value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
-    postToMeta(isDefined(extValue) ? extValue : value, field, meta);
+/**
+ * Puts value into spreaded structure.
+ * If 'extValue' is provided, puts it instead of current value.
+ * 
+ * Type: spreader. Spreads data through a validators scheme.
+ * 
+ * @param {string} field Spreaded value name.
+ * @param {any} extValue External value or function that returns it.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'field' is invalid.
+ */
+export const setDep = <T extends unknown>(field: string, extValue?: T | (() => T)): Validator<T> =>
+  (
+    (isString(field) && field.length > 0)
+      ? (
+        (value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
+          postToMeta(
+            isDefined(extValue)
+              ? (
+                isFunction(extValue)
+                  ? (extValue as Function)(meta)
+                  : extValue
+              )
+              : value,
+            field, meta
+          )
+      )
+      : throwValidatorError(S_SDP)
+  );
 
 export const setVDep = <T>(field: string, ...validators: Array<Validator<T>>): Validator<T> =>
   (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
