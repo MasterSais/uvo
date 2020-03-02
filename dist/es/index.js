@@ -83,7 +83,9 @@ const isValidatorsSequence = (validators) => validators.reduce((result, validato
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
 export const consecutive = (...validators) => (isValidatorsSequence(validators)
-    ? ((value, onError, meta) => validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value))
+    ? ((value, onError, meta) => validators.reduce((value, nextValidator) => (value !== null
+        ? nextValidator(value, onError, meta)
+        : null), value))
     : throwValidatorError(G_CONS));
 /**
  * Groups validators sequentially.
@@ -157,7 +159,9 @@ export const getDep = (field, preValidator) => ((isString(field) && field.length
                 return value;
             const validatorsList = toArray(validators);
             return (isValidatorsSequence(validatorsList)
-                ? (validatorsList.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value))
+                ? (validatorsList.reduce((value, nextValidator) => (value !== null
+                    ? nextValidator(value, onError, meta)
+                    : null), value))
                 : throwValidatorError(S_GDP));
         })
         : (_value, _onError, meta) => getFromMeta(field, meta))

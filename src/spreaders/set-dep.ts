@@ -2,7 +2,6 @@ import { S_SDP } from '../names';
 import { ErrorCallback, MetaData, Validator } from '../types';
 import { isDefined, isFunction, isString, postToMeta, throwValidatorError } from '../utilities';
 
-
 /**
  * Puts value into spreaded structure.
  * If 'extValue' is provided, puts it instead of current value.

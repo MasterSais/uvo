@@ -228,7 +228,11 @@ export const consecutive = <T, R>(...validators: Array<Processor<T | R, R>>): Pr
       ? (
         (value: T | R, onError?: ErrorCallback, meta?: MetaData): R =>
           validators.reduce((value: any, nextValidator: Processor<T | R, R>) =>
-            (value !== null ? nextValidator(value, onError, meta) : null), value) as R
+            (
+              value !== null
+                ? nextValidator(value, onError, meta)
+                : null
+            ), value) as R
       )
       : throwValidatorError(G_CONS)
   );
@@ -345,7 +349,11 @@ export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T>
                 isValidatorsSequence(validatorsList)
                   ? (
                     validatorsList.reduce((value: any, nextValidator: Validator<T>) =>
-                      (value !== null ? nextValidator(value, onError, meta) : null), value)
+                      (
+                        value !== null
+                          ? nextValidator(value, onError, meta)
+                          : null
+                      ), value)
                   )
                   : throwValidatorError(S_GDP)
               );

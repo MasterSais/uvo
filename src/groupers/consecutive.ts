@@ -19,7 +19,11 @@ export const consecutive = <T, R>(...validators: Array<Processor<T | R, R>>): Pr
       ? (
         (value: T | R, onError?: ErrorCallback, meta?: MetaData): R =>
           validators.reduce((value: any, nextValidator: Processor<T | R, R>) =>
-            (value !== null ? nextValidator(value, onError, meta) : null), value) as R
+            (
+              value !== null
+                ? nextValidator(value, onError, meta)
+                : null
+            ), value) as R
       )
       : throwValidatorError(G_CONS)
   );

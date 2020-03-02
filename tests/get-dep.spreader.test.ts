@@ -16,7 +16,8 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         ['f1', {}]
       ],
       [
-        ['', emptyFunction()]
+        ['', emptyFunction()],
+        []
       ],
       VALIDATOR_NAME
     );

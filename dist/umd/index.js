@@ -83,7 +83,9 @@ var __assign = (this && this.__assign) || function () {
         return (isValidatorsSequence(validators)
             ? (function (value, onError, meta) {
                 return validators.reduce(function (value, nextValidator) {
-                    return (value !== null ? nextValidator(value, onError, meta) : null);
+                    return (value !== null
+                        ? nextValidator(value, onError, meta)
+                        : null);
                 }, value);
             })
             : throwValidatorError(exports.G_CONS));
@@ -144,7 +146,9 @@ var __assign = (this && this.__assign) || function () {
                     var validatorsList = toArray(validators);
                     return (isValidatorsSequence(validatorsList)
                         ? (validatorsList.reduce(function (value, nextValidator) {
-                            return (value !== null ? nextValidator(value, onError, meta) : null);
+                            return (value !== null
+                                ? nextValidator(value, onError, meta)
+                                : null);
                         }, value))
                         : throwValidatorError(exports.S_GDP));
                 })
