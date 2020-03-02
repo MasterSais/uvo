@@ -116,6 +116,10 @@ export declare const G_CONS: string;
 export declare const G_PRLL: string;
 /** @type {string} */
 export declare const G_OR: string;
+/** @type {string} */
+export declare const G_TRM: string;
+/** @type {string} */
+export declare const S_GDP: string;
 /**
  * Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.
@@ -151,7 +155,29 @@ export declare const or: <T>(...validators: Processor<T, unknown>[]) => Processo
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
 export declare const parallel: <T>(...validators: Validator<T>[]) => Validator<T>;
+/**
+ * Groups processors sequentially.
+ * Passes value through a sequence of processors.
+ * Takes only processors (doesn't check errors).
+ *
+ * Type: grouper. Groups processors into one.
+ *
+ * @param {...Processor} processors Processors list.
+ * @return {Processor} Function that takes value.
+ * @throws {string} Will throw an error if 'processors' is invalid.
+ */
 export declare const transform: <T, R>(...processors: Processor<T | R, R>[]) => Processor<T | R, R>;
+/**
+ * Takes value from spreaded structure.
+ * Might be used for dynamic validators creation.
+ *
+ * Type: spreader. Spreads data through a validators scheme.
+ *
+ * @param {string} field Validators list.
+ * @param {Function} preValidator Function that takes spreaded value and insert new validators into scheme.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'field' or 'preValidator' is invalid.
+ */
 export declare const getDep: <T>(field: string, preValidator: (dep: T) => Validator<T> | Validator<T>[]) => Validator<T>;
 export declare const mergeDep: <T>(field: string) => Validator<T>;
 export declare const setDep: <T>(field: string, extValue?: T) => Validator<T>;

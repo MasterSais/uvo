@@ -39,6 +39,8 @@ var __assign = (this && this.__assign) || function () {
     exports.G_CONS = 'consecutive';
     exports.G_PRLL = 'parallel';
     exports.G_OR = 'or';
+    exports.G_TRM = 'transform';
+    exports.S_GDP = 'getDep';
     var toArray = function (params) {
         return Array.isArray(params) ? params : [params];
     };
@@ -125,17 +127,26 @@ var __assign = (this && this.__assign) || function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             processors[_i] = arguments[_i];
         }
-        return function (value, onError, meta) {
-            return processors.reduce(function (value, processor) { return processor(value, onError, meta); }, value);
-        };
+        return (isValidatorsSequence(processors)
+            ? (function (value) {
+                return processors.reduce(function (value, processor) { return processor(value); }, value);
+            })
+            : throwValidatorError(exports.G_TRM));
     };
     exports.getDep = function (field, preValidator) {
-        return function (value, onError, meta) {
-            return toArray(preValidator(getFromMeta(field, meta)))
-                .reduce(function (value, nextValidator) {
-                return (value !== null ? nextValidator(value, onError, meta) : null);
-            }, value);
-        };
+        return ((isString(field) && field.length > 0 && isFunction(preValidator))
+            ? (function (value, onError, meta) {
+                var validators = preValidator(getFromMeta(field, meta));
+                if (!validators)
+                    return value;
+                var validatorsList = toArray(validators);
+                return isValidatorsSequence(validatorsList)
+                    ? (validatorsList.reduce(function (value, nextValidator) {
+                        return (value !== null ? nextValidator(value, onError, meta) : null);
+                    }, value))
+                    : throwValidatorError(exports.S_GDP);
+            })
+            : throwValidatorError(exports.S_GDP));
     };
     exports.mergeDep = function (field) {
         return function (_value, _onError, meta) {
