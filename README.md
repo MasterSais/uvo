@@ -1,10 +1,6 @@
-# JS Universal Single Object Validator (USOV)
+# USOV
 
-USOV is a JavaScript schema builder for value parsing and validation. Define a schema, transform a value to match, validate the shape of an existing value, or both. Yup schema are extremely expressive and allow modeling complex, interdependent validations, or value transformations.
-
-Yup's API is heavily inspired by [Joi](https://github.com/hapijs/joi), but leaner and built with client-side validation as its primary use-case. Yup separates the parsing and validating functions into separate steps. `cast()` transforms data while `validate` checks that the input is the correct shape. Each can be performed together (such as HTML form validation) or seperately (such as deserializing trusted data from APIs).
-
-**Try it out:** https://runkit.com/jquense/yup#
+USOV is a JavaScript universal single object validator. It provides half-safe validation and transformation utilities. Each validator is represented by separated module (no carrying as in another validation libraries), thats gives opportunity for treeshaking. Library has 5 types of modules: validators (only validates entity), processors (only transforms entity), groupers (groups another validators in specific way), spreaders (provides crossvalidation between distanted fields amd recursion), containers (provides additional input/output processing).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -97,32 +93,17 @@ Yup's API is heavily inspired by [Joi](https://github.com/hapijs/joi), but leane
 ## Install
 
 ```sh
-npm install -S yup
+npm install usov
 ```
 
-Yup always relies on the `Promise` global object to handle asynchronous values as well as `Set` and `Map`.
-For browsers that do not support these, you'll need to include a polyfill, such as core-js:
-
-```js
-import 'core-js/es6/promise';
-import 'core-js/es6/set';
-import 'core-js/es6/map';
-```
-
-If you are using TypeScript installing the Yup typings is recommended
-
-```sh
-npm install -D @types/yup
-```
+Usov already has integrated TypeScript types definitions.
 
 ## Usage
 
-You define and create schema objects. Schema objects are immutable, so each call of a method returns a _new_ schema object. When using es module syntax, yup exports everything as a named export
-
 ```js
-import * as yup from 'yup'; // for everything
+import * as v from 'usov'; // for everything (recommended in all cases for better minification result e.g. in webpack)
 // or
-import { string, object } from 'yup'; // for only what you need
+import { number, array } from 'usov'; // for only what you need
 ```
 
 ```js
@@ -160,8 +141,6 @@ schema.cast({
 });
 // => { name: 'jimmy', age: 24, createdOn: Date }
 ```
-
-> If you're looking for an easily serializable DSL for yup schema, check out [yup-ast](https://github.com/WASD-Team/yup-ast)
 
 ### Using a custom locale dictionary
 
