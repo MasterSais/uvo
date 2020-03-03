@@ -42,6 +42,8 @@ var __assign = (this && this.__assign) || function () {
     exports.G_TRM = 'transform';
     exports.S_GDP = 'getDep';
     exports.S_SDP = 'setDep';
+    exports.S_SVDP = 'setVDep';
+    exports.S_DFT = 'useDefault';
     var toArray = function (params) {
         return Array.isArray(params) ? params : [params];
     };
@@ -171,26 +173,35 @@ var __assign = (this && this.__assign) || function () {
         for (var _i = 1; _i < arguments.length; _i++) {
             validators[_i - 1] = arguments[_i];
         }
-        return function (value, onError, meta) {
-            return (postToMeta(validators, field, meta), validators.reduce(function (value, nextValidator) {
-                return (value !== null ? nextValidator(value, onError, meta) : null);
-            }, value));
-        };
+        return ((isString(field) && field.length > 0 && isValidatorsSequence(validators) && validators.length > 0)
+            ? (function (value, onError, meta) {
+                return (postToMeta(validators, field, meta),
+                    validators.reduce(function (value, nextValidator) {
+                        return value !== null
+                            ? nextValidator(value, onError, meta)
+                            : null;
+                    }, value));
+            })
+            : throwValidatorError(exports.S_SVDP));
     };
     exports.useDefault = function (defaultValue) {
         var validators = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             validators[_i - 1] = arguments[_i];
         }
-        return function (value, onError, meta) {
-            return !isEmpty(value)
-                ? validators.reduce(function (value, nextValidator) {
-                    return (value !== null ? nextValidator(value, onError, meta) : null);
-                }, value)
-                : (isFunction(defaultValue)
-                    ? defaultValue(meta)
-                    : defaultValue);
-        };
+        return ((isValidatorsSequence(validators))
+            ? (function (value, onError, meta) {
+                return !isEmpty(value)
+                    ? (validators.reduce(function (value, nextValidator) {
+                        return value !== null
+                            ? nextValidator(value, onError, meta)
+                            : null;
+                    }, value))
+                    : (isFunction(defaultValue)
+                        ? defaultValue(meta)
+                        : defaultValue);
+            })
+            : throwValidatorError(exports.S_DFT));
     };
     exports.array = function (itemSpec, error) {
         var validators = toArray(itemSpec);

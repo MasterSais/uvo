@@ -63,3 +63,9 @@ export const S_GDP: string = 'getDep';
 
 /** @type {string} */
 export const S_SDP: string = 'setDep';
+
+/** @type {string} */
+export const S_SVDP: string = 'setVDep';
+
+/** @type {string} */
+export const S_DFT: string = 'useDefault';

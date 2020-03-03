@@ -9,5 +9,5 @@ import { Processor } from '../types';
  * @param {number|string|boolean} max Right bound to clamp to.
  * @return {Processor} Function that takes value.
  */
-export const clamp = <T extends (number | string | boolean)>(min: T, max: T): Processor<T, T> =>
+export const clamp = <T>(min: T, max: T): Processor<T, T> =>
   (value: T): T => value < min ? min : (value > max ? max : value);

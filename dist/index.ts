@@ -155,6 +155,12 @@ export const S_GDP: string = 'getDep';
 /** @type {string} */
 export const S_SDP: string = 'setDep';
 
+/** @type {string} */
+export const S_SVDP: string = 'setVDep';
+
+/** @type {string} */
+export const S_DFT: string = 'useDefault';
+
 const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
 
@@ -375,7 +381,7 @@ export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T>
  * @return {Validator} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'field' is invalid.
  */
-export const setDep = <T extends unknown>(field: string, extValue?: T | (() => T)): Validator<T> =>
+export const setDep = <T>(field: string, extValue?: T | (() => T)): Validator<T> =>
   (
     (isString(field) && field.length > 0)
       ? (
@@ -394,21 +400,66 @@ export const setDep = <T extends unknown>(field: string, extValue?: T | (() => T
       : throwValidatorError(S_SDP)
   );
 
+/**
+ * Puts validators into spreaded structure.
+ * Might be used for recursive schemes.
+ * 
+ * Type: spreader. Spreads data through a validators scheme.
+ * 
+ * @param {string} field Spreaded value name.
+ * @param {..Validator} validators Validators to save.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'field' or 'validators' is invalid.
+ */
 export const setVDep = <T>(field: string, ...validators: Array<Validator<T>>): Validator<T> =>
-  (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-    (postToMeta(validators, field, meta), validators.reduce((value: any, nextValidator: Validator<T>) =>
-      (value !== null ? nextValidator(value, onError, meta) : null), value));
+  (
+    (isString(field) && field.length > 0 && isValidatorsSequence(validators) && validators.length > 0)
+      ? (
+        (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
+          (
+            postToMeta(validators, field, meta),
+            validators.reduce((value: any, nextValidator: Validator<T>) =>
+              value !== null
+                ? nextValidator(value, onError, meta)
+                : null, value
+            )
+          )
+      )
+      : throwValidatorError(S_SVDP)
+  );
 
-export const useDefault = <T extends unknown>(defaultValue: T, ...validators: Array<Processor<any, any>>): Processor<any, any> =>
-  (value: any, onError?: ErrorCallback, meta?: MetaData): any =>
-    !isEmpty(value)
-      ? validators.reduce((value: any, nextValidator: Validator<T>) =>
-        (value !== null ? nextValidator(value, onError, meta) : null), value)
-      : (
-        isFunction(defaultValue)
-          ? (defaultValue as Function)(meta)
-          : defaultValue
-      );
+/**
+ * Puts default value into spreaded structure.
+ * If input value is empty, puts default value instead, otherwise validates input values with provided validators.
+ * 
+ * Type: spreader. Spreads data through a validators scheme.
+ * 
+ * @param {any} defaultValue Default value.
+ * @param {...Processor} validators Validators for input value.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
+export const useDefault = <T, R>(defaultValue: R | (() => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R> =>
+  (
+    (isValidatorsSequence(validators))
+      ? (
+        (value: T | R, onError?: ErrorCallback, meta?: MetaData): R =>
+          !isEmpty(value)
+            ? (
+              validators.reduce((value: T | R, nextValidator: Processor<T | R, R>) =>
+                value !== null
+                  ? nextValidator(value, onError, meta)
+                  : null, value
+              )
+            )
+            : (
+              isFunction(defaultValue)
+                ? (defaultValue as Function)(meta)
+                : defaultValue
+            )
+      )
+      : throwValidatorError(S_DFT)
+  );
 
 /**
  * Checks value to be an array.
@@ -893,7 +944,7 @@ export const string = <T>(error?: Error): Processor<T, string> =>
  * @param {number|string|boolean} max Right bound to clamp to.
  * @return {Processor} Function that takes value.
  */
-export const clamp = <T extends (number | string | boolean)>(min: T, max: T): Processor<T, T> =>
+export const clamp = <T>(min: T, max: T): Processor<T, T> =>
   (value: T): T => value < min ? min : (value > max ? max : value);
 
 export const withErrors = <T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>> =>

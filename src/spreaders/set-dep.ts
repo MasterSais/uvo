@@ -13,7 +13,7 @@ import { isDefined, isFunction, isString, postToMeta, throwValidatorError } from
  * @return {Validator} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'field' is invalid.
  */
-export const setDep = <T extends unknown>(field: string, extValue?: T | (() => T)): Validator<T> =>
+export const setDep = <T>(field: string, extValue?: T | (() => T)): Validator<T> =>
   (
     (isString(field) && field.length > 0)
       ? (

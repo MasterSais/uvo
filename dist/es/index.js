@@ -42,6 +42,10 @@ export const G_TRM = 'transform';
 export const S_GDP = 'getDep';
 /** @type {string} */
 export const S_SDP = 'setDep';
+/** @type {string} */
+export const S_SVDP = 'setVDep';
+/** @type {string} */
+export const S_DFT = 'useDefault';
 const toArray = (params) => Array.isArray(params) ? params : [params];
 const setMetaPath = (meta, path) => (meta && {
     ...meta,
@@ -184,12 +188,43 @@ export const setDep = (field, extValue) => ((isString(field) && field.length > 0
             : extValue)
         : value, field, meta))
     : throwValidatorError(S_SDP));
-export const setVDep = (field, ...validators) => (value, onError, meta) => (postToMeta(validators, field, meta), validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value));
-export const useDefault = (defaultValue, ...validators) => (value, onError, meta) => !isEmpty(value)
-    ? validators.reduce((value, nextValidator) => (value !== null ? nextValidator(value, onError, meta) : null), value)
-    : (isFunction(defaultValue)
-        ? defaultValue(meta)
-        : defaultValue);
+/**
+ * Puts validators into spreaded structure.
+ * Might be used for recursive schemes.
+ *
+ * Type: spreader. Spreads data through a validators scheme.
+ *
+ * @param {string} field Spreaded value name.
+ * @param {..Validator} validators Validators to save.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'field' or 'validators' is invalid.
+ */
+export const setVDep = (field, ...validators) => ((isString(field) && field.length > 0 && isValidatorsSequence(validators) && validators.length > 0)
+    ? ((value, onError, meta) => (postToMeta(validators, field, meta),
+        validators.reduce((value, nextValidator) => value !== null
+            ? nextValidator(value, onError, meta)
+            : null, value)))
+    : throwValidatorError(S_SVDP));
+/**
+ * Puts default value into spreaded structure.
+ * If input value is empty, puts default value instead, otherwise validates input values with provided validators.
+ *
+ * Type: spreader. Spreads data through a validators scheme.
+ *
+ * @param {any} defaultValue Default value.
+ * @param {...Processor} validators Validators for input value.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
+export const useDefault = (defaultValue, ...validators) => ((isValidatorsSequence(validators))
+    ? ((value, onError, meta) => !isEmpty(value)
+        ? (validators.reduce((value, nextValidator) => value !== null
+            ? nextValidator(value, onError, meta)
+            : null, value))
+        : (isFunction(defaultValue)
+            ? defaultValue(meta)
+            : defaultValue))
+    : throwValidatorError(S_DFT));
 /**
  * Checks value to be an array.
  *

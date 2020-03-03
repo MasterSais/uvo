@@ -122,6 +122,10 @@ export declare const G_TRM: string;
 export declare const S_GDP: string;
 /** @type {string} */
 export declare const S_SDP: string;
+/** @type {string} */
+export declare const S_SVDP: string;
+/** @type {string} */
+export declare const S_DFT: string;
 /**
  * Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.
@@ -193,9 +197,31 @@ export declare const getDep: <T>(field: string, preValidator?: (dep: T) => Valid
  * @return {Validator} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'field' is invalid.
  */
-export declare const setDep: <T extends unknown>(field: string, extValue?: T | (() => T)) => Validator<T>;
+export declare const setDep: <T>(field: string, extValue?: T | (() => T)) => Validator<T>;
+/**
+ * Puts validators into spreaded structure.
+ * Might be used for recursive schemes.
+ *
+ * Type: spreader. Spreads data through a validators scheme.
+ *
+ * @param {string} field Spreaded value name.
+ * @param {..Validator} validators Validators to save.
+ * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'field' or 'validators' is invalid.
+ */
 export declare const setVDep: <T>(field: string, ...validators: Validator<T>[]) => Validator<T>;
-export declare const useDefault: <T extends unknown>(defaultValue: T, ...validators: Processor<any, any>[]) => Processor<any, any>;
+/**
+ * Puts default value into spreaded structure.
+ * If input value is empty, puts default value instead, otherwise validates input values with provided validators.
+ *
+ * Type: spreader. Spreads data through a validators scheme.
+ *
+ * @param {any} defaultValue Default value.
+ * @param {...Processor} validators Validators for input value.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validators' is invalid.
+ */
+export declare const useDefault: <T, R>(defaultValue: R | (() => R), ...validators: Processor<T | R, R>[]) => Processor<T | R, R>;
 /**
  * Checks value to be an array.
  *
@@ -401,7 +427,7 @@ export declare const string: <T>(error?: Error) => Processor<T, string>;
  * @param {number|string|boolean} max Right bound to clamp to.
  * @return {Processor} Function that takes value.
  */
-export declare const clamp: <T extends string | number | boolean>(min: T, max: T) => Processor<T, T>;
+export declare const clamp: <T>(min: T, max: T) => Processor<T, T>;
 export declare const withErrors: <T, R>(validator: Processor<T, R>, commonErrorProcessor?: (meta?: MetaData) => Error) => Processor<T, Result<R>>;
 export declare const withMeta: <T, R>(validator: Processor<T, R>) => Processor<T, R>;
 export declare const withPromise: <T, R>(validator: Processor<T, Result<R>>) => Processor<T, Promise<R | Error[]>>;
