@@ -46,6 +46,12 @@ export const S_SDP = 'setDep';
 export const S_SVDP = 'setVDep';
 /** @type {string} */
 export const S_DFT = 'useDefault';
+/** @type {string} */
+export const C_ERR = 'withError';
+/** @type {string} */
+export const C_MET = 'withMeta';
+/** @type {string} */
+export const C_PRM = 'withPromise';
 const toArray = (params) => Array.isArray(params) ? params : [params];
 const setMetaPath = (meta, path) => (meta && {
     ...meta,
@@ -548,22 +554,57 @@ export const string = (error) => (value, onError, meta) => (isDefined(value)
  * @return {Processor} Function that takes value.
  */
 export const clamp = (min, max) => (value) => value < min ? min : (value > max ? max : value);
-export const withErrors = (validator, commonErrorProcessor) => (value, _onError, meta) => {
-    const errors = [];
-    const addError = (error, relevance) => errors.push({ error, relevance: relevance || { value: true } });
-    const errorProcessor = (error, meta, relevance) => error && (isFunction(error)
-        ? addError(error(meta), relevance)
-        : addError(error, relevance)) || commonErrorProcessor && addError(commonErrorProcessor(meta), relevance);
-    const result = validator(value, errorProcessor, meta);
-    return {
-        result,
-        errors: errors.length > 0
-            ? errors.filter(({ relevance }) => relevance.value).map(({ error }) => error)
-            : null
-    };
-};
-export const withMeta = (validator) => (value, onError) => validator(value, onError, { path: [], _deps: {}, params: [] });
-export const withPromise = (validator) => (value, onError, meta) => new Promise((resolve, reject) => {
-    const data = validator(value, onError, meta);
-    data.errors ? reject(data.errors) : resolve(data.result || data);
-});
+/**
+ * Provides error handling mechanism.
+ *
+ * Type: container. Embraces validator. Provides additional processing.
+ *
+ * @param {Processor} validator Validator.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validator' is invalid.
+ */
+export const withErrors = (validator, commonErrorProcessor) => (isFunction(validator)
+    ? ((value, _onError, meta) => {
+        const errors = [];
+        const addError = (error, relevance) => errors.push({ error, relevance: relevance || { value: true } });
+        const errorProcessor = (error, meta, relevance) => error && (isFunction(error)
+            ? addError(error(meta), relevance)
+            : addError(error, relevance)) || commonErrorProcessor && addError(commonErrorProcessor(meta), relevance);
+        const result = validator(value, errorProcessor, meta);
+        return {
+            result,
+            errors: errors.length > 0
+                ? errors.filter(({ relevance }) => relevance.value).map(({ error }) => error)
+                : null
+        };
+    })
+    : throwValidatorError(C_ERR));
+/**
+ * Provides meta structure.
+ *
+ * Type: container. Embraces validator. Provides additional processing.
+ *
+ * @param {Processor} validator Validator.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validator' is invalid.
+ */
+export const withMeta = (validator) => (isFunction(validator)
+    ? ((value, onError) => validator(value, onError, { path: [], _deps: {}, params: [] }))
+    : throwValidatorError(C_MET));
+/**
+ * Convert result to promise.
+ *
+ * Type: container. Embraces validator. Provides additional processing.
+ *
+ * @param {Processor} validator Validator.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validator' is invalid.
+ */
+export const withPromise = (validator) => (isFunction(validator)
+    ? ((value, onError, meta) => new Promise((resolve, reject) => {
+        const data = validator(value, onError, meta);
+        data.errors
+            ? reject(data.errors)
+            : resolve((data.result || data));
+    }))
+    : throwValidatorError(C_PRM));

@@ -161,6 +161,15 @@ export const S_SVDP: string = 'setVDep';
 /** @type {string} */
 export const S_DFT: string = 'useDefault';
 
+/** @type {string} */
+export const C_ERR: string = 'withError';
+
+/** @type {string} */
+export const C_MET: string = 'withMeta';
+
+/** @type {string} */
+export const C_PRM: string = 'withPromise';
+
 const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
 
@@ -947,37 +956,87 @@ export const string = <T>(error?: Error): Processor<T, string> =>
 export const clamp = <T>(min: T, max: T): Processor<T, T> =>
   (value: T): T => value < min ? min : (value > max ? max : value);
 
+/**
+ * Provides error handling mechanism.
+ * 
+ * Type: container. Embraces validator. Provides additional processing.
+ * 
+ * @param {Processor} validator Validator.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validator' is invalid.
+ */
 export const withErrors = <T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>> =>
-  (value: T, _onError?: ErrorCallback, meta?: MetaData): Result<R> => {
-    const errors: Array<{ error: any; relevance: Relevance }> = [];
+  (
+    isFunction(validator)
+      ? (
+        (value: T, _onError?: ErrorCallback, meta?: MetaData): Result<R> => {
+          const errors: Array<{ error: any; relevance: Relevance }> = [];
 
-    const addError = (error: any, relevance?: Relevance) =>
-      errors.push({ error, relevance: relevance || { value: true } });
+          const addError = (error: any, relevance?: Relevance) =>
+            errors.push({ error, relevance: relevance || { value: true } });
 
-    const errorProcessor: ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) =>
-      error && (
-        isFunction(error)
-          ? addError((error as Function)(meta), relevance)
-          : addError(error, relevance)
-      ) || commonErrorProcessor && addError(commonErrorProcessor(meta), relevance);
+          const errorProcessor: ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) =>
+            error && (
+              isFunction(error)
+                ? addError((error as Function)(meta), relevance)
+                : addError(error, relevance)
+            ) || commonErrorProcessor && addError(commonErrorProcessor(meta), relevance);
 
-    const result = validator(value, errorProcessor, meta);
+          const result = validator(value, errorProcessor, meta);
 
-    return {
-      result,
-      errors: errors.length > 0
-        ? errors.filter(({ relevance }) => relevance.value).map(({ error }) => error)
-        : null
-    };
-  };
+          return {
+            result,
+            errors: errors.length > 0
+              ? errors.filter(({ relevance }) => relevance.value).map(({ error }) => error)
+              : null
+          };
+        }
+      )
+      : throwValidatorError(C_ERR)
+  );
 
+/**
+ * Provides meta structure.
+ * 
+ * Type: container. Embraces validator. Provides additional processing.
+ * 
+ * @param {Processor} validator Validator.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validator' is invalid.
+ */
 export const withMeta = <T, R>(validator: Processor<T, R>): Processor<T, R> =>
-  (value: T, onError?: ErrorCallback): R =>
-    validator(value, onError, { path: [], _deps: {}, params: [] });
+  (
+    isFunction(validator)
+      ? (
+        (value: T, onError?: ErrorCallback): R =>
+          validator(value, onError, { path: [], _deps: {}, params: [] })
+      )
+      : throwValidatorError(C_MET)
+  );
 
-export const withPromise = <T, R>(validator: Processor<T, Result<R>>): Processor<T, Promise<R | Array<Error>>> =>
-  (value: T, onError?: ErrorCallback, meta?: MetaData): Promise<R | Array<Error>> => new Promise((resolve, reject) => {
-    const data = validator(value, onError, meta);
+/**
+ * Convert result to promise.
+ * 
+ * Type: container. Embraces validator. Provides additional processing.
+ * 
+ * @param {Processor} validator Validator.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validator' is invalid.
+ */
+export const withPromise = <T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>> =>
+  (
+    isFunction(validator)
+      ? (
+        (value: T, onError?: ErrorCallback, meta?: MetaData): Promise<R | Array<Error>> =>
+          new Promise(
+            (resolve, reject) => {
+              const data = validator(value, onError, meta) as Result<R>;
 
-    data.errors ? reject(data.errors) : resolve(data.result || data as unknown as R);
-  });
+              data.errors
+                ? reject(data.errors)
+                : resolve((data.result || data) as R);
+            }
+          )
+      )
+      : throwValidatorError(C_PRM)
+  );

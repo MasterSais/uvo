@@ -44,6 +44,9 @@ var __assign = (this && this.__assign) || function () {
     exports.S_SDP = 'setDep';
     exports.S_SVDP = 'setVDep';
     exports.S_DFT = 'useDefault';
+    exports.C_ERR = 'withError';
+    exports.C_MET = 'withMeta';
+    exports.C_PRM = 'withPromise';
     var toArray = function (params) {
         return Array.isArray(params) ? params : [params];
     };
@@ -431,40 +434,50 @@ var __assign = (this && this.__assign) || function () {
         return function (value) { return value < min ? min : (value > max ? max : value); };
     };
     exports.withErrors = function (validator, commonErrorProcessor) {
-        return function (value, _onError, meta) {
-            var errors = [];
-            var addError = function (error, relevance) {
-                return errors.push({ error: error, relevance: relevance || { value: true } });
-            };
-            var errorProcessor = function (error, meta, relevance) {
-                return error && (isFunction(error)
-                    ? addError(error(meta), relevance)
-                    : addError(error, relevance)) || commonErrorProcessor && addError(commonErrorProcessor(meta), relevance);
-            };
-            var result = validator(value, errorProcessor, meta);
-            return {
-                result: result,
-                errors: errors.length > 0
-                    ? errors.filter(function (_a) {
-                        var relevance = _a.relevance;
-                        return relevance.value;
-                    }).map(function (_a) {
-                        var error = _a.error;
-                        return error;
-                    })
-                    : null
-            };
-        };
+        return (isFunction(validator)
+            ? (function (value, _onError, meta) {
+                var errors = [];
+                var addError = function (error, relevance) {
+                    return errors.push({ error: error, relevance: relevance || { value: true } });
+                };
+                var errorProcessor = function (error, meta, relevance) {
+                    return error && (isFunction(error)
+                        ? addError(error(meta), relevance)
+                        : addError(error, relevance)) || commonErrorProcessor && addError(commonErrorProcessor(meta), relevance);
+                };
+                var result = validator(value, errorProcessor, meta);
+                return {
+                    result: result,
+                    errors: errors.length > 0
+                        ? errors.filter(function (_a) {
+                            var relevance = _a.relevance;
+                            return relevance.value;
+                        }).map(function (_a) {
+                            var error = _a.error;
+                            return error;
+                        })
+                        : null
+                };
+            })
+            : throwValidatorError(exports.C_ERR));
     };
     exports.withMeta = function (validator) {
-        return function (value, onError) {
-            return validator(value, onError, { path: [], _deps: {}, params: [] });
-        };
+        return (isFunction(validator)
+            ? (function (value, onError) {
+                return validator(value, onError, { path: [], _deps: {}, params: [] });
+            })
+            : throwValidatorError(exports.C_MET));
     };
     exports.withPromise = function (validator) {
-        return function (value, onError, meta) { return new Promise(function (resolve, reject) {
-            var data = validator(value, onError, meta);
-            data.errors ? reject(data.errors) : resolve(data.result || data);
-        }); };
+        return (isFunction(validator)
+            ? (function (value, onError, meta) {
+                return new Promise(function (resolve, reject) {
+                    var data = validator(value, onError, meta);
+                    data.errors
+                        ? reject(data.errors)
+                        : resolve((data.result || data));
+                });
+            })
+            : throwValidatorError(exports.C_PRM));
     };
 });

@@ -69,3 +69,12 @@ export const S_SVDP: string = 'setVDep';
 
 /** @type {string} */
 export const S_DFT: string = 'useDefault';
+
+/** @type {string} */
+export const C_ERR: string = 'withError';
+
+/** @type {string} */
+export const C_MET: string = 'withMeta';
+
+/** @type {string} */
+export const C_PRM: string = 'withPromise';

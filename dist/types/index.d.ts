@@ -126,6 +126,12 @@ export declare const S_SDP: string;
 export declare const S_SVDP: string;
 /** @type {string} */
 export declare const S_DFT: string;
+/** @type {string} */
+export declare const C_ERR: string;
+/** @type {string} */
+export declare const C_MET: string;
+/** @type {string} */
+export declare const C_PRM: string;
 /**
  * Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.
@@ -428,6 +434,33 @@ export declare const string: <T>(error?: Error) => Processor<T, string>;
  * @return {Processor} Function that takes value.
  */
 export declare const clamp: <T>(min: T, max: T) => Processor<T, T>;
+/**
+ * Provides error handling mechanism.
+ *
+ * Type: container. Embraces validator. Provides additional processing.
+ *
+ * @param {Processor} validator Validator.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validator' is invalid.
+ */
 export declare const withErrors: <T, R>(validator: Processor<T, R>, commonErrorProcessor?: (meta?: MetaData) => Error) => Processor<T, Result<R>>;
+/**
+ * Provides meta structure.
+ *
+ * Type: container. Embraces validator. Provides additional processing.
+ *
+ * @param {Processor} validator Validator.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validator' is invalid.
+ */
 export declare const withMeta: <T, R>(validator: Processor<T, R>) => Processor<T, R>;
-export declare const withPromise: <T, R>(validator: Processor<T, Result<R>>) => Processor<T, Promise<R | Error[]>>;
+/**
+ * Convert result to promise.
+ *
+ * Type: container. Embraces validator. Provides additional processing.
+ *
+ * @param {Processor} validator Validator.
+ * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * @throws {string} Will throw an error if 'validator' is invalid.
+ */
+export declare const withPromise: <T, R>(validator: Processor<T, R | Result<R>>) => Processor<T, Promise<R | Error[]>>;
