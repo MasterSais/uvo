@@ -31,13 +31,13 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     });
 
     test('base › r_1', () => {
-      validator('f2', 'ext')('value', null, meta);
+      expect(validator('f2', 'ext')('value', null, meta)).toEqual('value');
 
       expect(meta._deps['f2']).toEqual('ext');
     });
 
     test('base › r_2', () => {
-      validator('f3', () => 'extDynamic')('value', null, meta);
+      expect(validator('f3', () => 'extDynamic')('value', null, meta)).toEqual('value');
 
       expect(meta._deps['f3']).toEqual('extDynamic');
     });

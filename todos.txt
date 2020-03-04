@@ -2,9 +2,4 @@ object.camelCase()
 number.round()
 string.uppercase()
 *.empty()
-*.notEmpty()
-
-# - BP:
-1) Cross validation (password repetition)
-2) Types conditions (or, setDep(flag), onFlag op)
-3) Recursive descention (setVDep)
+*.erase()

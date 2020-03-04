@@ -1,4 +1,4 @@
-import { Error, ErrorCallback, MetaData, Processor } from './types';
+import { Error, ErrorCallback, MetaData, Processor, Validator } from './types';
 
 export const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
@@ -28,6 +28,10 @@ export const applyError = (error: Error, onError: ErrorCallback, meta: MetaData)
 export const throwValidatorError = (validator: string) => {
   throw validator;
 };
+
+export const reduceValidators = (value: any, onError: ErrorCallback, meta: MetaData, validators: Array<Validator<any>>): any =>
+  validators.reduce((value: any, nextValidator: Validator<any>): any =>
+    (value !== null ? nextValidator(value, onError, meta) : null), value);
 
 export const isEmpty = (value: any) => (value === null) || (value === undefined) || (value === '');
 

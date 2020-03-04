@@ -1,6 +1,6 @@
 import { G_CONS } from '../names';
 import { ErrorCallback, MetaData, Processor } from '../types';
-import { isValidatorsSequence, throwValidatorError } from '../utilities';
+import { isValidatorsSequence, reduceValidators, throwValidatorError } from '../utilities';
 
 /**
  * Groups validators sequentially.
@@ -13,17 +13,12 @@ import { isValidatorsSequence, throwValidatorError } from '../utilities';
  * @return {Processor} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'validators' is invalid.
  */
-export const consecutive = <T, R>(...validators: Array<Processor<T | R, R>>): Processor<T | R, R> =>
+export const consecutive = <T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T> =>
   (
     isValidatorsSequence(validators)
       ? (
-        (value: T | R, onError?: ErrorCallback, meta?: MetaData): R =>
-          validators.reduce((value: any, nextValidator: Processor<T | R, R>) =>
-            (
-              value !== null
-                ? nextValidator(value, onError, meta)
-                : null
-            ), value) as R
+        (value: any, onError?: ErrorCallback, meta?: MetaData): T =>
+          reduceValidators(value, onError, meta, validators)
       )
       : throwValidatorError(G_CONS)
   );

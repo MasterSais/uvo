@@ -11,23 +11,27 @@ import { isDefined, isFunction, isString, postToMeta, throwValidatorError } from
  * @param {string} field Spreaded value name.
  * @param {any} extValue External value or function that returns it.
  * @return {Validator} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'field' is invalid.
+ * @throws {string} Will throw an error if 'field' or 'meta' is invalid.
  */
 export const setDep = <T>(field: string, extValue?: T | (() => T)): Validator<T> =>
   (
     (isString(field) && field.length > 0)
       ? (
         (value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
-          postToMeta(
-            isDefined(extValue)
-              ? (
-                isFunction(extValue)
-                  ? (extValue as Function)(meta)
-                  : extValue
-              )
-              : value,
-            field, meta
-          )
+          meta
+            ? (
+              postToMeta(
+                isDefined(extValue)
+                  ? (
+                    isFunction(extValue)
+                      ? (extValue as Function)(meta)
+                      : extValue
+                  )
+                  : value,
+                field, meta
+              ), value
+            )
+            : throwValidatorError(S_SDP)
       )
       : throwValidatorError(S_SDP)
   );

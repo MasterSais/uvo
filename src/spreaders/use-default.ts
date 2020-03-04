@@ -1,6 +1,6 @@
 import { S_DFT } from '../names';
 import { ErrorCallback, MetaData, Processor } from '../types';
-import { isEmpty, isFunction, isValidatorsSequence, throwValidatorError } from '../utilities';
+import { isEmpty, isFunction, isValidatorsSequence, reduceValidators, throwValidatorError } from '../utilities';
 
 /**
  * Puts default value into spreaded structure.
@@ -19,13 +19,7 @@ export const useDefault = <T, R>(defaultValue: R | (() => R), ...validators: Arr
       ? (
         (value: T | R, onError?: ErrorCallback, meta?: MetaData): R =>
           !isEmpty(value)
-            ? (
-              validators.reduce((value: T | R, nextValidator: Processor<T | R, R>) =>
-                value !== null
-                  ? nextValidator(value, onError, meta)
-                  : null, value
-              )
-            )
+            ? reduceValidators(value, onError, meta, validators)
             : (
               isFunction(defaultValue)
                 ? (defaultValue as Function)(meta)
