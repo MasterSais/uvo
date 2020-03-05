@@ -18,3 +18,8 @@ export const integer = (error?: Error): Validator<number> =>
       && value % 1 === 0
     )
       ? value : applyError(error, onError, setMetaValidator(meta, V_INT));
+
+/**
+ * @borrows int as integer
+ */
+export const int = integer;

@@ -28,3 +28,8 @@ export const withPromise = <T, R>(validator: Processor<T, R | Result<R>>): Proce
       )
       : throwValidatorError(C_PRM)
   );
+
+/**
+ * @borrows wpr as withPromise
+ */
+export const wpr = withPromise;

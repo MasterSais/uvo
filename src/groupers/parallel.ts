@@ -27,3 +27,8 @@ export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
       )
       : throwValidatorError(G_PRLL)
   );
+
+/**
+ * @borrows prl as parallel
+ */
+export const prl = parallel;

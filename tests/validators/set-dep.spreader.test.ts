@@ -41,5 +41,11 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
       expect(meta._deps['f3']).toEqual('extDynamic');
     });
+
+    test('base › r_3', () => {
+      expect(validator('f4', (value) => value + ':extDynamic')('value', null, meta)).toEqual('value');
+
+      expect(meta._deps['f4']).toEqual('value:extDynamic');
+    });
   });
 });

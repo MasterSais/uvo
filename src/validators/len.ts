@@ -28,3 +28,8 @@ export const len = <T extends Lengthy>(len: number, error?: Error): Validator<T>
       )
       : throwValidatorError(V_LEN)
   );
+
+/**
+ * @borrows ln as len
+ */
+export const ln = len;

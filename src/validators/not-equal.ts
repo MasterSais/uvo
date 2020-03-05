@@ -18,3 +18,8 @@ export const notEqual = <T>(match: T, error?: Error): Validator<T> =>
       value !== match
     )
       ? value : applyError(error, onError, setMetaValidator(meta, V_NEQ, [match]));
+
+/**
+ * @borrows neq as notEqual
+ */
+export const neq = notEqual;

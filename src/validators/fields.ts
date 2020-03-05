@@ -57,3 +57,8 @@ export const fields = <T extends ObjectLike>(spec: Fields, error?: Error): Valid
       )
       : throwValidatorError(V_FIELDS)
   );
+
+/**
+ * @borrows fld as fields
+ */
+export const fld = fields;

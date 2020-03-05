@@ -22,3 +22,8 @@ export const consecutive = <T>(...validators: Array<Processor<any, T> | Processo
       )
       : throwValidatorError(G_CONS)
   );
+
+/**
+ * @borrows seq as consecutive
+ */
+export const seq = consecutive;

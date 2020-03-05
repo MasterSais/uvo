@@ -36,3 +36,8 @@ export const array = <T, R>(itemSpec?: Array<Processor<T | R, R>> | Processor<T 
     return throwValidatorError(V_ARR);
   }
 };
+
+/**
+ * @borrows arr as array
+ */
+export const arr = array;

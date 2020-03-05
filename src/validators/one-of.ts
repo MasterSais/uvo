@@ -26,3 +26,8 @@ export const oneOf = <T>(candidates: Array<T>, error?: Error): Validator<T> =>
       )
       : throwValidatorError(V_OOF)
   );
+
+/**
+ * @borrows oof as oneOf
+ */
+export const oof = oneOf;

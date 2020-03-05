@@ -25,3 +25,8 @@ export const regex = <T extends unknown>(match: RegExp, error?: Error): Validato
       )
       : throwValidatorError(V_REG)
   );
+
+/**
+ * @borrows rgx as regex
+ */
+export const rgx = regex;

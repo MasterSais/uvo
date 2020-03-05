@@ -22,3 +22,8 @@ export const transform = <T, R>(...processors: Array<Processor<T | R, R>>): Proc
       )
       : throwValidatorError(G_TRM)
   );
+
+/**
+ * @borrows tfm as transform
+ */
+export const tfm = transform;

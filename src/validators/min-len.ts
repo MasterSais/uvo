@@ -28,3 +28,8 @@ export const minLen = <T extends Lengthy>(len: number, error?: Error): Validator
       )
       : throwValidatorError(V_MNLEN)
   );
+
+/**
+ * @borrows mnl as minLen
+ */
+export const mnl = minLen;

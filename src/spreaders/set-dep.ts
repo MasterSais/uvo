@@ -13,7 +13,7 @@ import { isDefined, isFunction, isString, postToMeta, throwValidatorError } from
  * @return {Validator} Function that takes: value, error callback and custom metadata.
  * @throws {string} Will throw an error if 'field' or 'meta' is invalid.
  */
-export const setDep = <T>(field: string, extValue?: T | (() => T)): Validator<T> =>
+export const setDep = <T>(field: string, extValue?: T | ((value: T, meta?: MetaData) => T)): Validator<T> =>
   (
     (isString(field) && field.length > 0)
       ? (
@@ -24,7 +24,7 @@ export const setDep = <T>(field: string, extValue?: T | (() => T)): Validator<T>
                 isDefined(extValue)
                   ? (
                     isFunction(extValue)
-                      ? (extValue as Function)(meta)
+                      ? (extValue as Function)(value, meta)
                       : extValue
                   )
                   : value,
@@ -35,3 +35,8 @@ export const setDep = <T>(field: string, extValue?: T | (() => T)): Validator<T>
       )
       : throwValidatorError(S_SDP)
   );
+
+/**
+ * @borrows sdp as setDep
+ */
+export const sdp = setDep;

@@ -51,3 +51,8 @@ export const object2 = <T extends ObjectLike, R extends ObjectLike>(spec?: Array
     return throwValidatorError(V_OBJ);
   }
 };
+
+/**
+ * @borrows ob2 as object2
+ */
+export const ob2 = object2;

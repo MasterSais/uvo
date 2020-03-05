@@ -11,3 +11,8 @@ import { Processor } from '../types';
  */
 export const clamp = <T>(min: T, max: T): Processor<T, T> =>
   (value: T): T => value < min ? min : (value > max ? max : value);
+
+/**
+ * @borrows clp as clamp
+ */
+export const clp = clamp;

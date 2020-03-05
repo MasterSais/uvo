@@ -18,3 +18,8 @@ export const equal = <T>(match: T, error?: Error): Validator<T> =>
       value === match
     )
       ? value : applyError(error, onError, setMetaValidator(meta, V_EQ, [match]));
+
+/**
+ * @borrows eq as equal
+ */
+export const eq = equal;

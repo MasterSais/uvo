@@ -25,3 +25,8 @@ export const bool = <T>(error?: Error): Processor<T, boolean> =>
         : applyError(error, onError, setMetaValidator(meta, V_BLN))
     );
   };
+
+/**
+ * @borrows bln as bool
+ */
+export const bln = bool;
