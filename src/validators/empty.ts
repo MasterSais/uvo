@@ -1,9 +1,9 @@
-import { V_NEM } from '../names';
+import { V_EM } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, isEmpty, setMetaValidator } from '../utilities';
 
 /**
- * Checks value not to be empty.
+ * Checks value to be empty.
  * 
  * Type: validator. If validation is successful, then returns input value.
  * 
@@ -11,15 +11,15 @@ import { applyError, isEmpty, setMetaValidator } from '../utilities';
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
  * @return {Validator} Function that takes: value, error callback and custom metadata.
  */
-export const notEmpty = <T extends unknown>(error?: Error): Validator<T> =>
+export const empty = <T extends unknown>(error?: Error): Validator<T> =>
   (
     (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-      !isEmpty(value)
+      isEmpty(value)
         ? value
-        : applyError(error, onError, setMetaValidator(meta, V_NEM, []))
+        : applyError(error, onError, setMetaValidator(meta, V_EM, []))
   );
 
 /**
- * @borrows nem as notEmpty
+ * @borrows em as empty
  */
-export const nem = notEmpty;
+export const em = empty;

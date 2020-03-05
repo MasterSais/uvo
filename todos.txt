@@ -1,5 +1,7 @@
 object.camelCase()
-number.round()
-string.uppercase()
-*.empty()
-*.erase()
+number.round() tests
+string.uppercase() tests
+string.lowercase() tests
+*.empty() tests
+*.notEmpty() tests
+*.erase() tests

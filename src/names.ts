@@ -8,6 +8,9 @@ export const V_EQ: string = 'equal';
 export const V_REG: string = 'regex';
 
 /** @type {string} */
+export const V_EM: string = 'empty';
+
+/** @type {string} */
 export const V_NEM: string = 'notEmpty';
 
 /** @type {string} */
