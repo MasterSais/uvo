@@ -1,0 +1,37 @@
+[
+  {
+    "title": "USOV",
+    "content": [
+      "./markdown/description.txt",
+      "./markdown/doctoc-tree.txt"
+    ],
+    "sub": [
+      {
+        "title": "Install",
+        "content": [
+          "./markdown/installation.txt"
+        ]
+      },
+      {
+        "title": "Usage",
+        "content": [
+          "./markdown/usage.md"
+        ]
+      },
+      {
+        "title": "Types",
+        "content": [
+          "./markdown/types-description.txt"
+        ],
+        "sub": [
+          {
+            "parse": "declare type",
+            "content": [
+              "./dist/types/index.d.ts"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

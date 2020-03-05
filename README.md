@@ -5,12 +5,13 @@ USOV is a JavaScript universal single object validator. It provides half-safe va
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [Install](#install)
 - [Usage](#usage)
-  - [Using a custom locale dictionary](#using-a-custom-locale-dictionary)
+- [Types](#types)
 - [API](#api)
-  - [`yup`](#yup)
-    - [`yup.reach(schema: Schema, path: string, value?: object, context?: object): Schema`](#yupreachschema-schema-path-string-value-object-context-object-schema)
+  - [`validators`](#validators)
+    - [`array(itemSpec?: Array<Processor> | Processor, error?: Error): Processor`](#arrayitemspec-arrayprocessor--processor-error-error-processor)
     - [`yup.addMethod(schemaType: Schema, name: string, method: ()=> Schema): void`](#yupaddmethodschematype-schema-name-string-method--schema-void)
     - [`yup.ref(path: string, options: { contextPrefix: string }): Ref`](#yuprefpath-string-options--contextprefix-string--ref)
     - [`yup.lazy((value: any) => Schema): Lazy`](#yuplazyvalue-any--schema-lazy)
@@ -96,141 +97,88 @@ USOV is a JavaScript universal single object validator. It provides half-safe va
 npm install usov
 ```
 
-Usov already has integrated TypeScript types definitions.
-
 ## Usage
 
 ```js
 import * as v from 'usov'; // for everything (recommended in all cases for better minification result e.g. in webpack)
 // or
 import { number, array } from 'usov'; // for only what you need
+
+number()(10)
+// => 10
+
+number()('abc')
+// => null
 ```
 
 ```js
-let yup = require('yup');
+import * as v from 'usov';
 
-let schema = yup.object().shape({
-  name: yup.string().required(),
-  age: yup
-    .number()
-    .required()
-    .positive()
-    .integer(),
-  email: yup.string().email(),
-  website: yup.string().url(),
-  createdOn: yup.date().default(function() {
-    return new Date();
-  }),
-});
-
-// check validity
-schema
-  .isValid({
-    name: 'jimmy',
-    age: 24,
+const validator = (
+  v.object({
+    id: [v.number(), v.gte(0)],
+    name: [v.string(), v.minLen(10)],
+    role: [v.string(), v.regex(/^[A-Z]{5,20}$/)]
   })
-  .then(function(valid) {
-    valid; // => true
-  });
+);
+// or extended solution (recommended)
+const validator2 = (
+  v.object2([
+    ['id', v.number(), v.gte(0)],
+    ['name', v.string(), v.minLen(10)],
+    ['role', v.string(), v.regex(/^[A-Z]{5,20}$/)]
+  ])
+);
 
-// you can try and type cast objects to the defined schema
-schema.cast({
-  name: 'jimmy',
-  age: '24',
-  createdOn: '2014-09-23T19:25:25Z',
-});
-// => { name: 'jimmy', age: 24, createdOn: Date }
+validator({
+  id: 3, // right
+  name: 'YourAwesomeUserName', // right
+  role: 'invalidRole' // wrong. Will be null
+})
+// => { id: 3, name: 'YourAwesomeUserName', role: null }
 ```
 
-### Using a custom locale dictionary
-
-Allows you to customize the default messages used by Yup, when no message is provided with a validation test.
-If any message is missing in the custom dictionary the error message will default to Yup's one.
+## Types
 
 ```js
-import { setLocale } from 'yup';
+// Validator metadata.
+// Can be provided manually into validator or through `withError` container.
+// Some `spreaders` can't work without it.
+type MetaData = {
+  path: Array<string | number>;
+  validator?: string;
+  params: Array<any>;
+  _deps: ObjectLike;
+};
 
-setLocale({
-  mixed: {
-    default: 'Não é válido',
-  },
-  number: {
-    min: 'Deve ser maior que ${min}',
-  },
-});
+// Any type's error.
+// Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
+type Error = string | number | Record<any, any> | Array<any> | ((meta: MetaData) => any);
 
-// now use Yup schemas AFTER you defined your custom dictionary
-let schema = yup.object().shape({
-  name: yup.string(),
-  age: yup.number().min(18),
-});
+type Relevance = {
+  value: boolean;
+};
 
-schema.validate({ name: 'jimmy', age: 11 }).catch(function(err) {
-  err.name; // => 'ValidationError'
-  err.errors; // => ['Deve ser maior que 18']
-});
-```
+type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => void;
 
-If you need multi-language support, Yup has got you covered. The function `setLocale` accepts functions that can be used to generate error objects with translation keys and values. Just get this output and feed it into your favorite i18n library.
+type Processor<T, R> = (value: T, onError?: ErrorCallback, meta?: MetaData) => R;
 
-```js
-import { setLocale } from 'yup';
+type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 
-setLocale({
-  // use constant translation keys for messages without values
-  mixed: {
-    default: 'field_invalid',
-  },
-  // use functions to generate an error object that includes the value from the schema
-  number: {
-    min: ({ min }) => ({ key: 'field_too_short', values: { min } }),
-    max: ({ max }) => ({ key: 'field_too_big', values: { max } }),
-  },
-});
+type Fields = string | [('&' | '|' | '^'), ...Array<Fields | string>];
 
-// now use Yup schemas AFTER you defined your custom dictionary
-let schema = yup.object().shape({
-  name: yup.string(),
-  age: yup.number().min(18),
-});
-
-schema.validate({ name: 'jimmy', age: 11 }).catch(function(err) {
-  err.name; // => 'ValidationError'
-  err.errors; // => [{ key: 'field_too_short', values: { min: 18 } }]
-});
+type ObjectRecords = Record<string, Array<Processor<any, any>> | Processor<any, any>>;
 ```
 
 ## API
 
-### `yup`
+### `validators`
 
-The module export.
+Each validator accepts `error` param. Error will be passes into `onError` callback.
 
-```js
-let yup = require('yup');
+#### `array(itemSpec?: Array<Processor> | Processor, error?: Error): Processor`
 
-yup.mixed;
-yup.string;
-yup.number;
-yup.boolean; // also aliased as yup.bool
-yup.date;
-yup.object;
-yup.array;
-
-yup.reach;
-yup.addMethod;
-yup.ref;
-yup.lazy;
-yup.setLocale;
-yup.ValidationError;
-```
-
-#### `yup.reach(schema: Schema, path: string, value?: object, context?: object): Schema`
-
-For nested schemas `yup.reach` will retrieve a nested schema based on the provided path.
-
-For nested schemas that need to resolve dynamically, you can provide a `value` and optionally
-a `context` object.
+Checks value to be an array.
 
 ```js
 let schema = object().shape({

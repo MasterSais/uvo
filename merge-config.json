@@ -1,31 +1,27 @@
-{
-  "outDir": "./dist",
-  "outFile": "index.ts",
-  "include": [
-    {
-      "file": "./src/types.ts"
-    },
-    {
-      "file": "./src/names.ts"
-    },
-    {
-      "file": "./src/utilities.ts",
-      "removeExports": true
-    },
-    {
-      "dir": "./src/groupers"
-    },
-    {
-      "dir": "./src/spreaders"
-    },
-    {
-      "dir": "./src/validators"
-    },
-    {
-      "dir": "./src/processors"
-    },
-    {
-      "dir": "./src/containers"
-    }
-  ]
-}
+[
+  {
+    "file": "./src/types.ts"
+  },
+  {
+    "file": "./src/names.ts"
+  },
+  {
+    "file": "./src/utilities.ts",
+    "removeExports": true
+  },
+  {
+    "dir": "./src/groupers"
+  },
+  {
+    "dir": "./src/spreaders"
+  },
+  {
+    "dir": "./src/validators"
+  },
+  {
+    "dir": "./src/processors"
+  },
+  {
+    "dir": "./src/containers"
+  }
+]
