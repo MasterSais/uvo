@@ -24,7 +24,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://MasterSais@bitbucket.org/MasterSais/single-object-validator.git"
+    "url": "https://github.com/MasterSais/usov.git"
   },
   "keywords": [
     "es6",
@@ -33,9 +33,9 @@
     "jsusov",
     "validator"
   ],
-  "author": "MasterSais",
+  "author": "Yauheni Zhestiannikau (MasterSais) <evgensvvv@gmail.com>",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/MasterSais/single-object-validator#readme",
+  "homepage": "https://github.com/MasterSais/usov",
   "devDependencies": {
     "@types/jest": "25.1.3",
     "@types/node": "13.7.7",
