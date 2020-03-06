@@ -8,27 +8,30 @@ const config = JSON.parse(
     .toString()
 );
 
-const genTitle = (title, level) => `${'#'.repeat(level)} ${title}\n\r`;
+const genTitle = (title, level) => `${'#'.repeat(level)} \`${title}\`\n\r`;
 
 const loadFiles = (files) => files.map(file => `${fs.readFileSync(path.resolve(file)).toString()}\n\r`)
 
-const parseDoc = (doc, mark) => doc
-  .split('/**')
-  .filter(part => part.includes(mark))
-  .map(part => ({
-    desc:
-      (part.match(/\*[^\@]+\*/g) || [])
-        .join(String())
-        .replace(/\n|\r|\s{2}/g, String())
-        .replace(/\s*\*\s*/g, '*')
-        .replace(/\*\*$/g, '*')
-        .replace(/\*\*/g, '\n\r')
-        .replace(/\*/g, String()),
-    export:
-      (part.match(new RegExp(mark + '')) || [])
-  }))
-  .filter(Boolean)
-  .join('\n')
+const parseDoc = (files, level) => files
+  .map(file => fs.readFileSync(path.resolve(file)).toString())
+  .map(file => {
+    const [, name] = file.match(/@name \{([^\}]+)\}/);
+    const [, desc] = file.match(/@desc([^@\/\{]+)((\*\/)|(\{?@))/)
+    const [, example] = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/)
+
+    return (
+      `${genTitle(name, level)}\n${
+      (
+        desc
+          .replace(/[\r\n]+/g, String())
+          .replace(/\s?\*\s?/g, '*')
+          .replace(/\*\*/g, '\r\n')
+          .replace(/\*/g, ' ')
+          .trim()
+      )
+      }\n\n\`\`\`js${example}\`\`\``
+    )
+  });
 
 const build = (config, level = 1) => (
   config
@@ -40,7 +43,7 @@ const build = (config, level = 1) => (
       ),
       ...(
         parse
-          ? parseDoc(loadFiles(content).join(String()), parse)
+          ? parseDoc(content, level)
           : loadFiles(content)
       ),
       (

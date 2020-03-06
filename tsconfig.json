@@ -15,6 +15,9 @@
     "suppressImplicitAnyIndexErrors": true,
     "baseUrl": ".",
     "paths": {
+      "usov": [
+        "dist/types/index.d.ts"
+      ],
       "@lib/*": [
         "src/*"
       ],
@@ -30,6 +33,7 @@
   "include": [
     "./src/**/*.ts",
     "./dist/**/*.ts",
-    "./tests/**/*.ts"
+    "./tests/**/*.ts",
+    "./docs/**/*.ts"
   ]
 }

@@ -2,32 +2,32 @@
   {
     "title": "USOV",
     "content": [
-      "./markdown/description.txt",
-      "./markdown/doctoc-tree.txt"
+      "./docs/markdown/description.txt",
+      "./docs/markdown/doctoc-tree.txt"
     ],
     "sub": [
       {
         "title": "Install",
         "content": [
-          "./markdown/installation.txt"
+          "./docs/markdown/installation.txt"
         ]
       },
       {
         "title": "Usage",
         "content": [
-          "./markdown/usage.md"
+          "./docs/markdown/usage.md"
         ]
       },
       {
         "title": "Types",
         "content": [
-          "./markdown/types-description.txt"
+          "./docs/markdown/types-description.txt"
         ],
         "sub": [
           {
-            "parse": "declare type",
+            "parse": true,
             "content": [
-              "./dist/types/index.d.ts"
+              "./docs/validators/array.ts"
             ]
           }
         ]

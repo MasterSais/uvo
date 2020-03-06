@@ -2,18 +2,18 @@
 import * as v from 'usov'; // for everything (recommended in all cases for better minification result e.g. in webpack)
 // or
 import { number, array } from 'usov'; // for only what you need
-
-number()(10)
-// => 10
-
-number()('abc')
-// => null
 ```
 
 ```js
 import * as v from 'usov';
 
-const validator = (
+v.number()(10)
+// => 10
+
+v.number()('abc')
+// => null
+
+const simpleObj = (
   v.object({
     id: [v.number(), v.gte(0)],
     name: [v.string(), v.minLen(10)],
@@ -21,7 +21,7 @@ const validator = (
   })
 );
 // or extended solution (recommended)
-const validator2 = (
+const extObj = (
   v.object2([
     ['id', v.number(), v.gte(0)],
     ['name', v.string(), v.minLen(10)],
@@ -29,7 +29,7 @@ const validator2 = (
   ])
 );
 
-validator({
+simpleObj({
   id: 3, // right
   name: 'YourAwesomeUserName', // right
   role: 'invalidRole' // wrong. Will be null
