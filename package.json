@@ -9,7 +9,7 @@
     "lint:fix": "yarn run lint --fix",
     "test": "jest --silent --detectOpenHandles --passWithNoTests --config ./jest.config.json",
     "test:watch": "yarn run test --watch",
-    "build": "yarn run build:merge && yarn run build:modules && yarn run build:minify",
+    "build": "yarn run build:merge && yarn run build:modules && yarn run build:minify && yarn run build:doc",
     "build:merge": "node merge-sources.js dist index.ts && node inline-docs.js ./dist/index.ts",
     "build:modules": "concurrently --kill-others-on-fail \"yarn run build:umd\" \"yarn run build:es\" \"yarn run build:types\"",
     "build:minify": "concurrently --kill-others-on-fail \"yarn run build:umd-min\" \"yarn run build:es-min\"",
@@ -18,7 +18,7 @@
     "build:es": "tsc -p tsconfig.es.json",
     "build:es-min": "terser --config-file ./terser.config.json -o ./dist/es/index.min.js -- ./dist/es/index.js",
     "build:types": "tsc -p tsconfig.types.json",
-    "build:doc": "node generate-markdown.js README_TEST.md && doctoc README_TEST.md --github",
+    "build:doc": "node generate-markdown.js README.md && doctoc README.md --github",
     "predeploy": "yarn run lint && yarn run test && yarn run build"
   },
   "sideEffects": false,

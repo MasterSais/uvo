@@ -1,5 +1,5 @@
 /**
- * @name {array(itemSpec?: Array<Processor> or Processor, error?: Error): Processor}
+ * @name {array<T>(itemSpec?: Array<Processor<any, T>> | Processor<any, T>, error?: Error): Processor<Array<any>, Array<T>>}
  * 
  * @desc Checks value to be an array.
  * 

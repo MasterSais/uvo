@@ -19,15 +19,19 @@
         ]
       },
       {
-        "title": "Types",
-        "content": [
-          "./docs/markdown/types-description.txt"
-        ],
+        "title": "API",
+        "content": [],
         "sub": [
           {
-            "parse": true,
+            "title": "Validators",
             "content": [
-              "./docs/validators/array.ts"
+              "./docs/markdown/types-description.txt"
+            ],
+            "sub": [
+              {
+                "parse": true,
+                "contentDir": "./docs/validators"
+              }
             ]
           }
         ]

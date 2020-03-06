@@ -12,12 +12,14 @@ const genTitle = (title, level) => `${'#'.repeat(level)} \`${title}\`\n\r`;
 
 const loadFiles = (files) => files.map(file => `${fs.readFileSync(path.resolve(file)).toString()}\n\r`)
 
+const readDir = (dirName) => fs.readdirSync(dirName).map(fileName => dirName + '/' + fileName);
+
 const parseDoc = (files, level) => files
   .map(file => fs.readFileSync(path.resolve(file)).toString())
   .map(file => {
     const [, name] = file.match(/@name \{([^\}]+)\}/);
     const [, desc] = file.match(/@desc([^@\/\{]+)((\*\/)|(\{?@))/)
-    const [, example] = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/)
+    const example = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/)
 
     return (
       `${genTitle(name, level)}\n${
@@ -29,13 +31,13 @@ const parseDoc = (files, level) => files
           .replace(/\*/g, ' ')
           .trim()
       )
-      }\n\n\`\`\`js${example}\`\`\``
+      }\n\n${example ? `\`\`\`js${example[1]}\n\`\`\`\n\n` : String()}`
     )
   });
 
 const build = (config, level = 1) => (
   config
-    .map(({ title, content, sub, parse }) => [
+    .map(({ title, content, contentDir, sub, parse }) => [
       (
         title
           ? genTitle(title, level)
@@ -43,8 +45,8 @@ const build = (config, level = 1) => (
       ),
       ...(
         parse
-          ? parseDoc(content, level)
-          : loadFiles(content)
+          ? parseDoc(content || readDir(contentDir), level)
+          : loadFiles(content || readDir(contentDir))
       ),
       (
         sub

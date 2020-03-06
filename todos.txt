@@ -1,7 +1,9 @@
 object.camelCase()
 number.round() tests
+number.round(type: 'floor' | 'ceil' | 'trunc' | 'round' = 'round')
 string.uppercase() tests
 string.lowercase() tests
+Date type for GTE, LTE etc
 *.empty() tests
 *.notEmpty() tests
 *.erase() tests
