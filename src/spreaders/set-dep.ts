@@ -3,17 +3,9 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { isDefined, isFunction, isString, postToMeta, throwValidatorError } from '../utilities';
 
 /**
- * Puts value into spreaded structure.
- * If 'extValue' is provided, puts it instead of current value.
- * 
- * Type: spreader. Spreads data through a validators scheme.
- * 
- * @param {string} field Spreaded value name.
- * @param {any} extValue External value or function that returns it.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'field' or 'meta' is invalid.
+ * {@link docs/spreaders/set-dep}
  */
-export const setDep = <T>(field: string, extValue?: T | ((value: T, meta?: MetaData) => T)): Validator<T> =>
+export const setDep = <T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T> =>
   (
     (isString(field) && field.length > 0)
       ? (

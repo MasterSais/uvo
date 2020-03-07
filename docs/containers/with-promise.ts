@@ -29,7 +29,9 @@ await unchi('abc'); // error only works with 'withError' container.
 
 const withErrorUnchi = (
   v.withPromise(
-    v.number('ERR')
+    v.withErrors(
+      v.number('ERR')
+    )
   )
 );
 

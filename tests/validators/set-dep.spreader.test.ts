@@ -43,7 +43,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     });
 
     test('base › r_3', () => {
-      expect(validator('f4', (value) => value + ':extDynamic')('value', null, meta)).toEqual('value');
+      expect(validator('f4', (value: string) => value + ':extDynamic')('value', null, meta)).toEqual('value');
 
       expect(meta._deps['f4']).toEqual('value:extDynamic');
     });

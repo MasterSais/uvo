@@ -3,17 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { getFromMeta, isFunction, isString, isValidatorsSequence, reduceValidators, throwValidatorError, toArray } from '../utilities';
 
 /**
- * Takes value from spreaded structure.
- * Might be used for dynamic validators creation.
- * If 'preValidator' not provided, just replaces current value.
- * Works only with provided meta object.
- * 
- * Type: spreader. Spreads data through a validators scheme.
- * 
- * @param {string} field Spreaded value name.
- * @param {Function} preValidator Function that takes spreaded value and insert new validators into scheme.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'field' or 'meta' is invalid.
+ * {@link docs/spreaders/get-dep}
  */
 export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
   (
