@@ -52,6 +52,11 @@
     - [`withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>>`](#witherrorst-rvalidator-processort-r-commonerrorprocessor-meta-metadata--error-processort-resultr)
     - [`withMeta<T, R>(validator: Processor<T, R>): Processor<T, R>`](#withmetat-rvalidator-processort-r-processort-r)
     - [`withPromise<T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>>`](#withpromiset-rvalidator-processort-r--resultr-processort-promiser--arrayerror)
+  - [`Spreaders`](#spreaders)
+    - [`getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>`](#getdeptfield-string-prevalidator-dep-t--validatort--arrayvalidatort-validatort)
+    - [`setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>`](#setdeptfield-string-extvalue-any--value-t-meta-metadata--any-validatort)
+    - [`setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>`](#setvdeptfield-string-validators-arrayvalidatort-validatort)
+    - [`useDefault<T, R>(defaultValue: R | (() => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>`](#usedefaultt-rdefaultvalue-r----r-validators-arrayprocessort--r-r-processort--r-r)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
@@ -945,5 +950,114 @@ try {
 } catch (errors) {
   // => ['ERR']
 }
+```
+
+### `Spreaders`
+Spreads data through a validators scheme. Almost all spreaders requires meta schema to be provided with 'withMeta'.
+#### `getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>`
+
+Takes value from spreaded structure. Might be used for dynamic validators creation. If 'preValidator' not provided, just replaces current value. Works only with provided meta object.
+
+```js
+import * as v from 'usov';
+
+const simpleOne = (
+  v.withMeta(
+    v.object({
+      pass: [v.string(), v.minLen(10), v.setDep('pass')],
+      pass2: [v.getDep('pass', (pass: string) => v.equal(pass))] // Compares password and password confirmation
+    })
+  )
+);
+
+simpleOne({ pass: 'YourAwesomePassword', pass2: 'YourAwesomePassword' });
+// => { pass: 'YourAwesomePassword', pass2: 'YourAwesomePassword' }
+
+simpleOne({ pass: 'YourAwesomePassword', pass2: 'YourAwesomePass..' });
+// => { pass: 'YourAwesomePassword', pass2: null }
+
+simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
+// => { pass: null, pass2: null }
+```
+
+#### `setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>`
+
+Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value.
+
+```js
+import * as v from 'usov';
+
+v.withMeta( // meta schema required for dependencies.
+  v.object({
+    id: [v.number(), v.gte(0), v.setDep('id')] // if 'id' is valid, sets 'id' dependency into schema.
+  })
+);
+
+v.withMeta(
+  v.object({
+    id: [v.number(), v.gte(0), v.setDep('isIdValid', true)] // custom data for dependency.
+  })
+);
+
+v.withMeta(
+  v.consecutive(
+    v.setDep('beforeObjectValidation', true), // non conditional dependency.
+    v.object({
+      id: [v.number(), v.gte(0)]
+    })
+  )
+);
+```
+
+#### `setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>`
+
+Puts validators into spreaded structure. Might be used for recursive schemes.
+
+```js
+import * as v from 'usov';
+
+const recursiveOne = (
+  v.withMeta( // meta schema is required.
+    v.setVDep('node', // sets validators into meta schema.
+      v.object({
+        id: [v.number(), v.gte(0)],
+        node: v.getDep('node', validators => validators)
+      })
+    )
+  )
+);
+
+recursiveOne({ id: 1, node: { id: 2, node: { id: 3, node: { id: 4 } } } });
+// => { id: 1, node: { id: 2, node: { id: 3, node: { id: 4, node: null } } } }
+
+recursiveOne({ id: 1, node: { id: -1, node: { id: 3, node: { id: 4 } } } });
+// => { id: 1, node: { id: null, node: { id: 3, node: { id: 4, node: null } } } }
+
+recursiveOne({ id: 1, node: { id: -1, node: [1] } });
+// => { id: 1, node: { id: null, node: null } }
+```
+
+#### `useDefault<T, R>(defaultValue: R | (() => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>`
+
+Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators.
+
+```js
+import * as v from 'usov';
+
+const simpleOne = (
+  v.useDefault('default', v.string(), v.minLen(10))
+);
+
+simpleOne(null);
+// => 'default'
+
+simpleOne('');
+// => 'default'
+
+simpleOne('Stringu'); // too short.
+// => null
+
+simpleOne('Stringuuuuuuuuuu');
+// => 'Stringuuuuuuuuuu'
 ```
 

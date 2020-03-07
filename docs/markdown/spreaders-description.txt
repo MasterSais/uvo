@@ -1,0 +1,1 @@
+Spreads data through a validators scheme. Almost all spreaders requires meta schema to be provided with 'withMeta'.

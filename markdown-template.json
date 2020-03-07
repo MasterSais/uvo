@@ -81,6 +81,18 @@
                 "contentDir": "./docs/containers"
               }
             ]
+          },
+          {
+            "title": "Spreaders",
+            "content": [
+              "./docs/markdown/spreaders-description.txt"
+            ],
+            "sub": [
+              {
+                "parse": true,
+                "contentDir": "./docs/spreaders"
+              }
+            ]
           }
         ]
       }
