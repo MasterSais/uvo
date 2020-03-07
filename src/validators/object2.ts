@@ -9,15 +9,7 @@ const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
 );
 
 /**
- * Checks value to be an object.
- * 
- * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
- * 
- * @param {Array=} spec Validators scheme for object in form of array. Provides strict ordering. 
- * @param {Error=} error (Optional) Any type's error. 
- * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
- * @return {Processor} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'spec' is invalid.
+ * {@link docs/validators/object2}
  */
 export const object2 = <T extends ObjectLike, R extends ObjectLike>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R> => {
   const specList: Array<[string, Array<Processor<any, any>>]> = [];
@@ -53,6 +45,6 @@ export const object2 = <T extends ObjectLike, R extends ObjectLike>(spec?: Array
 };
 
 /**
- * @borrows ob2 as object2
+ * {@link docs/validators/object2}
  */
 export const ob2 = object2;

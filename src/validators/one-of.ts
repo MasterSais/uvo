@@ -3,15 +3,7 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, isArray, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
- * Checks value to be one of expected. Shallow comparison.
- * 
- * Type: validator. If validation is successful, then returns input value.
- * 
- * @param {Array} candidates List of possible expected values. 
- * @param {Error=} error (Optional) Any type's error. 
- * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'candidates' is invalid.
+ * {@link docs/validators/one-of}
  */
 export const oneOf = <T>(candidates: Array<T>, error?: Error): Validator<T> =>
   (
@@ -28,6 +20,6 @@ export const oneOf = <T>(candidates: Array<T>, error?: Error): Validator<T> =>
   );
 
 /**
- * @borrows oof as oneOf
+ * {@link docs/validators/one-of}
  */
 export const oof = oneOf;

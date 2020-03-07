@@ -3,13 +3,7 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, isEmpty, setMetaValidator } from '../utilities';
 
 /**
- * Checks value not to be empty.
- * 
- * Type: validator. If validation is successful, then returns input value.
- * 
- * @param {Error=} error (Optional) Any type's error. 
- * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
+ * {@link docs/validators/not-empty}
  */
 export const notEmpty = <T extends unknown>(error?: Error): Validator<T> =>
   (
@@ -20,6 +14,6 @@ export const notEmpty = <T extends unknown>(error?: Error): Validator<T> =>
   );
 
 /**
- * @borrows nem as notEmpty
+ * {@link docs/validators/not-empty}
  */
 export const nem = notEmpty;

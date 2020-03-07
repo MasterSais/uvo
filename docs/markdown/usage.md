@@ -7,10 +7,10 @@ import { number, array } from 'usov'; // for only what you need
 ```js
 import * as v from 'usov';
 
-v.number()(10)
+v.number()(10);
 // => 10
 
-v.number()('abc')
+v.number()('abc');
 // => null
 
 const simpleObj = (
@@ -33,6 +33,6 @@ simpleObj({
   id: 3, // right
   name: 'YourAwesomeUserName', // right
   role: 'invalidRole' // wrong. Will be null
-})
+});
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 ```

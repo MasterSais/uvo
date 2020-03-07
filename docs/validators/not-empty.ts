@@ -9,3 +9,24 @@
  * 
  * {@link docs/validator-result}
  */
+
+//#example
+import * as v from 'usov';
+
+v.notEmpty()(null);
+// => null
+
+v.notEmpty()(undefined);
+// => null
+
+v.notEmpty()('');
+// => null
+
+v.notEmpty()(true);
+// => true
+
+v.notEmpty()('abc');
+// => 'abc'
+
+v.notEmpty()(0);
+// => 0

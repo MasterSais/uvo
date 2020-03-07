@@ -13,3 +13,21 @@
  * 
  * @throws {string} Will throw an error if 'len' is invalid.
  */
+
+//#example
+import * as v from 'usov';
+
+v.len(3)([0, 1, 2]);
+// => [0, 1, 2]
+
+v.len(3)('abc');
+// => 'abc'
+
+v.len(3)({ length: 3 });
+// => { length: 3 }
+
+v.len(3)(10 as any);
+// => null
+
+v.len(3)({ length: '3' } as any);
+// => null

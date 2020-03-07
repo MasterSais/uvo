@@ -30,17 +30,7 @@ const validateFieldsSpec = (spec: Fields): boolean =>
   );
 
 /**
- * Checks for fields in the input object.
- * 
- * Type: validator. If validation is successful, then returns input value.
- * 
- * @param {Array|string} spec Fields specification.
- * If array, the first element represents a logical operation, otherwise a name of single field.
- * Operations: OR - '|', AND - '&', XOR - '^'. 
- * @param {Error=} error (Optional) Any type's error. 
- * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'spec' is invalid.
+ * {@link docs/validators/fields}
  */
 export const fields = <T extends ObjectLike>(spec: Fields, error?: Error): Validator<T> =>
   (
@@ -59,6 +49,6 @@ export const fields = <T extends ObjectLike>(spec: Fields, error?: Error): Valid
   );
 
 /**
- * @borrows fld as fields
+ * {@link docs/validators/fields}
  */
 export const fld = fields;

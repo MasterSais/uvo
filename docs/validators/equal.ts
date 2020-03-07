@@ -11,3 +11,15 @@
  * 
  * {@link docs/validator-result}
  */
+
+//#example
+import * as v from 'usov';
+
+v.equal(10)(10);
+// => 10
+
+v.equal('10')(10 as any);
+// => null
+
+v.equal([1, 2, 3])([1, 2, 3]); // it's not a deep equality. Only checks links.
+// => null

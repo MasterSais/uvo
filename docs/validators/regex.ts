@@ -13,3 +13,12 @@
  * 
  * @throws {string} Will throw an error if 'match' is invalid.
  */
+
+//#example
+import * as v from 'usov';
+
+v.regex(/[0-9]/)(1);
+// => 1
+
+v.regex(/[0-9]/)(11);
+// => null

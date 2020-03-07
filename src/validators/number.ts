@@ -3,13 +3,7 @@ import { Error, ErrorCallback, MetaData, Processor } from '../types';
 import { applyError, isArray, isFinite, setMetaValidator } from '../utilities';
 
 /**
- * Checks value to be a number compatible.
- * 
- * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
- * 
- * @param {Error=} error (Optional) Any type's error. 
- * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
- * @return {Processor} Function that takes: value, error callback and custom metadata.
+ * {@link docs/validators/number}
  */
 export const number = <T extends unknown>(error?: Error): Processor<T, number> =>
   (value: T, onError?: ErrorCallback, meta?: MetaData): number =>
@@ -22,6 +16,6 @@ export const number = <T extends unknown>(error?: Error): Processor<T, number> =
       ? Number(value) : applyError(error, onError, setMetaValidator(meta, V_NUM));
 
 /**
- * @borrows num as number
+ * {@link docs/validators/number}
  */
 export const num = number;

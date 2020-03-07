@@ -13,3 +13,18 @@
  * 
  * @throws {string} Will throw an error if 'len' is invalid.
  */
+
+//#example
+import * as v from 'usov';
+
+v.maxLen(3)([0, 1, 2]);
+// => [0, 1, 2]
+
+v.maxLen(3)([0, 1, 2, 3]);
+// => null
+
+v.maxLen(3)('abc');
+// => 'abc'
+
+v.maxLen(3)({ length: 3 });
+// => { length: 3 }

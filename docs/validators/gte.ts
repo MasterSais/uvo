@@ -13,3 +13,24 @@
  * 
  * @throws {string} Will throw an error if 'bound' is invalid.
  */
+
+//#example
+import * as v from 'usov';
+
+v.gte(0)(1);
+// => 1
+
+v.gte('0')('1');
+// => '1'
+
+v.gte(false)(true);
+// => true
+
+v.gte(0)(-1);
+// => null
+
+v.gte('b')('a');
+// => null
+
+v.gte(true)(false);
+// => null

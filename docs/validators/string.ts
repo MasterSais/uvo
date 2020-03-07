@@ -9,3 +9,18 @@
  * 
  * {@link docs/processor-result}
  */
+
+//#example
+import * as v from 'usov';
+
+v.string()(1);
+// => '1'
+
+v.string()('1');
+// => '1'
+
+v.string()(true);
+// => 'true'
+
+v.string()([1, 2]);
+// => null

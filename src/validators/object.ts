@@ -4,15 +4,7 @@ import { Error, ErrorCallback, MetaData, ObjectLike, ObjectRecords, Processor } 
 import { applyError, isObject, setMetaPath, setMetaValidator, toArray, throwValidatorError } from '../utilities';
 
 /**
- * Checks value to be an object.
- * 
- * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
- * 
- * @param {ObjectRecords=} spec Validators scheme for object. 
- * @param {Error=} error (Optional) Any type's error. 
- * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
- * @return {Processor} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'spec' is invalid.
+ * {@link docs/validators/object}
  */
 export const object = <T extends ObjectLike, R extends ObjectLike>(spec?: ObjectRecords, error?: Error): Processor<T, R> => {
   const specList: Array<[string, Array<Processor<any, any>>]> = [];
@@ -48,6 +40,6 @@ export const object = <T extends ObjectLike, R extends ObjectLike>(spec?: Object
 };
 
 /**
- * @borrows ob as object
+ * {@link docs/validators/object}
  */
 export const ob = object;

@@ -24,10 +24,10 @@ const simpleOne = (
   ])
 );
 
-simpleOne('abc' as unknown as Array<any>); // not an array.
+simpleOne('abc' as any); // not an array.
 // => null
 
-simpleOne([0, 1, 2]); // right.
+simpleOne([0, 1, 2]);
 // => [0, 1, 2]
 
 simpleOne([0, -1, 2]); // '-1' is negative.
@@ -37,7 +37,7 @@ simpleOne([0, 1, 'a']); // 'a' is a string.
 // => [0, 1, null]
 
 //but
-simpleOne([0, 1, '2']); // right.
+simpleOne([0, 1, '2']);
 // => [0, 1, 2]
 
 const anotherOne = (
@@ -50,7 +50,7 @@ const anotherOne = (
   )
 );
 
-anotherOne([0, 1, 2]); // right.
+anotherOne([0, 1, 2]);
 // => [0, 1, 2]
 
 anotherOne([0, 1, 20]); // '20' will be clamped to '10'.

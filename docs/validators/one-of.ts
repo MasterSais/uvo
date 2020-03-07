@@ -13,3 +13,15 @@
  * 
  * @throws {string} Will throw an error if 'candidates' is invalid.
  */
+
+//#example
+import * as v from 'usov';
+
+v.oneOf([0, 1, 2])(1);
+// => 10
+
+v.oneOf([0, 1, 2])(3);
+// => null
+
+v.oneOf([0, 1, [1]])([1]); // not a deep equality.
+// => null
