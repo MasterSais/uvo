@@ -1,1 +1,1 @@
-Common types.
+The main types used in the library.

@@ -23,9 +23,21 @@
         "content": [],
         "sub": [
           {
-            "title": "Validators",
+            "title": "Types",
             "content": [
               "./docs/markdown/types-description.txt"
+            ],
+            "sub": [
+              {
+                "parse": true,
+                "contentDir": "./docs/types"
+              }
+            ]
+          },
+          {
+            "title": "Validators",
+            "content": [
+              "./docs/markdown/validations-description.txt"
             ],
             "sub": [
               {

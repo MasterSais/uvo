@@ -7,12 +7,22 @@
 - [`Install`](#install)
 - [`Usage`](#usage)
 - [`API`](#api)
+  - [`Types`](#types)
+    - [`ErrorCallback`](#errorcallback)
+    - [`Error`](#error)
+    - [`FieldsSpec`](#fieldsspec)
+    - [`MetaData`](#metadata)
+    - [`ObjectSpec`](#objectspec)
+    - [`Processor`](#processor)
+    - [`Relevance`](#relevance)
+    - [`Result`](#result)
+    - [`Validator`](#validator)
   - [`Validators`](#validators)
     - [`array<T>(itemSpec?: Array<Processor<any, T>> | Processor<any, T>, error?: Error): Processor<Array<any>, Array<T>>`](#arraytitemspec-arrayprocessorany-t--processorany-t-error-error-processorarrayany-arrayt)
     - [`bool<T>(error?: Error): Processor<T, boolean>`](#boolterror-error-processort-boolean)
     - [`empty<T extends unknown>(error?: Error): Validator<T>`](#emptyt-extends-unknownerror-error-validatort)
     - [`equal<T>(match: T, error?: Error): Validator<T>`](#equaltmatch-t-error-error-validatort)
-    - [`fields<T extends ObjectLike>(spec: Fields, error?: Error): Validator<T>`](#fieldst-extends-objectlikespec-fields-error-error-validatort)
+    - [`fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`](#fieldst-extends-objectlikespec-fieldsspec-error-error-validatort)
     - [`gte<T>(bound: T, error?: Error): Validator<T>`](#gtetbound-t-error-error-validatort)
     - [`integer(error?: Error): Validator<number>`](#integererror-error-validatornumber)
     - [`len<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#lent-extends-lengthylen-number-error-error-validatort)
@@ -22,7 +32,7 @@
     - [`notEmpty<T extends unknown>(error?: Error): Validator<T>`](#notemptyt-extends-unknownerror-error-validatort)
     - [`notEqual<T>(match: T, error?: Error): Validator<T>`](#notequaltmatch-t-error-error-validatort)
     - [`number<T extends unknown>(error?: Error): Processor<T, number>`](#numbert-extends-unknownerror-error-processort-number)
-    - [`object<T extends ObjectLike, R extends ObjectLike>(spec?: ObjectRecords, error?: Error): Processor<T, R>`](#objectt-extends-objectlike-r-extends-objectlikespec-objectrecords-error-error-processort-r)
+    - [`object<T extends ObjectLike, R extends ObjectLike>(spec?: ObjectSpec, error?: Error): Processor<T, R>`](#objectt-extends-objectlike-r-extends-objectlikespec-objectspec-error-error-processort-r)
     - [`object2<T extends ObjectLike, R extends ObjectLike>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R>`](#object2t-extends-objectlike-r-extends-objectlikespec-arraystring-arrayprocessorany-any-error-error-processort-r)
     - [`oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>`](#oneoftcandidates-arrayt-error-error-validatort)
     - [`regex<T extends unknown>(match: RegExp, error?: Error): Validator<T>`](#regext-extends-unknownmatch-regexp-error-error-validatort)
@@ -73,8 +83,107 @@ simpleObj({
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 ```
 ## `API`
-### `Validators`
-Common types.
+### `Types`
+The main types used in the library.
+#### `ErrorCallback`
+
+Calls on validation error.
+
+```js
+type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => void;
+```
+
+#### `Error`
+
+Any type's error. Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
+
+```js
+type Error = (
+  string
+  | boolean
+  | number
+  | Record<any, any>
+  | Array<any>
+  | ((meta: MetaData) => any)
+);
+```
+
+#### `FieldsSpec`
+
+Specification for 'fields' validator.
+
+```js
+type FieldsSpec = (
+  string
+  | [
+    ('&' | '|' | '^'),
+    FieldsSpec | string,
+    FieldsSpec | string,
+    ...Array<FieldsSpec | string>
+  ]
+);
+```
+
+#### `MetaData`
+
+Internal data for errors and dependencies.
+
+```js
+type MetaData = {
+  path: Array<string | number>;
+  validator?: string;
+  params: Array<any>;
+  _deps: Record<string, any>;
+};
+```
+
+#### `ObjectSpec`
+
+Specification for 'object' and 'object2' validators.
+
+```js
+type ObjectSpec = Record<string, Array<Processor<any, any>> | Processor<any, any>>;
+```
+
+#### `Processor`
+
+Processes value.
+
+```js
+type Processor<T, R> = (value: T, onError?: ErrorCallback, meta?: MetaData) => R;
+```
+
+#### `Relevance`
+
+Error's relevancy status.
+
+```js
+type Relevance = {
+  value: boolean;
+};
+```
+
+#### `Result`
+
+'WithError' container's result. Will be null if no errors.
+
+```js
+type Result<T> = {
+  result: T;
+  errors?: Array<any>;
+};
+```
+
+#### `Validator`
+
+Validates value.
+
+```js
+type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
+```
+
+### `Validators`
+Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.
 #### `array<T>(itemSpec?: Array<Processor<any, T>> | Processor<any, T>, error?: Error): Processor<Array<any>, Array<T>>`
 
 Checks value to be an array.
@@ -194,7 +303,7 @@ v.equal([1, 2, 3])([1, 2, 3]); // it's not a deep equality. Only checks links.
 // => null
 ```
 
-#### `fields<T extends ObjectLike>(spec: Fields, error?: Error): Validator<T>`
+#### `fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`
 
 Checks for fields in the input object.
 
@@ -434,7 +543,7 @@ v.number()('12.1');
 // => 12.1
 ```
 
-#### `object<T extends ObjectLike, R extends ObjectLike>(spec?: ObjectRecords, error?: Error): Processor<T, R>`
+#### `object<T extends ObjectLike, R extends ObjectLike>(spec?: ObjectSpec, error?: Error): Processor<T, R>`
 
 Checks value to be an object.
 

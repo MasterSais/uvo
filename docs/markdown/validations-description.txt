@@ -1,0 +1,1 @@
+Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.

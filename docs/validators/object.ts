@@ -1,11 +1,11 @@
 /**
- * @name {object<T extends ObjectLike, R extends ObjectLike>(spec?: ObjectRecords, error?: Error): Processor<T, R>}
+ * @name {object<T extends ObjectLike, R extends ObjectLike>(spec?: ObjectSpec, error?: Error): Processor<T, R>}
  * 
  * @desc Checks value to be an object.
  * 
  * {@link docs/type-validator-processor}
  * 
- * @param {ObjectRecords=} spec Validators scheme for object.
+ * @param {ObjectSpec=} spec Validators scheme for object.
  * 
  * {@link docs/error-param}
  * 
