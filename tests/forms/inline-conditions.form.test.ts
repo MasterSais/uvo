@@ -1,4 +1,3 @@
-import { withMeta } from '@lib/containers/with-meta';
 import { consecutive } from '@lib/groupers/consecutive';
 import { or } from '@lib/groupers/or';
 import { gte } from '@lib/validators/gte';
@@ -11,15 +10,13 @@ import { string } from '@lib/validators/string';
 
 test('inline conditions', () => {
   const validator = (
-    withMeta(
-      object({
-        id: [or(
-          consecutive(number(), gte(0)),
-          consecutive(string(), len(36))
-        )],
-        name: [string(), minLen(10)]
-      })
-    )
+    object({
+      id: [or(
+        consecutive(number(), gte(0)),
+        consecutive(string(), len(36))
+      )],
+      name: [string(), minLen(10)]
+    })
   );
 
   expect(
@@ -41,15 +38,13 @@ test('inline conditions', () => {
 
 test('inline conditions 2', () => {
   const validator = (
-    withMeta(
-      object2([
-        ['id', or(
-          consecutive(number(), gte(0)),
-          consecutive(string(), len(36))
-        )],
-        ['name', string(), minLen(10)]
-      ])
-    )
+    object2([
+      ['id', or(
+        consecutive(number(), gte(0)),
+        consecutive(string(), len(36))
+      )],
+      ['name', string(), minLen(10)]
+    ])
   );
 
   expect(

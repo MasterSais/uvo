@@ -1,5 +1,5 @@
 /**
- * @name {withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>>}
+ * @name {withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Processor<T, Result<R>>}
  * 
  * @desc Provides error handling mechanism.
  * 

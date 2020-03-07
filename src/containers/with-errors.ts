@@ -5,22 +5,22 @@ import { isFunction, throwValidatorError } from '../utilities';
 /**
  * {@link docs/containers/with-errors}
  */
-export const withErrors = <T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>> =>
+export const withErrors = <T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Processor<T, Result<R>> =>
   (
     isFunction(validator)
       ? (
         (value: T, _onError?: ErrorCallback, meta?: MetaData): Result<R> => {
           const errors: Array<{ error: any; relevance: Relevance }> = [];
 
-          const addError = (error: any, relevance?: Relevance) =>
-            errors.push({ error, relevance: relevance || { value: true } });
+          const addError = (error?: any, relevance?: Relevance) =>
+            error && errors.push({ error, relevance: relevance || { value: true } });
 
-          const errorProcessor: ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) =>
-            error && (
-              isFunction(error)
+          const errorProcessor: ErrorCallback = (error?: Error, meta?: MetaData, relevance?: Relevance) =>
+            commonErrorProcessor
+              ? addError(commonErrorProcessor(error, meta), relevance)
+              : isFunction(error)
                 ? addError((error as Function)(meta), relevance)
-                : addError(error, relevance)
-            ) || commonErrorProcessor && addError(commonErrorProcessor(meta), relevance);
+                : addError(error, relevance);
 
           const result = validator(value, errorProcessor, meta);
 

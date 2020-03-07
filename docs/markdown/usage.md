@@ -1,5 +1,5 @@
 ```js
-import * as v from 'usov'; // for everything (recommended in all cases for better minification result e.g. in webpack)
+import * as v from 'usov'; // for everything (recommended for better minification results e.g. in webpack)
 // or
 import { number, array } from 'usov'; // for only what you need
 ```

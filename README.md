@@ -49,14 +49,16 @@
     - [`parallel<T>(...validators: Array<Validator<T>>): Validator<T>`](#paralleltvalidators-arrayvalidatort-validatort)
     - [`transform<T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R>`](#transformt-rprocessors-arrayprocessort--r-r-processort--r-r)
   - [`Containers`](#containers)
-    - [`withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>>`](#witherrorst-rvalidator-processort-r-commonerrorprocessor-meta-metadata--error-processort-resultr)
+    - [`withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Processor<T, Result<R>>`](#witherrorst-rvalidator-processort-r-commonerrorprocessor-error-error-meta-metadata--error-processort-resultr)
     - [`withMeta<T, R>(validator: Processor<T, R>): Processor<T, R>`](#withmetat-rvalidator-processort-r-processort-r)
     - [`withPromise<T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>>`](#withpromiset-rvalidator-processort-r--resultr-processort-promiser--arrayerror)
   - [`Spreaders`](#spreaders)
     - [`getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>`](#getdeptfield-string-prevalidator-dep-t--validatort--arrayvalidatort-validatort)
     - [`setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>`](#setdeptfield-string-extvalue-any--value-t-meta-metadata--any-validatort)
     - [`setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>`](#setvdeptfield-string-validators-arrayvalidatort-validatort)
-    - [`useDefault<T, R>(defaultValue: R | (() => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>`](#usedefaultt-rdefaultvalue-r----r-validators-arrayprocessort--r-r-processort--r-r)
+    - [`useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>`](#usedefaultt-rdefaultvalue-r--meta-metadata--r-validators-arrayprocessort--r-r-processort--r-r)
+- [`Custom validators`](#custom-validators)
+- [`Examples`](#examples)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
@@ -65,7 +67,7 @@ npm install usov
 ```
 ## `Usage`
 ```js
-import * as v from 'usov'; // for everything (recommended in all cases for better minification result e.g. in webpack)
+import * as v from 'usov'; // for everything (recommended for better minification results e.g. in webpack)
 // or
 import { number, array } from 'usov'; // for only what you need
 ```
@@ -853,7 +855,7 @@ unchi(8.3);
 
 ### `Containers`
 Embraces validators with additional data processing.
-#### `withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>>`
+#### `withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Processor<T, Result<R>>`
 
 Provides error handling mechanism.
 
@@ -1037,7 +1039,7 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 // => { id: 1, node: { id: null, node: null } }
 ```
 
-#### `useDefault<T, R>(defaultValue: R | (() => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>`
+#### `useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>`
 
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators.
 
@@ -1061,3 +1063,102 @@ simpleOne('Stringuuuuuuuuuu');
 // => 'Stringuuuuuuuuuu'
 ```
 
+## `Custom validators`
+You can create your own validator or processor.
+
+Base validator template:
+```js
+yourValidatorName(...yourProbableParams: Array<any>, error?: Error): Validator<any> =>
+  (
+    (value: any, onError?: ErrorCallback, meta?: MetaData): any =>
+      (
+        ... check input value
+      )
+        ? value : (onError && onError(error, meta), null)
+  );
+```
+
+Simple example:
+```js
+const gte = (bound: number, error?: Error): Validator<number> =>
+  (
+    (value: number, onError?: ErrorCallback, meta?: MetaData): number =>
+      (
+        value >= bound
+      )
+        ? value : (onError && onError(error, meta), null)
+  );
+```
+
+You must provide validator name and params into meta scheme for proper errors handling.
+```js
+... onError(error, meta && { ...meta, validator: 'name', params: [... your params] }) ...
+```
+## `Examples`
+All examples use advanced object schema 'object2' as recommended solution.
+
+Schema with custom user errors:
+```js
+v.withErrors(
+  v.object2([
+    ['id',
+      v.notEmpty('Empty id'),
+      v.number('Not a number'),
+      v.parallel(
+        v.gte(0, 'Must not be negative'),
+        v.integer('Must be an integer')
+      )
+    ],
+    ['name',
+      v.notEmpty('Empty name'),
+      v.string(),
+      v.minLen(10, 'Min length is 10')
+    ]
+  ])
+)
+```
+
+Schema with common error processor:
+```js
+v.withErrors(
+  v.object2([
+    ['id',
+      v.notEmpty(),
+      v.number('Custom error message'), // wanna add some info for common error processor?
+      v.parallel(
+        v.gte(0),
+        v.integer()
+      )
+    ],
+    ['name',
+      v.notEmpty(),
+      v.string(),
+      v.minLen(10)
+    ]
+  ]), ({ path, validator }, error) => ({ path, validator, error }) // catches all errors in the schema.
+)
+```
+
+Before validation checks required fields existence.
+```js
+v.consecutive(
+  v.fields(['&', ['^', 'id', 'guid'], 'login']),
+  v.object2([
+    ['id', v.number(), v.gte(0)],
+    ['guid', v.string(), v.len(36)],
+    ['login', v.string(), v.minLen(10)]
+  ])
+)
+```
+
+Conditional validation. Id can be an integer or a GUID.
+```js
+v.object2([
+  ['id', v.or(
+    v.consecutive(v.number(), v.integer(), v.gte(0)),
+    v.consecutive(v.string(), v.len(36)) // !notice: prefer to use 'regex' for GUID validation.
+  )],
+  ['name', v.string(), v.minLen(10)]
+])
+```
+

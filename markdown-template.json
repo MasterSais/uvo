@@ -95,6 +95,18 @@
             ]
           }
         ]
+      },
+      {
+        "title": "Custom validators",
+        "content": [
+          "./docs/markdown/validator-creation.md"
+        ]
+      },
+      {
+        "title": "Examples",
+        "content": [
+          "./docs/markdown/examples.md"
+        ]
       }
     ]
   }

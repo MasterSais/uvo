@@ -1,5 +1,5 @@
 /**
- * @name {useDefault<T, R>(defaultValue: R | (() => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>}
+ * @name {useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>}
  * 
  * @desc Puts default value into spreaded structure.
  * If input value is empty, puts default value instead, otherwise validates input values with provided validators.

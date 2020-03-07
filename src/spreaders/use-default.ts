@@ -5,7 +5,7 @@ import { isEmpty, isFunction, isValidatorsSequence, reduceValidators, throwValid
 /**
  * {@link docs/spreaders/use-default}
  */
-export const useDefault = <T, R>(defaultValue: R | (() => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R> =>
+export const useDefault = <T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R> =>
   (
     (isValidatorsSequence(validators))
       ? (
