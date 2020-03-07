@@ -7,7 +7,7 @@
  * 
  * {@link docs/error-param}
  * 
- * {@link docs/processor-result}
+ * {@link docs/validator-result}
  */
 
 //#example

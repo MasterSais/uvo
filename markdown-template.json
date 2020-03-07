@@ -45,6 +45,18 @@
                 "contentDir": "./docs/validators"
               }
             ]
+          },
+          {
+            "title": "Processors",
+            "content": [
+              "./docs/markdown/processors-description.txt"
+            ],
+            "sub": [
+              {
+                "parse": true,
+                "contentDir": "./docs/processors"
+              }
+            ]
           }
         ]
       }

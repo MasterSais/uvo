@@ -9,7 +9,7 @@
  * 
  * {@link docs/error-param}
  * 
- * {@link docs/processor-result}
+ * {@link docs/validator-result}
  * 
  * @throws {string} Will throw an error if 'spec' is invalid.
  */

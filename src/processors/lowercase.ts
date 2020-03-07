@@ -1,16 +1,12 @@
 import { Processor } from '../types';
 
 /**
- * Lowercase input string.
- * 
- * Type: processor. Processors do not check params' and values' types. Escape usage without validators.
- * 
- * @return {Processor} Function that takes value.
+ * {@link docs/processors/lowercase}
  */
 export const lowercase = (): Processor<string, string> =>
   (value: string): string => value.toLowerCase();
 
 /**
- * @borrows lcs as lowercase
+ * {@link docs/processors/lowercase}
  */
 export const lcs = lowercase;

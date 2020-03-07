@@ -1,3 +1,3 @@
 /**
- * Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
+ * Type: processor. Processors do not check params' and values' types. Escape usage without validators.
  */

@@ -37,6 +37,12 @@
     - [`oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>`](#oneoftcandidates-arrayt-error-error-validatort)
     - [`regex<T extends unknown>(match: RegExp, error?: Error): Validator<T>`](#regext-extends-unknownmatch-regexp-error-error-validatort)
     - [`string<T>(error?: Error): Processor<T, string>`](#stringterror-error-processort-string)
+  - [`Processors`](#processors)
+    - [`clamp<T>(min: T, max: T): Processor<T, T>`](#clamptmin-t-max-t-processort-t)
+    - [`erase<T>(): Processor<T, T>`](#eraset-processort-t)
+    - [`lowercase(): Processor<string, string>`](#lowercase-processorstring-string)
+    - [`round(): Processor<number, number>`](#round-processornumber-number)
+    - [`uppercase(): Processor<string, string>`](#uppercase-processorstring-string)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
@@ -650,5 +656,83 @@ v.string()(true);
 
 v.string()([1, 2]);
 // => null
+```
+
+### `Processors`
+Processes input value. No input types check. Recommended to use validators before.
+#### `clamp<T>(min: T, max: T): Processor<T, T>`
+
+Clamps value to required boundaries.
+
+```js
+import * as v from 'usov';
+
+v.clamp(0, 5)(2);
+// => 2
+
+v.clamp(0, 5)(-2);
+// => 0
+
+v.clamp(0, 5)(7);
+// => 5
+
+v.clamp('c', 'e')('d');
+// => 'd'
+
+v.clamp('c', 'e')('a');
+// => 'c'
+
+v.clamp('c', 'e')('f');
+// => 'e'
+```
+
+#### `erase<T>(): Processor<T, T>`
+
+Erase input.
+
+```js
+import * as v from 'usov';
+
+v.erase()(2);
+// => null
+```
+
+#### `lowercase(): Processor<string, string>`
+
+Lowercase input string.
+
+```js
+import * as v from 'usov';
+
+v.lowercase()('ABC');
+// => 'abc'
+```
+
+#### `round(): Processor<number, number>`
+
+Round input number.
+
+```js
+import * as v from 'usov';
+
+v.round()(10);
+// => 10
+
+v.round()(10.2);
+// => 10
+
+v.round()(9.8);
+// => 10
+```
+
+#### `uppercase(): Processor<string, string>`
+
+Uppercase input string.
+
+```js
+import * as v from 'usov';
+
+v.uppercase()('abc');
+// => 'ABC'
 ```
 
