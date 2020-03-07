@@ -69,6 +69,18 @@
                 "contentDir": "./docs/groupers"
               }
             ]
+          },
+          {
+            "title": "Containers",
+            "content": [
+              "./docs/markdown/containers-description.txt"
+            ],
+            "sub": [
+              {
+                "parse": true,
+                "contentDir": "./docs/containers"
+              }
+            ]
           }
         ]
       }

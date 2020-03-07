@@ -1,17 +1,15 @@
 /**
- * @name {parallel<T>(...validators: Array<Validator<T>>): Validator<T>}
+ * @name {withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>>}
  * 
- * @desc Groups validators in parallel.
- * The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).
- * Beware of using processors inside.
+ * @desc Provides error handling mechanism.
  * 
- * {@link docs/type-grouper}
+ * {@link docs/type-container}
  * 
- * @param {...Validator} validators Validators list.
+ * @param {Processor} validator Validator.
  * 
  * {@link docs/validator-result}
  * 
- * @throws {string} Will throw an error if 'validators' is invalid.
+ * @throws {string} Will throw an error if 'validator' is invalid.
  */
 
 //#example

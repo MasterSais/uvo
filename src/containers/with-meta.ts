@@ -3,13 +3,7 @@ import { ErrorCallback, Processor } from '../types';
 import { isFunction, throwValidatorError } from '../utilities';
 
 /**
- * Provides meta structure.
- * 
- * Type: container. Embraces validator. Provides additional processing.
- * 
- * @param {Processor} validator Validator.
- * @return {Processor} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'validator' is invalid.
+ * {@link docs/containers/with-meta}
  */
 export const withMeta = <T, R>(validator: Processor<T, R>): Processor<T, R> =>
   (

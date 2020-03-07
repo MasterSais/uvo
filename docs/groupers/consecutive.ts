@@ -17,18 +17,18 @@
 //#example
 import * as v from 'usov';
 
-const uchi = (
+const unchi = (
   v.consecutive(
     v.number(),
     v.gte(0)
   )
 );
 
-uchi(10);
+unchi(10);
 // => 10
 
-uchi(-1);
+unchi(-1);
 // => null
 
-uchi('a');
+unchi('a');
 // => null

@@ -16,18 +16,18 @@
 //#example
 import * as v from 'usov';
 
-const uchi = (
+const unchi = (
   v.or(
     v.number(),
     v.bool()
   )
 );
 
-uchi(10);
+unchi(10);
 // => 10
 
-uchi('true');
+unchi('true');
 // => 'true'
 
-uchi('abc');
+unchi('abc');
 // => null

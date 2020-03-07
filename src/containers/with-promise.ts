@@ -3,13 +3,7 @@ import { Error, ErrorCallback, MetaData, Processor, Result } from '../types';
 import { isFunction, throwValidatorError } from '../utilities';
 
 /**
- * Convert result to promise.
- * 
- * Type: container. Embraces validator. Provides additional processing.
- * 
- * @param {Processor} validator Validator.
- * @return {Processor} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'validator' is invalid.
+ * {@link docs/containers/with-promise}
  */
 export const withPromise = <T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>> =>
   (

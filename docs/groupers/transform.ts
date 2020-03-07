@@ -17,15 +17,15 @@
 //#example
 import * as v from 'usov';
 
-const uchi = (
+const unchi = (
   v.transform(
     v.round(),
     v.clamp(0, 10)
   )
 );
 
-uchi(10.5);
+unchi(10.5);
 // => 10
 
-uchi(8.3);
+unchi(8.3);
 // => 8

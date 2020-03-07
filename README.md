@@ -48,6 +48,10 @@
     - [`or<T>(...validators: Array<Processor<T, unknown>>): Processor<T, unknown>`](#ortvalidators-arrayprocessort-unknown-processort-unknown)
     - [`parallel<T>(...validators: Array<Validator<T>>): Validator<T>`](#paralleltvalidators-arrayvalidatort-validatort)
     - [`transform<T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R>`](#transformt-rprocessors-arrayprocessort--r-r-processort--r-r)
+  - [`Containers`](#containers)
+    - [`withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>>`](#witherrorst-rvalidator-processort-r-commonerrorprocessor-meta-metadata--error-processort-resultr)
+    - [`withMeta<T, R>(validator: Processor<T, R>): Processor<T, R>`](#withmetat-rvalidator-processort-r-processort-r)
+    - [`withPromise<T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>>`](#withpromiset-rvalidator-processort-r--resultr-processort-promiser--arrayerror)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
@@ -750,20 +754,20 @@ Groups validators sequentially. Passes value through a sequence of validators un
 ```js
 import * as v from 'usov';
 
-const uchi = (
+const unchi = (
   v.consecutive(
     v.number(),
     v.gte(0)
   )
 );
 
-uchi(10);
+unchi(10);
 // => 10
 
-uchi(-1);
+unchi(-1);
 // => null
 
-uchi('a');
+unchi('a');
 // => null
 ```
 
@@ -774,20 +778,20 @@ Groups validators sequentially. Searches for first successful validator's result
 ```js
 import * as v from 'usov';
 
-const uchi = (
+const unchi = (
   v.or(
     v.number(),
     v.bool()
   )
 );
 
-uchi(10);
+unchi(10);
 // => 10
 
-uchi('true');
+unchi('true');
 // => 'true'
 
-uchi('abc');
+unchi('abc');
 // => null
 ```
 
@@ -798,28 +802,26 @@ Groups validators in parallel. The main goal is to catch all errors (pass value 
 ```js
 import * as v from 'usov';
 
-const uchi = (
+const unchi = (
   v.withErrors(
-    v.withMeta(
-      v.parallel(
-        v.lte(10, 'ERR1'),
-        v.gte(0, 'ERR2'),
-        v.integer('ERR3')
-      )
+    v.parallel(
+      v.lte(10, 'ERR1'),
+      v.gte(0, 'ERR2'),
+      v.integer('ERR3')
     )
   )
 );
 
-uchi(10);
+unchi(10);
 // => { result: 10, errors: null }
 
-uchi(-1);
+unchi(-1);
 // => { result: null, errors: ['ERR2'] }
 
-uchi(11);
+unchi(11);
 // => { result: null, errors: ['ERR1'] }
 
-uchi(11.2);
+unchi(11.2);
 // => { result: null, errors: ['ERR1', 'ERR3'] }
 ```
 
@@ -830,17 +832,116 @@ Groups processors sequentially. Passes value through a sequence of processors. T
 ```js
 import * as v from 'usov';
 
-const uchi = (
+const unchi = (
   v.transform(
     v.round(),
     v.clamp(0, 10)
   )
 );
 
-uchi(10.5);
+unchi(10.5);
 // => 10
 
-uchi(8.3);
+unchi(8.3);
 // => 8
+```
+
+### `Containers`
+Embraces validators with additional data processing.
+#### `withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>>`
+
+Provides error handling mechanism.
+
+```js
+import * as v from 'usov';
+
+const unchi = (
+  v.withErrors(
+    v.parallel(
+      v.lte(10, 'ERR1'),
+      v.gte(0, 'ERR2'),
+      v.integer('ERR3')
+    )
+  )
+);
+
+unchi(10);
+// => { result: 10, errors: null }
+
+unchi(-1);
+// => { result: null, errors: ['ERR2'] }
+
+unchi(11);
+// => { result: null, errors: ['ERR1'] }
+
+unchi(11.2);
+// => { result: null, errors: ['ERR1', 'ERR3'] }
+```
+
+#### `withMeta<T, R>(validator: Processor<T, R>): Processor<T, R>`
+
+Provides meta structure.
+
+```js
+import * as v from 'usov';
+
+const unchi = (
+  v.withErrors(
+    v.withMeta( // provides meta object into schema.
+      v.parallel(
+        v.lte(10, ({ validator }) => validator), // returns validator name as error.
+        v.gte(0, ({ validator }) => validator),
+        v.integer(({ validator }) => validator)
+      )
+    )
+  )
+);
+
+unchi(10);
+// => { result: 10, errors: null }
+
+unchi(-1);
+// => { result: null, errors: ['gte'] }
+
+unchi(11);
+// => { result: null, errors: ['lte'] }
+
+unchi(11.2);
+// => { result: null, errors: ['lte', 'integer'] }
+```
+
+#### `withPromise<T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>>`
+
+Convert result to promise.
+
+```js
+import * as v from 'usov';
+
+const unchi = (
+  v.withPromise(
+    v.number('ERR')
+  )
+);
+
+await unchi(10);
+// => 10
+
+await unchi('abc'); // error only works with 'withError' container.
+// => null
+
+const withErrorUnchi = (
+  v.withPromise(
+    v.number('ERR')
+  )
+);
+
+await withErrorUnchi(10);
+// => 10
+
+try {
+  await withErrorUnchi('abc');
+} catch (errors) {
+  // => ['ERR']
+}
 ```
 

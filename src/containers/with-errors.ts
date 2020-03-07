@@ -3,13 +3,7 @@ import { Error, ErrorCallback, MetaData, Processor, Relevance, Result } from '..
 import { isFunction, throwValidatorError } from '../utilities';
 
 /**
- * Provides error handling mechanism.
- * 
- * Type: container. Embraces validator. Provides additional processing.
- * 
- * @param {Processor} validator Validator.
- * @return {Processor} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'validator' is invalid.
+ * {@link docs/containers/with-errors}
  */
 export const withErrors = <T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((meta?: MetaData) => Error)): Processor<T, Result<R>> =>
   (
