@@ -11,8 +11,3 @@ export const equal = <T>(match: T, error?: Error): Validator<T> =>
       value === match
     )
       ? value : applyError(error, onError, setMetaValidator(meta, V_EQ, [match]));
-
-/**
- * {@link docs/validators/equal}
- */
-export const eq = equal;

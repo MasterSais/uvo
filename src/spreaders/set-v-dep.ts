@@ -27,8 +27,3 @@ export const setVDep = <T>(field: string, ...validators: Array<Validator<T>>): V
       )
       : throwValidatorError(S_SVDP)
   );
-
-/**
- * @borrows svdp as setVDep
- */
-export const svdp = setVDep;

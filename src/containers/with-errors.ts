@@ -40,8 +40,3 @@ export const withErrors = <T, R>(validator: Processor<T, R>, commonErrorProcesso
       )
       : throwValidatorError(C_ERR)
   );
-
-/**
- * @borrows wrr as withErrors
- */
-export const wrr = withErrors;

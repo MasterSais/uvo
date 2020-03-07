@@ -38,8 +38,3 @@ export const object = <T extends ObjectLike, R extends ObjectLike>(spec?: Object
     return throwValidatorError(V_OBJ);
   }
 };
-
-/**
- * {@link docs/validators/object}
- */
-export const ob = object;

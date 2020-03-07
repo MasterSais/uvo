@@ -47,8 +47,3 @@ export const fields = <T extends ObjectLike>(spec: FieldsSpec, error?: Error): V
       )
       : throwValidatorError(V_FIELDS)
   );
-
-/**
- * {@link docs/validators/fields}
- */
-export const fld = fields;

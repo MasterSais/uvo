@@ -3,14 +3,7 @@ import { Error, ErrorCallback, MetaData, Processor, Relevance } from '../types';
 import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
- * Groups validators sequentially.
- * Searches for first successful validator's result.
- * 
- * Type: grouper. Groups validators into one.
- * 
- * @param {...Processor} validators Validators list.
- * @return {Processor} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'validators' is invalid.
+ * {@link docs/groupers/or}
  */
 export const or = <T>(...validators: Array<Processor<T, unknown>>): Processor<T, unknown> =>
   (

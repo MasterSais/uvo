@@ -18,8 +18,3 @@ export const oneOf = <T>(candidates: Array<T>, error?: Error): Validator<T> =>
       )
       : throwValidatorError(V_OOF)
   );
-
-/**
- * {@link docs/validators/one-of}
- */
-export const oof = oneOf;

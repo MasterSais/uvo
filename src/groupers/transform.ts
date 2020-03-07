@@ -3,15 +3,7 @@ import { Processor } from '../types';
 import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
- * Groups processors sequentially.
- * Passes value through a sequence of processors.
- * Takes only processors (doesn't check errors).
- * 
- * Type: grouper. Groups processors into one.
- * 
- * @param {...Processor} processors Processors list.
- * @return {Processor} Function that takes value.
- * @throws {string} Will throw an error if 'processors' is invalid.
+ * {@link docs/groupers/transform}
  */
 export const transform = <T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R> =>
   (
@@ -22,8 +14,3 @@ export const transform = <T, R>(...processors: Array<Processor<T | R, R>>): Proc
       )
       : throwValidatorError(G_TRM)
   );
-
-/**
- * @borrows tfm as transform
- */
-export const tfm = transform;

@@ -13,8 +13,3 @@ export const string = <T>(error?: Error): Processor<T, string> =>
       && !isFunction(value)
     )
       ? String(value) : applyError(error, onError, setMetaValidator(meta, V_STR));
-
-/**
- * {@link docs/validators/string}
- */
-export const str = string;

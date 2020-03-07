@@ -43,6 +43,11 @@
     - [`lowercase(): Processor<string, string>`](#lowercase-processorstring-string)
     - [`round(): Processor<number, number>`](#round-processornumber-number)
     - [`uppercase(): Processor<string, string>`](#uppercase-processorstring-string)
+  - [`Groupers`](#groupers)
+    - [`consecutive<T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T>`](#consecutivetvalidators-arrayprocessorany-t--processorany-t-processorany-t)
+    - [`or<T>(...validators: Array<Processor<T, unknown>>): Processor<T, unknown>`](#ortvalidators-arrayprocessort-unknown-processort-unknown)
+    - [`parallel<T>(...validators: Array<Validator<T>>): Validator<T>`](#paralleltvalidators-arrayvalidatort-validatort)
+    - [`transform<T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R>`](#transformt-rprocessors-arrayprocessort--r-r-processort--r-r)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
@@ -734,5 +739,108 @@ import * as v from 'usov';
 
 v.uppercase()('abc');
 // => 'ABC'
+```
+
+### `Groupers`
+Groups validators in a specific way.
+#### `consecutive<T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T>`
+
+Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' validator's scheme for fields.
+
+```js
+import * as v from 'usov';
+
+const uchi = (
+  v.consecutive(
+    v.number(),
+    v.gte(0)
+  )
+);
+
+uchi(10);
+// => 10
+
+uchi(-1);
+// => null
+
+uchi('a');
+// => null
+```
+
+#### `or<T>(...validators: Array<Processor<T, unknown>>): Processor<T, unknown>`
+
+Groups validators sequentially. Searches for first successful validator's result.
+
+```js
+import * as v from 'usov';
+
+const uchi = (
+  v.or(
+    v.number(),
+    v.bool()
+  )
+);
+
+uchi(10);
+// => 10
+
+uchi('true');
+// => 'true'
+
+uchi('abc');
+// => null
+```
+
+#### `parallel<T>(...validators: Array<Validator<T>>): Validator<T>`
+
+Groups validators in parallel. The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere). Beware of using processors inside.
+
+```js
+import * as v from 'usov';
+
+const uchi = (
+  v.withErrors(
+    v.withMeta(
+      v.parallel(
+        v.lte(10, 'ERR1'),
+        v.gte(0, 'ERR2'),
+        v.integer('ERR3')
+      )
+    )
+  )
+);
+
+uchi(10);
+// => { result: 10, errors: null }
+
+uchi(-1);
+// => { result: null, errors: ['ERR2'] }
+
+uchi(11);
+// => { result: null, errors: ['ERR1'] }
+
+uchi(11.2);
+// => { result: null, errors: ['ERR1', 'ERR3'] }
+```
+
+#### `transform<T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R>`
+
+Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
+
+```js
+import * as v from 'usov';
+
+const uchi = (
+  v.transform(
+    v.round(),
+    v.clamp(0, 10)
+  )
+);
+
+uchi(10.5);
+// => 10
+
+uchi(8.3);
+// => 8
 ```
 

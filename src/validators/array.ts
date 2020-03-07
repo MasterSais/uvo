@@ -28,8 +28,3 @@ export const array = <T>(itemSpec?: Array<Processor<any, T>> | Processor<any, T>
     return throwValidatorError(V_ARR);
   }
 };
-
-/**
- * {@link docs/validators/array}
- */
-export const arr = array;

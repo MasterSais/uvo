@@ -12,8 +12,3 @@ export const empty = <T extends unknown>(error?: Error): Validator<T> =>
         ? value
         : applyError(error, onError, setMetaValidator(meta, V_EM, []))
   );
-
-/**
- * {@link docs/validators/empty}
- */
-export const em = empty;

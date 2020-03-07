@@ -19,8 +19,3 @@ export const bool = <T>(error?: Error): Processor<T, boolean> =>
         : applyError(error, onError, setMetaValidator(meta, V_BLN))
     );
   };
-
-/**
- * {@link docs/validators/bool}
- */
-export const bln = bool;

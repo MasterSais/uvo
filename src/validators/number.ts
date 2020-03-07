@@ -14,8 +14,3 @@ export const number = <T extends unknown>(error?: Error): Processor<T, number> =
       && isFinite(value)
     )
       ? Number(value) : applyError(error, onError, setMetaValidator(meta, V_NUM));
-
-/**
- * {@link docs/validators/number}
- */
-export const num = number;

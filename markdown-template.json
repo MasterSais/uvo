@@ -57,6 +57,18 @@
                 "contentDir": "./docs/processors"
               }
             ]
+          },
+          {
+            "title": "Groupers",
+            "content": [
+              "./docs/markdown/groupers-description.txt"
+            ],
+            "sub": [
+              {
+                "parse": true,
+                "contentDir": "./docs/groupers"
+              }
+            ]
           }
         ]
       }

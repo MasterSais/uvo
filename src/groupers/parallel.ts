@@ -3,15 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
- * Groups validators in parallel.
- * The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).
- * Beware of using processors inside.
- * 
- * Type: grouper. Groups validators into one.
- * 
- * @param {...Validator} validators Validators list.
- * @return {Validator} Function that takes: value, error callback and custom metadata.
- * @throws {string} Will throw an error if 'validators' is invalid.
+ * {@link docs/groupers/parallel}
  */
 export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
   (
@@ -27,8 +19,3 @@ export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
       )
       : throwValidatorError(G_PRLL)
   );
-
-/**
- * @borrows prl as parallel
- */
-export const prl = parallel;

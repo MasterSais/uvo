@@ -35,8 +35,3 @@ export const setDep = <T>(field: string, extValue?: T | ((value: T, meta?: MetaD
       )
       : throwValidatorError(S_SDP)
   );
-
-/**
- * @borrows sdp as setDep
- */
-export const sdp = setDep;

@@ -5,8 +5,3 @@ import { Processor } from '../types';
  */
 export const round = (): Processor<number, number> =>
   Math.round;
-
-/**
- * {@link docs/processors/round}
- */
-export const rnd = round;

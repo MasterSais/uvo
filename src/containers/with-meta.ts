@@ -20,8 +20,3 @@ export const withMeta = <T, R>(validator: Processor<T, R>): Processor<T, R> =>
       )
       : throwValidatorError(C_MET)
   );
-
-/**
- * @borrows wmt as withMeta
- */
-export const wmt = withMeta;

@@ -20,8 +20,3 @@ export const maxLen = <T extends Lengthy>(len: number, error?: Error): Validator
       )
       : throwValidatorError(V_MXLEN)
   );
-
-/**
- * {@link docs/validators/max-len}
- */
-export const mxl = maxLen;

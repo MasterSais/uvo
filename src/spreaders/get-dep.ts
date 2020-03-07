@@ -45,8 +45,3 @@ export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T>
       )
       : throwValidatorError(S_GDP)
   );
-
-/**
- * @borrows gdp as getDep
- */
-export const gdp = getDep;

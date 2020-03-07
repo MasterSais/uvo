@@ -28,8 +28,3 @@ export const useDefault = <T, R>(defaultValue: R | (() => R), ...validators: Arr
       )
       : throwValidatorError(S_DFT)
   );
-  
-/**
- * @borrows dft as useDefault
- */
-export const dft = useDefault;

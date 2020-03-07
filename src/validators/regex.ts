@@ -17,8 +17,3 @@ export const regex = <T extends unknown>(match: RegExp, error?: Error): Validato
       )
       : throwValidatorError(V_REG)
   );
-
-/**
- * {@link docs/validators/regex}
- */
-export const rgx = regex;
