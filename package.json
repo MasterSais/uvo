@@ -26,11 +26,15 @@
     "type": "git",
     "url": "https://github.com/MasterSais/barideta.git"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "es6",
     "es2015",
     "barideta",
-    "jsbarideta",
+    "js",
+    "nodejs",
     "validator"
   ],
   "author": "Yauheni Zhestiannikau (MasterSais) <evgensvvv@gmail.com>",
