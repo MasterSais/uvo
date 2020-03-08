@@ -3,5 +3,5 @@ import { Processor } from '../types';
 /**
  * {@link docs/processors/erase}
  */
-export const erase = <T>(): Processor<T, T> =>
-  (): T => null;
+export const erase = <T>(): Processor<T, null> =>
+  (): null => null;

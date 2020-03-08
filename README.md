@@ -6,7 +6,7 @@ Futhermore, you can use containers for error handling and provide your own error
 
 You can easily extend library with your own specific validators or processors.
 
-Minified library bundle with all modules takes less than 6kb.
+Minified library bundle with all modules takes less than 6kb. It doesn't require any external dependency.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -46,7 +46,7 @@ Minified library bundle with all modules takes less than 6kb.
     - [`string<T>(error?: Error): Processor<T, string>`](#stringterror-error-processort-string)
   - [`Processors`](#processors)
     - [`clamp<T>(min: T, max: T): Processor<T, T>`](#clamptmin-t-max-t-processort-t)
-    - [`erase<T>(): Processor<T, T>`](#eraset-processort-t)
+    - [`erase<T>(): Processor<T, null>`](#eraset-processort-null)
     - [`lowercase(): Processor<string, string>`](#lowercase-processorstring-string)
     - [`round(): Processor<number, number>`](#round-processornumber-number)
     - [`uppercase(): Processor<string, string>`](#uppercase-processorstring-string)
@@ -717,7 +717,7 @@ v.clamp('c', 'e')('f');
 // => 'e'
 ```
 
-#### `erase<T>(): Processor<T, T>`
+#### `erase<T>(): Processor<T, null>`
 
 Erase input.
 
@@ -771,7 +771,7 @@ v.uppercase()('abc');
 Groups validators in a specific way.
 #### `consecutive<T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T>`
 
-Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' validator's scheme for fields.
+Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
 
 ```js
 import * as v from 'barideta';
@@ -934,7 +934,7 @@ unchi(11.2);
 
 #### `withPromise<T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>>`
 
-Convert result to promise.
+Convert result to promise. Use it for async validation.
 
 ```js
 import * as v from 'barideta';

@@ -1,7 +1,7 @@
 /**
  * @name {withPromise<T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>>}
  * 
- * @desc Convert result to promise.
+ * @desc Convert result to promise. Use it for async validation.
  * 
  * {@link docs/type-container}
  * 

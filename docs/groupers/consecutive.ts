@@ -3,7 +3,7 @@
  * 
  * @desc Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.
- * Uses by default in 'object' validator's scheme for fields.
+ * Uses by default in 'object' and 'object2' validator's scheme for fields.
  * 
  * {@link docs/type-grouper}
  * 

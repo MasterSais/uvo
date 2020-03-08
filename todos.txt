@@ -3,6 +3,7 @@ number.round() tests
 number.round(type: 'floor' | 'ceil' | 'trunc' | 'round' = 'round')
 string.uppercase() tests
 string.lowercase() tests
+string.trim()
 Date type for GTE, LTE etc
 *.empty() tests
 *.notEmpty() tests
