@@ -1,5 +1,5 @@
 {
-  "name": "usov",
+  "name": "barideta",
   "version": "1.0.0",
   "description": "JS Universal Single Object Validator",
   "main": "./dist/umd/index.js",
@@ -24,18 +24,18 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/MasterSais/usov.git"
+    "url": "https://github.com/MasterSais/barideta.git"
   },
   "keywords": [
     "es6",
     "es2015",
-    "usov",
-    "jsusov",
+    "barideta",
+    "jsbarideta",
     "validator"
   ],
   "author": "Yauheni Zhestiannikau (MasterSais) <evgensvvv@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/MasterSais/usov",
+  "homepage": "https://github.com/MasterSais/barideta",
   "devDependencies": {
     "@types/jest": "25.1.4",
     "@types/node": "13.9.0",

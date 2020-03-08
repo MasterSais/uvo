@@ -11,7 +11,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.bool()(true);
 // => true

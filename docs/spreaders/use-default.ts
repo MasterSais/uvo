@@ -15,7 +15,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const simpleOne = (
   v.useDefault('default', v.string(), v.minLen(10))

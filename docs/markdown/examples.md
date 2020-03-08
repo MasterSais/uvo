@@ -1,6 +1,8 @@
 All examples use advanced object schema 'object2' as recommended solution.
 
-Schema with custom user errors:
+### `Schema with custom user errors`
+
+Custom error on each validator:
 ```js
 v.withErrors(
   v.object2([
@@ -21,7 +23,9 @@ v.withErrors(
 )
 ```
 
-Schema with common error processor:
+### `Schema with common error processor`
+
+Each error will be represented as `{ path, validator, error }`:
 ```js
 v.withErrors(
   v.object2([
@@ -42,7 +46,9 @@ v.withErrors(
 )
 ```
 
-Before validation checks required fields existence.
+### `Fields validation`
+
+Before validation checks required fields existence:
 ```js
 v.consecutive(
   v.fields(['&', ['^', 'id', 'guid'], 'login']),
@@ -54,7 +60,9 @@ v.consecutive(
 )
 ```
 
-Conditional validation. Id can be an integer or a GUID.
+### `Conditional validation`
+
+Id can be an integer or a GUID:
 ```js
 v.object2([
   ['id', v.or(
@@ -63,4 +71,17 @@ v.object2([
   )],
   ['name', v.string(), v.minLen(10)]
 ])
+```
+
+Conditional validators usage
+```js
+v.withMeta(
+  v.object2([
+    ['id', v.number(), v.gte(0), v.setDep('isIdValid', true)],
+    ['name', getDep(
+      'isIdValid',
+      (isIdValid: boolean) => isIdValid && [v.string(), v.minLen(10)]
+    )]
+  ])
+)
 ```

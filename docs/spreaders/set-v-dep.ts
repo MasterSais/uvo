@@ -15,7 +15,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const recursiveOne = (
   v.withMeta( // meta schema is required.

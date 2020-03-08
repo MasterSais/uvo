@@ -1,11 +1,11 @@
 ```js
-import * as v from 'usov'; // for everything (recommended for better minification results e.g. in webpack)
+import * as v from 'barideta'; // for everything (recommended for better minification results e.g. in webpack)
 // or
-import { number, array } from 'usov'; // for only what you need
+import { number, array } from 'barideta'; // for only what you need
 ```
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.number()(10);
 // => 10

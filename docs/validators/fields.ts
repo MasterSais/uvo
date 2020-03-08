@@ -17,7 +17,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.fields('f1')({ f1: 1 }); // requires 'f1' field.
 // => { f1: 1 }

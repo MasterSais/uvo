@@ -1,5 +1,12 @@
-# `USOV`
-USOV is a JavaScript universal single object validator. It provides validation and transformation utilities. Each validator is represented by separated module (no carrying as in another validation libraries), thats gives opportunity for treeshaking. Library has 5 types of modules: validators (only validates entity), processors (only transforms entity), groupers (groups another validators in specific way), spreaders (provides crossvalidation between distanted fields and provides recursion), containers (provides additional input/output processing).
+# `Barideta`
+Barideta is a javascript universal single object validator. It provides validation and transformation utilities. Each validator is represented by a separated module, thats gives opportunity for treeshaking. Library has 5 types of modules: validators, processors, groupers, spreaders, containers. Each one has own specific behaviour.
+
+You can use validators only for validation and processing data without error handling (e.g. url query params).
+Futhermore, you can use containers for error handling and provide your own errors processing.
+
+You can easily extend library with your own specific validators or processors.
+
+Minified library bundle with all modules takes less than 6kb.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -59,21 +66,25 @@
     - [`useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>`](#usedefaultt-rdefaultvalue-r--meta-metadata--r-validators-arrayprocessort--r-r-processort--r-r)
 - [`Custom validators`](#custom-validators)
 - [`Examples`](#examples)
+  - [`Schema with custom user errors`](#schema-with-custom-user-errors)
+  - [`Schema with common error processor`](#schema-with-common-error-processor)
+  - [`Fields validation`](#fields-validation)
+  - [`Conditional validation`](#conditional-validation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
 ```sh
-npm install usov
+npm install barideta
 ```
 ## `Usage`
 ```js
-import * as v from 'usov'; // for everything (recommended for better minification results e.g. in webpack)
+import * as v from 'barideta'; // for everything (recommended for better minification results e.g. in webpack)
 // or
-import { number, array } from 'usov'; // for only what you need
+import { number, array } from 'barideta'; // for only what you need
 ```
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.number()(10);
 // => 10
@@ -211,7 +222,7 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 Checks value to be an array.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const simpleOne = (
   v.array([ // is array?
@@ -261,7 +272,7 @@ anotherOne([0, 1, 2, 3]); // too long.
 Checks value to be a boolean compatible.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.bool()(true);
 // => true
@@ -287,7 +298,7 @@ v.bool()('abc');
 Checks value to be empty.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.empty()(null);
 // => null
@@ -313,7 +324,7 @@ v.empty()(0);
 Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.equal(10)(10);
 // => 10
@@ -330,7 +341,7 @@ v.equal([1, 2, 3])([1, 2, 3]); // it's not a deep equality. Only checks links.
 Checks for fields in the input object.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.fields('f1')({ f1: 1 }); // requires 'f1' field.
 // => { f1: 1 }
@@ -372,7 +383,7 @@ v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 Checks value to be greater or equal to 'match' param. Requires the same type.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.gte(0)(1);
 // => 1
@@ -398,7 +409,7 @@ v.gte(true)(false);
 Checks number to be an integer.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.integer()(1);
 // => 1
@@ -415,7 +426,7 @@ v.integer()('1' as any); // requires a number.
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.len(3)([0, 1, 2]);
 // => [0, 1, 2]
@@ -438,7 +449,7 @@ v.len(3)({ length: '3' } as any);
 Checks value to be lower or equal to 'match' param. Requires the same type.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.lte(2)(1);
 // => 1
@@ -464,7 +475,7 @@ v.lte(false)(true);
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.maxLen(3)([0, 1, 2]);
 // => [0, 1, 2]
@@ -484,7 +495,7 @@ v.maxLen(3)({ length: 3 });
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.minLen(3)([0, 1, 2]);
 // => [0, 1, 2]
@@ -504,7 +515,7 @@ v.minLen(3)({ length: 3 });
 Checks value not to be empty.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.notEmpty()(null);
 // => null
@@ -530,7 +541,7 @@ v.notEmpty()(0);
 Checks value to be not equal to 'match' param. Requires the same type. Shallow comparison.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.notEqual(10)(10);
 // => null
@@ -547,7 +558,7 @@ v.notEqual([1, 2, 3])([1, 2, 3]); // it's not a deep equality. Only checks links
 Checks value to be a number compatible.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.number()(10);
 // => 10
@@ -570,7 +581,7 @@ v.number()('12.1');
 Checks value to be an object.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const simpleObj = (
   v.object({ // is object?
@@ -599,7 +610,7 @@ simpleObj(10 as any);
 Checks value to be an object.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const simpleObj = (
   v.object2([ // is object?
@@ -628,7 +639,7 @@ simpleObj(10 as any);
 Checks value to be one of expected. Shallow comparison.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.oneOf([0, 1, 2])(1);
 // => 10
@@ -645,7 +656,7 @@ v.oneOf([0, 1, [1]])([1]); // not a deep equality.
 Checks value to match a pattern.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.regex(/[0-9]/)(1);
 // => 1
@@ -659,7 +670,7 @@ v.regex(/[0-9]/)(11);
 Checks value to be a string compatible.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.string()(1);
 // => '1'
@@ -681,7 +692,7 @@ v.string()([1, 2]);
 Clamps value to required boundaries.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.clamp(0, 5)(2);
 // => 2
@@ -707,7 +718,7 @@ v.clamp('c', 'e')('f');
 Erase input.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.erase()(2);
 // => null
@@ -718,7 +729,7 @@ v.erase()(2);
 Lowercase input string.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.lowercase()('ABC');
 // => 'abc'
@@ -729,7 +740,7 @@ v.lowercase()('ABC');
 Round input number.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.round()(10);
 // => 10
@@ -746,7 +757,7 @@ v.round()(9.8);
 Uppercase input string.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.uppercase()('abc');
 // => 'ABC'
@@ -759,7 +770,7 @@ v.uppercase()('abc');
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' validator's scheme for fields.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const unchi = (
   v.consecutive(
@@ -783,7 +794,7 @@ unchi('a');
 Groups validators sequentially. Searches for first successful validator's result.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const unchi = (
   v.or(
@@ -807,7 +818,7 @@ unchi('abc');
 Groups validators in parallel. The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere). Beware of using processors inside.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const unchi = (
   v.withErrors(
@@ -837,7 +848,7 @@ unchi(11.2);
 Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const unchi = (
   v.transform(
@@ -860,7 +871,7 @@ unchi(8.3);
 Provides error handling mechanism.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const unchi = (
   v.withErrors(
@@ -890,7 +901,7 @@ unchi(11.2);
 Provides meta structure.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const unchi = (
   v.withErrors(
@@ -922,7 +933,7 @@ unchi(11.2);
 Convert result to promise.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const unchi = (
   v.withPromise(
@@ -961,7 +972,7 @@ try {
 Takes value from spreaded structure. Might be used for dynamic validators creation. If 'preValidator' not provided, just replaces current value. Works only with provided meta object.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const simpleOne = (
   v.withMeta(
@@ -987,7 +998,7 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.withMeta( // meta schema required for dependencies.
   v.object({
@@ -1016,7 +1027,7 @@ v.withMeta(
 Puts validators into spreaded structure. Might be used for recursive schemes.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const recursiveOne = (
   v.withMeta( // meta schema is required.
@@ -1044,7 +1055,7 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators.
 
 ```js
-import * as v from 'usov';
+import * as v from 'barideta';
 
 const simpleOne = (
   v.useDefault('default', v.string(), v.minLen(10))
@@ -1097,7 +1108,9 @@ You must provide validator name and params into meta scheme for proper errors ha
 ## `Examples`
 All examples use advanced object schema 'object2' as recommended solution.
 
-Schema with custom user errors:
+### `Schema with custom user errors`
+
+Custom error on each validator:
 ```js
 v.withErrors(
   v.object2([
@@ -1118,7 +1131,9 @@ v.withErrors(
 )
 ```
 
-Schema with common error processor:
+### `Schema with common error processor`
+
+Each error will be represented as `{ path, validator, error }`:
 ```js
 v.withErrors(
   v.object2([
@@ -1139,7 +1154,9 @@ v.withErrors(
 )
 ```
 
-Before validation checks required fields existence.
+### `Fields validation`
+
+Before validation checks required fields existence:
 ```js
 v.consecutive(
   v.fields(['&', ['^', 'id', 'guid'], 'login']),
@@ -1151,7 +1168,9 @@ v.consecutive(
 )
 ```
 
-Conditional validation. Id can be an integer or a GUID.
+### `Conditional validation`
+
+Id can be an integer or a GUID:
 ```js
 v.object2([
   ['id', v.or(
@@ -1160,5 +1179,18 @@ v.object2([
   )],
   ['name', v.string(), v.minLen(10)]
 ])
+```
+
+Conditional validators usage
+```js
+v.withMeta(
+  v.object2([
+    ['id', v.number(), v.gte(0), v.setDep('isIdValid', true)],
+    ['name', getDep(
+      'isIdValid',
+      (isIdValid: boolean) => isIdValid && [v.string(), v.minLen(10)]
+    )]
+  ])
+)
 ```
 

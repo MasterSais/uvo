@@ -15,7 +15,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.oneOf([0, 1, 2])(1);
 // => 10

@@ -15,7 +15,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.gte(0)(1);
 // => 1

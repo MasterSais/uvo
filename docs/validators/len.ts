@@ -15,7 +15,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.len(3)([0, 1, 2]);
 // => [0, 1, 2]

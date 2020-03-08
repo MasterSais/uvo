@@ -12,7 +12,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.clamp(0, 5)(2);
 // => 2

@@ -9,7 +9,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.erase()(2);
 // => null

@@ -13,7 +13,7 @@
  */
 
 //#example
-import * as v from 'usov';
+import * as v from 'barideta';
 
 v.notEqual(10)(10);
 // => null

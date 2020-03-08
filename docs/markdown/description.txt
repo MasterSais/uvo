@@ -1,1 +1,8 @@
-USOV is a JavaScript universal single object validator. It provides validation and transformation utilities. Each validator is represented by separated module (no carrying as in another validation libraries), thats gives opportunity for treeshaking. Library has 5 types of modules: validators (only validates entity), processors (only transforms entity), groupers (groups another validators in specific way), spreaders (provides crossvalidation between distanted fields and provides recursion), containers (provides additional input/output processing).
+Barideta is a javascript universal single object validator. It provides validation and transformation utilities. Each validator is represented by a separated module, thats gives opportunity for treeshaking. Library has 5 types of modules: validators, processors, groupers, spreaders, containers. Each one has own specific behaviour.
+
+You can use validators only for validation and processing data without error handling (e.g. url query params).
+Futhermore, you can use containers for error handling and provide your own errors processing.
+
+You can easily extend library with your own specific validators or processors.
+
+Minified library bundle with all modules takes less than 6kb.
