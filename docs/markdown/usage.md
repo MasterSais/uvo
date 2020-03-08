@@ -2,6 +2,8 @@
 import * as v from 'barideta'; // for everything (recommended for better minification results e.g. in webpack)
 // or
 import { number, array } from 'barideta'; // for only what you need
+// or
+const { object, setDep } = require('barideta');
 ```
 
 ```js

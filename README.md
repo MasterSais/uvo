@@ -75,12 +75,16 @@ Minified library bundle with all modules takes less than 6kb.
 ## `Install`
 ```sh
 npm install barideta
+//or
+yarn add barideta
 ```
 ## `Usage`
 ```js
 import * as v from 'barideta'; // for everything (recommended for better minification results e.g. in webpack)
 // or
 import { number, array } from 'barideta'; // for only what you need
+// or
+const { object, setDep } = require('barideta');
 ```
 
 ```js
