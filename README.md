@@ -48,7 +48,7 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`clamp<T>(min: T, max: T): Processor<T, T>`](#clamptmin-t-max-t-processort-t)
     - [`erase<T>(): Processor<T, null>`](#eraset-processort-null)
     - [`lowercase(): Processor<string, string>`](#lowercase-processorstring-string)
-    - [`round(): Processor<number, number>`](#round-processornumber-number)
+    - [`round(method: 'round' | 'floor' | 'ceil' = 'round'): Processor<number, number>`](#roundmethod-round--floor--ceil--round-processornumber-number)
     - [`uppercase(): Processor<string, string>`](#uppercase-processorstring-string)
   - [`Groupers`](#groupers)
     - [`consecutive<T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T>`](#consecutivetvalidators-arrayprocessorany-t--processorany-t-processorany-t)
@@ -739,9 +739,9 @@ v.lowercase()('ABC');
 // => 'abc'
 ```
 
-#### `round(): Processor<number, number>`
+#### `round(method: 'round' | 'floor' | 'ceil' = 'round'): Processor<number, number>`
 
-Round input number.
+Round input number with specific method.
 
 ```js
 import * as v from 'baridetta';
@@ -753,6 +753,24 @@ v.round()(10.2);
 // => 10
 
 v.round()(9.8);
+// => 10
+
+v.round('floor')(10);
+// => 10
+
+v.round('floor')(10.2);
+// => 10
+
+v.round('floor')(9.8);
+// => 9
+
+v.round('ceil')(10);
+// => 10
+
+v.round('ceil')(10.2);
+// => 11
+
+v.round('ceil')(9.8);
 // => 10
 ```
 

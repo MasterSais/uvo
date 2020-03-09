@@ -3,5 +3,5 @@ import { Processor } from '../types';
 /**
  * {@link docs/processors/round}
  */
-export const round = (): Processor<number, number> =>
-  Math.round;
+export const round = (method: 'round' | 'floor' | 'ceil' = 'round'): Processor<number, number> =>
+  Math[method];
