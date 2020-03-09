@@ -5,16 +5,16 @@ import { isValidatorsSequence, throwValidatorError } from '../utilities';
 /**
  * {@link docs/groupers/or}
  */
-export const or = <T>(...validators: Array<Processor<T, unknown>>): Processor<T, unknown> =>
+export const or = (...validators: Array<Processor<any, any>>): Processor<any, any> =>
   (
     isValidatorsSequence(validators)
       ? (
-        (value: T, onError?: ErrorCallback, meta?: MetaData): unknown => {
+        (value: unknown, onError?: ErrorCallback, meta?: MetaData): unknown => {
           let processed = null;
 
           const relevance: Relevance = { value: false };
 
-          validators.find((nextValidator: Processor<T, unknown>) =>
+          validators.find((nextValidator: Processor<unknown, unknown>) =>
             (
               processed = nextValidator(value, onError ? (error: Error, meta?: MetaData) => onError(error, meta, relevance) : null, meta),
               processed !== null

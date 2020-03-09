@@ -42,7 +42,7 @@ v.withErrors(
       v.string(),
       v.minLen(10)
     ]
-  ]), ({ path, validator }, error) => ({ path, validator, error }) // catches all errors in the schema.
+  ]), (error, { path, validator }) => ({ path, validator, error }) // catches all errors in the schema.
 )
 ```
 

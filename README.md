@@ -39,8 +39,8 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`notEmpty<T extends unknown>(error?: Error): Validator<T>`](#notemptyt-extends-unknownerror-error-validatort)
     - [`notEqual<T>(match: T, error?: Error): Validator<T>`](#notequaltmatch-t-error-error-validatort)
     - [`number<T extends unknown>(error?: Error): Processor<T, number>`](#numbert-extends-unknownerror-error-processort-number)
-    - [`object<T extends ObjectLike, R extends ObjectLike>(spec?: ObjectSpec, error?: Error): Processor<T, R>`](#objectt-extends-objectlike-r-extends-objectlikespec-objectspec-error-error-processort-r)
-    - [`object2<T extends ObjectLike, R extends ObjectLike>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R>`](#object2t-extends-objectlike-r-extends-objectlikespec-arraystring-arrayprocessorany-any-error-error-processort-r)
+    - [`object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Processor<T, R>`](#objectt-extends-objectlike-r--tspec-objectspec-error-error-processort-r)
+    - [`object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R>`](#object2t-extends-objectlike-r--tspec-arraystring-arrayprocessorany-any-error-error-processort-r)
     - [`oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>`](#oneoftcandidates-arrayt-error-error-validatort)
     - [`regex<T extends unknown>(match: RegExp, error?: Error): Validator<T>`](#regext-extends-unknownmatch-regexp-error-error-validatort)
     - [`string<T>(error?: Error): Processor<T, string>`](#stringterror-error-processort-string)
@@ -52,7 +52,7 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`uppercase(): Processor<string, string>`](#uppercase-processorstring-string)
   - [`Groupers`](#groupers)
     - [`consecutive<T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T>`](#consecutivetvalidators-arrayprocessorany-t--processorany-t-processorany-t)
-    - [`or<T>(...validators: Array<Processor<T, unknown>>): Processor<T, unknown>`](#ortvalidators-arrayprocessort-unknown-processort-unknown)
+    - [`or<T>(...validators: Array<Processor<any, any>>): Processor<any, any>`](#ortvalidators-arrayprocessorany-any-processorany-any)
     - [`parallel<T>(...validators: Array<Validator<T>>): Validator<T>`](#paralleltvalidators-arrayvalidatort-validatort)
     - [`transform<T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R>`](#transformt-rprocessors-arrayprocessort--r-r-processort--r-r)
   - [`Containers`](#containers)
@@ -580,7 +580,7 @@ v.number()('12.1');
 // => 12.1
 ```
 
-#### `object<T extends ObjectLike, R extends ObjectLike>(spec?: ObjectSpec, error?: Error): Processor<T, R>`
+#### `object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Processor<T, R>`
 
 Checks value to be an object.
 
@@ -609,7 +609,7 @@ simpleObj(10 as any);
 // => null
 ```
 
-#### `object2<T extends ObjectLike, R extends ObjectLike>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R>`
+#### `object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R>`
 
 Checks value to be an object.
 
@@ -793,7 +793,7 @@ unchi('a');
 // => null
 ```
 
-#### `or<T>(...validators: Array<Processor<T, unknown>>): Processor<T, unknown>`
+#### `or<T>(...validators: Array<Processor<any, any>>): Processor<any, any>`
 
 Groups validators sequentially. Searches for first successful validator's result.
 
@@ -1154,7 +1154,7 @@ v.withErrors(
       v.string(),
       v.minLen(10)
     ]
-  ]), ({ path, validator }, error) => ({ path, validator, error }) // catches all errors in the schema.
+  ]), (error, { path, validator }) => ({ path, validator, error }) // catches all errors in the schema.
 )
 ```
 

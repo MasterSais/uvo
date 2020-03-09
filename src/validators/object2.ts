@@ -11,7 +11,7 @@ const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
 /**
  * {@link docs/validators/object2}
  */
-export const object2 = <T extends ObjectLike, R extends ObjectLike>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R> => {
+export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R> => {
   const specList: Array<[string, Array<Processor<any, any>>]> = [];
 
   const isSpecArray = isNestedArrays(spec);

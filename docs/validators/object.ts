@@ -1,5 +1,5 @@
 /**
- * @name {object<T extends ObjectLike, R extends ObjectLike>(spec?: ObjectSpec, error?: Error): Processor<T, R>}
+ * @name {object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Processor<T, R>}
  * 
  * @desc Checks value to be an object.
  * 
