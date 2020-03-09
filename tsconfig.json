@@ -8,7 +8,6 @@
     "moduleResolution": "node",
     "removeComments": true,
     "esModuleInterop": true,
-    "incremental": true,
     "preserveConstEnums": true,
     "alwaysStrict": true,
     "noImplicitReturns": true,
