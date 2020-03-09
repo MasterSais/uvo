@@ -1,5 +1,4 @@
 object.camelCase()
 string.trim()
+notOneOf
 Date type for GTE, LTE etc
-*.empty() tests
-*.notEmpty() tests
