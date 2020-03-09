@@ -11,8 +11,7 @@ export const oneOf = <T>(candidates: Array<T>, error?: Error): Validator<T> =>
       ? (
         (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
           (
-            value !== null
-            && candidates.indexOf(value) >= 0
+            candidates.indexOf(value) >= 0
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_OOF, [candidates]))
       )

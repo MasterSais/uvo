@@ -33,6 +33,8 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [[[0, 1, 2]], 1],
         [[['0', '1', '2']], '1'],
         [[[true, false]], true],
+        [[[true, null]], null],
+        [[[12, null, undefined]], undefined],
         [[[0, '1', true]], '1'],
         [[[0, '1', true]], 0],
         [[[0, emptyObject(), 0]], emptyObject()],
