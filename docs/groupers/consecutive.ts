@@ -1,5 +1,5 @@
 /**
- * @name {consecutive<T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T>}
+ * @name {consecutive<T>(...validators: Array<Processor<any, T>>): Processor<any, T>}
  * 
  * @desc Groups validators sequentially.
  * Passes value through a sequence of validators until an error occurs.

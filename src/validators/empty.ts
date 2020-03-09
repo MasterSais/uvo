@@ -5,7 +5,7 @@ import { applyError, isEmpty, setMetaValidator } from '../utilities';
 /**
  * {@link docs/validators/empty}
  */
-export const empty = <T extends unknown>(error?: Error): Validator<T> =>
+export const empty = <T>(error?: Error): Validator<T> =>
   (
     (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
       isEmpty(value)

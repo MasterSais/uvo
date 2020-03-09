@@ -1,5 +1,5 @@
 /**
- * @name {empty<T extends unknown>(error?: Error): Validator<T>}
+ * @name {empty<T>(error?: Error): Validator<T>}
  * 
  * @desc Checks value to be empty.
  * 

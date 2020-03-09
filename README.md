@@ -27,7 +27,7 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
   - [`Validators`](#validators)
     - [`array<T>(itemSpec?: Array<Processor<any, T>> | Processor<any, T>, error?: Error): Processor<Array<any>, Array<T>>`](#arraytitemspec-arrayprocessorany-t--processorany-t-error-error-processorarrayany-arrayt)
     - [`bool<T>(error?: Error): Processor<T, boolean>`](#boolterror-error-processort-boolean)
-    - [`empty<T extends unknown>(error?: Error): Validator<T>`](#emptyt-extends-unknownerror-error-validatort)
+    - [`empty<T>(error?: Error): Validator<T>`](#emptyterror-error-validatort)
     - [`equal<T>(match: T, error?: Error): Validator<T>`](#equaltmatch-t-error-error-validatort)
     - [`fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`](#fieldst-extends-objectlikespec-fieldsspec-error-error-validatort)
     - [`gte<T>(bound: T, error?: Error): Validator<T>`](#gtetbound-t-error-error-validatort)
@@ -51,7 +51,7 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`round(method: 'round' | 'floor' | 'ceil' = 'round'): Processor<number, number>`](#roundmethod-round--floor--ceil--round-processornumber-number)
     - [`uppercase(): Processor<string, string>`](#uppercase-processorstring-string)
   - [`Groupers`](#groupers)
-    - [`consecutive<T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T>`](#consecutivetvalidators-arrayprocessorany-t--processorany-t-processorany-t)
+    - [`consecutive<T>(...validators: Array<Processor<any, T>>): Processor<any, T>`](#consecutivetvalidators-arrayprocessorany-t-processorany-t)
     - [`or<T>(...validators: Array<Processor<any, any>>): Processor<any, any>`](#ortvalidators-arrayprocessorany-any-processorany-any)
     - [`parallel<T>(...validators: Array<Validator<T>>): Validator<T>`](#paralleltvalidators-arrayvalidatort-validatort)
     - [`transform<T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R>`](#transformt-rprocessors-arrayprocessort--r-r-processort--r-r)
@@ -297,7 +297,7 @@ v.bool()('abc');
 // => null
 ```
 
-#### `empty<T extends unknown>(error?: Error): Validator<T>`
+#### `empty<T>(error?: Error): Validator<T>`
 
 Checks value to be empty.
 
@@ -787,7 +787,7 @@ v.uppercase()('abc');
 
 ### `Groupers`
 Groups validators in a specific way.
-#### `consecutive<T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T>`
+#### `consecutive<T>(...validators: Array<Processor<any, T>>): Processor<any, T>`
 
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
 

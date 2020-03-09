@@ -5,7 +5,7 @@ import { isValidatorsSequence, reduceValidators, throwValidatorError } from '../
 /**
  * {@link docs/groupers/consecutive}
  */
-export const consecutive = <T>(...validators: Array<Processor<any, T> | Processor<any, T>>): Processor<any, T> =>
+export const consecutive = <T>(...validators: Array<Processor<any, T>>): Processor<any, T> =>
   (
     isValidatorsSequence(validators)
       ? (
