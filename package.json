@@ -1,6 +1,6 @@
 {
   "name": "baridetta",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "JavaScript Universal Single Object Validator",
   "main": "./dist/umd/index.js",
   "module": "./dist/es/index.js",
