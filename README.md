@@ -1,5 +1,5 @@
-# `Barideta`
-Barideta is a javascript universal single object validator. It provides validation and transformation utilities. Each validator is represented by a separated module, thats gives opportunity for treeshaking. Library has 5 types of modules: validators, processors, groupers, spreaders, containers. Each one has own specific behaviour.
+# `Baridetta`
+Baridetta is a javascript universal single object validator. It provides validation and transformation utilities. Each validator is represented by a separated module, thats gives opportunity for treeshaking. Library has 5 types of modules: validators, processors, groupers, spreaders, containers. Each one has own specific behaviour.
 
 You can use validators only for validation and processing data without error handling (e.g. url query params).
 Futhermore, you can use containers for error handling and provide your own errors processing.
