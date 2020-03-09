@@ -1,5 +1,5 @@
 ```sh
-npm install barideta
+npm install baridetta
 //or
-yarn add barideta
+yarn add baridetta
 ```

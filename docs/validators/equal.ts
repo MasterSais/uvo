@@ -13,7 +13,7 @@
  */
 
 //#example
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.equal(10)(10);
 // => 10

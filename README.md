@@ -74,21 +74,21 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
 ```sh
-npm install barideta
+npm install baridetta
 //or
-yarn add barideta
+yarn add baridetta
 ```
 ## `Usage`
 ```js
-import * as v from 'barideta'; // for everything (recommended for better minification results e.g. in webpack)
+import * as v from 'baridetta'; // for everything (recommended for better minification results e.g. in webpack)
 // or
-import { number, array } from 'barideta'; // for only what you need
+import { number, array } from 'baridetta'; // for only what you need
 // or
-const { object, setDep } = require('barideta');
+const { object, setDep } = require('baridetta');
 ```
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.number()(10);
 // => 10
@@ -226,7 +226,7 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 Checks value to be an array.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const simpleOne = (
   v.array([ // is array?
@@ -276,7 +276,7 @@ anotherOne([0, 1, 2, 3]); // too long.
 Checks value to be a boolean compatible.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.bool()(true);
 // => true
@@ -302,7 +302,7 @@ v.bool()('abc');
 Checks value to be empty.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.empty()(null);
 // => null
@@ -328,7 +328,7 @@ v.empty()(0);
 Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.equal(10)(10);
 // => 10
@@ -345,7 +345,7 @@ v.equal([1, 2, 3])([1, 2, 3]); // it's not a deep equality. Only checks links.
 Checks for fields in the input object.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.fields('f1')({ f1: 1 }); // requires 'f1' field.
 // => { f1: 1 }
@@ -387,7 +387,7 @@ v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 Checks value to be greater or equal to 'match' param. Requires the same type.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.gte(0)(1);
 // => 1
@@ -413,7 +413,7 @@ v.gte(true)(false);
 Checks number to be an integer.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.integer()(1);
 // => 1
@@ -430,7 +430,7 @@ v.integer()('1' as any); // requires a number.
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.len(3)([0, 1, 2]);
 // => [0, 1, 2]
@@ -453,7 +453,7 @@ v.len(3)({ length: '3' } as any);
 Checks value to be lower or equal to 'match' param. Requires the same type.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.lte(2)(1);
 // => 1
@@ -479,7 +479,7 @@ v.lte(false)(true);
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.maxLen(3)([0, 1, 2]);
 // => [0, 1, 2]
@@ -499,7 +499,7 @@ v.maxLen(3)({ length: 3 });
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.minLen(3)([0, 1, 2]);
 // => [0, 1, 2]
@@ -519,7 +519,7 @@ v.minLen(3)({ length: 3 });
 Checks value not to be empty.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.notEmpty()(null);
 // => null
@@ -545,7 +545,7 @@ v.notEmpty()(0);
 Checks value to be not equal to 'match' param. Requires the same type. Shallow comparison.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.notEqual(10)(10);
 // => null
@@ -562,7 +562,7 @@ v.notEqual([1, 2, 3])([1, 2, 3]); // it's not a deep equality. Only checks links
 Checks value to be a number compatible.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.number()(10);
 // => 10
@@ -585,7 +585,7 @@ v.number()('12.1');
 Checks value to be an object.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const simpleObj = (
   v.object({ // is object?
@@ -614,7 +614,7 @@ simpleObj(10 as any);
 Checks value to be an object.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const simpleObj = (
   v.object2([ // is object?
@@ -643,7 +643,7 @@ simpleObj(10 as any);
 Checks value to be one of expected. Shallow comparison.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.oneOf([0, 1, 2])(1);
 // => 10
@@ -660,7 +660,7 @@ v.oneOf([0, 1, [1]])([1]); // not a deep equality.
 Checks value to match a pattern.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.regex(/[0-9]/)(1);
 // => 1
@@ -674,7 +674,7 @@ v.regex(/[0-9]/)(11);
 Checks value to be a string compatible.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.string()(1);
 // => '1'
@@ -696,7 +696,7 @@ v.string()([1, 2]);
 Clamps value to required boundaries.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.clamp(0, 5)(2);
 // => 2
@@ -722,7 +722,7 @@ v.clamp('c', 'e')('f');
 Erase input.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.erase()(2);
 // => null
@@ -733,7 +733,7 @@ v.erase()(2);
 Lowercase input string.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.lowercase()('ABC');
 // => 'abc'
@@ -744,7 +744,7 @@ v.lowercase()('ABC');
 Round input number.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.round()(10);
 // => 10
@@ -761,7 +761,7 @@ v.round()(9.8);
 Uppercase input string.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.uppercase()('abc');
 // => 'ABC'
@@ -774,7 +774,7 @@ v.uppercase()('abc');
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const unchi = (
   v.consecutive(
@@ -798,7 +798,7 @@ unchi('a');
 Groups validators sequentially. Searches for first successful validator's result.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const unchi = (
   v.or(
@@ -822,7 +822,7 @@ unchi('abc');
 Groups validators in parallel. The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere). Beware of using processors inside.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const unchi = (
   v.withErrors(
@@ -852,7 +852,7 @@ unchi(11.2);
 Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const unchi = (
   v.transform(
@@ -875,7 +875,7 @@ unchi(8.3);
 Provides error handling mechanism.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const unchi = (
   v.withErrors(
@@ -905,7 +905,7 @@ unchi(11.2);
 Provides meta structure.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const unchi = (
   v.withErrors(
@@ -937,7 +937,7 @@ unchi(11.2);
 Convert result to promise. Use it for async validation.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const unchi = (
   v.withPromise(
@@ -976,7 +976,7 @@ try {
 Takes value from spreaded structure. Might be used for dynamic validators creation. If 'preValidator' not provided, just replaces current value. Works only with provided meta object.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const simpleOne = (
   v.withMeta(
@@ -1002,7 +1002,7 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.withMeta( // meta schema required for dependencies.
   v.object({
@@ -1031,7 +1031,7 @@ v.withMeta(
 Puts validators into spreaded structure. Might be used for recursive schemes.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const recursiveOne = (
   v.withMeta( // meta schema is required.
@@ -1059,7 +1059,7 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators.
 
 ```js
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 const simpleOne = (
   v.useDefault('default', v.string(), v.minLen(10))

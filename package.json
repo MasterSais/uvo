@@ -1,5 +1,5 @@
 {
-  "name": "barideta",
+  "name": "baridetta",
   "version": "1.0.0",
   "description": "JavaScript Universal Single Object Validator",
   "main": "./dist/umd/index.js",
@@ -24,7 +24,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/MasterSais/barideta.git"
+    "url": "https://github.com/MasterSais/baridetta.git"
   },
   "files": [
     "dist"
@@ -32,14 +32,14 @@
   "keywords": [
     "es6",
     "es2015",
-    "barideta",
+    "baridetta",
     "js",
     "nodejs",
     "validator"
   ],
   "author": "Yauheni Zhestiannikau (MasterSais) <evgensvvv@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/MasterSais/barideta",
+  "homepage": "https://github.com/MasterSais/baridetta",
   "devDependencies": {
     "@types/jest": "25.1.4",
     "@types/node": "13.9.0",

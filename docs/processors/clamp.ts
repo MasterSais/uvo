@@ -12,7 +12,7 @@
  */
 
 //#example
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.clamp(0, 5)(2);
 // => 2

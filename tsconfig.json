@@ -15,7 +15,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "baseUrl": ".",
     "paths": {
-      "barideta": [
+      "baridetta": [
         "dist/types/index.d.ts"
       ],
       "@lib/*": [

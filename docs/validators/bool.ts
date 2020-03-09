@@ -11,7 +11,7 @@
  */
 
 //#example
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.bool()(true);
 // => true

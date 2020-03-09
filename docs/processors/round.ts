@@ -9,7 +9,7 @@
  */
 
 //#example
-import * as v from 'barideta';
+import * as v from 'baridetta';
 
 v.round()(10);
 // => 10
