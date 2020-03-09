@@ -1,8 +1,5 @@
 object.camelCase()
-string.uppercase() tests
-string.lowercase() tests
 string.trim()
 Date type for GTE, LTE etc
 *.empty() tests
 *.notEmpty() tests
-*.erase() tests
