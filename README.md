@@ -434,7 +434,7 @@ v.integer.not()(1.1);
 
 #### `len<T extends Lengthy>(len: number, error?: Error): Validator<T>`
 
-Checks length to be equal to 'len' param. Requires to be object like.
+Checks length to be equal to 'len' param. Requires to be object like. Can be inverted with .not call.
 
 ```js
 import * as v from 'baridetta';
@@ -453,6 +453,18 @@ v.len(3)(10 as any);
 
 v.len(3)({ length: '3' } as any);
 // => null
+
+v.len.not(3)([0, 1, 2]);
+// => null
+
+v.len.not(3)('abc');
+// => null
+
+v.len.not(3)([0, 1, 2, 3]);
+// => [0, 1, 2, 3]
+
+v.len.not(3)('abcd');
+// => 'abcd'
 ```
 
 #### `lte<T>(bound: T, error?: Error): Validator<T>`
