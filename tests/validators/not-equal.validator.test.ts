@@ -2,7 +2,7 @@ import { V_EQ as VALIDATOR_NAME } from '@lib/names';
 import { equal as validator } from '@lib/validators/equal';
 import { baseCasesWithParams, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
-describe(`validator › ${VALIDATOR_NAME}`, () => {
+describe(`validator › not ${VALIDATOR_NAME}`, () => {
   describe('base', () => {
     baseCasesWithParams<any>(
       validator.not,
