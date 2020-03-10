@@ -20,13 +20,12 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`FieldsSpec`](#fieldsspec)
     - [`MetaData`](#metadata)
     - [`ObjectSpec`](#objectspec)
-    - [`Processor`](#processor)
     - [`Relevance`](#relevance)
     - [`Result`](#result)
     - [`Validator`](#validator)
   - [`Validators`](#validators)
-    - [`array<T>(itemSpec?: Array<Processor<any, T>> | Processor<any, T>, error?: Error): Processor<Array<any>, Array<T>>`](#arraytitemspec-arrayprocessorany-t--processorany-t-error-error-processorarrayany-arrayt)
-    - [`bool<T>(error?: Error): Processor<T, boolean>`](#boolterror-error-processort-boolean)
+    - [`array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>`](#arraytitemspec-arrayvalidatorany-t--validatorany-t-error-error-validatorarrayany-arrayt)
+    - [`bool<T>(error?: Error): Validator<T, boolean>`](#boolterror-error-validatort-boolean)
     - [`empty<T>(error?: Error): Validator<T>`](#emptyterror-error-validatort)
     - [`equal<T>(match: T, error?: Error): Validator<T>`](#equaltmatch-t-error-error-validatort)
     - [`fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`](#fieldst-extends-objectlikespec-fieldsspec-error-error-validatort)
@@ -36,34 +35,33 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`lte<T>(bound: T, error?: Error): Validator<T>`](#ltetbound-t-error-error-validatort)
     - [`maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#maxlent-extends-lengthylen-number-error-error-validatort)
     - [`minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#minlent-extends-lengthylen-number-error-error-validatort)
-    - [`notEmpty<T extends unknown>(error?: Error): Validator<T>`](#notemptyt-extends-unknownerror-error-validatort)
     - [`notEqual<T>(match: T, error?: Error): Validator<T>`](#notequaltmatch-t-error-error-validatort)
-    - [`number<T extends unknown>(error?: Error): Processor<T, number>`](#numbert-extends-unknownerror-error-processort-number)
-    - [`object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Processor<T, R>`](#objectt-extends-objectlike-r--tspec-objectspec-error-error-processort-r)
-    - [`object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R>`](#object2t-extends-objectlike-r--tspec-arraystring-arrayprocessorany-any-error-error-processort-r)
+    - [`number<T extends unknown>(error?: Error): Validator<T, number>`](#numbert-extends-unknownerror-error-validatort-number)
+    - [`object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>`](#objectt-extends-objectlike-r--tspec-objectspec-error-error-validatort-r)
+    - [`object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`](#object2t-extends-objectlike-r--tspec-arraystring-arrayvalidatorany-any-error-error-validatort-r)
     - [`oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>`](#oneoftcandidates-arrayt-error-error-validatort)
     - [`regex<T extends unknown>(match: RegExp, error?: Error): Validator<T>`](#regext-extends-unknownmatch-regexp-error-error-validatort)
-    - [`string<T>(error?: Error): Processor<T, string>`](#stringterror-error-processort-string)
+    - [`string<T>(error?: Error): Validator<T, string>`](#stringterror-error-validatort-string)
   - [`Processors`](#processors)
-    - [`clamp<T>(min: T, max: T): Processor<T, T>`](#clamptmin-t-max-t-processort-t)
-    - [`erase<T>(): Processor<T, null>`](#eraset-processort-null)
-    - [`lowercase(): Processor<string, string>`](#lowercase-processorstring-string)
-    - [`round(method: 'round' | 'floor' | 'ceil' = 'round'): Processor<number, number>`](#roundmethod-round--floor--ceil--round-processornumber-number)
-    - [`uppercase(): Processor<string, string>`](#uppercase-processorstring-string)
+    - [`clamp<T>(min: T, max: T): Validator<T, T>`](#clamptmin-t-max-t-validatort-t)
+    - [`erase<T>(): Validator<T, null>`](#eraset-validatort-null)
+    - [`lowercase(): Validator<string, string>`](#lowercase-validatorstring-string)
+    - [`round(method: 'round' | 'floor' | 'ceil' = 'round'): Validator<number, number>`](#roundmethod-round--floor--ceil--round-validatornumber-number)
+    - [`uppercase(): Validator<string, string>`](#uppercase-validatorstring-string)
   - [`Groupers`](#groupers)
-    - [`consecutive<T>(...validators: Array<Processor<any, T>>): Processor<any, T>`](#consecutivetvalidators-arrayprocessorany-t-processorany-t)
-    - [`or<T>(...validators: Array<Processor<any, any>>): Processor<any, any>`](#ortvalidators-arrayprocessorany-any-processorany-any)
+    - [`consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>`](#consecutivetvalidators-arrayvalidatorany-t-validatorany-t)
+    - [`or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>`](#ortvalidators-arrayvalidatorany-any-validatorany-any)
     - [`parallel<T>(...validators: Array<Validator<T>>): Validator<T>`](#paralleltvalidators-arrayvalidatort-validatort)
-    - [`transform<T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R>`](#transformt-rprocessors-arrayprocessort--r-r-processort--r-r)
+    - [`transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>`](#transformt-rprocessors-arrayvalidatort--r-r-validatort--r-r)
   - [`Containers`](#containers)
-    - [`withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Processor<T, Result<R>>`](#witherrorst-rvalidator-processort-r-commonerrorprocessor-error-error-meta-metadata--error-processort-resultr)
-    - [`withMeta<T, R>(validator: Processor<T, R>): Processor<T, R>`](#withmetat-rvalidator-processort-r-processort-r)
-    - [`withPromise<T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>>`](#withpromiset-rvalidator-processort-r--resultr-processort-promiser--arrayerror)
+    - [`withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>`](#witherrorst-rvalidator-validatort-r-commonerrorprocessor-error-error-meta-metadata--error-validatort-resultr)
+    - [`withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>`](#withmetat-rvalidator-validatort-r-validatort-r)
+    - [`withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>`](#withpromiset-rvalidator-validatort-r--resultr-validatort-promiser--arrayerror)
   - [`Spreaders`](#spreaders)
     - [`getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>`](#getdeptfield-string-prevalidator-dep-t--validatort--arrayvalidatort-validatort)
     - [`setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>`](#setdeptfield-string-extvalue-any--value-t-meta-metadata--any-validatort)
     - [`setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>`](#setvdeptfield-string-validators-arrayvalidatort-validatort)
-    - [`useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>`](#usedefaultt-rdefaultvalue-r--meta-metadata--r-validators-arrayprocessort--r-r-processort--r-r)
+    - [`useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`](#usedefaultt-rdefaultvalue-r--meta-metadata--r-validators-arrayvalidatort--r-r-validatort--r-r)
 - [`Custom validators`](#custom-validators)
 - [`Examples`](#examples)
   - [`Schema with custom user errors`](#schema-with-custom-user-errors)
@@ -179,15 +177,7 @@ type MetaData = {
 Specification for 'object' and 'object2' validators.
 
 ```js
-type ObjectSpec = Record<string, Array<Processor<any, any>> | Processor<any, any>>;
-```
-
-#### `Processor`
-
-Processes value.
-
-```js
-type Processor<T, R> = (value: T, onError?: ErrorCallback, meta?: MetaData) => R;
+type ObjectSpec = Record<string, Array<Validator<any, any>> | Validator<any, any>>;
 ```
 
 #### `Relevance`
@@ -221,7 +211,7 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 
 ### `Validators`
 Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.
-#### `array<T>(itemSpec?: Array<Processor<any, T>> | Processor<any, T>, error?: Error): Processor<Array<any>, Array<T>>`
+#### `array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>`
 
 Checks value to be an array.
 
@@ -271,7 +261,7 @@ anotherOne([0, 1, 2, 3]); // too long.
 // => null
 ```
 
-#### `bool<T>(error?: Error): Processor<T, boolean>`
+#### `bool<T>(error?: Error): Validator<T, boolean>`
 
 Checks value to be a boolean compatible.
 
@@ -299,7 +289,7 @@ v.bool()('abc');
 
 #### `empty<T>(error?: Error): Validator<T>`
 
-Checks value to be empty.
+Checks value to be empty. Can be inverted with .not call.
 
 ```js
 import * as v from 'baridetta';
@@ -321,6 +311,12 @@ v.empty()('abc');
 
 v.empty()(0);
 // => null
+
+v.empty.not()(undefined);
+// => null
+
+v.empty.not()(0);
+// => 0
 ```
 
 #### `equal<T>(match: T, error?: Error): Validator<T>`
@@ -514,32 +510,6 @@ v.minLen(3)({ length: 3 });
 // => { length: 3 }
 ```
 
-#### `notEmpty<T extends unknown>(error?: Error): Validator<T>`
-
-Checks value not to be empty.
-
-```js
-import * as v from 'baridetta';
-
-v.notEmpty()(null);
-// => null
-
-v.notEmpty()(undefined);
-// => null
-
-v.notEmpty()('');
-// => null
-
-v.notEmpty()(true);
-// => true
-
-v.notEmpty()('abc');
-// => 'abc'
-
-v.notEmpty()(0);
-// => 0
-```
-
 #### `notEqual<T>(match: T, error?: Error): Validator<T>`
 
 Checks value to be not equal to 'match' param. Requires the same type. Shallow comparison.
@@ -557,7 +527,7 @@ v.notEqual([1, 2, 3])([1, 2, 3]); // it's not a deep equality. Only checks links
 // => [1, 2, 3]
 ```
 
-#### `number<T extends unknown>(error?: Error): Processor<T, number>`
+#### `number<T extends unknown>(error?: Error): Validator<T, number>`
 
 Checks value to be a number compatible.
 
@@ -580,7 +550,7 @@ v.number()('12.1');
 // => 12.1
 ```
 
-#### `object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Processor<T, R>`
+#### `object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>`
 
 Checks value to be an object.
 
@@ -609,7 +579,7 @@ simpleObj(10 as any);
 // => null
 ```
 
-#### `object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R>`
+#### `object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`
 
 Checks value to be an object.
 
@@ -669,7 +639,7 @@ v.regex(/[0-9]/)(11);
 // => null
 ```
 
-#### `string<T>(error?: Error): Processor<T, string>`
+#### `string<T>(error?: Error): Validator<T, string>`
 
 Checks value to be a string compatible.
 
@@ -691,7 +661,7 @@ v.string()([1, 2]);
 
 ### `Processors`
 Processes input value. No input types check. Recommended to use validators before.
-#### `clamp<T>(min: T, max: T): Processor<T, T>`
+#### `clamp<T>(min: T, max: T): Validator<T, T>`
 
 Clamps value to required boundaries.
 
@@ -717,7 +687,7 @@ v.clamp('c', 'e')('f');
 // => 'e'
 ```
 
-#### `erase<T>(): Processor<T, null>`
+#### `erase<T>(): Validator<T, null>`
 
 Erase input.
 
@@ -728,7 +698,7 @@ v.erase()(2);
 // => null
 ```
 
-#### `lowercase(): Processor<string, string>`
+#### `lowercase(): Validator<string, string>`
 
 Lowercase input string.
 
@@ -739,7 +709,7 @@ v.lowercase()('ABC');
 // => 'abc'
 ```
 
-#### `round(method: 'round' | 'floor' | 'ceil' = 'round'): Processor<number, number>`
+#### `round(method: 'round' | 'floor' | 'ceil' = 'round'): Validator<number, number>`
 
 Round input number with specific method.
 
@@ -774,7 +744,7 @@ v.round('ceil')(9.8);
 // => 10
 ```
 
-#### `uppercase(): Processor<string, string>`
+#### `uppercase(): Validator<string, string>`
 
 Uppercase input string.
 
@@ -787,7 +757,7 @@ v.uppercase()('abc');
 
 ### `Groupers`
 Groups validators in a specific way.
-#### `consecutive<T>(...validators: Array<Processor<any, T>>): Processor<any, T>`
+#### `consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>`
 
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
 
@@ -811,7 +781,7 @@ unchi('a');
 // => null
 ```
 
-#### `or<T>(...validators: Array<Processor<any, any>>): Processor<any, any>`
+#### `or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>`
 
 Groups validators sequentially. Searches for first successful validator's result.
 
@@ -865,7 +835,7 @@ unchi(11.2);
 // => { result: null, errors: ['ERR1', 'ERR3'] }
 ```
 
-#### `transform<T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R>`
+#### `transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>`
 
 Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
 
@@ -888,7 +858,7 @@ unchi(8.3);
 
 ### `Containers`
 Embraces validators with additional data processing.
-#### `withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Processor<T, Result<R>>`
+#### `withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>`
 
 Provides error handling mechanism.
 
@@ -918,7 +888,7 @@ unchi(11.2);
 // => { result: null, errors: ['ERR1', 'ERR3'] }
 ```
 
-#### `withMeta<T, R>(validator: Processor<T, R>): Processor<T, R>`
+#### `withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>`
 
 Provides meta structure.
 
@@ -950,7 +920,7 @@ unchi(11.2);
 // => { result: null, errors: ['lte', 'integer'] }
 ```
 
-#### `withPromise<T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>>`
+#### `withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>`
 
 Convert result to promise. Use it for async validation.
 
@@ -1072,7 +1042,7 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 // => { id: 1, node: { id: null, node: null } }
 ```
 
-#### `useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Processor<T | R, R>>): Processor<T | R, R>`
+#### `useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`
 
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators.
 
@@ -1137,7 +1107,7 @@ Custom error on each validator:
 v.withErrors(
   v.object2([
     ['id',
-      v.notEmpty('Empty id'),
+      v.empty.not('Empty id'),
       v.number('Not a number'),
       v.parallel(
         v.gte(0, 'Must not be negative'),
@@ -1145,7 +1115,7 @@ v.withErrors(
       )
     ],
     ['name',
-      v.notEmpty('Empty name'),
+      v.empty.not('Empty name'),
       v.string(),
       v.minLen(10, 'Min length is 10')
     ]
@@ -1160,7 +1130,7 @@ Each error will be represented as `{ path, validator, error }`:
 v.withErrors(
   v.object2([
     ['id',
-      v.notEmpty(),
+      v.empty.not(),
       v.number('Custom error message'), // wanna add some info for common error processor?
       v.parallel(
         v.gte(0),
@@ -1168,7 +1138,7 @@ v.withErrors(
       )
     ],
     ['name',
-      v.notEmpty(),
+      v.empty.not(),
       v.string(),
       v.minLen(10)
     ]

@@ -1,11 +1,11 @@
 import { C_MET } from '../names';
-import { ErrorCallback, Processor } from '../types';
+import { ErrorCallback, Validator } from '../types';
 import { isFunction, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/containers/with-meta}
  */
-export const withMeta = <T, R>(validator: Processor<T, R>): Processor<T, R> =>
+export const withMeta = <T, R>(validator: Validator<T, R>): Validator<T, R> =>
   (
     isFunction(validator)
       ? (

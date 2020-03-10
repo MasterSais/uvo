@@ -1,11 +1,11 @@
 import { C_ERR } from '../names';
-import { Error, ErrorCallback, MetaData, Processor, Relevance, Result } from '../types';
+import { Error, ErrorCallback, MetaData, Validator, Relevance, Result } from '../types';
 import { isFunction, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/containers/with-errors}
  */
-export const withErrors = <T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Processor<T, Result<R>> =>
+export const withErrors = <T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>> =>
   (
     isFunction(validator)
       ? (

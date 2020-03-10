@@ -1,7 +1,7 @@
-import { Processor } from '../types';
+import { Validator } from '../types';
 
 /**
  * {@link docs/processors/lowercase}
  */
-export const lowercase = (): Processor<string, string> =>
+export const lowercase = (): Validator<string, string> =>
   (value: string): string => value.toLowerCase();

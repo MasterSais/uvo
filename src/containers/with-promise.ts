@@ -1,11 +1,11 @@
 import { C_PRM } from '../names';
-import { Error, ErrorCallback, MetaData, Processor, Result } from '../types';
+import { Error, ErrorCallback, MetaData, Validator, Result } from '../types';
 import { isFunction, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/containers/with-promise}
  */
-export const withPromise = <T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>> =>
+export const withPromise = <T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>> =>
   (
     isFunction(validator)
       ? (

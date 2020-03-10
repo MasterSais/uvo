@@ -7,7 +7,7 @@ Custom error on each validator:
 v.withErrors(
   v.object2([
     ['id',
-      v.notEmpty('Empty id'),
+      v.empty.not('Empty id'),
       v.number('Not a number'),
       v.parallel(
         v.gte(0, 'Must not be negative'),
@@ -15,7 +15,7 @@ v.withErrors(
       )
     ],
     ['name',
-      v.notEmpty('Empty name'),
+      v.empty.not('Empty name'),
       v.string(),
       v.minLen(10, 'Min length is 10')
     ]
@@ -30,7 +30,7 @@ Each error will be represented as `{ path, validator, error }`:
 v.withErrors(
   v.object2([
     ['id',
-      v.notEmpty(),
+      v.empty.not(),
       v.number('Custom error message'), // wanna add some info for common error processor?
       v.parallel(
         v.gte(0),
@@ -38,7 +38,7 @@ v.withErrors(
       )
     ],
     ['name',
-      v.notEmpty(),
+      v.empty.not(),
       v.string(),
       v.minLen(10)
     ]

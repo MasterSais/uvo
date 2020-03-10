@@ -1,11 +1,11 @@
 /**
- * @name {withPromise<T, R>(validator: Processor<T, R | Result<R>>): Processor<T, Promise<R | Array<Error>>>}
+ * @name {withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>}
  * 
  * @desc Convert result to promise. Use it for async validation.
  * 
  * {@link docs/type-container}
  * 
- * @param {Processor} validator Validator.
+ * @param {Validator} validator Validator.
  * 
  * {@link docs/validator-result}
  * 

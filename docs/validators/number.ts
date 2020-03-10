@@ -1,5 +1,5 @@
 /**
- * @name {number<T extends unknown>(error?: Error): Processor<T, number>}
+ * @name {number<T extends unknown>(error?: Error): Validator<T, number>}
  * 
  * @desc Checks value to be a number compatible.
  * 

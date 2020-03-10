@@ -1,5 +1,5 @@
 /**
- * @name {array<T>(itemSpec?: Array<Processor<any, T>> | Processor<any, T>, error?: Error): Processor<Array<any>, Array<T>>}
+ * @name {array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>}
  * 
  * @desc Checks value to be an array.
  * 

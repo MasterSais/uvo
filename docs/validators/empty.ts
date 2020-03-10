@@ -1,7 +1,7 @@
 /**
  * @name {empty<T>(error?: Error): Validator<T>}
  * 
- * @desc Checks value to be empty.
+ * @desc Checks value to be empty. Can be inverted with .not call.
  * 
  * {@link docs/type-validator}
  * 
@@ -30,3 +30,9 @@ v.empty()('abc');
 
 v.empty()(0);
 // => null
+
+v.empty.not()(undefined);
+// => null
+
+v.empty.not()(0);
+// => 0

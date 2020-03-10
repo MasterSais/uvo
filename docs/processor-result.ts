@@ -1,3 +1,3 @@
 /**
- * @return {Processor} Function that takes value.
+ * @return {Validator} Function that takes value.
  */

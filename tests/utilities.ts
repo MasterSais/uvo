@@ -1,4 +1,4 @@
-import { Error, MetaData, Processor } from '@lib/types';
+import { Error, MetaData, Validator } from '@lib/types';
 
 export const notNullError = () => 'error';
 
@@ -13,7 +13,7 @@ export const emptyObject = () => _emptyObject;
 const _emptyArray: Array<any> = [];
 export const emptyArray = () => _emptyArray;
 
-export const baseCases = <T = any, R = T>(validator: Processor<T, R>, rightCases: Array<T>, wrongCases: Array<T>, processor?: (value: T) => R) =>
+export const baseCases = <T = any, R = T>(validator: Validator<T, R>, rightCases: Array<T>, wrongCases: Array<T>, processor?: (value: T) => R) =>
   (
     rightCases.forEach((input, index) => {
       test('r_' + index, () => {
@@ -27,7 +27,7 @@ export const baseCases = <T = any, R = T>(validator: Processor<T, R>, rightCases
     })
   );
 
-export const baseCasesWithParams = <T = any, R = T>(validator: (...args: any) => Processor<T, R>, rightCases: Array<[Array<any>, T, T?]>, wrongCases: Array<[Array<any>, T]>, processor?: (value: T) => R) =>
+export const baseCasesWithParams = <T = any, R = T>(validator: (...args: any) => Validator<T, R>, rightCases: Array<[Array<any>, T, T?]>, wrongCases: Array<[Array<any>, T]>, processor?: (value: T) => R) =>
   (
     rightCases.forEach(([params, input, expected], index) => {
       test('r_' + index, () => {
@@ -45,7 +45,7 @@ export const baseCasesWithParams = <T = any, R = T>(validator: (...args: any) =>
     })
   );
 
-export const withErrorCases = <T = any, R = T>(validator: Processor<T, R>, values: [[T, R?], [T]?], meta?: MetaData, processor?: (value: T) => R) => {
+export const withErrorCases = <T = any, R = T>(validator: Validator<T, R>, values: [[T, R?], [T]?], meta?: MetaData, processor?: (value: T) => R) => {
   let error: Error = null;
 
   const errorSetter = (err: Error, meta: MetaData) => error = (
@@ -76,7 +76,7 @@ export const metaCase = (meta: MetaData, path: Array<string | number>, params: A
   expect(meta.validator).toEqual(validator);
 };
 
-export const paramsCases = (validator: (...args: any) => Processor<any, any>, rightCases: Array<Array<any>>, wrongCases: Array<Array<any>>, validatorName: string) =>
+export const paramsCases = (validator: (...args: any) => Validator<any, any>, rightCases: Array<Array<any>>, wrongCases: Array<Array<any>>, validatorName: string) =>
   (
     rightCases.forEach((params, index) =>
       test('r_' + index, () =>

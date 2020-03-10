@@ -1,5 +1,5 @@
 /**
- * @name {bool<T>(error?: Error): Processor<T, boolean>}
+ * @name {bool<T>(error?: Error): Validator<T, boolean>}
  * 
  * @desc Checks value to be a boolean compatible.
  * 

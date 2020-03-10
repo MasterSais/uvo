@@ -1,11 +1,11 @@
 import { G_TRM } from '../names';
-import { Processor } from '../types';
+import { Validator } from '../types';
 import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/groupers/transform}
  */
-export const transform = <T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R> =>
+export const transform = <T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R> =>
   (
     isValidatorsSequence(processors)
       ? (

@@ -1,7 +1,7 @@
-import { Processor } from '../types';
+import { Validator } from '../types';
 
 /**
  * {@link docs/processors/erase}
  */
-export const erase = <T>(): Processor<T, null> =>
+export const erase = <T>(): Validator<T, null> =>
   (): null => null;

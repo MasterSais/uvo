@@ -1,5 +1,5 @@
 /**
- * @name {erase<T>(): Processor<T, null>}
+ * @name {erase<T>(): Validator<T, null>}
  * 
  * @desc Erase input.
  * 

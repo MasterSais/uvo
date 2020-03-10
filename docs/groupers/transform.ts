@@ -1,5 +1,5 @@
 /**
- * @name {transform<T, R>(...processors: Array<Processor<T | R, R>>): Processor<T | R, R>}
+ * @name {transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>}
  * 
  * @desc Groups processors sequentially.
  * Passes value through a sequence of processors.
@@ -7,7 +7,7 @@
  * 
  * {@link docs/type-grouper}
  * 
- * @param {...Processor} processors Processors list.
+ * @param {...Processor} processors Validators list.
  * 
  * {@link docs/processor-result}
  * 

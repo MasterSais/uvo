@@ -1,5 +1,5 @@
 /**
- * @name {or<T>(...validators: Array<Processor<any, any>>): Processor<any, any>}
+ * @name {or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>}
  * 
  * @desc Groups validators sequentially.
  * Searches for first successful validator's result.

@@ -1,11 +1,11 @@
 import { G_OR } from '../names';
-import { Error, ErrorCallback, MetaData, Processor, Relevance } from '../types';
+import { Error, ErrorCallback, MetaData, Validator, Relevance } from '../types';
 import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/groupers/or}
  */
-export const or = (...validators: Array<Processor<any, any>>): Processor<any, any> =>
+export const or = (...validators: Array<Validator<any, any>>): Validator<any, any> =>
   (
     isValidatorsSequence(validators)
       ? (
@@ -14,7 +14,7 @@ export const or = (...validators: Array<Processor<any, any>>): Processor<any, an
 
           const relevance: Relevance = { value: false };
 
-          validators.find((nextValidator: Processor<unknown, unknown>) =>
+          validators.find((nextValidator: Validator<unknown, unknown>) =>
             (
               processed = nextValidator(value, onError ? (error: Error, meta?: MetaData) => onError(error, meta, relevance) : null, meta),
               processed !== null

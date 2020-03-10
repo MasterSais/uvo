@@ -1,4 +1,4 @@
-import { Error, ErrorCallback, MetaData, Processor, Validator } from './types';
+import { Error, ErrorCallback, Invertible, MetaData, Validator } from './types';
 
 export const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
@@ -57,5 +57,15 @@ export const isObject = (value: any): boolean => value && typeof value === 'obje
 
 export const isArray = (value: any): boolean => Array.isArray(value);
 
-export const isValidatorsSequence = (validators: Array<Processor<any, any>>): boolean =>
+export const isValidatorsSequence = (validators: Array<Validator<any, any>>): boolean =>
   validators.reduce((result: boolean, validator) => result && isFunction(validator), true);
+
+export const makeInvertible = <T>(conditionFactory: (invert: boolean) => T): Invertible<T> => {
+  const validator = conditionFactory(false) as Invertible<T>;
+
+  validator.not = conditionFactory(true);
+
+  return validator;
+};
+
+export const invertCondition = (condition: boolean, invert: boolean) => invert ? !condition : condition;

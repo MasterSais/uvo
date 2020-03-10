@@ -1,7 +1,7 @@
 import { isArray } from 'util';
 import { consecutive } from '../groupers/consecutive';
 import { V_OBJ } from '../names';
-import { Error, ErrorCallback, MetaData, ObjectLike, Processor } from '../types';
+import { Error, ErrorCallback, MetaData, ObjectLike, Validator } from '../types';
 import { applyError, isObject, setMetaPath, setMetaValidator, toArray, throwValidatorError } from '../utilities';
 
 const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
@@ -11,8 +11,8 @@ const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
 /**
  * {@link docs/validators/object2}
  */
-export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Processor<any, any>>]>, error?: Error): Processor<T, R> => {
-  const specList: Array<[string, Array<Processor<any, any>>]> = [];
+export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R> => {
+  const specList: Array<[string, Array<Validator<any, any>>]> = [];
 
   const isSpecArray = isNestedArrays(spec);
 
@@ -25,7 +25,7 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string, ...Ar
   );
 
   if (isSpecValid || !spec) {
-    const validators: Array<[string, Processor<any, any>]> =
+    const validators: Array<[string, Validator<any, any>]> =
       spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
 
     return (data: T, onError?: ErrorCallback, meta?: MetaData): R =>

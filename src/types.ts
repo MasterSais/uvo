@@ -48,14 +48,14 @@ export declare type Result<T> = {
 };
 
 /**
- * {@link docs/types/processor}
- */
-export declare type Processor<T, R> = (value: T, onError?: ErrorCallback, meta?: MetaData) => R;
-
-/**
  * {@link docs/types/validator}
  */
-export declare type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
+export declare type Validator<T, R = T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => R;
+
+/**
+ * Function with invertible supplement.
+ */
+export declare type Invertible<T> = T & { not: T };
 
 /**
  * {@link docs/types/fields-spec}
@@ -65,4 +65,4 @@ export declare type FieldsSpec = string | [('&' | '|' | '^'), FieldsSpec | strin
 /**
  * {@link docs/types/object-spec}
  */
-export declare type ObjectSpec = Record<string, Array<Processor<any, any>> | Processor<any, any>>;
+export declare type ObjectSpec = Record<string, Array<Validator<any, any>> | Validator<any, any>>;

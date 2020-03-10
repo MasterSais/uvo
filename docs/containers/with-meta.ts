@@ -1,11 +1,11 @@
 /**
- * @name {withMeta<T, R>(validator: Processor<T, R>): Processor<T, R>}
+ * @name {withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>}
  * 
  * @desc Provides meta structure.
  * 
  * {@link docs/type-container}
  * 
- * @param {Processor} validator Validator.
+ * @param {Validator} validator Validator.
  * 
  * {@link docs/validator-result}
  * 

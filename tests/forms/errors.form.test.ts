@@ -1,9 +1,9 @@
 import { withErrors } from '@lib/containers/with-errors';
 import { parallel } from '@lib/groupers/parallel';
+import { empty } from '@lib/validators/empty';
 import { gte } from '@lib/validators/gte';
 import { integer } from '@lib/validators/integer';
 import { minLen } from '@lib/validators/min-len';
-import { notEmpty } from '@lib/validators/not-empty';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';
@@ -14,13 +14,13 @@ test('errors', () => {
     withErrors(
       object({
         id: [
-          notEmpty('Empty id'),
+          empty.not('Empty id'),
           number('Not a number'),
           gte(0, 'Must not be negative'),
           integer('Must be an integer')
         ],
         name: [
-          notEmpty('Empty name'),
+          empty.not('Empty name'),
           string(),
           minLen(10, 'Min length is 10')
         ]
@@ -68,7 +68,7 @@ test('errors parallel', () => {
     withErrors(
       object({
         id: [
-          notEmpty('Empty id'),
+          empty.not('Empty id'),
           number('Not a number'),
           parallel(
             gte(0, 'Must not be negative'),
@@ -76,7 +76,7 @@ test('errors parallel', () => {
           )
         ],
         name: [
-          notEmpty('Empty name'),
+          empty.not('Empty name'),
           string(),
           minLen(10, 'Min length is 10')
         ]
@@ -125,13 +125,13 @@ test('errors 2', () => {
     withErrors(
       object2([
         ['id',
-          notEmpty('Empty id'),
+          empty.not('Empty id'),
           number('Not a number'),
           gte(0, 'Must not be negative'),
           integer('Must be an integer')
         ],
         ['name',
-          notEmpty('Empty name'),
+          empty.not('Empty name'),
           string(),
           minLen(10, 'Min length is 10')
         ]
@@ -179,7 +179,7 @@ test('errors parallel 2', () => {
     withErrors(
       object2([
         ['id',
-          notEmpty('Empty id'),
+          empty.not('Empty id'),
           number('Not a number'),
           parallel(
             gte(0, 'Must not be negative'),
@@ -187,7 +187,7 @@ test('errors parallel 2', () => {
           )
         ],
         ['name',
-          notEmpty('Empty name'),
+          empty.not('Empty name'),
           string(),
           minLen(10, 'Min length is 10')
         ]

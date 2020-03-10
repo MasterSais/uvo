@@ -1,5 +1,5 @@
 /**
- * @name {lowercase(): Processor<string, string>}
+ * @name {lowercase(): Validator<string, string>}
  * 
  * @desc Lowercase input string.
  * 

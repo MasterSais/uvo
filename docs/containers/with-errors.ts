@@ -1,11 +1,11 @@
 /**
- * @name {withErrors<T, R>(validator: Processor<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Processor<T, Result<R>>}
+ * @name {withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>}
  * 
  * @desc Provides error handling mechanism.
  * 
  * {@link docs/type-container}
  * 
- * @param {Processor} validator Validator.
+ * @param {Validator} validator Validator.
  * 
  * {@link docs/validator-result}
  * 

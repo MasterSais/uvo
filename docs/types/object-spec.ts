@@ -1,8 +1,8 @@
 /** 
  * @name {ObjectSpec}
  * @desc Specification for 'object' and 'object2' validators.
- * @type {Processor | Record<string, Array<Processor<any, any>>} 
+ * @type {Validator | Record<string, Array<Validator<any, any>>} 
  */
 
 //#example
-type ObjectSpec = Record<string, Array<Processor<any, any>> | Processor<any, any>>;
+type ObjectSpec = Record<string, Array<Validator<any, any>> | Validator<any, any>>;

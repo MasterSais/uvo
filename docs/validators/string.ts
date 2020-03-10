@@ -1,5 +1,5 @@
 /**
- * @name {string<T>(error?: Error): Processor<T, string>}
+ * @name {string<T>(error?: Error): Validator<T, string>}
  * 
  * @desc Checks value to be a string compatible.
  * 

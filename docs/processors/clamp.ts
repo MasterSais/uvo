@@ -1,5 +1,5 @@
 /**
- * @name {clamp<T>(min: T, max: T): Processor<T, T>}
+ * @name {clamp<T>(min: T, max: T): Validator<T, T>}
  * 
  * @desc Clamps value to required boundaries.
  * 
