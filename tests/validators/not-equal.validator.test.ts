@@ -1,11 +1,11 @@
-import { V_NEQ as VALIDATOR_NAME } from '@lib/names';
-import { notEqual as validator } from '@lib/validators/not-equal';
+import { V_EQ as VALIDATOR_NAME } from '@lib/names';
+import { equal as validator } from '@lib/validators/equal';
 import { baseCasesWithParams, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('base', () => {
     baseCasesWithParams<any>(
-      validator,
+      validator.not,
       [
         [[1], 0],
         [[1], 'abc'],
@@ -38,14 +38,14 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('with error', () => {
     withErrorCases<any>(
-      validator(1, notNullError()),
+      validator.not(1, notNullError()),
       [[0], [1]]
     );
   });
 
   describe('with meta', () => {
     withErrorCases(
-      validator(1, errorMetaCase([], [1], VALIDATOR_NAME)),
+      validator.not(1, errorMetaCase([], [1], VALIDATOR_NAME)),
       [[1]],
       emptyMeta()
     );

@@ -35,7 +35,6 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`lte<T>(bound: T, error?: Error): Validator<T>`](#ltetbound-t-error-error-validatort)
     - [`maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#maxlent-extends-lengthylen-number-error-error-validatort)
     - [`minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#minlent-extends-lengthylen-number-error-error-validatort)
-    - [`notEqual<T>(match: T, error?: Error): Validator<T>`](#notequaltmatch-t-error-error-validatort)
     - [`number<T extends unknown>(error?: Error): Validator<T, number>`](#numbert-extends-unknownerror-error-validatort-number)
     - [`object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>`](#objectt-extends-objectlike-r--tspec-objectspec-error-error-validatort-r)
     - [`object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`](#object2t-extends-objectlike-r--tspec-arraystring-arrayvalidatorany-any-error-error-validatort-r)
@@ -321,7 +320,7 @@ v.empty.not()(0);
 
 #### `equal<T>(match: T, error?: Error): Validator<T>`
 
-Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
+Checks value to be equal to 'match' param. Requires the same type. Shallow comparison. Can be inverted with .not call.
 
 ```js
 import * as v from 'baridetta';
@@ -334,6 +333,12 @@ v.equal('10')(10 as any);
 
 v.equal([1, 2, 3])([1, 2, 3]); // it's not a deep equality. Only checks links.
 // => null
+
+v.equal.not(10)(10);
+// => null
+
+v.equal.not(10)(1);
+// => 1
 ```
 
 #### `fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`
@@ -508,23 +513,6 @@ v.minLen(3)('abc');
 
 v.minLen(3)({ length: 3 });
 // => { length: 3 }
-```
-
-#### `notEqual<T>(match: T, error?: Error): Validator<T>`
-
-Checks value to be not equal to 'match' param. Requires the same type. Shallow comparison.
-
-```js
-import * as v from 'baridetta';
-
-v.notEqual(10)(10);
-// => null
-
-v.notEqual('10')(10 as any);
-// => 10
-
-v.notEqual([1, 2, 3])([1, 2, 3]); // it's not a deep equality. Only checks links.
-// => [1, 2, 3]
 ```
 
 #### `number<T extends unknown>(error?: Error): Validator<T, number>`

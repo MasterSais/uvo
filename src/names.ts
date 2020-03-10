@@ -11,9 +11,6 @@ export const V_REG: string = 'regex';
 export const V_EM: string = 'empty';
 
 /** @type {string} */
-export const V_NEQ: string = 'notEqual';
-
-/** @type {string} */
 export const V_GTE: string = 'gte';
 
 /** @type {string} */
