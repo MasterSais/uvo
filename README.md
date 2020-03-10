@@ -639,16 +639,22 @@ v.oneOf.not([0, 1, 2])(3);
 
 #### `regex<T extends unknown>(match: RegExp, error?: Error): Validator<T>`
 
-Checks value to match a pattern.
+Checks value to match a pattern. Can be inverted with .not call.
 
 ```js
 import * as v from 'baridetta';
 
-v.regex(/[0-9]/)(1);
+v.regex(/^[0-9]$/)(1);
 // => 1
 
-v.regex(/[0-9]/)(11);
+v.regex(/^[0-9]$/)(11);
 // => null
+
+v.regex.not(/^[0-9]$/)(1);
+// => null
+
+v.regex(/^[0-9]$/)(11);
+// => 11
 ```
 
 #### `string<T>(error?: Error): Validator<T, string>`
