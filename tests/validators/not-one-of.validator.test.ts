@@ -3,28 +3,6 @@ import { oneOf as validator } from '@lib/validators/one-of';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases, emptyArray, emptyObject, emptyFunction } from '@test/utilities';
 
 describe(`validator › not ${VALIDATOR_NAME}`, () => {
-  describe('params', () => {
-    paramsCases(
-      validator.not,
-      [
-        [[0, 0]],
-        [[0]],
-        [[]]
-      ],
-      [
-        [{}],
-        [1],
-        [NaN],
-        [Infinity],
-        ['1'],
-        [true],
-        [null],
-        [undefined]
-      ],
-      VALIDATOR_NAME
-    );
-  });
-
   describe('base', () => {
     baseCasesWithParams<any>(
       validator.not,

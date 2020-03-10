@@ -2,12 +2,10 @@ import { V_EQ } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, invertCondition, makeInvertible, setMetaValidator } from '../utilities';
 
-type Equal = <T>(match: T, error?: Error) => Validator<T>;
-
 /**
  * {@link docs/validators/equal}
  */
-export const equal = makeInvertible<Equal>(
+export const equal = makeInvertible<(<T>(match: T, error?: Error) => Validator<T>)>(
   (invert: boolean) => <T>(match: T, error?: Error): Validator<T> =>
     (
       (value: T, onError?: ErrorCallback, meta?: MetaData): T =>

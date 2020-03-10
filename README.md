@@ -411,7 +411,7 @@ v.gte(true)(false);
 
 #### `integer(error?: Error): Validator<number>`
 
-Checks number to be an integer.
+Checks number to be an integer. Can be inverted with .not call.
 
 ```js
 import * as v from 'baridetta';
@@ -424,6 +424,12 @@ v.integer()(1.1);
 
 v.integer()('1' as any); // requires a number.
 // => null
+
+v.integer.not()(1);
+// => null
+
+v.integer.not()(1.1);
+// => 1.1
 ```
 
 #### `len<T extends Lengthy>(len: number, error?: Error): Validator<T>`

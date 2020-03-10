@@ -2,12 +2,10 @@ import { V_OOF } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, invertCondition, isArray, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
 
-type OneOf = <T>(candidates: Array<T>, error?: Error) => Validator<T>;
-
 /**
  * {@link docs/validators/one-of}
  */
-export const oneOf = makeInvertible<OneOf>(
+export const oneOf = makeInvertible<(<T>(candidates: Array<T>, error?: Error) => Validator<T>)>(
   (invert: boolean) => <T>(candidates: Array<T>, error?: Error): Validator<T> =>
     (
       isArray(candidates)
