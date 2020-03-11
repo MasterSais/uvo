@@ -45,7 +45,8 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`clamp<T>(min: T, max: T): Validator<T, T>`](#clamptmin-t-max-t-validatort-t)
     - [`erase<T>(): Validator<T, null>`](#eraset-validatort-null)
     - [`lowercase(): Validator<string, string>`](#lowercase-validatorstring-string)
-    - [`round(method: 'round' | 'floor' | 'ceil' = 'round'): Validator<number, number>`](#roundmethod-round--floor--ceil--round-validatornumber-number)
+    - [`round(method?: 'floor' | 'ceil'): Validator<number, number>`](#roundmethod-floor--ceil-validatornumber-number)
+    - [`trim(method?: 'left' | 'right'): Validator<string, string>`](#trimmethod-left--right-validatorstring-string)
     - [`uppercase(): Validator<string, string>`](#uppercase-validatorstring-string)
   - [`Groupers`](#groupers)
     - [`consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>`](#consecutivetvalidators-arrayvalidatorany-t-validatorany-t)
@@ -737,7 +738,7 @@ v.lowercase()('ABC');
 // => 'abc'
 ```
 
-#### `round(method: 'round' | 'floor' | 'ceil' = 'round'): Validator<number, number>`
+#### `round(method?: 'floor' | 'ceil'): Validator<number, number>`
 
 Round input number with specific method.
 
@@ -770,6 +771,23 @@ v.round('ceil')(10.2);
 
 v.round('ceil')(9.8);
 // => 10
+```
+
+#### `trim(method?: 'left' | 'right'): Validator<string, string>`
+
+Trim input string with specific method.
+
+```js
+import * as v from 'baridetta';
+
+v.trim()(' abc ');
+// => 'abc'
+
+v.trim('left')(' abc ');
+// => 'abc '
+
+v.trim('right')(' abc ');
+// => ' abc'
 ```
 
 #### `uppercase(): Validator<string, string>`

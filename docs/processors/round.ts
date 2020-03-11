@@ -1,5 +1,5 @@
 /**
- * @name {round(method: 'round' | 'floor' | 'ceil' = 'round'): Validator<number, number>}
+ * @name {round(method?: 'floor' | 'ceil'): Validator<number, number>}
  * 
  * @desc Round input number with specific method.
  * 
