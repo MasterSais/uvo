@@ -85,3 +85,16 @@ v.withMeta(
   ])
 )
 ```
+
+Array with custom processor injection
+```js
+v.consecutive(
+  v.array(
+    v.object2([
+      ['id', v.number(), v.gte(0)],
+      ['name', v.string(), v.minLen(10), v.regex.not(/invalid_name_regex/)]
+    ])
+  ),
+  (data: Array<number>) => data.filter(value => !!value)
+)
+```

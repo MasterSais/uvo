@@ -28,3 +28,17 @@ You must provide validator name and params into meta scheme for proper errors ha
 ```js
 ... onError(error, meta && { ...meta, validator: 'name', params: [... your params] }) ...
 ```
+
+Processor injection example:
+```js
+import * as v from 'baridetta';
+
+const simpleOne = (
+  v.consecutive(
+    v.array([
+      v.number(),
+      v.gte(0)
+    ]),
+    (data: Array<number>) => data.filter(value => !!value) // Remove null values.
+  )
+);

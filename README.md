@@ -62,8 +62,6 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>`](#setvdeptfield-string-validators-arrayvalidatort-validatort)
     - [`useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`](#usedefaultt-rdefaultvalue-r--meta-metadata--r-validators-arrayvalidatort--r-r-validatort--r-r)
 - [`Custom validators`](#custom-validators)
-- [`Examples`](#examples)
-  - [`Schema with custom user errors`](#schema-with-custom-user-errors)
   - [`Schema with common error processor`](#schema-with-common-error-processor)
   - [`Fields validation`](#fields-validation)
   - [`Conditional validation`](#conditional-validation)
@@ -1127,6 +1125,20 @@ You must provide validator name and params into meta scheme for proper errors ha
 ```js
 ... onError(error, meta && { ...meta, validator: 'name', params: [... your params] }) ...
 ```
+
+Processor injection example:
+```js
+import * as v from 'baridetta';
+
+const simpleOne = (
+  v.consecutive(
+    v.array([
+      v.number(),
+      v.gte(0)
+    ]),
+    (data: Array<number>) => data.filter(value => !!value) // Remove null values.
+  )
+);
 ## `Examples`
 All examples use advanced object schema 'object2' as recommended solution.
 
@@ -1213,6 +1225,19 @@ v.withMeta(
       (isIdValid: boolean) => isIdValid && [v.string(), v.minLen(10)]
     )]
   ])
+)
+```
+
+Array with custom processor injection
+```js
+v.consecutive(
+  v.array(
+    v.object2([
+      ['id', v.number(), v.gte(0)],
+      ['name', v.string(), v.minLen(10), v.regex.not(/invalid_name_regex/)]
+    ])
+  ),
+  (data: Array<number>) => data.filter(value => !!value)
 )
 ```
 
