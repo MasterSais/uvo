@@ -1,3 +1,4 @@
 object.camelCase()
-keep fields processor
-random
+number.random()
+containers tests
+use symbol as error result instead of null

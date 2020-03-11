@@ -37,7 +37,7 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#minlent-extends-lengthylen-number-error-error-validatort)
     - [`number<T extends unknown>(error?: Error): Validator<T, number>`](#numbert-extends-unknownerror-error-validatort-number)
     - [`object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>`](#objectt-extends-objectlike-r--tspec-objectspec-error-error-validatort-r)
-    - [`object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`](#object2t-extends-objectlike-r--tspec-arraystring-arrayvalidatorany-any-error-error-validatort-r)
+    - [`object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`](#object2t-extends-objectlike-r--tspec-arraystring--regex-arrayvalidatorany-any-error-error-validatort-r)
     - [`oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>`](#oneoftcandidates-arrayt-error-error-validatort)
     - [`regex<T extends unknown>(match: RegExp, error?: Error): Validator<T>`](#regext-extends-unknownmatch-regexp-error-error-validatort)
     - [`string<T>(error?: Error): Validator<T, string>`](#stringterror-error-validatort-string)
@@ -585,7 +585,8 @@ const simpleObj = (
 simpleObj({
   id: 3,
   name: 'YourAwesomeUserName',
-  role: 'invalidRole' // wrong. Will be null
+  role: 'invalidRole', // wrong. Will be null
+  status: 0 // will be skipped in output.
 });
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 
@@ -594,9 +595,24 @@ simpleObj([]);
 
 simpleObj(10 as any);
 // => null
+
+const fieldsKeeper = (
+  v.object({
+    id: [], // just takes input value.
+    name: []
+  })
+);
+
+fieldsKeeper({
+  id: 3,
+  name: 'YourAwesomeUserName',
+  role: 'invalidRole',
+  status: 0
+});
+// => { id: 3, name: 'YourAwesomeUserName' }
 ```
 
-#### `object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`
+#### `object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`
 
 Checks value to be an object.
 
@@ -614,7 +630,8 @@ const simpleObj = (
 simpleObj({
   id: 3,
   name: 'YourAwesomeUserName',
-  role: 'invalidRole' // wrong. Will be null
+  role: 'invalidRole', // wrong. Will be null
+  status: 0 // will be skipped in output.
 });
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 
@@ -623,6 +640,36 @@ simpleObj([]);
 
 simpleObj(10 as any);
 // => null
+
+const fieldsKeeper = (
+  v.object2([
+    ['id'], // just takes input value.
+    ['name']
+  ])
+);
+
+fieldsKeeper({
+  id: 3,
+  name: 'YourAwesomeUserName',
+  role: 'invalidRole',
+  status: 0
+});
+// => { id: 3, name: 'YourAwesomeUserName' }
+
+const advancedObj = (
+  v.object2([
+    ['id', v.number(), v.gte(0)],
+    [/name|surname|thirdname/, v.string(), v.minLen(10)] // use regex for fields matching.
+  ])
+);
+
+advancedObj({
+  id: 3,
+  name: 'YourAwesomeUserName',
+  surname: 'YourAwesomeUserSurname',
+  thirdname: 'YourAwesomeUserThirdname'
+});
+// => { id: 3, name: 'YourAwesomeUserName', surname: 'YourAwesomeUserSurname', thirdname: 'YourAwesomeUserThirdname' }
 ```
 
 #### `oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>`

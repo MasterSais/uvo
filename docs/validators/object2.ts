@@ -1,11 +1,12 @@
 /**
- * @name {object2<T extends ObjectLike, R = T>(spec?: Array<[string, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>}
+ * @name {object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>}
  * 
  * @desc Checks value to be an object.
  * 
  * {@link docs/type-validator-processor}
  * 
- * @param {Array=} spec Validators scheme for object in form of array. Provides strict ordering. 
+ * @param {Array=} spec Validators scheme for object in form of array. Provides strict ordering.
+ * Each key can be a Regex.
  * 
  * {@link docs/error-param}
  * 
@@ -28,7 +29,8 @@ const simpleObj = (
 simpleObj({
   id: 3,
   name: 'YourAwesomeUserName',
-  role: 'invalidRole' // wrong. Will be null
+  role: 'invalidRole', // wrong. Will be null
+  status: 0 // will be skipped in output.
 });
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 
@@ -37,3 +39,33 @@ simpleObj([]);
 
 simpleObj(10 as any);
 // => null
+
+const fieldsKeeper = (
+  v.object2([
+    ['id'], // just takes input value.
+    ['name']
+  ])
+);
+
+fieldsKeeper({
+  id: 3,
+  name: 'YourAwesomeUserName',
+  role: 'invalidRole',
+  status: 0
+});
+// => { id: 3, name: 'YourAwesomeUserName' }
+
+const advancedObj = (
+  v.object2([
+    ['id', v.number(), v.gte(0)],
+    [/name|surname|thirdname/, v.string(), v.minLen(10)] // use regex for fields matching.
+  ])
+);
+
+advancedObj({
+  id: 3,
+  name: 'YourAwesomeUserName',
+  surname: 'YourAwesomeUserSurname',
+  thirdname: 'YourAwesomeUserThirdname'
+});
+// => { id: 3, name: 'YourAwesomeUserName', surname: 'YourAwesomeUserSurname', thirdname: 'YourAwesomeUserThirdname' }

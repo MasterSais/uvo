@@ -1,7 +1,7 @@
 import { consecutive } from '../groupers/consecutive';
 import { V_OBJ } from '../names';
 import { Error, ErrorCallback, MetaData, ObjectLike, ObjectSpec, Validator } from '../types';
-import { applyError, isObject, setMetaPath, setMetaValidator, toArray, throwValidatorError } from '../utilities';
+import { applyError, isObject, setMetaPath, setMetaValidator, throwValidatorError, toArray } from '../utilities';
 
 /**
  * {@link docs/validators/object}
@@ -22,10 +22,7 @@ export const object = <T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: E
       spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
 
     return (data: T, onError?: ErrorCallback, meta?: MetaData): R =>
-      (
-        data !== null
-        && isObject(data)
-      )
+      isObject(data)
         ? (
           validators
             ? validators.reduce((result: R, [key, validator]) => (
@@ -34,7 +31,7 @@ export const object = <T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: E
             : data as unknown as R
         )
         : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
-  } else {
-    return throwValidatorError(V_OBJ);
   }
+
+  return throwValidatorError(V_OBJ);
 };

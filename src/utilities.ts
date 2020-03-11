@@ -47,6 +47,8 @@ export const isFiniteNumber = (value: any): boolean => Number.isFinite(value);
 
 export const isNumber = (value: any): boolean => typeof value === 'number';
 
+export const isRegEx = (value: any): boolean => value && value.constructor === RegExp;
+
 export const isString = (value: any): boolean => typeof value === 'string';
 
 export const isBoolean = (value: any): boolean => typeof value === 'boolean';

@@ -1,6 +1,6 @@
 import { V_REG } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, invertCondition, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
+import { applyError, invertCondition, isRegEx, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/validators/regex}
@@ -8,7 +8,7 @@ import { applyError, invertCondition, makeInvertible, setMetaValidator, throwVal
 export const regex = makeInvertible<(<T extends unknown>(match: RegExp, error?: Error) => Validator<T>)>(
   (invert: boolean) => <T extends unknown>(match: RegExp, error?: Error): Validator<T> =>
     (
-      (match && match.constructor === RegExp)
+      isRegEx(match)
         ? (
           (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
             (

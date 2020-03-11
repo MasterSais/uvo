@@ -21,6 +21,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [{ f1: number() }],
         [{ f1: number(), f2: string() }],
         [{ f1: number(), f2: [] }],
+        [{ f1: number(), '': [] }],
         [{ f1: number(), f2: [string(), len(10)] }]
       ],
       [
@@ -56,12 +57,18 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [[{}], {}],
         [[{}], { f1: null }, {}],
         [[{}], { f1: true }, {}],
+        [[{ f1: [] }], { f1: 12 }],
+        [[{ f1: [] }], { f1: '12' }],
+        [[{ f1: [] }], { f1: null }],
         [[{ f1: number() }], { f1: 12 }],
         [[{ f1: number() }], { f1: '12' }, { f1: 12 }],
         [[{ f1: number() }], { f1: 'abc' }, { f1: null }],
         [[{ f1: [number(), gte(10)] }], { f1: 11 }, { f1: 11 }],
         [[{ f1: [number(), gte(10)] }], { f1: '11' }, { f1: 11 }],
-        [[{ f1: [number(), gte(10)] }], { f1: '9' }, { f1: null }]
+        [[{ f1: [number(), gte(10)] }], { f1: '9' }, { f1: null }],
+        [[{ f1: [number(), gte(10)] }], { f1: 11, f2: 10 }, { f1: 11 }],
+        [[{ f1: [number(), gte(10)] }], { f1: '11', f2: '10' }, { f1: 11 }],
+        [[{ f1: [number(), gte(10)] }], { f1: '9', f2: null }, { f1: null }]
       ],
       [
         [[], 1],

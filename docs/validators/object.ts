@@ -28,7 +28,8 @@ const simpleObj = (
 simpleObj({
   id: 3,
   name: 'YourAwesomeUserName',
-  role: 'invalidRole' // wrong. Will be null
+  role: 'invalidRole', // wrong. Will be null
+  status: 0 // will be skipped in output.
 });
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 
@@ -37,3 +38,18 @@ simpleObj([]);
 
 simpleObj(10 as any);
 // => null
+
+const fieldsKeeper = (
+  v.object({
+    id: [], // just takes input value.
+    name: []
+  })
+);
+
+fieldsKeeper({
+  id: 3,
+  name: 'YourAwesomeUserName',
+  role: 'invalidRole',
+  status: 0
+});
+// => { id: 3, name: 'YourAwesomeUserName' }
