@@ -26,12 +26,14 @@ export const applyError = (error: Error, onError: ErrorCallback, meta: MetaData)
   (onError && onError(error, meta), null);
 
 export const throwValidatorError = (validator: string) => {
-  throw validator;
+  throw `Invalid params provided in '${validator}'`;
 };
 
 export const reduceValidators = (value: any, onError: ErrorCallback, meta: MetaData, validators: Array<Validator<any>>): any =>
   validators.reduce((value: any, nextValidator: Validator<any>): any =>
     (value !== null ? nextValidator(value, onError, meta) : null), value);
+
+export const valueOf = (value: any) => (value !== null && value !== undefined) ? value.valueOf() : value;
 
 export const isEmpty = (value: any) => (value === null) || (value === undefined) || (value === '');
 

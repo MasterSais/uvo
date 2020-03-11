@@ -5,7 +5,7 @@
  * 
  * {@link docs/type-validator}
  * 
- * @param {number | string | boolean} bound Boundary value. One of three types: number, string, boolean.
+ * @param {number | string | boolean | Date} bound Boundary value. One of three types: number, string, boolean.
  * 
  * {@link docs/error-param}
  * 
@@ -33,4 +33,10 @@ v.lte('a')('b');
 // => null
 
 v.lte(false)(true);
+// => null
+
+v.lte(new Date())(new Date(Date.now() - 1000));
+// => Date
+
+v.lte(new Date())(new Date(Date.now() + 1000));
 // => null

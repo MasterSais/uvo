@@ -36,7 +36,10 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [[0], Infinity],
         [['b'], 'b'],
         [['b'], 'c'],
-        [[true], true]
+        [[true], true],
+        [[Date.now()], Date.now() + 1000],
+        [[Date.now()], new Date(Date.now() + 1000)],
+        [[new Date()], new Date(Date.now() + 1000)]
       ],
       [
         [[0], -1],
@@ -56,7 +59,10 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [['0'], emptyArray()],
         [['0'], NaN],
         [['0'], undefined],
-        [[true], false]
+        [[true], false],
+        [[Date.now()], Date.now() - 1000],
+        [[Date.now()], new Date(Date.now() - 1000)],
+        [[new Date()], new Date(Date.now() - 1000)]
       ]
     );
   });

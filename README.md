@@ -407,6 +407,12 @@ v.gte('b')('a');
 
 v.gte(true)(false);
 // => null
+
+v.gte(new Date())(new Date(Date.now() + 1000));
+// => Date
+
+v.gte(new Date())(new Date(Date.now() - 1000));
+// => null
 ```
 
 #### `integer(error?: Error): Validator<number>`
@@ -490,6 +496,12 @@ v.lte('a')('b');
 // => null
 
 v.lte(false)(true);
+// => null
+
+v.lte(new Date())(new Date(Date.now() - 1000));
+// => Date
+
+v.lte(new Date())(new Date(Date.now() + 1000));
 // => null
 ```
 
