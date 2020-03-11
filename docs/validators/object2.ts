@@ -1,12 +1,12 @@
 /**
  * @name {object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>}
  * 
- * @desc Checks value to be an object.
+ * @desc Checks value to be an object. Provides strict ordering.
+ * Each key can be a Regex.
  * 
  * {@link docs/type-validator-processor}
  * 
- * @param {Array=} spec Validators scheme for object in form of array. Provides strict ordering.
- * Each key can be a Regex.
+ * @param {Array=} spec Validators scheme for object in form of array.
  * 
  * {@link docs/error-param}
  * 

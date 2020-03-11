@@ -42,3 +42,4 @@ const simpleOne = (
     (data: Array<number>) => data.filter(value => !!value) // Remove null values.
   )
 );
+```

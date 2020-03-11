@@ -63,6 +63,8 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>`](#setvdeptfield-string-validators-arrayvalidatort-validatort)
     - [`useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`](#usedefaultt-rdefaultvalue-r--meta-metadata--r-validators-arrayvalidatort--r-r-validatort--r-r)
 - [`Custom validators`](#custom-validators)
+- [`Examples`](#examples)
+  - [`Schema with custom user errors`](#schema-with-custom-user-errors)
   - [`Schema with common error processor`](#schema-with-common-error-processor)
   - [`Fields validation`](#fields-validation)
   - [`Conditional validation`](#conditional-validation)
@@ -614,7 +616,7 @@ fieldsKeeper({
 
 #### `object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`
 
-Checks value to be an object.
+Checks value to be an object. Provides strict ordering. Each key can be a Regex.
 
 ```js
 import * as v from 'baridetta';
@@ -1204,6 +1206,7 @@ const simpleOne = (
     (data: Array<number>) => data.filter(value => !!value) // Remove null values.
   )
 );
+```
 ## `Examples`
 All examples use advanced object schema 'object2' as recommended solution.
 
