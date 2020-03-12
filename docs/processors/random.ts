@@ -6,7 +6,9 @@
  * {@link docs/type-processor}
  * 
  * @param {number=} min Min value. Default is 0.
+ * 
  * @param {number=} max Max value. Default is 1.
+ * 
  * @param {number=} precision Result precision. Default is 10.
  * 
  * {@link docs/processor-result}

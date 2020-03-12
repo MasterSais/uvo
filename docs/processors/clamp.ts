@@ -6,6 +6,7 @@
  * {@link docs/type-processor}
  * 
  * @param {number|string|boolean} min Left bound to clamp to.
+ * 
  * @param {number|string|boolean} max Right bound to clamp to.
  * 
  * {@link docs/processor-result}
