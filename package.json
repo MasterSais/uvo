@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint src/**/*.ts",
     "lint:fix": "yarn run lint --fix",
-    "test": "jest --silent --detectOpenHandles --passWithNoTests --config ./jest.config.json",
+    "test": "jest --config ./jest.config.json",
     "test:watch": "yarn run test --watch",
     "build": "yarn run build:merge && yarn run build:modules && yarn run build:minify && yarn run build:doc",
     "build:merge": "node merge-sources.js dist index.ts && node inline-docs.js ./dist/index.ts",
@@ -45,8 +45,8 @@
   "devDependencies": {
     "@types/jest": "25.1.4",
     "@types/node": "13.9.0",
-    "@typescript-eslint/eslint-plugin": "2.22.0",
-    "@typescript-eslint/parser": "2.22.0",
+    "@typescript-eslint/eslint-plugin": "2.23.0",
+    "@typescript-eslint/parser": "2.23.0",
     "concurrently": "5.1.0",
     "doctoc": "1.4.0",
     "eslint": "6.8.0",

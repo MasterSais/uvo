@@ -5,6 +5,8 @@
  * 
  * {@link docs/type-processor}
  * 
+ * @param {string=} method Specific method.
+ * 
  * {@link docs/processor-result}
  */
 

@@ -45,6 +45,7 @@ Minified library bundle with all modules takes less than 6kb. It doesn't require
     - [`clamp<T>(min: T, max: T): Validator<T, T>`](#clamptmin-t-max-t-validatort-t)
     - [`erase<T>(): Validator<T, null>`](#eraset-validatort-null)
     - [`lowercase(): Validator<string, string>`](#lowercase-validatorstring-string)
+    - [`random(min: number, max: number, precision: number): Validator<any, number>`](#randommin-number-max-number-precision-number-validatorany-number)
     - [`round(method?: 'floor' | 'ceil'): Validator<number, number>`](#roundmethod-floor--ceil-validatornumber-number)
     - [`trim(method?: 'left' | 'right'): Validator<string, string>`](#trimmethod-left--right-validatorstring-string)
     - [`uppercase(): Validator<string, string>`](#uppercase-validatorstring-string)
@@ -785,6 +786,26 @@ import * as v from 'baridetta';
 
 v.lowercase()('ABC');
 // => 'abc'
+```
+
+#### `random(min: number, max: number, precision: number): Validator<any, number>`
+
+Returns random value according to params.
+
+```js
+import * as v from 'baridetta';
+
+v.random()(null);
+// => in [0...1]
+
+v.random(5, 10)(null);
+// => in [5...10]
+
+v.random(5, 10, 0)(null);
+// => in [5, 6, 7, 8, 9, 10]
+
+v.random(0, 1, 0)(null);
+// => in [0, 1]
 ```
 
 #### `round(method?: 'floor' | 'ceil'): Validator<number, number>`
