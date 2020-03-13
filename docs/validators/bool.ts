@@ -36,4 +36,7 @@ v.bool.check()(true);
 // => true
 
 v.bool.check()(1);
+// => 1
+
+v.bool.check()('abc');
 // => null

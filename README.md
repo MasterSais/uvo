@@ -6,7 +6,7 @@ Futhermore, you can use containers for error handling and provide your own error
 
 You can easily extend library with your own specific validators or processors.
 
-Minified library bundle with all modules takes less than 6kb. It doesn't require any external dependency.
+Minified library bundle with all modules takes less than 7kb. It doesn't require any external dependency.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -291,6 +291,9 @@ v.bool.check()(true);
 // => true
 
 v.bool.check()(1);
+// => 1
+
+v.bool.check()('abc');
 // => null
 ```
 
@@ -579,6 +582,9 @@ v.number.check()(10);
 // => 10
 
 v.number.check()('10');
+// => '10'
+
+v.number.check()('true');
 // => null
 ```
 
@@ -750,10 +756,13 @@ v.string()([1, 2]);
 // => null
 
 v.string.check()(1);
-// => null
+// => 1
 
 v.string.check()('1');
 // => '1'
+
+v.string.check()([1, 2]);
+// => null
 ```
 
 ### `Processors`

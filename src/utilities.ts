@@ -72,10 +72,10 @@ export const makeInvertible = <T>(factory: (invert: boolean) => T): Invertible<T
   return validator;
 };
 
-export const makeCheckable = <T>(factory: (checkOnly: boolean) => T): Checkable<T> => {
-  const validator = factory(false) as Checkable<T>;
+export const makeCheckable = <T, R>(factory: (checkOnly: boolean) => T | R): Checkable<T, R> => {
+  const validator = factory(false) as Checkable<T, R>;
 
-  validator.check = factory(true);
+  validator.check = factory(true) as R;
 
   return validator;
 };

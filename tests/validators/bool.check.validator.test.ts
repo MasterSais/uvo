@@ -7,16 +7,16 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     baseCasesWithParams<any>(
       validator.check,
       [
-        [[], true, true],
-        [[], false, false]
-      ],
-      [
+        [[], true],
+        [[], false],
         [[], 1],
         [[], 0],
         [[], 'true'],
         [[], 'false'],
         [[], '1'],
-        [[], '0'],
+        [[], '0']
+      ],
+      [
         [[], null],
         [[], '10.2'],
         [[], '-10.2'],

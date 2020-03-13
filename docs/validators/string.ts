@@ -27,7 +27,10 @@ v.string()([1, 2]);
 // => null
 
 v.string.check()(1);
-// => null
+// => 1
 
 v.string.check()('1');
 // => '1'
+
+v.string.check()([1, 2]);
+// => null

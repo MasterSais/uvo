@@ -7,11 +7,11 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     baseCases<any>(
       validator.check(),
       [
-        0, 2.2, -1.2
+        0, 2.2, -1.2,
+        '0', '2.1', '2', '-2',
+        true, false
       ],
       [
-        '0', '2.1', '2', '-2',
-        true, false,
         NaN, Infinity,
         '', '-', 'abc',
         null, undefined,
@@ -19,8 +19,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         emptyFunction(),
         emptyArray(),
         [1, 2, 3]
-      ],
-      Number
+      ]
     );
   });
 
@@ -28,8 +27,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     withErrorCases(
       validator.check(notNullError()),
       [[0], [null]],
-      null,
-      Number
+      null
     );
   });
 
@@ -37,8 +35,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     withErrorCases(
       validator.check(errorMetaCase([], [], VALIDATOR_NAME)),
       [[null]],
-      emptyMeta(),
-      Number
+      emptyMeta()
     );
   });
 });

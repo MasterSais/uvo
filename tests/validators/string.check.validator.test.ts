@@ -7,17 +7,16 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     baseCases<any>(
       validator.check(),
       [
-        '', '2', 'abc'
+        '', '2', 'abc',
+        0, 2.2, -1.2, NaN, Infinity,
+        true, false
       ],
       [
-        0, 2.2, -1.2, NaN, Infinity,
-        true, false,
         null, undefined,
         emptyObject(),
         emptyFunction(),
         emptyArray()
-      ],
-      String
+      ]
     );
   });
 
@@ -25,8 +24,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     withErrorCases(
       validator.check(notNullError()),
       [['0'], [null]],
-      null,
-      String
+      null
     );
   });
 
@@ -34,8 +32,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     withErrorCases(
       validator.check(errorMetaCase([], [], VALIDATOR_NAME)),
       [[null]],
-      emptyMeta(),
-      String
+      emptyMeta()
     );
   });
 });

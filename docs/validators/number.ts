@@ -33,4 +33,7 @@ v.number.check()(10);
 // => 10
 
 v.number.check()('10');
+// => '10'
+
+v.number.check()('true');
 // => null

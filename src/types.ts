@@ -60,7 +60,7 @@ export declare type Invertible<T> = T & { not: T };
 /**
  * Function with checkable supplement.
  */
-export declare type Checkable<T> = T & { check: T };
+export declare type Checkable<T, R> = T & { check: R };
 
 /**
  * {@link docs/types/fields-spec}
