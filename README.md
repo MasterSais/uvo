@@ -26,6 +26,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
   - [`Validators`](#validators)
     - [`array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>`](#arraytitemspec-arrayvalidatorany-t--validatorany-t-error-error-validatorarrayany-arrayt)
     - [`bool<T>(error?: Error): Validator<T, boolean>`](#boolterror-error-validatort-boolean)
+    - [`<T>(error?: Error): Validator<T, number>`](#terror-error-validatort-number)
     - [`empty<T>(error?: Error): Validator<T>`](#emptyterror-error-validatort)
     - [`equal<T>(match: T, error?: Error): Validator<T>`](#equaltmatch-t-error-error-validatort)
     - [`fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`](#fieldst-extends-objectlikespec-fieldsspec-error-error-validatort)
@@ -35,11 +36,11 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`lte<T>(bound: T, error?: Error): Validator<T>`](#ltetbound-t-error-error-validatort)
     - [`maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#maxlent-extends-lengthylen-number-error-error-validatort)
     - [`minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#minlent-extends-lengthylen-number-error-error-validatort)
-    - [`number<T extends unknown>(error?: Error): Validator<T, number>`](#numbert-extends-unknownerror-error-validatort-number)
+    - [`number<T>(error?: Error): Validator<T, number>`](#numberterror-error-validatort-number)
     - [`object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>`](#objectt-extends-objectlike-r--tspec-objectspec-error-error-validatort-r)
     - [`object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`](#object2t-extends-objectlike-r--tspec-arraystring--regex-arrayvalidatorany-any-error-error-validatort-r)
     - [`oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>`](#oneoftcandidates-arrayt-error-error-validatort)
-    - [`regex<T extends unknown>(match: RegExp, error?: Error): Validator<T>`](#regext-extends-unknownmatch-regexp-error-error-validatort)
+    - [`regex<T>(match: RegExp, error?: Error): Validator<T>`](#regextmatch-regexp-error-error-validatort)
     - [`string<T>(error?: Error): Validator<T, string>`](#stringterror-error-validatort-string)
   - [`Processors`](#processors)
     - [`clamp<T>(min: T, max: T): Validator<T, T>`](#clamptmin-t-max-t-validatort-t)
@@ -294,6 +295,29 @@ v.bool.check()(1);
 // => 1
 
 v.bool.check()('abc');
+// => null
+```
+
+#### `<T>(error?: Error): Validator<T, number>`
+
+Checks value to be a date compatible. Can be in CheckOnly mode with .check call. Result in ms.
+
+```js
+import * as v from 'baridetta';
+
+v.date()('12.12.2020');
+// => 1607720400000
+
+v.date()([12, 12, 2020]);
+// => 1607720400000
+
+v.date()('99.12.2020');
+// => null
+
+v.date.check()('12.12.2020');
+// => '12.12.2020'
+
+v.date.check()('99.12.2020');
 // => null
 ```
 
@@ -556,7 +580,7 @@ v.minLen(3)({ length: 3 });
 // => { length: 3 }
 ```
 
-#### `number<T extends unknown>(error?: Error): Validator<T, number>`
+#### `number<T>(error?: Error): Validator<T, number>`
 
 Checks value to be a number compatible. Can be in CheckOnly mode with .check call.
 
@@ -716,7 +740,7 @@ v.oneOf.not([0, 1, 2])(3);
 // => 3
 ```
 
-#### `regex<T extends unknown>(match: RegExp, error?: Error): Validator<T>`
+#### `regex<T>(match: RegExp, error?: Error): Validator<T>`
 
 Checks value to match a pattern. Can be inverted with .not call.
 

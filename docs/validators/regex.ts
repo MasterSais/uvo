@@ -1,5 +1,5 @@
 /**
- * @name {regex<T extends unknown>(match: RegExp, error?: Error): Validator<T>}
+ * @name {regex<T>(match: RegExp, error?: Error): Validator<T>}
  * 
  * @desc Checks value to match a pattern. Can be inverted with .not call.
  * 

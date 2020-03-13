@@ -35,6 +35,9 @@ export const V_FIELDS: string = 'fields';
 export const V_NUM: string = 'number';
 
 /** @type {string} */
+export const V_DTE: string = 'date';
+
+/** @type {string} */
 export const V_STR: string = 'string';
 
 /** @type {string} */
