@@ -26,7 +26,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
   - [`Validators`](#validators)
     - [`array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>`](#arraytitemspec-arrayvalidatorany-t--validatorany-t-error-error-validatorarrayany-arrayt)
     - [`bool<T>(error?: Error): Validator<T, boolean>`](#boolterror-error-validatort-boolean)
-    - [`<T>(error?: Error): Validator<T, number>`](#terror-error-validatort-number)
+    - [`date<T>(error?: Error): Validator<T, number>`](#dateterror-error-validatort-number)
     - [`empty<T>(error?: Error): Validator<T>`](#emptyterror-error-validatort)
     - [`equal<T>(match: T, error?: Error): Validator<T>`](#equaltmatch-t-error-error-validatort)
     - [`fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`](#fieldst-extends-objectlikespec-fieldsspec-error-error-validatort)
@@ -298,7 +298,7 @@ v.bool.check()('abc');
 // => null
 ```
 
-#### `<T>(error?: Error): Validator<T, number>`
+#### `date<T>(error?: Error): Validator<T, number>`
 
 Checks value to be a date compatible. Can be in CheckOnly mode with .check call. Result in ms.
 
