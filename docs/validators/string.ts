@@ -2,6 +2,7 @@
  * @name {string<T>(error?: Error): Validator<T, string>}
  * 
  * @desc Checks value to be a string compatible.
+ * Can be in CheckOnly mode with .check call.
  * 
  * {@link docs/type-validator-processor}
  * 
@@ -24,3 +25,9 @@ v.string()(true);
 
 v.string()([1, 2]);
 // => null
+
+v.string.check()(1);
+// => null
+
+v.string.check()('1');
+// => '1'

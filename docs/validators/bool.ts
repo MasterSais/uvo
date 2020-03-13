@@ -2,6 +2,7 @@
  * @name {bool<T>(error?: Error): Validator<T, boolean>}
  * 
  * @desc Checks value to be a boolean compatible.
+ * Can be in CheckOnly mode with .check call.
  * 
  * {@link docs/type-validator-processor}
  * 
@@ -29,4 +30,10 @@ v.bool()(10);
 // => null
 
 v.bool()('abc');
+// => null
+
+v.bool.check()(true);
+// => true
+
+v.bool.check()(1);
 // => null

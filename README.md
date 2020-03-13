@@ -264,7 +264,7 @@ anotherOne([0, 1, 2, 3]); // too long.
 
 #### `bool<T>(error?: Error): Validator<T, boolean>`
 
-Checks value to be a boolean compatible.
+Checks value to be a boolean compatible. Can be in CheckOnly mode with .check call.
 
 ```js
 import * as v from 'baridetta';
@@ -285,6 +285,12 @@ v.bool()(10);
 // => null
 
 v.bool()('abc');
+// => null
+
+v.bool.check()(true);
+// => true
+
+v.bool.check()(1);
 // => null
 ```
 
@@ -549,7 +555,7 @@ v.minLen(3)({ length: 3 });
 
 #### `number<T extends unknown>(error?: Error): Validator<T, number>`
 
-Checks value to be a number compatible.
+Checks value to be a number compatible. Can be in CheckOnly mode with .check call.
 
 ```js
 import * as v from 'baridetta';
@@ -568,6 +574,12 @@ v.number()('true');
 
 v.number()('12.1');
 // => 12.1
+
+v.number.check()(10);
+// => 10
+
+v.number.check()('10');
+// => null
 ```
 
 #### `object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>`
@@ -720,7 +732,7 @@ v.regex(/^[0-9]$/)(11);
 
 #### `string<T>(error?: Error): Validator<T, string>`
 
-Checks value to be a string compatible.
+Checks value to be a string compatible. Can be in CheckOnly mode with .check call.
 
 ```js
 import * as v from 'baridetta';
@@ -736,6 +748,12 @@ v.string()(true);
 
 v.string()([1, 2]);
 // => null
+
+v.string.check()(1);
+// => null
+
+v.string.check()('1');
+// => '1'
 ```
 
 ### `Processors`
@@ -970,6 +988,16 @@ unchi(10.5);
 
 unchi(8.3);
 // => 8
+
+const niUnchi = (
+  v.transform((value: any) => value + 1) // custom transform.
+);
+
+niUnchi(10.5);
+// => 11.5
+
+niUnchi(8.3);
+// => 9.3
 ```
 
 ### `Containers`

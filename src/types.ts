@@ -58,6 +58,11 @@ export declare type Validator<T, R = T> = (value: T, onError?: ErrorCallback, me
 export declare type Invertible<T> = T & { not: T };
 
 /**
+ * Function with checkable supplement.
+ */
+export declare type Checkable<T> = T & { check: T };
+
+/**
  * {@link docs/types/fields-spec}
  */
 export declare type FieldsSpec = string | [('&' | '|' | '^'), FieldsSpec | string, FieldsSpec | string, ...Array<FieldsSpec | string>];

@@ -2,6 +2,7 @@
  * @name {number<T extends unknown>(error?: Error): Validator<T, number>}
  * 
  * @desc Checks value to be a number compatible.
+ * Can be in CheckOnly mode with .check call.
  * 
  * {@link docs/type-validator-processor}
  * 
@@ -27,3 +28,9 @@ v.number()('true');
 
 v.number()('12.1');
 // => 12.1
+
+v.number.check()(10);
+// => 10
+
+v.number.check()('10');
+// => null

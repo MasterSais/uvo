@@ -1,4 +1,4 @@
-import { Error, ErrorCallback, Invertible, MetaData, Validator } from './types';
+import { Checkable, Error, ErrorCallback, Invertible, MetaData, Validator } from './types';
 
 export const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
@@ -64,10 +64,18 @@ export const isArray = (value: any): boolean => Array.isArray(value);
 export const isValidatorsSequence = (validators: Array<Validator<any, any>>): boolean =>
   validators.reduce((result: boolean, validator) => result && isFunction(validator), true);
 
-export const makeInvertible = <T>(conditionFactory: (invert: boolean) => T): Invertible<T> => {
-  const validator = conditionFactory(false) as Invertible<T>;
+export const makeInvertible = <T>(factory: (invert: boolean) => T): Invertible<T> => {
+  const validator = factory(false) as Invertible<T>;
 
-  validator.not = conditionFactory(true);
+  validator.not = factory(true);
+
+  return validator;
+};
+
+export const makeCheckable = <T>(factory: (checkOnly: boolean) => T): Checkable<T> => {
+  const validator = factory(false) as Checkable<T>;
+
+  validator.check = factory(true);
 
   return validator;
 };

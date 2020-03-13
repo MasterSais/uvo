@@ -1,2 +1,9 @@
 object.camelCase()
-??? use symbol as error result instead of null
+object.constantCase()
+*.stripOnError()
+*.strip()
+*.defined()
+*.date() validator
+*.useFallback()
+*.onError() validator
+? local errors in scheme branch
