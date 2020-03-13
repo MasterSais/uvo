@@ -1,5 +1,5 @@
-import { V_BLN as VALIDATOR_NAME } from '@lib/names';
-import { bool as validator } from '@lib/validators/bool';
+import { V_DTE as VALIDATOR_NAME } from '@lib/names';
+import { date as validator } from '@lib/validators/date';
 import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME} check`, () => {
@@ -7,24 +7,17 @@ describe(`validator › ${VALIDATOR_NAME} check`, () => {
     baseCasesWithParams<any>(
       validator.check,
       [
-        [[], true],
-        [[], false],
-        [[], 1],
-        [[], 0],
-        [[], 'true'],
-        [[], 'false'],
-        [[], '1'],
-        [[], '0']
+        [[], 0, 0],
+        [[], '12.12.2020', '12.12.2020'],
+        [[], [12, 12, 2020], [12, 12, 2020]]
       ],
       [
         [[], null],
-        [[], '10.2'],
-        [[], '-10.2'],
+        [[], 'abc'],
         [[], undefined],
         [[], NaN],
         [[], Infinity],
         [[], emptyArray()],
-        [[], [1, 2, 3]],
         [[], emptyFunction()],
         [[], emptyObject()]
       ]
@@ -34,7 +27,7 @@ describe(`validator › ${VALIDATOR_NAME} check`, () => {
   describe('with error', () => {
     withErrorCases(
       validator.check(notNullError()),
-      [[false], [null]],
+      [[0, 0], [null]],
       null
     );
   });

@@ -2,7 +2,7 @@ import { V_STR as VALIDATOR_NAME } from '@lib/names';
 import { string as validator } from '@lib/validators/string';
 import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
-describe(`validator › ${VALIDATOR_NAME}`, () => {
+describe(`validator › ${VALIDATOR_NAME} check`, () => {
   describe('base', () => {
     baseCases<any>(
       validator.check(),
