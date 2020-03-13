@@ -8,7 +8,7 @@ import { gte } from '@lib/validators/gte';
 import { integer } from '@lib/validators/integer';
 import { number } from '@lib/validators/number';
 
-test(`validator › ${VALIDATOR_NAME}`, () => {
+test(`validator › ${VALIDATOR_NAME}`, async () => {
   const promiseOne = (
     withPromise(
       withErrors(

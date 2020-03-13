@@ -1,8 +1,12 @@
 object.camelCase()
 object.constantCase()
-*.stripOnError()
-*.strip()
-*.defined()
-*.date() validator
+object.strip('name', (value) => bool)
 *.useFallback()
-*.onError() validator
+*.onError() spreader
+
+errors for invertibles
+
+v2: 
+1. defined, empty => oneOf([undefined, ...])
+2. gte, lte, equal => compare('type') types: lt, gt, lte, gte, equal
+3. len, minLen, maxLen => length('type') types: lt, gt, lte, gte, equal

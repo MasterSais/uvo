@@ -27,6 +27,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>`](#arraytitemspec-arrayvalidatorany-t--validatorany-t-error-error-validatorarrayany-arrayt)
     - [`bool<T>(error?: Error): Validator<T, boolean>`](#boolterror-error-validatort-boolean)
     - [`date<T>(error?: Error): Validator<T, number>`](#dateterror-error-validatort-number)
+    - [`defined<T>(error?: Error): Validator<T>`](#definedterror-error-validatort)
     - [`empty<T>(error?: Error): Validator<T>`](#emptyterror-error-validatort)
     - [`equal<T>(match: T, error?: Error): Validator<T>`](#equaltmatch-t-error-error-validatort)
     - [`fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`](#fieldst-extends-objectlikespec-fieldsspec-error-error-validatort)
@@ -318,6 +319,38 @@ v.date.check()('12.12.2020');
 // => '12.12.2020'
 
 v.date.check()('99.12.2020');
+// => null
+```
+
+#### `defined<T>(error?: Error): Validator<T>`
+
+Checks value to be defined. Can be inverted with .not call.
+
+```js
+import * as v from 'baridetta';
+
+v.defined()(null);
+// => null
+
+v.defined()(undefined);
+// => null
+
+v.defined()('');
+// => ''
+
+v.defined()(true);
+// => true
+
+v.defined.not()(null);
+// => null
+
+v.defined.not()(undefined);
+// => undefined
+
+v.defined.not()('');
+// => null
+
+v.defined.not()(true);
 // => null
 ```
 
