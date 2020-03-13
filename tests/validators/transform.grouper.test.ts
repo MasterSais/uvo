@@ -10,7 +10,8 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
       [
         [],
         [emptyFunction()],
-        [emptyFunction(), emptyFunction()]
+        [emptyFunction(), emptyFunction()],
+        [(value: any) => value + 1]
       ],
       [
         [emptyObject()],
@@ -32,7 +33,8 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
       validator,
       [
         [[clamp(0, 5)], -1, 0],
-        [[clamp(-100, 100), clamp(-10, 0), clamp(2, 8)], 300, 2]
+        [[clamp(-100, 100), clamp(-10, 0), clamp(2, 8)], 300, 2],
+        [[(value: any) => value + 1], 10, 11]
       ],
       []
     );

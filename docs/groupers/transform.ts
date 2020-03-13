@@ -29,3 +29,13 @@ unchi(10.5);
 
 unchi(8.3);
 // => 8
+
+const niUnchi = (
+  v.transform((value: any) => value + 1) // custom transform.
+);
+
+niUnchi(10.5);
+// => 11.5
+
+niUnchi(8.3);
+// => 9.3
