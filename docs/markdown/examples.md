@@ -98,3 +98,19 @@ v.consecutive(
   (data: Array<number>) => data.filter(value => !!value)
 )
 ```
+
+### `Fields strip`
+
+Removes unnecessary fields
+```js
+v.consecutive(
+  v.object2([
+    ['id', v.number(), v.integer(), v.gte(0)],
+    ['name', v.string(), v.minLen(10)],
+    [/createdAt|updatedAt/, v.date()]
+  ]),
+  v.strip('role'), // just removes one field.
+  v.strip('address', (address: string) => address === null), // removes if empty.
+  v.strip(/createdAt|updatedAt/, () => (/* condition */)), // removes matched fields conditionally.
+)
+```
