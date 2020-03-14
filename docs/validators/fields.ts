@@ -17,7 +17,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.fields('f1')({ f1: 1 }); // requires 'f1' field.
 // => { f1: 1 }

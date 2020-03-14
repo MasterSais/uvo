@@ -13,7 +13,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const unchi = (
   v.withPromise(

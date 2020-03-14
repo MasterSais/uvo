@@ -31,7 +31,7 @@ You must provide validator name and params into meta scheme for proper errors ha
 
 Processor injection example:
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleOne = (
   v.consecutive(

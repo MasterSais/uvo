@@ -1,5 +1,5 @@
 {
-  "name": "baridetta",
+  "name": "uvo",
   "version": "1.5.0",
   "description": "JavaScript Universal Single Object Validator",
   "main": "./dist/umd/index.js",
@@ -24,7 +24,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/MasterSais/baridetta.git"
+    "url": "https://github.com/MasterSais/uvo.git"
   },
   "files": [
     "dist/es",
@@ -34,7 +34,7 @@
   "keywords": [
     "es6",
     "es2015",
-    "baridetta",
+    "uvo",
     "js",
     "ts",
     "typescript",
@@ -44,7 +44,7 @@
   ],
   "author": "Yauheni Zhestiannikau (MasterSais) <evgensvvv@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/MasterSais/baridetta",
+  "homepage": "https://github.com/MasterSais/uvo",
   "devDependencies": {
     "@types/jest": "25.1.4",
     "@types/node": "13.9.0",

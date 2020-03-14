@@ -15,7 +15,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.regex(/^[0-9]$/)(1);
 // => 1

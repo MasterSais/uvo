@@ -14,7 +14,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "baseUrl": ".",
     "paths": {
-      "baridetta": [
+      "uvo": [
         "dist/types/index.d.ts"
       ],
       "@lib/*": [

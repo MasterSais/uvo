@@ -13,7 +13,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.date()('12.12.2020');
 // => 1607720400000

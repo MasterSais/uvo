@@ -11,7 +11,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.valueMap(['yes', true], ['no', false])('yes');
 // => true

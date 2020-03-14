@@ -1,5 +1,5 @@
-# `Baridetta`
-Baridetta is a javascript universal single object validator. It provides validation and transformation utilities. Each validator is represented by a separated module, thats gives opportunity for treeshaking. Library has 5 types of modules: validators, processors, groupers, spreaders, containers. Each one has own specific behaviour.
+# `Uvo`
+Uvo is a javascript universal single object validator. It provides validation and transformation utilities. Each validator is represented by a separated module, thats gives opportunity for treeshaking. Library has 5 types of modules: validators, processors, groupers, spreaders, containers. Each one has own specific behaviour.
 
 You can use validators only for validation and processing data without error handling (e.g. url query params).
 Futhermore, you can use containers for error handling and provide your own errors processing.
@@ -84,21 +84,21 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
 ```sh
-npm install baridetta
+npm install uvo
 //or
-yarn add baridetta
+yarn add uvo
 ```
 ## `Usage`
 ```js
-import * as v from 'baridetta'; // for everything (recommended for better minification results e.g. in webpack)
+import * as v from 'uvo'; // for everything (recommended for better minification results e.g. in webpack)
 // or
-import { number, array } from 'baridetta'; // for only what you need
+import { number, array } from 'uvo'; // for only what you need
 // or
-const { object, setDep } = require('baridetta');
+const { object, setDep } = require('uvo');
 ```
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.number()(10);
 // => 10
@@ -228,7 +228,7 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 Checks value to be an array.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleOne = (
   v.array([ // is array?
@@ -278,7 +278,7 @@ anotherOne([0, 1, 2, 3]); // too long.
 Checks value to be a boolean compatible. Can be in CheckOnly mode with .check call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.bool()(true);
 // => true
@@ -313,7 +313,7 @@ v.bool.check()('abc');
 Checks value to be a date compatible. Can be in CheckOnly mode with .check call. Result in ms.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.date()('12.12.2020');
 // => 1607720400000
@@ -336,7 +336,7 @@ v.date.check()('99.12.2020');
 Checks value to be defined. Can be inverted with .not call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.defined()(null);
 // => null
@@ -368,7 +368,7 @@ v.defined.not()(true);
 Checks value to be empty. Can be inverted with .not call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.empty()(null);
 // => null
@@ -400,7 +400,7 @@ v.empty.not()(0);
 Checks value to be equal to 'match' param. Requires the same type. Shallow comparison. Can be inverted with .not call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.equal(10)(10);
 // => 10
@@ -423,7 +423,7 @@ v.equal.not(10)(1);
 Checks for fields in the input object.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.fields('f1')({ f1: 1 }); // requires 'f1' field.
 // => { f1: 1 }
@@ -465,7 +465,7 @@ v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 Checks value to be greater or equal to 'match' param. Requires the same type.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.gte(0)(1);
 // => 1
@@ -497,7 +497,7 @@ v.gte(new Date())(new Date(Date.now() - 1000));
 Checks number to be an integer. Can be inverted with .not call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.integer()(1);
 // => 1
@@ -520,7 +520,7 @@ v.integer.not()(1.1);
 Checks length to be equal to 'len' param. Requires to be object like. Can be inverted with .not call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.len(3)([0, 1, 2]);
 // => [0, 1, 2]
@@ -555,7 +555,7 @@ v.len.not(3)('abcd');
 Checks value to be lower or equal to 'match' param. Requires the same type.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.lte(2)(1);
 // => 1
@@ -587,7 +587,7 @@ v.lte(new Date())(new Date(Date.now() + 1000));
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.maxLen(3)([0, 1, 2]);
 // => [0, 1, 2]
@@ -607,7 +607,7 @@ v.maxLen(3)({ length: 3 });
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.minLen(3)([0, 1, 2]);
 // => [0, 1, 2]
@@ -627,7 +627,7 @@ v.minLen(3)({ length: 3 });
 Checks value to be a number compatible. Can be in CheckOnly mode with .check call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.number()(10);
 // => 10
@@ -659,7 +659,7 @@ v.number.check()('true');
 Checks value to be an object.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleObj = (
   v.object({ // is object?
@@ -704,7 +704,7 @@ fieldsKeeper({
 Checks value to be an object. Provides strict ordering. Each key can be a Regex.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleObj = (
   v.object2([ // is object?
@@ -764,7 +764,7 @@ advancedObj({
 Checks value to be one of expected. Shallow comparison. Can be inverted with .not call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.oneOf([0, 1, 2])(1);
 // => 1
@@ -787,7 +787,7 @@ v.oneOf.not([0, 1, 2])(3);
 Checks value to match a pattern. Can be inverted with .not call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.regex(/^[0-9]$/)(1);
 // => 1
@@ -807,7 +807,7 @@ v.regex(/^[0-9]$/)(11);
 Checks value to be a string compatible. Can be in CheckOnly mode with .check call.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.string()(1);
 // => '1'
@@ -838,7 +838,7 @@ v.string.check()([1, 2]);
 Clamps value to required boundaries.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.clamp(0, 5)(2);
 // => 2
@@ -864,7 +864,7 @@ v.clamp('c', 'e')('f');
 Erase input.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.erase()(2);
 // => null
@@ -875,7 +875,7 @@ v.erase()(2);
 Maps object keys with custom mapper.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.keysMap((key: string) => `_${key}`)({ f1: 'abc', f2: 10 });
 // => { _f1: 'abc', _f2: 10 }
@@ -892,7 +892,7 @@ v.keysMap((key: string) => key === 'f1' ? 'f2' : key)({ f1: 'abc' }); // moves/r
 Lowercase input string.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.lowercase()('ABC');
 // => 'abc'
@@ -903,7 +903,7 @@ v.lowercase()('ABC');
 Returns random value according to params.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.random()(null);
 // => in [0...1]
@@ -923,7 +923,7 @@ v.random(0, 1, 0)(null);
 Round input number with specific method.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.round()(10);
 // => 10
@@ -958,7 +958,7 @@ v.round('ceil')(9.8);
 Removes field from object conditionally.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.strip('f1')({ f1: 'abc', f2: 10 });
 // => { f2: 10 }
@@ -987,7 +987,7 @@ v.strip(/f1|f2/)({ f1: 10, f2: 'abc' });
 Trim input string with specific method.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.trim()(' abc ');
 // => 'abc'
@@ -1004,7 +1004,7 @@ v.trim('right')(' abc ');
 Uppercase input string.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.uppercase()('abc');
 // => 'ABC'
@@ -1015,7 +1015,7 @@ v.uppercase()('abc');
 Maps value with custom mappers.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.valueMap(['yes', true], ['no', false])('yes');
 // => true
@@ -1043,7 +1043,7 @@ v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const unchi = (
   v.consecutive(
@@ -1067,7 +1067,7 @@ unchi('a');
 Groups validators sequentially. Searches for first successful validator's result.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const unchi = (
   v.or(
@@ -1091,7 +1091,7 @@ unchi('abc');
 Groups validators in parallel. The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere). Beware of using processors inside.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const unchi = (
   v.withErrors(
@@ -1121,7 +1121,7 @@ unchi(11.2);
 Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const unchi = (
   v.transform(
@@ -1154,7 +1154,7 @@ niUnchi(8.3);
 Provides error handling mechanism.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const unchi = (
   v.withErrors(
@@ -1184,7 +1184,7 @@ unchi(11.2);
 Provides fallback value on error.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleOne = (
   v.withFallback('fallback', v.string(), v.minLen(10))
@@ -1208,7 +1208,7 @@ simpleOne('Stringuuuuuuuuuu');
 Provides meta structure.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const unchi = (
   v.withErrors(
@@ -1240,7 +1240,7 @@ unchi(11.2);
 Provides custom error handler.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const unchi = (
   v.withOnError(
@@ -1275,7 +1275,7 @@ unchi(11.2);
 Convert result to promise. Use it for async validation.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const unchi = (
   v.withPromise(
@@ -1314,7 +1314,7 @@ try {
 Takes value from spreaded structure. Might be used for dynamic validators creation. If 'preValidator' not provided, just replaces current value. Works only with provided meta object.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleOne = (
   v.withMeta(
@@ -1340,7 +1340,7 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.withMeta( // meta schema required for dependencies.
   v.object({
@@ -1369,7 +1369,7 @@ v.withMeta(
 Puts validators into spreaded structure. Might be used for recursive schemes.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const recursiveOne = (
   v.withMeta( // meta schema is required.
@@ -1397,7 +1397,7 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators. If you need fallback value on error use 'withFallback' container instead.
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleOne = (
   v.useDefault('default', v.string(), v.minLen(10))
@@ -1450,7 +1450,7 @@ You must provide validator name and params into meta scheme for proper errors ha
 
 Processor injection example:
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleOne = (
   v.consecutive(
@@ -1597,7 +1597,7 @@ v.consecutive(
 
 ### `Custom value mapping`
 
-Map 'yes' & 'no' on boolean
+Maps 'yes' and 'no' on boolean
 ```js
 v.consecutive(
   v.object2([

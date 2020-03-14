@@ -11,7 +11,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.keysMap((key: string) => `_${key}`)({ f1: 'abc', f2: 10 });
 // => { _f1: 'abc', _f2: 10 }

@@ -1,13 +1,13 @@
 ```js
-import * as v from 'baridetta'; // for everything (recommended for better minification results e.g. in webpack)
+import * as v from 'uvo'; // for everything (recommended for better minification results e.g. in webpack)
 // or
-import { number, array } from 'baridetta'; // for only what you need
+import { number, array } from 'uvo'; // for only what you need
 // or
-const { object, setDep } = require('baridetta');
+const { object, setDep } = require('uvo');
 ```
 
 ```js
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.number()(10);
 // => 10

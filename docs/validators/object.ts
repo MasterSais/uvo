@@ -15,7 +15,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleObj = (
   v.object({ // is object?

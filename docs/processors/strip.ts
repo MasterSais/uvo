@@ -13,7 +13,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.strip('f1')({ f1: 'abc', f2: 10 });
 // => { f2: 10 }

@@ -15,7 +15,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.gte(0)(1);
 // => 1

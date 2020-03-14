@@ -9,7 +9,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 v.uppercase()('abc');
 // => 'ABC'

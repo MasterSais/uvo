@@ -132,7 +132,7 @@ v.consecutive(
 
 ### `Custom value mapping`
 
-Map 'yes' & 'no' on boolean
+Maps 'yes' and 'no' on boolean
 ```js
 v.consecutive(
   v.object2([

@@ -1,12 +1,12 @@
 v2: 
-0. Think of validator's error value
-1. defined, empty => oneOf([undefined, ...]) EMPTY_VALUES
-2. gte, lte, equal => compare('type') types: lt, gt, lte, gte, equal, deepEqual
-3. len, minLen, maxLen => length('type') types: lt, gt, lte, gte, equal
-4. number.integer() => number.multiple(1)
+  - Think of validator's error value
+  - defined, empty => oneOf([undefined, ...]) EMPTY_VALUES
+  - gte, lte, equal => compare('type') types: lt, gt, lte, gte, equal, deepEqual
+  - len, minLen, maxLen => length('type') types: lt, gt, lte, gte, equal
+  - number.integer() => number.multiple(1)
 
 minification:
-0. const => let
+  - const => let
 
 v*:
-0. compile()
+  - compile()

@@ -15,7 +15,7 @@
  */
 
 //#example
-import * as v from 'baridetta';
+import * as v from 'uvo';
 
 const simpleOne = (
   v.withFallback('fallback', v.string(), v.minLen(10))
