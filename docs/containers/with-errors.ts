@@ -7,6 +7,8 @@
  * 
  * @param {Validator} validator Validator.
  * 
+ * @param {Function=} commonErrorProcessor Common error processor.
+ * 
  * {@link docs/validator-result}
  * 
  * @throws {string} Will throw an error if 'validator' is invalid.

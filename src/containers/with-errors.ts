@@ -17,7 +17,12 @@ export const withErrors = <T, R>(validator: Validator<T, R>, commonErrorProcesso
 
           const errorProcessor: ErrorCallback = (error?: Error, meta?: MetaData, relevance?: Relevance) =>
             commonErrorProcessor
-              ? addError(commonErrorProcessor(error, meta), relevance)
+              ? addError(commonErrorProcessor(
+                isFunction(error)
+                  ? (error as Function)(meta)
+                  : error,
+                meta
+              ), relevance)
               : isFunction(error)
                 ? addError((error as Function)(meta), relevance)
                 : addError(error, relevance);

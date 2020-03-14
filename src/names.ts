@@ -77,7 +77,10 @@ export const S_SVDP: string = 'setVDep';
 export const S_DFT: string = 'useDefault';
 
 /** @type {string} */
-export const C_ERR: string = 'withError';
+export const C_ERR: string = 'withErrors';
+
+/** @type {string} */
+export const C_OER: string = 'withOnError';
 
 /** @type {string} */
 export const C_MET: string = 'withMeta';

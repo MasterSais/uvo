@@ -3,7 +3,7 @@
  * 
  * @desc Provides fallback value on error.
  * 
- * {@link docs/type-spreader}
+ * {@link docs/type-container}
  * 
  * @param {any} fallback Fallback value. Can be a function.
  * 

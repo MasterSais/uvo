@@ -61,6 +61,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>`](#witherrorst-rvalidator-validatort-r-commonerrorprocessor-error-error-meta-metadata--error-validatort-resultr)
     - [`withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`](#withfallbackt-rfallback-r--initialvalue-t-meta-metadata--r-validators-arrayvalidatort--r-r-validatort--r-r)
     - [`withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>`](#withmetat-rvalidator-validatort-r-validatort-r)
+    - [`withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>`](#withonerrort-rerrorprocessor-errorcallback-validators-arrayvalidatorany-t-validatort-r)
     - [`withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>`](#withpromiset-rvalidator-validatort-r--resultr-validatort-promiser--arrayerror)
   - [`Spreaders`](#spreaders)
     - [`getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>`](#getdeptfield-string-prevalidator-dep-t--validatort--arrayvalidatort-validatort)
@@ -1183,6 +1184,41 @@ unchi(11);
 
 unchi(11.2);
 // => { result: null, errors: ['lte', 'integer'] }
+```
+
+#### `withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>`
+
+Provides custom error handler.
+
+```js
+import * as v from 'baridetta';
+
+const unchi = (
+  v.withOnError(
+    (error) => { console.error(error); },
+    v.parallel(
+      v.lte(10, 'ERR1'),
+      v.gte(0, 'ERR2'),
+      v.integer('ERR3')
+    )
+  )
+);
+
+unchi(10);
+// => 10
+
+unchi(-1);
+// => null
+// console.error => 'ERR2'
+
+unchi(11);
+// => null
+// console.error => 'ERR1'
+
+unchi(11.2);
+// => null
+// console.error => 'ERR1'
+// console.error => 'ERR3'
 ```
 
 #### `withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>`
