@@ -49,6 +49,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`lowercase(): Validator<string, string>`](#lowercase-validatorstring-string)
     - [`random(min: number, max: number, precision: number): Validator<any, number>`](#randommin-number-max-number-precision-number-validatorany-number)
     - [`round(method?: 'floor' | 'ceil'): Validator<number, number>`](#roundmethod-floor--ceil-validatornumber-number)
+    - [`strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>`](#stript-extends-objectlike-kfield-string--regexp-condition-boolean--value-k--boolean--true-validatort-t)
     - [`trim(method?: 'left' | 'right'): Validator<string, string>`](#trimmethod-left--right-validatorstring-string)
     - [`uppercase(): Validator<string, string>`](#uppercase-validatorstring-string)
   - [`Groupers`](#groupers)
@@ -925,6 +926,35 @@ v.round('ceil')(10.2);
 
 v.round('ceil')(9.8);
 // => 10
+```
+
+#### `strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>`
+
+Removes field from object conditionally.
+
+```js
+import * as v from 'baridetta';
+
+v.strip('f1')({ f1: 'abc', f2: 10 });
+// => { f2: 10 }
+
+v.strip('f1', false)({ f1: 'abc', f2: 10 });
+// => { f1: 'abc', f2: 10 }
+
+v.strip('f1', (value: string) => value === 'abc')({ f1: 'abc', f2: 10 });
+// => { f2: 10 }
+
+v.strip('f1', (value: string) => value === 'a')({ f1: 'abc', f2: 10 });
+// => { f1: 'abc', f2: 10 }
+
+v.strip(/f1|f2/, (value: any) => value === null)({ f1: null, f2: 10 });
+// => { f2: 10 }
+
+v.strip(/f1|f2/, (value: any) => value === null)({ f1: null, f2: null });
+// => {}
+
+v.strip(/f1|f2/)({ f1: 10, f2: 'abc' });
+// => {}
 ```
 
 #### `trim(method?: 'left' | 'right'): Validator<string, string>`
