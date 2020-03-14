@@ -53,7 +53,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>`](#stript-extends-objectlike-kfield-string--regexp-condition-boolean--value-k--boolean--true-validatort-t)
     - [`trim(method?: 'left' | 'right'): Validator<string, string>`](#trimmethod-left--right-validatorstring-string)
     - [`uppercase(): Validator<string, string>`](#uppercase-validatorstring-string)
-    - [`valueMap<T, R>(map: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>`](#valuemapt-rmap-arrayprimitive--value-t--boolean--regexp-primitive--value-t--r-validatort-r)
+    - [`valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>`](#valuemapt-rmappers-arrayprimitive--value-t--boolean--regexp-primitive--value-t--r-validatort-r)
   - [`Groupers`](#groupers)
     - [`consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>`](#consecutivetvalidators-arrayvalidatorany-t-validatorany-t)
     - [`or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>`](#ortvalidators-arrayvalidatorany-any-validatorany-any)
@@ -1010,29 +1010,29 @@ v.uppercase()('abc');
 // => 'ABC'
 ```
 
-#### `valueMap<T, R>(map: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>`
+#### `valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>`
 
 Maps value with custom mappers.
 
 ```js
 import * as v from 'baridetta';
 
-v.valueMap([['yes', true], ['no', false]])('yes');
+v.valueMap(['yes', true], ['no', false])('yes');
 // => true
 
-v.valueMap([['yes', true], ['no', false]])(true);
+v.valueMap(['yes', true], ['no', false])(true);
 // => true
 
-v.valueMap([['yes', true], ['no', false]])('nope');
+v.valueMap(['yes', true], ['no', false])('nope');
 // => 'nope'
 
-v.valueMap([['yes', true], [(value: string) => ['no', 'nope'].includes(value), false]])('nope');
+v.valueMap(['yes', true], [(value: string) => ['no', 'nope'].includes(value), false])('nope');
 // => false
 
-v.valueMap([['yes', true], [/no|nope/, false]])('nope');
+v.valueMap(['yes', true], [/no|nope/, false])('nope');
 // => false
 
-v.valueMap([['yes', true], [/no|nope/, (value: string) => `${value}?`]])('nope');
+v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 // => 'nope?'
 ```
 

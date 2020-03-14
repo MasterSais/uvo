@@ -4,9 +4,9 @@ import { isFunction, isRegEx } from '../utilities';
 /**
  * {@link docs/processors/value-map}
  */
-export const valueMap = <T, R>(map: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R> => (
+export const valueMap = <T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R> => (
   (value: T): R => {
-    const mapper = map.find(([match]) => (
+    const mapper = mappers.find(([match]) => (
       isFunction(match) && (match as Function)(value)
       ||
       isRegEx(match) && (match as RegExp).test(value as unknown as string)

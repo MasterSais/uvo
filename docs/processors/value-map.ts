@@ -1,5 +1,5 @@
 /**
- * @name {valueMap<T, R>(map: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>}
+ * @name {valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>}
  * 
  * @desc Maps value with custom mappers.
  * 
@@ -13,20 +13,20 @@
 //#example
 import * as v from 'baridetta';
 
-v.valueMap([['yes', true], ['no', false]])('yes');
+v.valueMap(['yes', true], ['no', false])('yes');
 // => true
 
-v.valueMap([['yes', true], ['no', false]])(true);
+v.valueMap(['yes', true], ['no', false])(true);
 // => true
 
-v.valueMap([['yes', true], ['no', false]])('nope');
+v.valueMap(['yes', true], ['no', false])('nope');
 // => 'nope'
 
-v.valueMap([['yes', true], [(value: string) => ['no', 'nope'].includes(value), false]])('nope');
+v.valueMap(['yes', true], [(value: string) => ['no', 'nope'].includes(value), false])('nope');
 // => false
 
-v.valueMap([['yes', true], [/no|nope/, false]])('nope');
+v.valueMap(['yes', true], [/no|nope/, false])('nope');
 // => false
 
-v.valueMap([['yes', true], [/no|nope/, (value: string) => `${value}?`]])('nope');
+v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 // => 'nope?'
