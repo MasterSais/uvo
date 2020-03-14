@@ -1,8 +1,5 @@
-object.camelCase()
-object.constantCase()
-
 v2: 
 0. Think of validator's error value
-1. defined, empty => oneOf([undefined, ...])
+1. defined, empty => oneOf([undefined, ...]) EMPTY_VALUES
 2. gte, lte, equal => compare('type') types: lt, gt, lte, gte, equal
 3. len, minLen, maxLen => length('type') types: lt, gt, lte, gte, equal

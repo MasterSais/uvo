@@ -46,6 +46,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
   - [`Processors`](#processors)
     - [`clamp<T>(min: T, max: T): Validator<T, T>`](#clamptmin-t-max-t-validatort-t)
     - [`erase<T>(): Validator<T, null>`](#eraset-validatort-null)
+    - [`keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>`](#keysmapt-extends-objectlikemapper-key-string--string-validatort-t)
     - [`lowercase(): Validator<string, string>`](#lowercase-validatorstring-string)
     - [`random(min: number, max: number, precision: number): Validator<any, number>`](#randommin-number-max-number-precision-number-validatorany-number)
     - [`round(method?: 'floor' | 'ceil'): Validator<number, number>`](#roundmethod-floor--ceil-validatornumber-number)
@@ -74,7 +75,9 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
   - [`Schema with common error processor`](#schema-with-common-error-processor)
   - [`Fields validation`](#fields-validation)
   - [`Conditional validation`](#conditional-validation)
+  - [`Injections`](#injections)
   - [`Fields strip`](#fields-strip)
+  - [`Keys transformations`](#keys-transformations)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
@@ -865,6 +868,23 @@ v.erase()(2);
 // => null
 ```
 
+#### `keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>`
+
+Maps object keys with custom mapper.
+
+```js
+import * as v from 'baridetta';
+
+v.keysMap((key: string) => `_${key}`)({ f1: 'abc', f2: 10 });
+// => { _f1: 'abc', _f2: 10 }
+
+v.keysMap((key: string) => key.toUpperCase())({ f1: 'abc', f2: 10 });
+// => { F1: 'abc', F2: 10 }
+
+v.keysMap((key: string) => key === 'f1' ? 'f2' : key)({ f1: 'abc' }); // moves/renames field
+// => { f2: 'abc' }
+```
+
 #### `lowercase(): Validator<string, string>`
 
 Lowercase input string.
@@ -1503,6 +1523,8 @@ v.withMeta(
 )
 ```
 
+### `Injections`
+
 Array with custom processor injection
 ```js
 v.consecutive(
@@ -1529,6 +1551,19 @@ v.consecutive(
   v.strip('role'), // just removes one field.
   v.strip('address', (address: string) => address === null), // removes if empty.
   v.strip(/createdAt|updatedAt/, () => (/* condition */)), // removes matched fields conditionally.
+)
+```
+
+### `Keys transformations`
+
+Camelize object fields
+```js
+v.consecutive(
+  v.object2([
+    ['--id--', v.number(), v.integer(), v.gte(0)],
+    ['--name--', v.string(), v.minLen(10)]
+  ]),
+  v.keysMap(_.camelCase) // e.g. using lodash
 )
 ```
 

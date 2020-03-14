@@ -36,8 +36,11 @@
     "es2015",
     "baridetta",
     "js",
+    "ts",
+    "typescript",
     "nodejs",
-    "validator"
+    "validator",
+    "validation"
   ],
   "author": "Yauheni Zhestiannikau (MasterSais) <evgensvvv@gmail.com>",
   "license": "MIT",

@@ -86,6 +86,8 @@ v.withMeta(
 )
 ```
 
+### `Injections`
+
 Array with custom processor injection
 ```js
 v.consecutive(
@@ -112,5 +114,18 @@ v.consecutive(
   v.strip('role'), // just removes one field.
   v.strip('address', (address: string) => address === null), // removes if empty.
   v.strip(/createdAt|updatedAt/, () => (/* condition */)), // removes matched fields conditionally.
+)
+```
+
+### `Keys transformations`
+
+Camelize object fields
+```js
+v.consecutive(
+  v.object2([
+    ['--id--', v.number(), v.integer(), v.gte(0)],
+    ['--name--', v.string(), v.minLen(10)]
+  ]),
+  v.keysMap(_.camelCase) // e.g. using lodash
 )
 ```
