@@ -5,7 +5,7 @@
  * 
  * {@link docs/type-processor}
  * 
- * @param {Array} map Value mappers.
+ * @param {...Array} mappers Value mappers.
  *
  * {@link docs/processor-result}
  */

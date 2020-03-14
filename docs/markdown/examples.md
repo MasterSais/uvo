@@ -139,7 +139,7 @@ v.consecutive(
     ['id', v.number(), v.integer(), v.gte(0)],
     ['name', v.string(), v.minLen(10)],
     ['disabled', 
-      v.valueMap([['yes', true], ['no', false]]), // converts specific value to type compatible value.
+      v.valueMap(['yes', true], ['no', false]), // converts specific value to type compatible value.
       v.bool() // just check and cast another boolean compatible values.
     ]
   ])
