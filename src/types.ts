@@ -58,6 +58,11 @@ export declare type Validator<T, R = T> = (value: T, onError?: ErrorCallback, me
 export declare type Invertible<T> = T & { not: T };
 
 /**
+ * All primitive types.
+ */
+export declare type Primitive = string | number | boolean;
+
+/**
  * Function with checkable supplement.
  */
 export declare type Checkable<T, R> = T & { check: R };

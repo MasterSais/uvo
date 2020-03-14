@@ -5,7 +5,7 @@
  * 
  * {@link docs/type-validator}
  * 
- * @param {number | string | boolean | Date} bound Boundary value. One of three types: number, string, boolean.
+ * @param {Primitive | Date} bound Boundary value. Primitive or Date type.
  * 
  * {@link docs/error-param}
  * 

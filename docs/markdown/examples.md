@@ -129,3 +129,19 @@ v.consecutive(
   v.keysMap(_.camelCase) // e.g. using lodash
 )
 ```
+
+### `Custom value mapping`
+
+Map 'yes' & 'no' on boolean
+```js
+v.consecutive(
+  v.object2([
+    ['id', v.number(), v.integer(), v.gte(0)],
+    ['name', v.string(), v.minLen(10)],
+    ['disabled', 
+      v.valueMap([['yes', true], ['no', false]]), // converts specific value to type compatible value.
+      v.bool() // just check and cast another boolean compatible values.
+    ]
+  ])
+)
+```

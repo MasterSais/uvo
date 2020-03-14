@@ -53,6 +53,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>`](#stript-extends-objectlike-kfield-string--regexp-condition-boolean--value-k--boolean--true-validatort-t)
     - [`trim(method?: 'left' | 'right'): Validator<string, string>`](#trimmethod-left--right-validatorstring-string)
     - [`uppercase(): Validator<string, string>`](#uppercase-validatorstring-string)
+    - [`valueMap<T, R>(map: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>`](#valuemapt-rmap-arrayprimitive--value-t--boolean--regexp-primitive--value-t--r-validatort-r)
   - [`Groupers`](#groupers)
     - [`consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>`](#consecutivetvalidators-arrayvalidatorany-t-validatorany-t)
     - [`or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>`](#ortvalidators-arrayvalidatorany-any-validatorany-any)
@@ -78,6 +79,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
   - [`Injections`](#injections)
   - [`Fields strip`](#fields-strip)
   - [`Keys transformations`](#keys-transformations)
+  - [`Custom value mapping`](#custom-value-mapping)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
@@ -1008,6 +1010,32 @@ v.uppercase()('abc');
 // => 'ABC'
 ```
 
+#### `valueMap<T, R>(map: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>`
+
+Maps value with custom mappers.
+
+```js
+import * as v from 'baridetta';
+
+v.valueMap([['yes', true], ['no', false]])('yes');
+// => true
+
+v.valueMap([['yes', true], ['no', false]])(true);
+// => true
+
+v.valueMap([['yes', true], ['no', false]])('nope');
+// => 'nope'
+
+v.valueMap([['yes', true], [(value: string) => ['no', 'nope'].includes(value), false]])('nope');
+// => false
+
+v.valueMap([['yes', true], [/no|nope/, false]])('nope');
+// => false
+
+v.valueMap([['yes', true], [/no|nope/, (value: string) => `${value}?`]])('nope');
+// => 'nope?'
+```
+
 ### `Groupers`
 Groups validators in a specific way.
 #### `consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>`
@@ -1564,6 +1592,22 @@ v.consecutive(
     ['--name--', v.string(), v.minLen(10)]
   ]),
   v.keysMap(_.camelCase) // e.g. using lodash
+)
+```
+
+### `Custom value mapping`
+
+Map 'yes' & 'no' on boolean
+```js
+v.consecutive(
+  v.object2([
+    ['id', v.number(), v.integer(), v.gte(0)],
+    ['name', v.string(), v.minLen(10)],
+    ['disabled', 
+      v.valueMap([['yes', true], ['no', false]]), // converts specific value to type compatible value.
+      v.bool() // just check and cast another boolean compatible values.
+    ]
+  ])
 )
 ```
 
