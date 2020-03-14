@@ -1,6 +1,8 @@
 /** 
  * @name {ObjectSpec}
+ * 
  * @desc Specification for 'object' and 'object2' validators.
+ * 
  * @type {Validator | Record<string, Array<Validator<any, any>>} 
  */
 

@@ -1,5 +1,9 @@
 /**
- * @name {equal<T>(match: T, error?: Error): Validator<T>}
+ * @name {equal}
+ * 
+ * @scheme {equal<T>(match: T, error?: Error): Validator<T>}
+ * 
+ * @invertible
  * 
  * @desc Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
  * Can be inverted with .not call.

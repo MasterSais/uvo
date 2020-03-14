@@ -1,5 +1,9 @@
 /**
- * @name {defined<T>(error?: Error): Validator<T>}
+ * @name {defined}
+ * 
+ * @scheme {defined<T>(error?: Error): Validator<T>}
+ * 
+ * @invertible
  * 
  * @desc Checks value to be defined. Can be inverted with .not call.
  * 

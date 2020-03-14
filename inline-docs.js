@@ -32,6 +32,4 @@ const inline = (file, parse = false) => {
 fs.writeFileSync(
   filePath,
   inline(filePath)
-    .replace(/@name/g, 'Scheme:')
-    .replace(/@desc/g, 'Description:')
 );

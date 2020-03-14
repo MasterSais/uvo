@@ -1,5 +1,7 @@
 /**
- * @name {uppercase(): Validator<string, string>}
+ * @name {uppercase}
+ * 
+ * @scheme {uppercase(): Validator<string, string>}
  * 
  * @desc Uppercase input string.
  * 

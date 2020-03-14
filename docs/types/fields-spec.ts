@@ -1,6 +1,8 @@
 /** 
  * @name {FieldsSpec}
+ * 
  * @desc Specification for 'fields' validator.
+ * 
  * @type {Array | string} 
  */
 

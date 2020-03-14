@@ -1,5 +1,9 @@
 /**
- * @name {regex<T>(match: RegExp, error?: Error): Validator<T>}
+ * @name {regex}
+ * 
+ * @scheme {regex<T>(match: RegExp, error?: Error): Validator<T>}
+ * 
+ * @invertible
  * 
  * @desc Checks value to match a pattern. Can be inverted with .not call.
  * 

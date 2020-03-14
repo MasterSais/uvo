@@ -1,5 +1,7 @@
 /**
- * @name {trim(method?: 'left' | 'right'): Validator<string, string>}
+ * @name {trim}
+ * 
+ * @scheme {trim(method?: 'left' | 'right'): Validator<string, string>}
  * 
  * @desc Trim input string with specific method.
  * 

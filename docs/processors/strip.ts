@@ -1,5 +1,7 @@
 /**
- * @name {strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>}
+ * @name {strip}
+ * 
+ * @scheme {strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>}
  * 
  * @desc Removes field from object conditionally.
  * 

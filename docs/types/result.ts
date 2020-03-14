@@ -1,8 +1,12 @@
 /**
  * @name {Result}
+ * 
  * @desc 'WithError' container's result. Will be null if no errors.
+ * 
  * @typedef {Object} Result
+ * 
  * @property {any} result - Validation result.
+ * 
  * @property {Array} errors - Errors list.
  */
 

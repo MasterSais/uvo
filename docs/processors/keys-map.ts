@@ -1,5 +1,7 @@
 /**
- * @name {keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>}
+ * @name {keysMap}
+ * 
+ * @scheme {keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>}
  * 
  * @desc Maps object keys with custom mapper.
  * 

@@ -1,5 +1,7 @@
 /**
- * @name {array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>}
+ * @name {array}
+ * 
+ * @scheme {array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>}
  * 
  * @desc Checks value to be an array.
  * 

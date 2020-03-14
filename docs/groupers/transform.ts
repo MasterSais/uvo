@@ -1,5 +1,7 @@
 /**
- * @name {transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>}
+ * @name {transform}
+ * 
+ * @scheme {transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>}
  * 
  * @desc Groups processors sequentially.
  * Passes value through a sequence of processors.

@@ -1,5 +1,7 @@
 /**
- * @name {setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>}
+ * @name {setDep}
+ * 
+ * @scheme {setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>}
  * 
  * @desc Puts value into spreaded structure.
  * If 'extValue' is provided, puts it instead of current value.
@@ -7,6 +9,7 @@
  * {@link docs/type-spreader}
  * 
  * @param {string} field Spreaded value name.
+ * 
  * @param {any} extValue External value or function that returns it.
  * 
  * {@link docs/validator-result}

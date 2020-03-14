@@ -19,7 +19,10 @@
     "build:es-min": "terser --config-file ./terser.config.json -o ./dist/es/index.min.js -- ./dist/es/index.js",
     "build:types": "tsc -p tsconfig.types.json",
     "build:doc": "node generate-markdown.js README.md && doctoc README.md --github",
-    "predeploy": "yarn run lint && yarn run test && yarn run build"
+    "predeploy": "yarn run lint && yarn run test && yarn run build",
+    "deploy:patch": "yarn version --patch && npm publish",
+    "deploy:minor": "yarn version --minor && npm publish",
+    "deploy:major": "yarn version --major && npm publish"
   },
   "sideEffects": false,
   "repository": {

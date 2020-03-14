@@ -1,5 +1,9 @@
 /**
- * @name {len<T extends Lengthy>(len: number, error?: Error): Validator<T>}
+ * @name {len}
+ * 
+ * @scheme {len<T extends Lengthy>(len: number, error?: Error): Validator<T>}
+ * 
+ * @invertible
  * 
  * @desc Checks length to be equal to 'len' param. Requires to be object like.
  * Can be inverted with .not call.

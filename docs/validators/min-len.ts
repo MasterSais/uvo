@@ -1,5 +1,7 @@
 /**
- * @name {minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>}
+ * @name {minLen}
+ * 
+ * @scheme {minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>}
  * 
  * @desc Checks length to be equal to 'len' param. Requires to be object like.
  * 

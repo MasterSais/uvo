@@ -1,5 +1,9 @@
 /**
- * @name {bool<T>(error?: Error): Validator<T, boolean>}
+ * @name {bool}
+ * 
+ * @scheme {bool<T>(error?: Error): Validator<T, boolean>}
+ * 
+ * @checkable
  * 
  * @desc Checks value to be a boolean compatible.
  * Can be in CheckOnly mode with .check call.

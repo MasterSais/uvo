@@ -1,5 +1,7 @@
 /**
- * @name {or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>}
+ * @name {or}
+ * 
+ * @scheme {or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>}
  * 
  * @desc Groups validators sequentially.
  * Searches for first successful validator's result.

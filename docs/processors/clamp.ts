@@ -1,13 +1,15 @@
 /**
- * @name {clamp<T>(min: T, max: T): Validator<T, T>}
+ * @name {clamp}
+ * 
+ * @scheme {clamp<T>(min: T, max: T): Validator<T, T>}
  * 
  * @desc Clamps value to required boundaries.
  * 
  * {@link docs/type-processor}
  * 
- * @param {number|string|boolean} min Left bound to clamp to.
+ * @param {Primitive} min Left bound to clamp to.
  * 
- * @param {number|string|boolean} max Right bound to clamp to.
+ * @param {Primitive} max Right bound to clamp to.
  * 
  * {@link docs/processor-result}
  */

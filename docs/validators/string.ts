@@ -1,5 +1,9 @@
 /**
- * @name {string<T>(error?: Error): Validator<T, string>}
+ * @name {string}
+ * 
+ * @scheme {string<T>(error?: Error): Validator<T, string>}
+ * 
+ * @checkable
  * 
  * @desc Checks value to be a string compatible.
  * Can be in CheckOnly mode with .check call.

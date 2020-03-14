@@ -8,7 +8,8 @@ const config = JSON.parse(
     .toString()
 );
 
-const genTitle = (title, level) => `${'#'.repeat(level)} \`${title}\`\n\r`;
+const genTitle = (title, level, checkable, invertible) =>
+  `${'#'.repeat(level)} \`${title}${checkable ? ' <checkable>' : ''}${invertible ? ' <invertible>' : ''}\`\n\r`;
 
 const loadFiles = (files) => files.map(file => `${fs.readFileSync(path.resolve(file)).toString()}\n\r`)
 
@@ -18,11 +19,20 @@ const parseDoc = (files, level) => files
   .map(file => fs.readFileSync(path.resolve(file)).toString())
   .map(file => {
     const [, name] = file.match(/@name \{([^\}]+)\}/);
+    const checkable = file.match(/@checkable/);
+    const invertible = file.match(/@invertible/);
+    const [, scheme] = file.match(/@scheme \{([^\}]+)\}/) || [];
     const [, desc] = file.match(/@desc([^@\/\{]+)((\*\/)|(\{?@))/)
     const example = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/)
 
     return (
-      `${genTitle(name, level)}\n${
+      `${genTitle(name, level, !!checkable, !!invertible)}\n${
+      (
+        scheme
+          ? `\`\`\`js\n${scheme}\n\`\`\``
+          : ''
+      )
+      }\n${
       (
         desc
           .replace(/[\r\n]+/g, String())

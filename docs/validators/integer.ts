@@ -1,5 +1,9 @@
 /**
- * @name {integer(error?: Error): Validator<number>}
+ * @name {integer}
+ * 
+ * @scheme {integer(error?: Error): Validator<number>}
+ * 
+ * @invertible
  * 
  * @desc Checks number to be an integer. Can be inverted with .not call.
  * 

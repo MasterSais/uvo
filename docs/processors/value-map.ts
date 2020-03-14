@@ -1,5 +1,7 @@
 /**
- * @name {valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>}
+ * @name {valueMap}
+ * 
+ * @scheme {valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>}
  * 
  * @desc Maps value with custom mappers.
  * 

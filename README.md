@@ -24,52 +24,52 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`Result`](#result)
     - [`Validator`](#validator)
   - [`Validators`](#validators)
-    - [`array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>`](#arraytitemspec-arrayvalidatorany-t--validatorany-t-error-error-validatorarrayany-arrayt)
-    - [`bool<T>(error?: Error): Validator<T, boolean>`](#boolterror-error-validatort-boolean)
-    - [`date<T>(error?: Error): Validator<T, number>`](#dateterror-error-validatort-number)
-    - [`defined<T>(error?: Error): Validator<T>`](#definedterror-error-validatort)
-    - [`empty<T>(error?: Error): Validator<T>`](#emptyterror-error-validatort)
-    - [`equal<T>(match: T, error?: Error): Validator<T>`](#equaltmatch-t-error-error-validatort)
-    - [`fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`](#fieldst-extends-objectlikespec-fieldsspec-error-error-validatort)
-    - [`gte<T>(bound: T, error?: Error): Validator<T>`](#gtetbound-t-error-error-validatort)
-    - [`integer(error?: Error): Validator<number>`](#integererror-error-validatornumber)
-    - [`len<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#lent-extends-lengthylen-number-error-error-validatort)
-    - [`lte<T>(bound: T, error?: Error): Validator<T>`](#ltetbound-t-error-error-validatort)
-    - [`maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#maxlent-extends-lengthylen-number-error-error-validatort)
-    - [`minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`](#minlent-extends-lengthylen-number-error-error-validatort)
-    - [`number<T>(error?: Error): Validator<T, number>`](#numberterror-error-validatort-number)
-    - [`object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>`](#objectt-extends-objectlike-r--tspec-objectspec-error-error-validatort-r)
-    - [`object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`](#object2t-extends-objectlike-r--tspec-arraystring--regex-arrayvalidatorany-any-error-error-validatort-r)
-    - [`oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>`](#oneoftcandidates-arrayt-error-error-validatort)
-    - [`regex<T>(match: RegExp, error?: Error): Validator<T>`](#regextmatch-regexp-error-error-validatort)
-    - [`string<T>(error?: Error): Validator<T, string>`](#stringterror-error-validatort-string)
+    - [`array`](#array)
+    - [`bool <checkable>`](#bool-checkable)
+    - [`date <checkable>`](#date-checkable)
+    - [`defined <invertible>`](#defined-invertible)
+    - [`empty <invertible>`](#empty-invertible)
+    - [`equal <invertible>`](#equal-invertible)
+    - [`fields`](#fields)
+    - [`gte`](#gte)
+    - [`integer <invertible>`](#integer-invertible)
+    - [`len <invertible>`](#len-invertible)
+    - [`lte`](#lte)
+    - [`maxLen`](#maxlen)
+    - [`minLen`](#minlen)
+    - [`number <checkable>`](#number-checkable)
+    - [`object`](#object)
+    - [`object2`](#object2)
+    - [`oneOf <invertible>`](#oneof-invertible)
+    - [`regex <invertible>`](#regex-invertible)
+    - [`string <checkable>`](#string-checkable)
   - [`Processors`](#processors)
-    - [`clamp<T>(min: T, max: T): Validator<T, T>`](#clamptmin-t-max-t-validatort-t)
-    - [`erase<T>(): Validator<T, null>`](#eraset-validatort-null)
-    - [`keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>`](#keysmapt-extends-objectlikemapper-key-string--string-validatort-t)
-    - [`lowercase(): Validator<string, string>`](#lowercase-validatorstring-string)
-    - [`random(min: number, max: number, precision: number): Validator<any, number>`](#randommin-number-max-number-precision-number-validatorany-number)
-    - [`round(method?: 'floor' | 'ceil'): Validator<number, number>`](#roundmethod-floor--ceil-validatornumber-number)
-    - [`strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>`](#stript-extends-objectlike-kfield-string--regexp-condition-boolean--value-k--boolean--true-validatort-t)
-    - [`trim(method?: 'left' | 'right'): Validator<string, string>`](#trimmethod-left--right-validatorstring-string)
-    - [`uppercase(): Validator<string, string>`](#uppercase-validatorstring-string)
-    - [`valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>`](#valuemapt-rmappers-arrayprimitive--value-t--boolean--regexp-primitive--value-t--r-validatort-r)
+    - [`clamp`](#clamp)
+    - [`erase`](#erase)
+    - [`keysMap`](#keysmap)
+    - [`lowercase`](#lowercase)
+    - [`random`](#random)
+    - [`round`](#round)
+    - [`strip`](#strip)
+    - [`trim`](#trim)
+    - [`uppercase`](#uppercase)
+    - [`valueMap`](#valuemap)
   - [`Groupers`](#groupers)
-    - [`consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>`](#consecutivetvalidators-arrayvalidatorany-t-validatorany-t)
-    - [`or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>`](#ortvalidators-arrayvalidatorany-any-validatorany-any)
-    - [`parallel<T>(...validators: Array<Validator<T>>): Validator<T>`](#paralleltvalidators-arrayvalidatort-validatort)
-    - [`transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>`](#transformt-rprocessors-arrayvalidatort--r-r-validatort--r-r)
+    - [`consecutive`](#consecutive)
+    - [`or`](#or)
+    - [`parallel`](#parallel)
+    - [`transform`](#transform)
   - [`Containers`](#containers)
-    - [`withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>`](#witherrorst-rvalidator-validatort-r-commonerrorprocessor-error-error-meta-metadata--error-validatort-resultr)
-    - [`withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`](#withfallbackt-rfallback-r--initialvalue-t-meta-metadata--r-validators-arrayvalidatort--r-r-validatort--r-r)
-    - [`withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>`](#withmetat-rvalidator-validatort-r-validatort-r)
-    - [`withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>`](#withonerrort-rerrorprocessor-errorcallback-validators-arrayvalidatorany-t-validatort-r)
-    - [`withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>`](#withpromiset-rvalidator-validatort-r--resultr-validatort-promiser--arrayerror)
+    - [`withErrors`](#witherrors)
+    - [`withFallback`](#withfallback)
+    - [`withMeta`](#withmeta)
+    - [`withOnError`](#withonerror)
+    - [`withPromise`](#withpromise)
   - [`Spreaders`](#spreaders)
-    - [`getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>`](#getdeptfield-string-prevalidator-dep-t--validatort--arrayvalidatort-validatort)
-    - [`setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>`](#setdeptfield-string-extvalue-any--value-t-meta-metadata--any-validatort)
-    - [`setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>`](#setvdeptfield-string-validators-arrayvalidatort-validatort)
-    - [`useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`](#usedefaultt-rdefaultvalue-r--meta-metadata--r-validators-arrayvalidatort--r-r-validatort--r-r)
+    - [`getDep`](#getdep)
+    - [`setDep`](#setdep)
+    - [`setVDep`](#setvdep)
+    - [`useDefault`](#usedefault)
 - [`Custom validators`](#custom-validators)
 - [`Examples`](#examples)
   - [`Schema with custom user errors`](#schema-with-custom-user-errors)
@@ -134,6 +134,7 @@ simpleObj({
 The main types used in the library.
 #### `ErrorCallback`
 
+
 Calls on validation error.
 
 ```js
@@ -142,7 +143,8 @@ type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => v
 
 #### `Error`
 
-Any type's error. Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
+
+Any type's error.  Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
 
 ```js
 type Error = (
@@ -156,6 +158,7 @@ type Error = (
 ```
 
 #### `FieldsSpec`
+
 
 Specification for 'fields' validator.
 
@@ -173,6 +176,7 @@ type FieldsSpec = (
 
 #### `MetaData`
 
+
 Internal data for errors and dependencies.
 
 ```js
@@ -186,6 +190,7 @@ type MetaData = {
 
 #### `ObjectSpec`
 
+
 Specification for 'object' and 'object2' validators.
 
 ```js
@@ -193,6 +198,7 @@ type ObjectSpec = Record<string, Array<Validator<any, any>> | Validator<any, any
 ```
 
 #### `Relevance`
+
 
 Error's relevancy status.
 
@@ -203,6 +209,7 @@ type Relevance = {
 ```
 
 #### `Result`
+
 
 'WithError' container's result. Will be null if no errors.
 
@@ -215,6 +222,7 @@ type Result<T> = {
 
 #### `Validator`
 
+
 Validates value.
 
 ```js
@@ -223,8 +231,11 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 
 ### `Validators`
 Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.
-#### `array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>`
+#### `array`
 
+```js
+array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>
+```
 Checks value to be an array.
 
 ```js
@@ -273,8 +284,11 @@ anotherOne([0, 1, 2, 3]); // too long.
 // => null
 ```
 
-#### `bool<T>(error?: Error): Validator<T, boolean>`
+#### `bool <checkable>`
 
+```js
+bool<T>(error?: Error): Validator<T, boolean>
+```
 Checks value to be a boolean compatible. Can be in CheckOnly mode with .check call.
 
 ```js
@@ -308,8 +322,11 @@ v.bool.check()('abc');
 // => null
 ```
 
-#### `date<T>(error?: Error): Validator<T, number>`
+#### `date <checkable>`
 
+```js
+date<T>(error?: Error): Validator<T, number>
+```
 Checks value to be a date compatible. Can be in CheckOnly mode with .check call. Result in ms.
 
 ```js
@@ -331,8 +348,11 @@ v.date.check()('99.12.2020');
 // => null
 ```
 
-#### `defined<T>(error?: Error): Validator<T>`
+#### `defined <invertible>`
 
+```js
+defined<T>(error?: Error): Validator<T>
+```
 Checks value to be defined. Can be inverted with .not call.
 
 ```js
@@ -363,8 +383,11 @@ v.defined.not()(true);
 // => null
 ```
 
-#### `empty<T>(error?: Error): Validator<T>`
+#### `empty <invertible>`
 
+```js
+empty<T>(error?: Error): Validator<T>
+```
 Checks value to be empty. Can be inverted with .not call.
 
 ```js
@@ -395,8 +418,11 @@ v.empty.not()(0);
 // => 0
 ```
 
-#### `equal<T>(match: T, error?: Error): Validator<T>`
+#### `equal <invertible>`
 
+```js
+equal<T>(match: T, error?: Error): Validator<T>
+```
 Checks value to be equal to 'match' param. Requires the same type. Shallow comparison. Can be inverted with .not call.
 
 ```js
@@ -418,8 +444,11 @@ v.equal.not(10)(1);
 // => 1
 ```
 
-#### `fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>`
+#### `fields`
 
+```js
+fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>
+```
 Checks for fields in the input object.
 
 ```js
@@ -460,8 +489,11 @@ v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 // requires identifier ('id' either 'guid'), 'role', name ('fullname' or 'nickname' or both).
 ```
 
-#### `gte<T>(bound: T, error?: Error): Validator<T>`
+#### `gte`
 
+```js
+gte<T>(bound: T, error?: Error): Validator<T>
+```
 Checks value to be greater or equal to 'match' param. Requires the same type.
 
 ```js
@@ -492,8 +524,11 @@ v.gte(new Date())(new Date(Date.now() - 1000));
 // => null
 ```
 
-#### `integer(error?: Error): Validator<number>`
+#### `integer <invertible>`
 
+```js
+integer(error?: Error): Validator<number>
+```
 Checks number to be an integer. Can be inverted with .not call.
 
 ```js
@@ -515,8 +550,11 @@ v.integer.not()(1.1);
 // => 1.1
 ```
 
-#### `len<T extends Lengthy>(len: number, error?: Error): Validator<T>`
+#### `len <invertible>`
 
+```js
+len<T extends Lengthy>(len: number, error?: Error): Validator<T>
+```
 Checks length to be equal to 'len' param. Requires to be object like. Can be inverted with .not call.
 
 ```js
@@ -550,8 +588,11 @@ v.len.not(3)('abcd');
 // => 'abcd'
 ```
 
-#### `lte<T>(bound: T, error?: Error): Validator<T>`
+#### `lte`
 
+```js
+lte<T>(bound: T, error?: Error): Validator<T>
+```
 Checks value to be lower or equal to 'match' param. Requires the same type.
 
 ```js
@@ -582,8 +623,11 @@ v.lte(new Date())(new Date(Date.now() + 1000));
 // => null
 ```
 
-#### `maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`
+#### `maxLen`
 
+```js
+maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
+```
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
@@ -602,8 +646,11 @@ v.maxLen(3)({ length: 3 });
 // => { length: 3 }
 ```
 
-#### `minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>`
+#### `minLen`
 
+```js
+minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
+```
 Checks length to be equal to 'len' param. Requires to be object like.
 
 ```js
@@ -622,8 +669,11 @@ v.minLen(3)({ length: 3 });
 // => { length: 3 }
 ```
 
-#### `number<T>(error?: Error): Validator<T, number>`
+#### `number <checkable>`
 
+```js
+number<T>(error?: Error): Validator<T, number>
+```
 Checks value to be a number compatible. Can be in CheckOnly mode with .check call.
 
 ```js
@@ -654,8 +704,11 @@ v.number.check()('true');
 // => null
 ```
 
-#### `object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>`
+#### `object`
 
+```js
+object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>
+```
 Checks value to be an object.
 
 ```js
@@ -699,8 +752,11 @@ fieldsKeeper({
 // => { id: 3, name: 'YourAwesomeUserName' }
 ```
 
-#### `object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>`
+#### `object2`
 
+```js
+object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>
+```
 Checks value to be an object. Provides strict ordering. Each key can be a Regex.
 
 ```js
@@ -759,8 +815,11 @@ advancedObj({
 // => { id: 3, name: 'YourAwesomeUserName', surname: 'YourAwesomeUserSurname', thirdname: 'YourAwesomeUserThirdname' }
 ```
 
-#### `oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>`
+#### `oneOf <invertible>`
 
+```js
+oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>
+```
 Checks value to be one of expected. Shallow comparison. Can be inverted with .not call.
 
 ```js
@@ -782,8 +841,11 @@ v.oneOf.not([0, 1, 2])(3);
 // => 3
 ```
 
-#### `regex<T>(match: RegExp, error?: Error): Validator<T>`
+#### `regex <invertible>`
 
+```js
+regex<T>(match: RegExp, error?: Error): Validator<T>
+```
 Checks value to match a pattern. Can be inverted with .not call.
 
 ```js
@@ -802,8 +864,11 @@ v.regex(/^[0-9]$/)(11);
 // => 11
 ```
 
-#### `string<T>(error?: Error): Validator<T, string>`
+#### `string <checkable>`
 
+```js
+string<T>(error?: Error): Validator<T, string>
+```
 Checks value to be a string compatible. Can be in CheckOnly mode with .check call.
 
 ```js
@@ -833,8 +898,11 @@ v.string.check()([1, 2]);
 
 ### `Processors`
 Processes input value. No input types check. Recommended to use validators before.
-#### `clamp<T>(min: T, max: T): Validator<T, T>`
+#### `clamp`
 
+```js
+clamp<T>(min: T, max: T): Validator<T, T>
+```
 Clamps value to required boundaries.
 
 ```js
@@ -859,8 +927,11 @@ v.clamp('c', 'e')('f');
 // => 'e'
 ```
 
-#### `erase<T>(): Validator<T, null>`
+#### `erase`
 
+```js
+erase<T>(): Validator<T, null>
+```
 Erase input.
 
 ```js
@@ -870,8 +941,11 @@ v.erase()(2);
 // => null
 ```
 
-#### `keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>`
+#### `keysMap`
 
+```js
+keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>
+```
 Maps object keys with custom mapper.
 
 ```js
@@ -887,8 +961,11 @@ v.keysMap((key: string) => key === 'f1' ? 'f2' : key)({ f1: 'abc' }); // moves/r
 // => { f2: 'abc' }
 ```
 
-#### `lowercase(): Validator<string, string>`
+#### `lowercase`
 
+```js
+lowercase(): Validator<string, string>
+```
 Lowercase input string.
 
 ```js
@@ -898,8 +975,11 @@ v.lowercase()('ABC');
 // => 'abc'
 ```
 
-#### `random(min: number, max: number, precision: number): Validator<any, number>`
+#### `random`
 
+```js
+random(min: number, max: number, precision: number): Validator<any, number>
+```
 Returns random value according to params.
 
 ```js
@@ -918,8 +998,11 @@ v.random(0, 1, 0)(null);
 // => in [0, 1]
 ```
 
-#### `round(method?: 'floor' | 'ceil'): Validator<number, number>`
+#### `round`
 
+```js
+round(method?: 'floor' | 'ceil'): Validator<number, number>
+```
 Round input number with specific method.
 
 ```js
@@ -953,8 +1036,11 @@ v.round('ceil')(9.8);
 // => 10
 ```
 
-#### `strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>`
+#### `strip`
 
+```js
+strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>
+```
 Removes field from object conditionally.
 
 ```js
@@ -982,8 +1068,11 @@ v.strip(/f1|f2/)({ f1: 10, f2: 'abc' });
 // => {}
 ```
 
-#### `trim(method?: 'left' | 'right'): Validator<string, string>`
+#### `trim`
 
+```js
+trim(method?: 'left' | 'right'): Validator<string, string>
+```
 Trim input string with specific method.
 
 ```js
@@ -999,8 +1088,11 @@ v.trim('right')(' abc ');
 // => ' abc'
 ```
 
-#### `uppercase(): Validator<string, string>`
+#### `uppercase`
 
+```js
+uppercase(): Validator<string, string>
+```
 Uppercase input string.
 
 ```js
@@ -1010,8 +1102,11 @@ v.uppercase()('abc');
 // => 'ABC'
 ```
 
-#### `valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>`
+#### `valueMap`
 
+```js
+valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>
+```
 Maps value with custom mappers.
 
 ```js
@@ -1038,8 +1133,11 @@ v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 
 ### `Groupers`
 Groups validators in a specific way.
-#### `consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>`
+#### `consecutive`
 
+```js
+consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>
+```
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
 
 ```js
@@ -1062,8 +1160,11 @@ unchi('a');
 // => null
 ```
 
-#### `or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>`
+#### `or`
 
+```js
+or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>
+```
 Groups validators sequentially. Searches for first successful validator's result.
 
 ```js
@@ -1086,8 +1187,11 @@ unchi('abc');
 // => null
 ```
 
-#### `parallel<T>(...validators: Array<Validator<T>>): Validator<T>`
+#### `parallel`
 
+```js
+parallel<T>(...validators: Array<Validator<T>>): Validator<T>
+```
 Groups validators in parallel. The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere). Beware of using processors inside.
 
 ```js
@@ -1116,8 +1220,11 @@ unchi(11.2);
 // => { result: null, errors: ['ERR1', 'ERR3'] }
 ```
 
-#### `transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>`
+#### `transform`
 
+```js
+transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>
+```
 Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
 
 ```js
@@ -1149,8 +1256,11 @@ niUnchi(8.3);
 
 ### `Containers`
 Embraces validators with additional data processing.
-#### `withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>`
+#### `withErrors`
 
+```js
+withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>
+```
 Provides error handling mechanism.
 
 ```js
@@ -1179,8 +1289,11 @@ unchi(11.2);
 // => { result: null, errors: ['ERR1', 'ERR3'] }
 ```
 
-#### `withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`
+#### `withFallback`
 
+```js
+withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
+```
 Provides fallback value on error.
 
 ```js
@@ -1203,8 +1316,11 @@ simpleOne('Stringuuuuuuuuuu');
 // => 'Stringuuuuuuuuuu'
 ```
 
-#### `withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>`
+#### `withMeta`
 
+```js
+withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>
+```
 Provides meta structure.
 
 ```js
@@ -1235,8 +1351,11 @@ unchi(11.2);
 // => { result: null, errors: ['lte', 'integer'] }
 ```
 
-#### `withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>`
+#### `withOnError`
 
+```js
+withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>
+```
 Provides custom error handler.
 
 ```js
@@ -1270,8 +1389,11 @@ unchi(11.2);
 // console.error => 'ERR3'
 ```
 
-#### `withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>`
+#### `withPromise`
 
+```js
+withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>
+```
 Convert result to promise. Use it for async validation.
 
 ```js
@@ -1309,8 +1431,11 @@ try {
 
 ### `Spreaders`
 Spreads data through a validators scheme. Almost all spreaders requires meta schema to be provided with 'withMeta'.
-#### `getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>`
+#### `getDep`
 
+```js
+getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>
+```
 Takes value from spreaded structure. Might be used for dynamic validators creation. If 'preValidator' not provided, just replaces current value. Works only with provided meta object.
 
 ```js
@@ -1335,8 +1460,11 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 // => { pass: null, pass2: null }
 ```
 
-#### `setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>`
+#### `setDep`
 
+```js
+setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>
+```
 Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value.
 
 ```js
@@ -1364,8 +1492,11 @@ v.withMeta(
 );
 ```
 
-#### `setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>`
+#### `setVDep`
 
+```js
+setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>
+```
 Puts validators into spreaded structure. Might be used for recursive schemes.
 
 ```js
@@ -1392,8 +1523,11 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 // => { id: 1, node: { id: null, node: null } }
 ```
 
-#### `useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`
+#### `useDefault`
 
+```js
+useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
+```
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators. If you need fallback value on error use 'withFallback' container instead.
 
 ```js

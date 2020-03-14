@@ -1,5 +1,7 @@
 /**
- * @name {object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>}
+ * @name {object2}
+ * 
+ * @scheme {object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>}
  * 
  * @desc Checks value to be an object. Provides strict ordering.
  * Each key can be a Regex.

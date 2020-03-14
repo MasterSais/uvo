@@ -1,5 +1,7 @@
 /**
- * @name {setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>}
+ * @name {setVDep}
+ * 
+ * @scheme {setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>}
  * 
  * @desc Puts validators into spreaded structure.
  * Might be used for recursive schemes.
@@ -7,6 +9,7 @@
  * {@link docs/type-spreader}
  * 
  * @param {string} field Spreaded value name.
+ * 
  * @param {..Validator} validators Validators to save.
  * 
  * {@link docs/validator-result}

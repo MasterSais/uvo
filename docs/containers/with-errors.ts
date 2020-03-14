@@ -1,5 +1,7 @@
 /**
- * @name {withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>}
+ * @name {withErrors}
+ * 
+ * @scheme {withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>}
  * 
  * @desc Provides error handling mechanism.
  * 

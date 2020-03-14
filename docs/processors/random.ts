@@ -1,5 +1,7 @@
 /**
- * @name {random(min: number, max: number, precision: number): Validator<any, number>}
+ * @name {random}
+ * 
+ * @scheme {random(min: number, max: number, precision: number): Validator<any, number>}
  * 
  * @desc Returns random value according to params.
  * 

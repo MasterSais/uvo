@@ -1,5 +1,7 @@
 /**
- * @name {erase<T>(): Validator<T, null>}
+ * @name {erase}
+ * 
+ * @scheme {erase<T>(): Validator<T, null>}
  * 
  * @desc Erase input.
  * 

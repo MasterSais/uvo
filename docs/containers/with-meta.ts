@@ -1,5 +1,7 @@
 /**
- * @name {withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>}
+ * @name {withMeta}
+ * 
+ * @scheme {withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>}
  * 
  * @desc Provides meta structure.
  * 

@@ -1,5 +1,9 @@
 /**
- * @name {oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>}
+ * @name {oneOf}
+ * 
+ * @scheme {oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>}
+ * 
+ * @invertible
  * 
  * @desc Checks value to be one of expected. Shallow comparison. Can be inverted with .not call.
  * 

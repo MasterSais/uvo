@@ -1,5 +1,9 @@
 /**
- * @name {empty<T>(error?: Error): Validator<T>}
+ * @name {empty}
+ * 
+ * @scheme {empty<T>(error?: Error): Validator<T>}
+ * 
+ * @invertible
  * 
  * @desc Checks value to be empty. Can be inverted with .not call.
  * 

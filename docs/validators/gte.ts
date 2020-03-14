@@ -1,5 +1,7 @@
 /**
- * @name {gte<T>(bound: T, error?: Error): Validator<T>}
+ * @name {gte}
+ * 
+ * @scheme {gte<T>(bound: T, error?: Error): Validator<T>}
  * 
  * @desc Checks value to be greater or equal to 'match' param. Requires the same type.
  * 

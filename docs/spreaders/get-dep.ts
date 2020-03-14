@@ -1,5 +1,7 @@
 /**
- * @name {getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>}
+ * @name {getDep}
+ * 
+ * @scheme {getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>}
  * 
  * @desc Takes value from spreaded structure.
  * Might be used for dynamic validators creation.
@@ -9,6 +11,7 @@
  * {@link docs/type-spreader}
  * 
  * @param {string} field Spreaded value name.
+ * 
  * @param {Function} preValidator Function that takes spreaded value and insert new validators into scheme.
  * 
  * {@link docs/validator-result}
