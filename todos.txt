@@ -1,7 +1,5 @@
 object.camelCase()
 object.constantCase()
-object.strip('name', (value) => bool)
-*.withFallback()
 *.onError() spreader
 errors for invertibles
 

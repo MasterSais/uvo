@@ -84,3 +84,6 @@ export const C_MET: string = 'withMeta';
 
 /** @type {string} */
 export const C_PRM: string = 'withPromise';
+
+/** @type {string} */
+export const C_FLB: string = 'withFallback';

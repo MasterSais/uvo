@@ -30,7 +30,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     });
 
     test('base › r_1', () => {
-      expect(validator(5, clamp<number>(0, 10))(15)).toEqual(10);
+      expect(validator(5, clamp(0, 10))(15)).toEqual(10);
     });
 
     test('base › r_2', () => {

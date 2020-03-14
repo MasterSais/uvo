@@ -59,6 +59,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>`](#transformt-rprocessors-arrayvalidatort--r-r-validatort--r-r)
   - [`Containers`](#containers)
     - [`withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>`](#witherrorst-rvalidator-validatort-r-commonerrorprocessor-error-error-meta-metadata--error-validatort-resultr)
+    - [`withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`](#withfallbackt-rfallback-r--initialvalue-t-meta-metadata--r-validators-arrayvalidatort--r-r-validatort--r-r)
     - [`withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>`](#withmetat-rvalidator-validatort-r-validatort-r)
     - [`withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>`](#withpromiset-rvalidator-validatort-r--resultr-validatort-promiser--arrayerror)
   - [`Spreaders`](#spreaders)
@@ -1128,6 +1129,30 @@ unchi(11.2);
 // => { result: null, errors: ['ERR1', 'ERR3'] }
 ```
 
+#### `withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`
+
+Provides fallback value on error.
+
+```js
+import * as v from 'baridetta';
+
+const simpleOne = (
+  v.withFallback('fallback', v.string(), v.minLen(10))
+);
+
+simpleOne(null);
+// => 'fallback'
+
+simpleOne('');
+// => 'fallback'
+
+simpleOne('Stringu'); // too short.
+// => 'fallback'
+
+simpleOne('Stringuuuuuuuuuu');
+// => 'Stringuuuuuuuuuu'
+```
+
 #### `withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>`
 
 Provides meta structure.
@@ -1284,7 +1309,7 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 
 #### `useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>`
 
-Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators.
+Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators. If you need fallback value on error use 'withFallback' container instead.
 
 ```js
 import * as v from 'baridetta';

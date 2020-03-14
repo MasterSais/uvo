@@ -3,6 +3,7 @@
  * 
  * @desc Puts default value into spreaded structure.
  * If input value is empty, puts default value instead, otherwise validates input values with provided validators.
+ * If you need fallback value on error use 'withFallback' container instead.
  * 
  * {@link docs/type-spreader}
  * 
