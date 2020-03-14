@@ -1,8 +1,9 @@
 import { V_EQ as VALIDATOR_NAME } from '@lib/names';
+import { invertError } from '@lib/utilities';
 import { equal as validator } from '@lib/validators/equal';
 import { baseCasesWithParams, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
-describe(`validator › not ${VALIDATOR_NAME}`, () => {
+describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
   describe('base', () => {
     baseCasesWithParams<any>(
       validator.not,
@@ -45,7 +46,7 @@ describe(`validator › not ${VALIDATOR_NAME}`, () => {
 
   describe('with meta', () => {
     withErrorCases(
-      validator.not(1, errorMetaCase([], [1], VALIDATOR_NAME)),
+      validator.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
       [[1]],
       emptyMeta()
     );

@@ -1,6 +1,6 @@
 import { V_INT } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, invertCondition, isNumber, makeInvertible, setMetaValidator } from '../utilities';
+import { applyError, invertCondition, invertError, isNumber, makeInvertible, setMetaValidator } from '../utilities';
 
 /**
  * {@link docs/validators/integer}
@@ -14,6 +14,6 @@ export const integer = makeInvertible<((error?: Error) => Validator<number>)>(
             isNumber(value) && value % 1 === 0
           ), invert)
         )
-          ? value : applyError(error, onError, setMetaValidator(meta, V_INT))
+          ? value : applyError(error, onError, setMetaValidator(meta, invertError(V_INT, invert)))
     )
 );

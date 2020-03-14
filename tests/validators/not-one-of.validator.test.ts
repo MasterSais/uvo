@@ -1,8 +1,9 @@
 import { V_OOF as VALIDATOR_NAME } from '@lib/names';
+import { invertError } from '@lib/utilities';
 import { oneOf as validator } from '@lib/validators/one-of';
-import { baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases, emptyArray, emptyObject, emptyFunction } from '@test/utilities';
+import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
-describe(`validator › not ${VALIDATOR_NAME}`, () => {
+describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
   describe('base', () => {
     baseCasesWithParams<any>(
       validator.not,
@@ -41,7 +42,7 @@ describe(`validator › not ${VALIDATOR_NAME}`, () => {
 
   describe('with meta', () => {
     withErrorCases<any>(
-      validator.not([0, 1, 2], errorMetaCase([], [[0, 1, 2]], VALIDATOR_NAME)),
+      validator.not([0, 1, 2], errorMetaCase([], [[0, 1, 2]], invertError(VALIDATOR_NAME, true))),
       [[1]],
       emptyMeta()
     );

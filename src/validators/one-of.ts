@@ -1,6 +1,6 @@
 import { V_OOF } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, invertCondition, isArray, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
+import { applyError, invertCondition, invertError, isArray, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/validators/one-of}
@@ -14,8 +14,8 @@ export const oneOf = makeInvertible<(<T>(candidates: Array<T>, error?: Error) =>
             (
               invertCondition(candidates.indexOf(value) >= 0, invert)
             )
-              ? value : applyError(error, onError, setMetaValidator(meta, V_OOF, [candidates]))
+              ? value : applyError(error, onError, setMetaValidator(meta, invertError(V_OOF, invert), [candidates]))
         )
-        : throwValidatorError(V_OOF)
+        : throwValidatorError(invertError(V_OOF, invert))
     )
 );

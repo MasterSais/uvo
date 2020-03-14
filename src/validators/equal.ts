@@ -1,6 +1,6 @@
 import { V_EQ } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, invertCondition, makeInvertible, setMetaValidator } from '../utilities';
+import { applyError, invertCondition, invertError, makeInvertible, setMetaValidator } from '../utilities';
 
 /**
  * {@link docs/validators/equal}
@@ -12,6 +12,6 @@ export const equal = makeInvertible<(<T>(match: T, error?: Error) => Validator<T
         (
           invertCondition(value === match, invert)
         )
-          ? value : applyError(error, onError, setMetaValidator(meta, V_EQ, [match]))
+          ? value : applyError(error, onError, setMetaValidator(meta, invertError(V_EQ, invert), [match]))
     )
 );

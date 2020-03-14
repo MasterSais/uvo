@@ -81,3 +81,5 @@ export const makeCheckable = <T, R>(factory: (checkOnly: boolean) => T | R): Che
 };
 
 export const invertCondition = (condition: boolean, invert: boolean) => invert ? !condition : condition;
+
+export const invertError = (name: string, invert: boolean) => invert ? `not:${name}` : name;

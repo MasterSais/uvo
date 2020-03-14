@@ -1,6 +1,6 @@
 import { V_LEN } from '../names';
 import { Error, ErrorCallback, Lengthy, MetaData, Validator } from '../types';
-import { applyError, invertCondition, isFiniteNumber, isObjectLike, isString, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
+import { applyError, invertCondition, invertError, isFiniteNumber, isObjectLike, isString, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/validators/len}
@@ -19,8 +19,8 @@ export const len = makeInvertible<(<T extends Lengthy>(len: number, error?: Erro
                 && value.length === len
               ), invert)
             )
-              ? value : applyError(error, onError, setMetaValidator(meta, V_LEN, [len]))
+              ? value : applyError(error, onError, setMetaValidator(meta, invertError(V_LEN, invert), [len]))
         )
-        : throwValidatorError(V_LEN)
+        : throwValidatorError(invertError(V_LEN, invert))
     )
 );
