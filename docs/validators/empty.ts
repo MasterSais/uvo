@@ -5,6 +5,8 @@
  * 
  * @invertible
  * 
+ * @shortcut {oneOf([null, undefined, ''])}
+ * 
  * @desc Checks value to be empty. Can be inverted with .not call.
  * 
  * {@link docs/type-validator}

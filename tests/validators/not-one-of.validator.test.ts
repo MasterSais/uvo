@@ -1,7 +1,7 @@
 import { V_OOF as VALIDATOR_NAME } from '@lib/names';
 import { invertError } from '@lib/utilities';
-import { oneOf as validator } from '@lib/validators/one-of';
-import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
+import { empty, oneOf as validator } from '@lib/validators/one-of';
+import { baseCases, baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
   describe('base', () => {
@@ -33,6 +33,19 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
     );
   });
 
+  describe('base › empty', () => {
+    baseCases<any>(
+      empty.not(),
+      [
+        1, true, 'abc', Infinity,
+        emptyArray(), emptyFunction(), emptyObject()
+      ],
+      [
+        null, undefined, ''
+      ]
+    );
+  });
+
   describe('with error', () => {
     withErrorCases<any>(
       validator.not([0, 1, 2], notNullError()),
@@ -44,6 +57,21 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
     withErrorCases<any>(
       validator.not([0, 1, 2], errorMetaCase([], [[0, 1, 2]], invertError(VALIDATOR_NAME, true))),
       [[1]],
+      emptyMeta()
+    );
+  });
+
+  describe('with error › empty', () => {
+    withErrorCases<any>(
+      empty.not(notNullError()),
+      [[3], [null]]
+    );
+  });
+
+  describe('with meta › empty', () => {
+    withErrorCases<any>(
+      empty.not(errorMetaCase([], [[null, undefined, '']], invertError(VALIDATOR_NAME, true))),
+      [[null]],
       emptyMeta()
     );
   });

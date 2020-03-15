@@ -28,7 +28,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`bool <checkable>`](#bool-checkable)
     - [`date <checkable>`](#date-checkable)
     - [`defined <shortcut:equal.not(undefined)>`](#defined-shortcutequalnotundefined)
-    - [`empty <invertible>`](#empty-invertible)
+    - [`empty <invertible> <shortcut:oneOf([null, undefined, ''])>`](#empty-invertible-shortcutoneofnull-undefined-)
     - [`equal <invertible>`](#equal-invertible)
     - [`fields`](#fields)
     - [`gte`](#gte)
@@ -372,7 +372,7 @@ v.defined()(true);
 // => true
 ```
 
-#### `empty <invertible>`
+#### `empty <invertible> <shortcut:oneOf([null, undefined, ''])>`
 
 ```js
 empty<T>(error?: Error): Validator<T>
