@@ -8,14 +8,13 @@ const config = JSON.parse(
     .toString()
 );
 
-const genTitle = (title, level, checkable, invertible, shortcut) => (
+const genTitle = (title, level, checkable, invertible) => (
   String()
     .concat('#'.repeat(level))
     .concat(' `')
     .concat(title)
     .concat(checkable ? ' <checkable>' : '')
     .concat(invertible ? ' <invertible>' : '')
-    .concat(shortcut ? ` <shortcut | ${shortcut}>` : '')
     .concat('`\n\r')
 );
 
@@ -35,10 +34,10 @@ const parseDoc = (files, level) => files
     const example = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/)
 
     return (
-      `${genTitle(name, level, !!checkable, !!invertible, shortcut)}\n${
+      `${genTitle(name, level, !!checkable, !!invertible)}\n${
       (
-        scheme
-          ? `\`\`\`js\n${scheme}\n\`\`\``
+        (scheme || shortcut)
+          ? `\`\`\`js\n${shortcut ? `// shortcut to\n${shortcut}\n\n` : ''}${scheme ? `// scheme\n${scheme}` : ''}\n\`\`\``
           : ''
       )
       }\n${

@@ -1,11 +1,11 @@
 /**
  * @name {is}
  * 
+ * @universal
+ * 
  * @scheme {is<T>(comparator: ((value: T) => boolean), error?: Error): Validator<T>}
  * 
- * @invertible
- * 
- * @desc Checks value with custom comparator. Can be inverted with .not call.
+ * @desc Checks value with custom comparator.
  * 
  * {@link docs/type-validator}
  * 
@@ -26,9 +26,3 @@ v.is((value: number) => value === 10)(10);
 
 v.is((value) => value === 10)('10');
 // => null
-
-v.is.not((value: number) => value === 10)(10);
-// => null
-
-v.is.not((value) => value === 10)('10');
-// => '10'

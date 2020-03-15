@@ -1,6 +1,8 @@
 /**
  * @name {object}
  * 
+ * @universal
+ * 
  * @scheme {object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>}
  * 
  * @desc Checks value to be an object.

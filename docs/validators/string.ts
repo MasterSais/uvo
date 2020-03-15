@@ -1,6 +1,8 @@
 /**
  * @name {string}
  * 
+ * @universal
+ * 
  * @scheme {string<T>(error?: Error): Validator<T, string>}
  * 
  * @checkable

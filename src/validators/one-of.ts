@@ -25,6 +25,6 @@ const EMPTY_VALUES = [null, undefined, ''];
 /**
  * {@link docs/validators/empty}
  */
-export const empty = (error?: Error) => oneOf(EMPTY_VALUES, error) as any as Invertible<<T>(error?: Error) => Validator<T>>;
+export const empty = (error?: Error) => oneOf(EMPTY_VALUES, error) as any as Invertible<(<T>(error?: Error) => Validator<T>)>;
 
 empty.not = (error?: Error) => oneOf.not(EMPTY_VALUES, error) as any as <T>(error?: Error) => Validator<T>;

@@ -25,6 +25,6 @@ export const multiple = makeInvertible<((multiplier: number, error?: Error) => V
 /**
  * {@link docs/validators/integer}
  */
-export const integer: Invertible<(error?: Error) => Validator<number, number>> = (error?: Error) => multiple(1, error);
+export const integer: Invertible<((error?: Error) => Validator<number, number>)> = (error?: Error) => multiple(1, error);
 
 integer.not = (error?: Error) => multiple.not(1, error);

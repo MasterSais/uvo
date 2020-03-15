@@ -27,17 +27,17 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`array`](#array)
     - [`bool <checkable>`](#bool-checkable)
     - [`date <checkable>`](#date-checkable)
-    - [`defined <shortcut | is(value => value !== undefined)>`](#defined-shortcut--isvalue--value--undefined)
-    - [`empty <invertible> <shortcut | oneOf([null, undefined, ''])>`](#empty-invertible-shortcut--oneofnull-undefined-)
-    - [`equal <invertible> <shortcut | is(value => value === match)>`](#equal-invertible-shortcut--isvalue--value--match)
+    - [`defined`](#defined)
+    - [`empty <invertible>`](#empty-invertible)
+    - [`equal <invertible>`](#equal-invertible)
     - [`fields`](#fields)
-    - [`gte <invertible> <shortcut | is(value => value >= bound)>`](#gte-invertible-shortcut--isvalue--value--bound)
-    - [`integer <invertible> <shortcut | multiple(1)>`](#integer-invertible-shortcut--multiple1)
-    - [`is <invertible>`](#is-invertible)
+    - [`gte <invertible>`](#gte-invertible)
+    - [`integer <invertible>`](#integer-invertible)
+    - [`is`](#is)
     - [`length <invertible>`](#length-invertible)
-    - [`lte <invertible> <shortcut | is(value => value <= bound)>`](#lte-invertible-shortcut--isvalue--value--bound)
-    - [`maxLen <invertible> <shortcut | length(len, 'lte')>`](#maxlen-invertible-shortcut--lengthlen-lte)
-    - [`minLen <invertible> <shortcut | length(len, 'gte')>`](#minlen-invertible-shortcut--lengthlen-gte)
+    - [`lte <invertible>`](#lte-invertible)
+    - [`maxLen <invertible>`](#maxlen-invertible)
+    - [`minLen <invertible>`](#minlen-invertible)
     - [`multiple <invertible>`](#multiple-invertible)
     - [`number <checkable>`](#number-checkable)
     - [`object`](#object)
@@ -236,6 +236,7 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 #### `array`
 
 ```js
+// scheme
 array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>
 ```
 Checks value to be an array.
@@ -289,6 +290,7 @@ anotherOne([0, 1, 2, 3]); // too long.
 #### `bool <checkable>`
 
 ```js
+// scheme
 bool<T>(error?: Error): Validator<T, boolean>
 ```
 Checks value to be a boolean compatible. Can be in CheckOnly mode with .check call.
@@ -327,6 +329,7 @@ v.bool.check()('abc');
 #### `date <checkable>`
 
 ```js
+// scheme
 date<T>(error?: Error): Validator<T, number>
 ```
 Checks value to be a date compatible. Can be in CheckOnly mode with .check call. Result in ms.
@@ -350,9 +353,13 @@ v.date.check()('99.12.2020');
 // => null
 ```
 
-#### `defined <shortcut | is(value => value !== undefined)>`
+#### `defined`
 
 ```js
+// shortcut to
+is(value => value !== undefined)
+
+// scheme
 defined<T>(error?: Error): Validator<T>
 ```
 Checks value to be defined.
@@ -373,9 +380,13 @@ v.defined()(true);
 // => true
 ```
 
-#### `empty <invertible> <shortcut | oneOf([null, undefined, ''])>`
+#### `empty <invertible>`
 
 ```js
+// shortcut to
+oneOf([null, undefined, ''])
+
+// scheme
 empty<T>(error?: Error): Validator<T>
 ```
 Checks value to be empty. Can be inverted with .not call.
@@ -408,9 +419,13 @@ v.empty.not()(0);
 // => 0
 ```
 
-#### `equal <invertible> <shortcut | is(value => value === match)>`
+#### `equal <invertible>`
 
 ```js
+// shortcut to
+is(value => value === match)
+
+// scheme
 equal<T>(match: T, error?: Error): Validator<T>
 ```
 Checks value to be equal to 'match' param. Requires the same type. Shallow comparison. Can be inverted with .not call.
@@ -437,6 +452,7 @@ v.equal.not(10)(1);
 #### `fields`
 
 ```js
+// scheme
 fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>
 ```
 Checks for fields in the input object.
@@ -479,9 +495,13 @@ v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 // requires identifier ('id' either 'guid'), 'role', name ('fullname' or 'nickname' or both).
 ```
 
-#### `gte <invertible> <shortcut | is(value => value >= bound)>`
+#### `gte <invertible>`
 
 ```js
+// shortcut to
+is(value => value >= bound)
+
+// scheme
 gte<T>(bound: T, error?: Error): Validator<T>
 ```
 Checks value to be greater or equal to 'match' param. Requires the same type.
@@ -526,9 +546,13 @@ v.gte.not(0)(-1);
 // => -1
 ```
 
-#### `integer <invertible> <shortcut | multiple(1)>`
+#### `integer <invertible>`
 
 ```js
+// shortcut to
+multiple(1)
+
+// scheme
 integer(error?: Error): Validator<number>
 ```
 Checks number to be an integer. Can be inverted with .not call.
@@ -552,12 +576,13 @@ v.integer.not()(1.1);
 // => 1.1
 ```
 
-#### `is <invertible>`
+#### `is`
 
 ```js
+// scheme
 is<T>(comparator: ((value: T) => boolean), error?: Error): Validator<T>
 ```
-Checks value with custom comparator. Can be inverted with .not call.
+Checks value with custom comparator.
 
 ```js
 import * as v from 'uvo';
@@ -567,17 +592,12 @@ v.is((value: number) => value === 10)(10);
 
 v.is((value) => value === 10)('10');
 // => null
-
-v.is.not((value: number) => value === 10)(10);
-// => null
-
-v.is.not((value) => value === 10)('10');
-// => '10'
 ```
 
 #### `length <invertible>`
 
 ```js
+// scheme
 length<T extends Lengthy>(len: number, type: 'equal' | 'gte' | 'lte' = 'equal', error?: Error): Validator<T>
 ```
 Compares length with 'len' param. Requires to be an object like or string. Can be inverted with .not call.
@@ -622,9 +642,13 @@ v.length.not(3)('abcd');
 // => 'abcd'
 ```
 
-#### `lte <invertible> <shortcut | is(value => value <= bound)>`
+#### `lte <invertible>`
 
 ```js
+// shortcut to
+is(value => value <= bound)
+
+// scheme
 lte<T>(bound: T, error?: Error): Validator<T>
 ```
 Checks value to be lower or equal to 'match' param. Requires the same type.
@@ -669,9 +693,13 @@ v.lte.not(0)(1);
 // => 1
 ```
 
-#### `maxLen <invertible> <shortcut | length(len, 'lte')>`
+#### `maxLen <invertible>`
 
 ```js
+// shortcut to
+length(len, 'lte')
+
+// scheme
 maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
@@ -692,9 +720,13 @@ v.maxLen(3)({ length: 3 });
 // => { length: 3 }
 ```
 
-#### `minLen <invertible> <shortcut | length(len, 'gte')>`
+#### `minLen <invertible>`
 
 ```js
+// shortcut to
+length(len, 'gte')
+
+// scheme
 minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
@@ -718,6 +750,7 @@ v.minLen(3)({ length: 3 });
 #### `multiple <invertible>`
 
 ```js
+// scheme
 multiple(multiplier: number, error?: Error): Validator<number>
 ```
 Checks number to be an integer. Can be inverted with .not call.
@@ -747,6 +780,7 @@ v.multiple.not(3)(11);
 #### `number <checkable>`
 
 ```js
+// scheme
 number<T>(error?: Error): Validator<T, number>
 ```
 Checks value to be a number compatible. Can be in CheckOnly mode with .check call.
@@ -782,6 +816,7 @@ v.number.check()('true');
 #### `object`
 
 ```js
+// scheme
 object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>
 ```
 Checks value to be an object.
@@ -830,6 +865,7 @@ fieldsKeeper({
 #### `object2`
 
 ```js
+// scheme
 object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>
 ```
 Checks value to be an object. Provides strict ordering. Each key can be a Regex.
@@ -893,6 +929,7 @@ advancedObj({
 #### `oneOf <invertible>`
 
 ```js
+// scheme
 oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>
 ```
 Checks value to be one of expected. Shallow comparison. Can be inverted with .not call.
@@ -919,6 +956,7 @@ v.oneOf.not([0, 1, 2])(3);
 #### `regex <invertible>`
 
 ```js
+// scheme
 regex<T>(match: RegExp, error?: Error): Validator<T>
 ```
 Checks value to match a pattern. Can be inverted with .not call.
@@ -942,6 +980,7 @@ v.regex(/^[0-9]$/)(11);
 #### `string <checkable>`
 
 ```js
+// scheme
 string<T>(error?: Error): Validator<T, string>
 ```
 Checks value to be a string compatible. Can be in CheckOnly mode with .check call.
@@ -976,6 +1015,7 @@ v.string.check()([1, 2]);
 #### `clamp`
 
 ```js
+// scheme
 clamp<T>(min: T, max: T): Validator<T, T>
 ```
 Clamps value to required boundaries.
@@ -1005,6 +1045,7 @@ v.clamp('c', 'e')('f');
 #### `erase`
 
 ```js
+// scheme
 erase<T>(): Validator<T, null>
 ```
 Erase input.
@@ -1019,6 +1060,7 @@ v.erase()(2);
 #### `keysMap`
 
 ```js
+// scheme
 keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>
 ```
 Maps object keys with custom mapper.
@@ -1039,6 +1081,7 @@ v.keysMap((key: string) => key === 'f1' ? 'f2' : key)({ f1: 'abc' }); // moves/r
 #### `lowercase`
 
 ```js
+// scheme
 lowercase(): Validator<string, string>
 ```
 Lowercase input string.
@@ -1053,6 +1096,7 @@ v.lowercase()('ABC');
 #### `random`
 
 ```js
+// scheme
 random(min: number, max: number, precision: number): Validator<any, number>
 ```
 Returns random value according to params.
@@ -1076,6 +1120,7 @@ v.random(0, 1, 0)(null);
 #### `round`
 
 ```js
+// scheme
 round(method?: 'floor' | 'ceil'): Validator<number, number>
 ```
 Round input number with specific method.
@@ -1114,6 +1159,7 @@ v.round('ceil')(9.8);
 #### `strip`
 
 ```js
+// scheme
 strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>
 ```
 Removes field from object conditionally.
@@ -1146,6 +1192,7 @@ v.strip(/f1|f2/)({ f1: 10, f2: 'abc' });
 #### `trim`
 
 ```js
+// scheme
 trim(method?: 'left' | 'right'): Validator<string, string>
 ```
 Trim input string with specific method.
@@ -1166,6 +1213,7 @@ v.trim('right')(' abc ');
 #### `uppercase`
 
 ```js
+// scheme
 uppercase(): Validator<string, string>
 ```
 Uppercase input string.
@@ -1180,6 +1228,7 @@ v.uppercase()('abc');
 #### `valueMap`
 
 ```js
+// scheme
 valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>
 ```
 Maps value with custom mappers.
@@ -1211,6 +1260,7 @@ v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 #### `consecutive`
 
 ```js
+// scheme
 consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>
 ```
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
@@ -1238,6 +1288,7 @@ unchi('a');
 #### `or`
 
 ```js
+// scheme
 or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>
 ```
 Groups validators sequentially. Searches for first successful validator's result.
@@ -1265,6 +1316,7 @@ unchi('abc');
 #### `parallel`
 
 ```js
+// scheme
 parallel<T>(...validators: Array<Validator<T>>): Validator<T>
 ```
 Groups validators in parallel. The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere). Beware of using processors inside.
@@ -1298,6 +1350,7 @@ unchi(11.2);
 #### `transform`
 
 ```js
+// scheme
 transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
@@ -1334,6 +1387,7 @@ niUnchi(8.3);
 #### `withErrors`
 
 ```js
+// scheme
 withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>
 ```
 Provides error handling mechanism.
@@ -1367,6 +1421,7 @@ unchi(11.2);
 #### `withFallback`
 
 ```js
+// scheme
 withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Provides fallback value on error.
@@ -1394,6 +1449,7 @@ simpleOne('Stringuuuuuuuuuu');
 #### `withMeta`
 
 ```js
+// scheme
 withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>
 ```
 Provides meta structure.
@@ -1429,6 +1485,7 @@ unchi(11.2);
 #### `withOnError`
 
 ```js
+// scheme
 withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>
 ```
 Provides custom error handler.
@@ -1467,6 +1524,7 @@ unchi(11.2);
 #### `withPromise`
 
 ```js
+// scheme
 withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>
 ```
 Convert result to promise. Use it for async validation.
@@ -1509,6 +1567,7 @@ try {
 #### `getDep`
 
 ```js
+// scheme
 getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>
 ```
 Takes value from spreaded structure. Might be used for dynamic validators creation. If 'preValidator' not provided, just replaces current value. Works only with provided meta object.
@@ -1538,6 +1597,7 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 #### `setDep`
 
 ```js
+// scheme
 setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>
 ```
 Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value.
@@ -1570,6 +1630,7 @@ v.withMeta(
 #### `setVDep`
 
 ```js
+// scheme
 setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>
 ```
 Puts validators into spreaded structure. Might be used for recursive schemes.
@@ -1601,6 +1662,7 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 #### `useDefault`
 
 ```js
+// scheme
 useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators. If you need fallback value on error use 'withFallback' container instead.

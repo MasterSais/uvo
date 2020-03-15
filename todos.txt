@@ -1,5 +1,8 @@
 v2: 
   - Think of validator's error value
+  - Is can take (after error param) shortcut validator name
+  - No params or Is can take (after error param) shortcut validator params
+  - Is tests
 
 minification:
   - const => let

@@ -1,46 +1,44 @@
 import { V_IS } from '../names';
 import { Error, ErrorCallback, Invertible, MetaData, Validator } from '../types';
-import { applyError, invertCondition, invertError, isFunction, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
+import { applyError, isFunction, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/validators/is}
  */
-export const is = makeInvertible<(<T>(comparator: ((value: T) => boolean), error?: Error) => Validator<T>)>(
-  (invert: boolean) => <T>(comparator: ((value: T) => boolean), error?: Error): Validator<T> =>
-    (
-      isFunction(comparator)
-        ? (
-          (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-            invertCondition(comparator(value), invert)
-              ? value
-              : applyError(error, onError, setMetaValidator(meta, invertError(V_IS, invert), [comparator.toString()]))
-        )
-        : throwValidatorError(invertError(V_IS, invert))
-    )
-);
+export const is = <T>(comparator: ((value: T) => boolean), error?: Error): Validator<T> =>
+  (
+    isFunction(comparator)
+      ? (
+        (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
+          comparator(value)
+            ? value
+            : applyError(error, onError, setMetaValidator(meta, V_IS, [comparator.toString()]))
+      )
+      : throwValidatorError(V_IS)
+  );
 
 /**
  * {@link docs/validators/defined}
  */
-export const defined: <T>(error?: Error) => Validator<T, T> = <T>(error?: Error) => is((value: T) => value !== undefined, error);
+export const defined = <T>(error?: Error) => is((value: T) => value !== undefined, error);
 
 /**
  * {@link docs/validators/equal}
  */
-export const equal = (<T>(match: T, error?: Error) => is((value: T) => value === match, error)) as any as Invertible<<T>(match: T, error?: Error) => Validator<T, T>>;
+export const equal: Invertible<(<T>(match: T, error?: Error) => Validator<T, T>)> = <T>(match: T, error?: Error) => is((value: T) => value === match, error);
 
 equal.not = <T>(match: T, error?: Error) => is((value: T) => value !== match, error);
 
 /**
  * {@link docs/validators/gte}
  */
-export const gte = (<T>(bound: T, error?: Error) => is((value: T) => value >= bound, error)) as any as Invertible<<T>(bound: T, error?: Error) => Validator<T, T>>;
+export const gte: Invertible<(<T>(bound: T, error?: Error) => Validator<T, T>)> = <T>(bound: T, error?: Error) => is((value: T) => value >= bound, error);
 
 gte.not = <T>(bound: T, error?: Error) => is((value: T) => value < bound, error);
 
 /**
  * {@link docs/validators/lte}
  */
-export const lte = (<T>(bound: T, error?: Error) => is((value: T) => value <= bound, error)) as any as Invertible<<T>(bound: T, error?: Error) => Validator<T, T>>;
+export const lte: Invertible<(<T>(bound: T, error?: Error) => Validator<T, T>)> = <T>(bound: T, error?: Error) => is((value: T) => value <= bound, error);
 
 lte.not = <T>(bound: T, error?: Error) => is((value: T) => value > bound, error);

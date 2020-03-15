@@ -1,6 +1,8 @@
 /**
  * @name {bool}
  * 
+ * @universal
+ * 
  * @scheme {bool<T>(error?: Error): Validator<T, boolean>}
  * 
  * @checkable

@@ -1,6 +1,8 @@
 /**
  * @name {number}
  * 
+ * @universal
+ * 
  * @scheme {number<T>(error?: Error): Validator<T, number>}
  * 
  * @checkable

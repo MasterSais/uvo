@@ -36,13 +36,13 @@ export const length = makeInvertible<(<T extends Lengthy>(len: number, type?: 'e
 /**
  * {@link docs/validators/min-len}
  */
-export const minLen: Invertible<<T extends Lengthy>(len: number, error?: Error) => Validator<T>> = (len: number, error?: Error) => length(len, 'gte', error);
+export const minLen: Invertible<(<T extends Lengthy>(len: number, error?: Error) => Validator<T>)> = (len: number, error?: Error) => length(len, 'gte', error);
 
 minLen.not = (len: number, error?: Error) => length.not(len, 'gte', error);
 
 /**
  * {@link docs/validators/max-len}
  */
-export const maxLen: Invertible<<T extends Lengthy>(len: number, error?: Error) => Validator<T>> = (len: number, error?: Error) => length(len, 'lte', error);
+export const maxLen: Invertible<(<T extends Lengthy>(len: number, error?: Error) => Validator<T>)> = (len: number, error?: Error) => length(len, 'lte', error);
 
 maxLen.not = (len: number, error?: Error) => length.not(len, 'lte', error);
