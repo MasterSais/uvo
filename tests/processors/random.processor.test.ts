@@ -1,7 +1,7 @@
 import { consecutive } from '@lib/groupers/consecutive';
 import { random } from '@lib/processors/random';
-import { gte } from '@lib/validators/gte';
-import { lte } from '@lib/validators/lte';
+import { gte } from '@lib/validators/is';
+import { lte } from '@lib/validators/is';
 import { number } from '@lib/validators/number';
 import { oneOf } from '@lib/validators/one-of';
 

@@ -1,7 +1,7 @@
 import { withOnError } from '@lib/containers/with-on-error';
 import { parallel } from '@lib/groupers/parallel';
 import { C_OER as VALIDATOR_NAME } from '@lib/names';
-import { gte } from '@lib/validators/gte';
+import { gte } from '@lib/validators/is';
 import { integer } from '@lib/validators/multiple';
 import { number } from '@lib/validators/number';
 

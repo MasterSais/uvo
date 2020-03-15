@@ -3,7 +3,7 @@ import { withMeta } from '@lib/containers/with-meta';
 import { consecutive } from '@lib/groupers/consecutive';
 import { parallel } from '@lib/groupers/parallel';
 import { C_MET as VALIDATOR_NAME } from '@lib/names';
-import { gte } from '@lib/validators/gte';
+import { gte } from '@lib/validators/is';
 import { integer } from '@lib/validators/multiple';
 import { number } from '@lib/validators/number';
 import { baseCasesWithParams } from '@test/utilities';
@@ -24,7 +24,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     [
       [[params1], 12, { result: 12, errors: null }],
       [[params1], 'abc', { result: null, errors: ['number'] }],
-      [[params1], -1, { result: null, errors: ['gte'] }],
+      [[params1], -1, { result: null, errors: ['is'] }],
       [[params1], 2.2, { result: null, errors: ['multiple'] }]
     ],
     []
@@ -47,9 +47,9 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     [
       [[params2], 12, { result: 12, errors: null }],
       [[params2], 'abc', { result: null, errors: ['number'] }],
-      [[params2], -1, { result: null, errors: ['gte'] }],
+      [[params2], -1, { result: null, errors: ['is'] }],
       [[params2], 2.2, { result: null, errors: ['multiple'] }],
-      [[params2], -2.2, { result: null, errors: ['gte', 'multiple'] }]
+      [[params2], -2.2, { result: null, errors: ['is', 'multiple'] }]
     ],
     []
   );

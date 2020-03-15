@@ -2,16 +2,10 @@
 export const V_MLP: string = 'multiple';
 
 /** @type {string} */
-export const V_EQ: string = 'equal';
+export const V_IS: string = 'is';
 
 /** @type {string} */
 export const V_REG: string = 'regex';
-
-/** @type {string} */
-export const V_GTE: string = 'gte';
-
-/** @type {string} */
-export const V_LTE: string = 'lte';
 
 /** @type {string} */
 export const V_OOF: string = 'oneOf';

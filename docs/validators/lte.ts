@@ -5,6 +5,10 @@
  * 
  * @desc Checks value to be lower or equal to 'match' param. Requires the same type.
  * 
+ * @invertible
+ * 
+ * @shortcut {is(value => value <= bound)}
+ * 
  * {@link docs/type-validator}
  * 
  * @param {Primitive | Date} bound Boundary value. Primitive or Date type.
@@ -42,3 +46,15 @@ v.lte(new Date())(new Date(Date.now() - 1000));
 
 v.lte(new Date())(new Date(Date.now() + 1000));
 // => null
+
+v.lte.not(2)(1);
+// => null
+
+v.lte.not('2')('1');
+// => null
+
+v.lte.not(true)(true);
+// => null
+
+v.lte.not(0)(1);
+// => 1

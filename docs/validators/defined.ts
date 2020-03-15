@@ -3,7 +3,7 @@
  * 
  * @scheme {defined<T>(error?: Error): Validator<T>}
  *
- * @shortcut {equal.not(undefined)}
+ * @shortcut {is(value => value !== undefined)}
  * 
  * @desc Checks value to be defined.
  * 

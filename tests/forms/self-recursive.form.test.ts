@@ -1,7 +1,7 @@
 import { withMeta } from '@lib/containers/with-meta';
 import { getDep } from '@lib/spreaders/get-dep';
 import { setVDep } from '@lib/spreaders/set-v-dep';
-import { gte } from '@lib/validators/gte';
+import { gte } from '@lib/validators/is';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';

@@ -1,6 +1,6 @@
 import { consecutive } from '@lib/groupers/consecutive';
 import { array } from '@lib/validators/array';
-import { gte } from '@lib/validators/gte';
+import { gte } from '@lib/validators/is';
 import { number } from '@lib/validators/number';
 
 test('processor injection', () => {

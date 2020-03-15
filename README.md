@@ -27,14 +27,15 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`array`](#array)
     - [`bool <checkable>`](#bool-checkable)
     - [`date <checkable>`](#date-checkable)
-    - [`defined <shortcut | equal.not(undefined)>`](#defined-shortcut--equalnotundefined)
+    - [`defined <shortcut | is(value => value !== undefined)>`](#defined-shortcut--isvalue--value--undefined)
     - [`empty <invertible> <shortcut | oneOf([null, undefined, ''])>`](#empty-invertible-shortcut--oneofnull-undefined-)
-    - [`equal <invertible>`](#equal-invertible)
+    - [`equal <invertible> <shortcut | is(value => value === match)>`](#equal-invertible-shortcut--isvalue--value--match)
     - [`fields`](#fields)
-    - [`gte`](#gte)
+    - [`gte <invertible> <shortcut | is(value => value >= bound)>`](#gte-invertible-shortcut--isvalue--value--bound)
     - [`integer <invertible> <shortcut | multiple(1)>`](#integer-invertible-shortcut--multiple1)
+    - [`is <invertible>`](#is-invertible)
     - [`length <invertible>`](#length-invertible)
-    - [`lte`](#lte)
+    - [`lte <invertible> <shortcut | is(value => value <= bound)>`](#lte-invertible-shortcut--isvalue--value--bound)
     - [`maxLen <invertible> <shortcut | length(len, 'lte')>`](#maxlen-invertible-shortcut--lengthlen-lte)
     - [`minLen <invertible> <shortcut | length(len, 'gte')>`](#minlen-invertible-shortcut--lengthlen-gte)
     - [`multiple <invertible>`](#multiple-invertible)
@@ -349,7 +350,7 @@ v.date.check()('99.12.2020');
 // => null
 ```
 
-#### `defined <shortcut | equal.not(undefined)>`
+#### `defined <shortcut | is(value => value !== undefined)>`
 
 ```js
 defined<T>(error?: Error): Validator<T>
@@ -407,7 +408,7 @@ v.empty.not()(0);
 // => 0
 ```
 
-#### `equal <invertible>`
+#### `equal <invertible> <shortcut | is(value => value === match)>`
 
 ```js
 equal<T>(match: T, error?: Error): Validator<T>
@@ -478,7 +479,7 @@ v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 // requires identifier ('id' either 'guid'), 'role', name ('fullname' or 'nickname' or both).
 ```
 
-#### `gte`
+#### `gte <invertible> <shortcut | is(value => value >= bound)>`
 
 ```js
 gte<T>(bound: T, error?: Error): Validator<T>
@@ -511,6 +512,18 @@ v.gte(new Date())(new Date(Date.now() + 1000));
 
 v.gte(new Date())(new Date(Date.now() - 1000));
 // => null
+
+v.gte.not(0)(1);
+// => null
+
+v.gte.not('0')('1');
+// => null
+
+v.gte.not(false)(true);
+// => null
+
+v.gte.not(0)(-1);
+// => -1
 ```
 
 #### `integer <invertible> <shortcut | multiple(1)>`
@@ -537,6 +550,29 @@ v.integer.not()(1);
 
 v.integer.not()(1.1);
 // => 1.1
+```
+
+#### `is <invertible>`
+
+```js
+is<T>(comparator: ((value: T) => boolean), error?: Error): Validator<T>
+```
+Checks value with custom comparator. Can be inverted with .not call.
+
+```js
+import * as v from 'uvo';
+
+v.is((value: number) => value === 10)(10);
+// => 10
+
+v.is((value) => value === 10)('10');
+// => null
+
+v.is.not((value: number) => value === 10)(10);
+// => null
+
+v.is.not((value) => value === 10)('10');
+// => '10'
 ```
 
 #### `length <invertible>`
@@ -586,7 +622,7 @@ v.length.not(3)('abcd');
 // => 'abcd'
 ```
 
-#### `lte`
+#### `lte <invertible> <shortcut | is(value => value <= bound)>`
 
 ```js
 lte<T>(bound: T, error?: Error): Validator<T>
@@ -619,6 +655,18 @@ v.lte(new Date())(new Date(Date.now() - 1000));
 
 v.lte(new Date())(new Date(Date.now() + 1000));
 // => null
+
+v.lte.not(2)(1);
+// => null
+
+v.lte.not('2')('1');
+// => null
+
+v.lte.not(true)(true);
+// => null
+
+v.lte.not(0)(1);
+// => 1
 ```
 
 #### `maxLen <invertible> <shortcut | length(len, 'lte')>`

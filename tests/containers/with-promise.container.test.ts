@@ -4,7 +4,7 @@ import { withPromise } from '@lib/containers/with-promise';
 import { consecutive } from '@lib/groupers/consecutive';
 import { parallel } from '@lib/groupers/parallel';
 import { C_PRM as VALIDATOR_NAME } from '@lib/names';
-import { gte } from '@lib/validators/gte';
+import { gte } from '@lib/validators/is';
 import { integer } from '@lib/validators/multiple';
 import { number } from '@lib/validators/number';
 
@@ -27,7 +27,7 @@ test(`validator › ${VALIDATOR_NAME}`, async () => {
 
   promiseOne('abc').catch(errors => expect(errors).toEqual(['number']));
 
-  promiseOne(-1).catch(errors => expect(errors).toEqual(['gte']));
+  promiseOne(-1).catch(errors => expect(errors).toEqual(['is']));
 
   promiseOne(2.2).catch(errors => expect(errors).toEqual(['multiple']));
 
@@ -51,9 +51,9 @@ test(`validator › ${VALIDATOR_NAME}`, async () => {
 
   promiseToo('abc').catch(errors => expect(errors).toEqual(['number']));
 
-  promiseToo(-1).catch(errors => expect(errors).toEqual(['gte']));
+  promiseToo(-1).catch(errors => expect(errors).toEqual(['is']));
 
   promiseToo(2.2).catch(errors => expect(errors).toEqual(['multiple']));
 
-  promiseToo(-2.2).catch(errors => expect(errors).toEqual(['gte', 'multiple']));
+  promiseToo(-2.2).catch(errors => expect(errors).toEqual(['is', 'multiple']));
 });

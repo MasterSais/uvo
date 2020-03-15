@@ -5,6 +5,8 @@
  * 
  * @invertible
  * 
+ * @shortcut {is(value => value === match)}
+ * 
  * @desc Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
  * Can be inverted with .not call.
  * 

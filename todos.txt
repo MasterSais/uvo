@@ -1,6 +1,5 @@
 v2: 
   - Think of validator's error value
-  - gte, lte, equal => compare('type') types: lt, gt, lte, gte, equal, deepEqual - shortPaths
 
 minification:
   - const => let
