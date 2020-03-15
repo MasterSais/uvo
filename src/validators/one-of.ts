@@ -1,6 +1,6 @@
 import { V_OOF } from '../names';
 import { Error, ErrorCallback, Invertible, MetaData, Validator } from '../types';
-import { applyError, bind, invertCondition, invertError, isArray, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
+import { applyError, invertCondition, invertError, isArray, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/validators/one-of}
@@ -25,6 +25,6 @@ const EMPTY_VALUES = [null, undefined, ''];
 /**
  * {@link docs/validators/empty}
  */
-export const empty: Invertible<<T>(error?: Error) => Validator<T>> = bind(oneOf, EMPTY_VALUES);
+export const empty = (error?: Error) => oneOf(EMPTY_VALUES, error) as any as Invertible<<T>(error?: Error) => Validator<T>>;
 
-empty.not = bind(oneOf.not, EMPTY_VALUES);
+empty.not = (error?: Error) => oneOf.not(EMPTY_VALUES, error) as any as <T>(error?: Error) => Validator<T>;

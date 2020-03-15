@@ -15,7 +15,7 @@ const genTitle = (title, level, checkable, invertible, shortcut) => (
     .concat(title)
     .concat(checkable ? ' <checkable>' : '')
     .concat(invertible ? ' <invertible>' : '')
-    .concat(shortcut ? ` <shortcut:${shortcut}>` : '')
+    .concat(shortcut ? ` <shortcut | ${shortcut}>` : '')
     .concat('`\n\r')
 );
 

@@ -27,16 +27,16 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`array`](#array)
     - [`bool <checkable>`](#bool-checkable)
     - [`date <checkable>`](#date-checkable)
-    - [`defined <shortcut:equal.not(undefined)>`](#defined-shortcutequalnotundefined)
-    - [`empty <invertible> <shortcut:oneOf([null, undefined, ''])>`](#empty-invertible-shortcutoneofnull-undefined-)
+    - [`defined <shortcut | equal.not(undefined)>`](#defined-shortcut--equalnotundefined)
+    - [`empty <invertible> <shortcut | oneOf([null, undefined, ''])>`](#empty-invertible-shortcut--oneofnull-undefined-)
     - [`equal <invertible>`](#equal-invertible)
     - [`fields`](#fields)
     - [`gte`](#gte)
-    - [`integer <invertible> <shortcut:multiple(1)>`](#integer-invertible-shortcutmultiple1)
+    - [`integer <invertible> <shortcut | multiple(1)>`](#integer-invertible-shortcut--multiple1)
     - [`length <invertible>`](#length-invertible)
     - [`lte`](#lte)
-    - [`maxLen <invertible> <shortcut:length(len, 'lte')>`](#maxlen-invertible-shortcutlengthlen-lte)
-    - [`minLen <invertible> <shortcut:length(len, 'gte')>`](#minlen-invertible-shortcutlengthlen-gte)
+    - [`maxLen <invertible> <shortcut | length(len, 'lte')>`](#maxlen-invertible-shortcut--lengthlen-lte)
+    - [`minLen <invertible> <shortcut | length(len, 'gte')>`](#minlen-invertible-shortcut--lengthlen-gte)
     - [`multiple <invertible>`](#multiple-invertible)
     - [`number <checkable>`](#number-checkable)
     - [`object`](#object)
@@ -349,7 +349,7 @@ v.date.check()('99.12.2020');
 // => null
 ```
 
-#### `defined <shortcut:equal.not(undefined)>`
+#### `defined <shortcut | equal.not(undefined)>`
 
 ```js
 defined<T>(error?: Error): Validator<T>
@@ -372,7 +372,7 @@ v.defined()(true);
 // => true
 ```
 
-#### `empty <invertible> <shortcut:oneOf([null, undefined, ''])>`
+#### `empty <invertible> <shortcut | oneOf([null, undefined, ''])>`
 
 ```js
 empty<T>(error?: Error): Validator<T>
@@ -513,7 +513,7 @@ v.gte(new Date())(new Date(Date.now() - 1000));
 // => null
 ```
 
-#### `integer <invertible> <shortcut:multiple(1)>`
+#### `integer <invertible> <shortcut | multiple(1)>`
 
 ```js
 integer(error?: Error): Validator<number>
@@ -621,7 +621,7 @@ v.lte(new Date())(new Date(Date.now() + 1000));
 // => null
 ```
 
-#### `maxLen <invertible> <shortcut:length(len, 'lte')>`
+#### `maxLen <invertible> <shortcut | length(len, 'lte')>`
 
 ```js
 maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
@@ -644,7 +644,7 @@ v.maxLen(3)({ length: 3 });
 // => { length: 3 }
 ```
 
-#### `minLen <invertible> <shortcut:length(len, 'gte')>`
+#### `minLen <invertible> <shortcut | length(len, 'gte')>`
 
 ```js
 minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>

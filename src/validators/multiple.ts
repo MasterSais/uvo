@@ -1,6 +1,6 @@
 import { V_MLP } from '../names';
 import { Error, ErrorCallback, Invertible, MetaData, Validator } from '../types';
-import { applyError, bind, invertCondition, invertError, isNumber, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
+import { applyError, invertCondition, invertError, isNumber, makeInvertible, setMetaValidator, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/validators/multiple}
@@ -25,6 +25,6 @@ export const multiple = makeInvertible<((multiplier: number, error?: Error) => V
 /**
  * {@link docs/validators/integer}
  */
-export const integer: Invertible<(error?: Error) => Validator<number, number>> = bind(multiple, 1);
+export const integer: Invertible<(error?: Error) => Validator<number, number>> = (error?: Error) => multiple(1, error);
 
-integer.not = bind(multiple.not, 1);
+integer.not = (error?: Error) => multiple.not(1, error);
