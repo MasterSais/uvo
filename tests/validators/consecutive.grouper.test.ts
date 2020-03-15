@@ -1,7 +1,7 @@
 import { consecutive as validator } from '@lib/groupers/consecutive';
 import { G_CONS as VALIDATOR_NAME, V_NUM } from '@lib/names';
 import { gte } from '@lib/validators/gte';
-import { integer } from '@lib/validators/integer';
+import { integer } from '@lib/validators/multiple';
 import { number } from '@lib/validators/number';
 import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 

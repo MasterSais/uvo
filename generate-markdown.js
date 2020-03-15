@@ -8,8 +8,16 @@ const config = JSON.parse(
     .toString()
 );
 
-const genTitle = (title, level, checkable, invertible) =>
-  `${'#'.repeat(level)} \`${title}${checkable ? ' <checkable>' : ''}${invertible ? ' <invertible>' : ''}\`\n\r`;
+const genTitle = (title, level, checkable, invertible, shortcut) => (
+  String()
+    .concat('#'.repeat(level))
+    .concat(' `')
+    .concat(title)
+    .concat(checkable ? ' <checkable>' : '')
+    .concat(invertible ? ' <invertible>' : '')
+    .concat(shortcut ? ` <shortcut:${shortcut}>` : '')
+    .concat('`\n\r')
+);
 
 const loadFiles = (files) => files.map(file => `${fs.readFileSync(path.resolve(file)).toString()}\n\r`)
 
@@ -21,12 +29,13 @@ const parseDoc = (files, level) => files
     const [, name] = file.match(/@name \{([^\}]+)\}/);
     const checkable = file.match(/@checkable/);
     const invertible = file.match(/@invertible/);
+    const [, shortcut] = file.match(/@shortcut \{([^\}]+)\}/) || [];
     const [, scheme] = file.match(/@scheme \{([^\}]+)\}/) || [];
     const [, desc] = file.match(/@desc([^@\/\{]+)((\*\/)|(\{?@))/)
     const example = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/)
 
     return (
-      `${genTitle(name, level, !!checkable, !!invertible)}\n${
+      `${genTitle(name, level, !!checkable, !!invertible, shortcut)}\n${
       (
         scheme
           ? `\`\`\`js\n${scheme}\n\`\`\``

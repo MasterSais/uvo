@@ -5,7 +5,7 @@ import { consecutive } from '@lib/groupers/consecutive';
 import { parallel } from '@lib/groupers/parallel';
 import { C_PRM as VALIDATOR_NAME } from '@lib/names';
 import { gte } from '@lib/validators/gte';
-import { integer } from '@lib/validators/integer';
+import { integer } from '@lib/validators/multiple';
 import { number } from '@lib/validators/number';
 
 test(`validator › ${VALIDATOR_NAME}`, async () => {
@@ -29,7 +29,7 @@ test(`validator › ${VALIDATOR_NAME}`, async () => {
 
   promiseOne(-1).catch(errors => expect(errors).toEqual(['gte']));
 
-  promiseOne(2.2).catch(errors => expect(errors).toEqual(['integer']));
+  promiseOne(2.2).catch(errors => expect(errors).toEqual(['multiple']));
 
   const promiseToo = (
     withPromise(
@@ -53,7 +53,7 @@ test(`validator › ${VALIDATOR_NAME}`, async () => {
 
   promiseToo(-1).catch(errors => expect(errors).toEqual(['gte']));
 
-  promiseToo(2.2).catch(errors => expect(errors).toEqual(['integer']));
+  promiseToo(2.2).catch(errors => expect(errors).toEqual(['multiple']));
 
-  promiseToo(-2.2).catch(errors => expect(errors).toEqual(['gte', 'integer']));
+  promiseToo(-2.2).catch(errors => expect(errors).toEqual(['gte', 'multiple']));
 });

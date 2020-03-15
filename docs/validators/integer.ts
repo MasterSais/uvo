@@ -5,6 +5,8 @@
  * 
  * @invertible
  * 
+ * @shortcut {multiple(1)}
+ * 
  * @desc Checks number to be an integer. Can be inverted with .not call.
  * 
  * {@link docs/type-validator}

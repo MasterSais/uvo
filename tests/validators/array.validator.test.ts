@@ -1,7 +1,7 @@
 import { V_ARR as VALIDATOR_NAME } from '@lib/names';
 import { array as validator } from '@lib/validators/array';
 import { gte } from '@lib/validators/gte';
-import { integer } from '@lib/validators/integer';
+import { integer } from '@lib/validators/multiple';
 import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

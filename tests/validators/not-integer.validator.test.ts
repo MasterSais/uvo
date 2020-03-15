@@ -1,6 +1,6 @@
-import { V_INT as VALIDATOR_NAME } from '@lib/names';
+import { V_MLP as VALIDATOR_NAME } from '@lib/names';
 import { invertError } from '@lib/utilities';
-import { integer as validator } from '@lib/validators/integer';
+import { integer as validator } from '@lib/validators/multiple';
 import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
@@ -31,7 +31,7 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
 
   describe('with meta', () => {
     withErrorCases(
-      validator.not(errorMetaCase([], [], invertError(VALIDATOR_NAME, true))),
+      validator.not(errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
       [[0]],
       emptyMeta()
     );

@@ -32,11 +32,12 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`equal <invertible>`](#equal-invertible)
     - [`fields`](#fields)
     - [`gte`](#gte)
-    - [`integer <invertible>`](#integer-invertible)
+    - [`integer <invertible> <shortcut:multiple(1)>`](#integer-invertible-shortcutmultiple1)
     - [`len <invertible>`](#len-invertible)
     - [`lte`](#lte)
     - [`maxLen`](#maxlen)
     - [`minLen`](#minlen)
+    - [`multiple <invertible>`](#multiple-invertible)
     - [`number <checkable>`](#number-checkable)
     - [`object`](#object)
     - [`object2`](#object2)
@@ -524,7 +525,7 @@ v.gte(new Date())(new Date(Date.now() - 1000));
 // => null
 ```
 
-#### `integer <invertible>`
+#### `integer <invertible> <shortcut:multiple(1)>`
 
 ```js
 integer(error?: Error): Validator<number>
@@ -667,6 +668,35 @@ v.minLen(3)('abc');
 
 v.minLen(3)({ length: 3 });
 // => { length: 3 }
+```
+
+#### `multiple <invertible>`
+
+```js
+multiple(multiplier: number, error?: Error): Validator<number>
+```
+Checks number to be an integer. Can be inverted with .not call.
+
+```js
+import * as v from 'uvo';
+
+v.multiple(1)(1); // integer
+// => 1
+
+v.multiple(1)(1.1);
+// => null
+
+v.multiple(2)(2);
+// => 2
+
+v.multiple(2)(3);
+// => null
+
+v.multiple.not(3)(12);
+// => null
+
+v.multiple.not(3)(11);
+// => 11
 ```
 
 #### `number <checkable>`

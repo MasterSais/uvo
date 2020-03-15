@@ -3,7 +3,7 @@ import { consecutive } from '@lib/groupers/consecutive';
 import { parallel } from '@lib/groupers/parallel';
 import { C_ERR as VALIDATOR_NAME } from '@lib/names';
 import { gte } from '@lib/validators/gte';
-import { integer } from '@lib/validators/integer';
+import { integer } from '@lib/validators/multiple';
 import { number } from '@lib/validators/number';
 import { baseCasesWithParams } from '@test/utilities';
 
