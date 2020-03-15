@@ -1,8 +1,8 @@
 import { consecutive } from '@lib/groupers/consecutive';
 import { fields } from '@lib/validators/fields';
 import { gte } from '@lib/validators/gte';
-import { len } from '@lib/validators/len';
-import { minLen } from '@lib/validators/min-len';
+import { length } from '@lib/validators/length';
+import { minLen } from '@lib/validators/length';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';
@@ -14,7 +14,7 @@ test('fields conditions', () => {
       fields(['&', ['^', 'id', 'guid'], 'login']),
       object({
         id: [number(), gte(0)],
-        guid: [string(), len(36)],
+        guid: [string(), length(36)],
         login: [string(), minLen(10)]
       })
     )
@@ -51,7 +51,7 @@ test('fields conditions 2', () => {
       fields(['&', ['^', 'id', 'guid'], 'login']),
       object2([
         ['id', number(), gte(0)],
-        ['guid', string(), len(36)],
+        ['guid', string(), length(36)],
         ['login', string(), minLen(10)]
       ])
     )

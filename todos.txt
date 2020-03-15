@@ -1,8 +1,6 @@
 v2: 
   - Think of validator's error value
-  - empty => oneOf([undefined, ...]) EMPTY_VALUES
   - gte, lte, equal => compare('type') types: lt, gt, lte, gte, equal, deepEqual - shortPaths
-  - len, minLen, maxLen => length('type') types: lt, gt, lte, gte, equal
 
 minification:
   - const => let

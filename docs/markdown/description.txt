@@ -5,4 +5,4 @@ Futhermore, you can use containers for error handling and provide your own error
 
 You can easily extend library with your own specific validators or processors.
 
-Minified library bundle with all modules takes less than 7kb. It doesn't require any external dependency.
+Minified library bundle with all modules takes less than 8kb. It doesn't require any external dependency.

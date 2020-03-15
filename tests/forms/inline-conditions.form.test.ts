@@ -1,8 +1,8 @@
 import { consecutive } from '@lib/groupers/consecutive';
 import { or } from '@lib/groupers/or';
 import { gte } from '@lib/validators/gte';
-import { len } from '@lib/validators/len';
-import { minLen } from '@lib/validators/min-len';
+import { length } from '@lib/validators/length';
+import { minLen } from '@lib/validators/length';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';
@@ -13,7 +13,7 @@ test('inline conditions', () => {
     object({
       id: [or(
         consecutive(number(), gte(0)),
-        consecutive(string(), len(36))
+        consecutive(string(), length(36))
       )],
       name: [string(), minLen(10)]
     })
@@ -41,7 +41,7 @@ test('inline conditions 2', () => {
     object2([
       ['id', or(
         consecutive(number(), gte(0)),
-        consecutive(string(), len(36))
+        consecutive(string(), length(36))
       )],
       ['name', string(), minLen(10)]
     ])

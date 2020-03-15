@@ -2,7 +2,7 @@ import { withMeta } from '@lib/containers/with-meta';
 import { getDep } from '@lib/spreaders/get-dep';
 import { setDep } from '@lib/spreaders/set-dep';
 import { gte } from '@lib/validators/gte';
-import { minLen } from '@lib/validators/min-len';
+import { minLen } from '@lib/validators/length';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';

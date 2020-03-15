@@ -1,7 +1,6 @@
 import { G_CONS, V_OBJ as VALIDATOR_NAME } from '@lib/names';
 import { gte } from '@lib/validators/gte';
-import { len } from '@lib/validators/len';
-import { maxLen } from '@lib/validators/max-len';
+import { length, maxLen } from '@lib/validators/length';
 import { number } from '@lib/validators/number';
 import { object as validator } from '@lib/validators/object';
 import { string } from '@lib/validators/string';
@@ -22,7 +21,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [{ f1: number(), f2: string() }],
         [{ f1: number(), f2: [] }],
         [{ f1: number(), '': [] }],
-        [{ f1: number(), f2: [string(), len(10)] }]
+        [{ f1: number(), f2: [string(), length(10)] }]
       ],
       [
         [1],
@@ -85,7 +84,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [[{ f1: string() }], undefined],
         [[{ f1: string(), f2: number() }], emptyArray()],
         [[{ f1: string(), f2: number() }], emptyFunction()],
-        [[{ f1: [string(), maxLen(10)], f2: number() }], emptyFunction()],
+        [[{ f1: [string(), maxLen(10)], f2: number() }], emptyFunction()]
       ]
     );
   });

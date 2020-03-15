@@ -6,7 +6,7 @@ Futhermore, you can use containers for error handling and provide your own error
 
 You can easily extend library with your own specific validators or processors.
 
-Minified library bundle with all modules takes less than 7kb. It doesn't require any external dependency.
+Minified library bundle with all modules takes less than 8kb. It doesn't require any external dependency.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -33,10 +33,10 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`fields`](#fields)
     - [`gte`](#gte)
     - [`integer <invertible> <shortcut:multiple(1)>`](#integer-invertible-shortcutmultiple1)
-    - [`len <invertible>`](#len-invertible)
+    - [`length <invertible>`](#length-invertible)
     - [`lte`](#lte)
-    - [`maxLen`](#maxlen)
-    - [`minLen`](#minlen)
+    - [`maxLen <invertible> <shortcut:length(len, 'lte')>`](#maxlen-invertible-shortcutlengthlen-lte)
+    - [`minLen <invertible> <shortcut:length(len, 'gte')>`](#minlen-invertible-shortcutlengthlen-gte)
     - [`multiple <invertible>`](#multiple-invertible)
     - [`number <checkable>`](#number-checkable)
     - [`object`](#object)
@@ -539,41 +539,50 @@ v.integer.not()(1.1);
 // => 1.1
 ```
 
-#### `len <invertible>`
+#### `length <invertible>`
 
 ```js
-len<T extends Lengthy>(len: number, error?: Error): Validator<T>
+length<T extends Lengthy>(len: number, type: 'equal' | 'gte' | 'lte' = 'equal', error?: Error): Validator<T>
 ```
-Checks length to be equal to 'len' param. Requires to be object like. Can be inverted with .not call.
+Compares length with 'len' param. Requires to be an object like or string. Can be inverted with .not call.
 
 ```js
 import * as v from 'uvo';
 
-v.len(3)([0, 1, 2]);
+v.length(3)([0, 1, 2]);
 // => [0, 1, 2]
 
-v.len(3)('abc');
+v.length(3, 'gte')([0, 1, 2]);
+// => [0, 1, 2]
+
+v.length(3, 'lte')([0, 1, 2]);
+// => [0, 1, 2]
+
+v.length.not(3, 'lte')([0, 1, 2]);
+// => null
+
+v.length(3)('abc');
 // => 'abc'
 
-v.len(3)({ length: 3 });
+v.length(3)({ length: 3 });
 // => { length: 3 }
 
-v.len(3)(10 as any);
+v.length(3)(10 as any);
 // => null
 
-v.len(3)({ length: '3' } as any);
+v.length(3)({ length: '3' } as any); // length is not a number.
 // => null
 
-v.len.not(3)([0, 1, 2]);
+v.length.not(3)([0, 1, 2]);
 // => null
 
-v.len.not(3)('abc');
+v.length.not(3)('abc');
 // => null
 
-v.len.not(3)([0, 1, 2, 3]);
+v.length.not(3)([0, 1, 2, 3]);
 // => [0, 1, 2, 3]
 
-v.len.not(3)('abcd');
+v.length.not(3)('abcd');
 // => 'abcd'
 ```
 
@@ -612,12 +621,12 @@ v.lte(new Date())(new Date(Date.now() + 1000));
 // => null
 ```
 
-#### `maxLen`
+#### `maxLen <invertible> <shortcut:length(len, 'lte')>`
 
 ```js
 maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
-Checks length to be equal to 'len' param. Requires to be object like.
+Checks length to be equal to 'len' param. Requires to be an object like or string.
 
 ```js
 import * as v from 'uvo';
@@ -635,12 +644,12 @@ v.maxLen(3)({ length: 3 });
 // => { length: 3 }
 ```
 
-#### `minLen`
+#### `minLen <invertible> <shortcut:length(len, 'gte')>`
 
 ```js
 minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
-Checks length to be equal to 'len' param. Requires to be object like.
+Checks length to be equal to 'len' param. Requires to be an object like or string.
 
 ```js
 import * as v from 'uvo';

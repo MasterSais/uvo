@@ -3,7 +3,7 @@ import { parallel } from '@lib/groupers/parallel';
 import { empty } from '@lib/validators/one-of';
 import { gte } from '@lib/validators/gte';
 import { integer } from '@lib/validators/multiple';
-import { minLen } from '@lib/validators/min-len';
+import { minLen } from '@lib/validators/length';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';

@@ -3,7 +3,11 @@
  * 
  * @scheme {minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>}
  * 
- * @desc Checks length to be equal to 'len' param. Requires to be object like.
+ * @invertible
+ * 
+ * @shortcut {length(len, 'gte')}
+ * 
+ * @desc Checks length to be equal to 'len' param. Requires to be an object like or string.
  * 
  * {@link docs/type-validator}
  * 
