@@ -27,7 +27,7 @@ Minified library bundle with all modules takes less than 7kb. It doesn't require
     - [`array`](#array)
     - [`bool <checkable>`](#bool-checkable)
     - [`date <checkable>`](#date-checkable)
-    - [`defined <invertible>`](#defined-invertible)
+    - [`defined <shortcut:equal.not(undefined)>`](#defined-shortcutequalnotundefined)
     - [`empty <invertible>`](#empty-invertible)
     - [`equal <invertible>`](#equal-invertible)
     - [`fields`](#fields)
@@ -349,12 +349,12 @@ v.date.check()('99.12.2020');
 // => null
 ```
 
-#### `defined <invertible>`
+#### `defined <shortcut:equal.not(undefined)>`
 
 ```js
 defined<T>(error?: Error): Validator<T>
 ```
-Checks value to be defined. Can be inverted with .not call.
+Checks value to be defined.
 
 ```js
 import * as v from 'uvo';
@@ -370,18 +370,6 @@ v.defined()('');
 
 v.defined()(true);
 // => true
-
-v.defined.not()(null);
-// => null
-
-v.defined.not()(undefined);
-// => undefined
-
-v.defined.not()('');
-// => null
-
-v.defined.not()(true);
-// => null
 ```
 
 #### `empty <invertible>`

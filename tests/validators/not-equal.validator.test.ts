@@ -1,7 +1,7 @@
 import { V_EQ as VALIDATOR_NAME } from '@lib/names';
 import { invertError } from '@lib/utilities';
-import { equal as validator } from '@lib/validators/equal';
-import { baseCasesWithParams, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
+import { defined, equal as validator } from '@lib/validators/equal';
+import { baseCases, baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
   describe('base', () => {
@@ -37,6 +37,19 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
     );
   });
 
+  describe('base › defined', () => {
+    baseCases<any>(
+      defined(),
+      [
+        1, 'abc', true, null,
+        emptyObject(), emptyArray(), emptyFunction()
+      ],
+      [
+        undefined
+      ]
+    );
+  });
+
   describe('with error', () => {
     withErrorCases<any>(
       validator.not(1, notNullError()),
@@ -48,6 +61,21 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
     withErrorCases(
       validator.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
       [[1]],
+      emptyMeta()
+    );
+  });
+
+  describe('with error › defined', () => {
+    withErrorCases<any>(
+      defined(notNullError()),
+      [[1], [undefined]]
+    );
+  });
+
+  describe('with meta › defined', () => {
+    withErrorCases<any>(
+      defined(errorMetaCase([], [undefined], invertError(VALIDATOR_NAME, true))),
+      [[undefined]],
       emptyMeta()
     );
   });
