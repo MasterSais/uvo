@@ -2,7 +2,8 @@ import { withErrors } from '@lib/containers/with-errors';
 import { consecutive } from '@lib/groupers/consecutive';
 import { parallel } from '@lib/groupers/parallel';
 import { C_ERR as VALIDATOR_NAME } from '@lib/names';
-import { gte, integer } from '@lib/validators/is';
+import { gte } from '@lib/validators/is';
+import { integer } from '@lib/validators/multiple';
 import { number } from '@lib/validators/number';
 import { baseCasesWithParams } from '@test/utilities';
 

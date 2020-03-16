@@ -1,6 +1,6 @@
 import { V_LEN as VALIDATOR_NAME } from '@lib/names';
 import { invertError } from '@lib/utilities';
-import { length as validator, maxLen, minLen } from '@lib/validators/is';
+import { length as validator, maxLen, minLen } from '@lib/validators/length';
 import { baseCases, baseCasesWithParams, emptyFunction, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {

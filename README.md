@@ -965,6 +965,9 @@ v.oneOf.not([0, 1, 2])(3);
 #### `regex <invertible>`
 
 ```js
+// shortcut to
+is(value => match.test(value))
+
 // scheme
 regex<T>(match: RegExp, error?: Error): Validator<T>
 ```

@@ -1,6 +1,7 @@
 import { consecutive } from '@lib/groupers/consecutive';
 import { fields } from '@lib/validators/fields';
-import { gte, length, minLen } from '@lib/validators/is';
+import { gte } from '@lib/validators/is';
+import { length, minLen } from '@lib/validators/length';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';

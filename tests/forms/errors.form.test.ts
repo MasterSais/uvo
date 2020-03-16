@@ -1,6 +1,8 @@
 import { withErrors } from '@lib/containers/with-errors';
 import { parallel } from '@lib/groupers/parallel';
-import { empty, gte, integer, minLen } from '@lib/validators/is';
+import { empty, gte } from '@lib/validators/is';
+import { minLen } from '@lib/validators/length';
+import { integer } from '@lib/validators/multiple';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';

@@ -1,6 +1,7 @@
 import { or as validator } from '@lib/groupers/or';
 import { G_OR as VALIDATOR_NAME, V_IS, V_MLP } from '@lib/names';
-import { gte, integer } from '@lib/validators/is';
+import { gte } from '@lib/validators/is';
+import { integer } from '@lib/validators/multiple';
 import { number } from '@lib/validators/number';
 import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 

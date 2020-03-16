@@ -1,4 +1,5 @@
-import { gte, minLen } from '@lib/validators/is';
+import { gte } from '@lib/validators/is';
+import { minLen } from '@lib/validators/length';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';

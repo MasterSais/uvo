@@ -1,5 +1,5 @@
 import { V_LEN as VALIDATOR_NAME } from '@lib/names';
-import { length as validator, maxLen, minLen } from '@lib/validators/is';
+import { length as validator, maxLen, minLen } from '@lib/validators/length';
 import { baseCases, baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

@@ -85,3 +85,54 @@ export const makeCheckable = <T, R>(factory: (checkOnly: boolean) => T | R): Che
 export const invertCondition = (condition: boolean, invert: boolean) => invert ? !condition : condition;
 
 export const invertError = (name: string, invert: boolean) => invert ? `not:${name}` : name;
+
+export const isFactory = (validator: string, params?: Array<any>) =>
+  (
+    <T>(comparator: ((value: T) => boolean), error?: Error): Validator<T> =>
+      (
+        isFunction(comparator)
+          ? (
+            (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
+              comparator(value)
+                ? value
+                : applyError(error, onError, setMetaValidator(meta, validator, params || []))
+          )
+          : throwValidatorError(validator)
+      )
+  );
+
+export const lengthFactory = (validator: string, comparator: ((value: number, len: number) => boolean)) => (
+  (
+    makeInvertible<(<T extends Lengthy>(len: number, error?: Error) => Validator<T>)>(
+      (
+        (invert: boolean) => <T extends Lengthy>(len: number, error?: Error) => isFactory(invertError(validator, invert), [len])(
+          (
+            (isFiniteNumber(len) && len >= 0)
+              ? (
+                (value: T) => invertCondition(isLengthy(value) && comparator(value.length, len), invert)
+              )
+              : throwValidatorError(invertError(validator, invert))
+          ), error
+        )
+      )
+    )
+  )
+);
+
+export const multipleFactory = (validator: string) => (
+  (
+    makeInvertible<((multiplier: number, error?: Error) => Validator<number>)>(
+      (
+        (invert: boolean) => (multiplier: number, error?: Error): Validator<number> => isFactory(invertError(validator, invert), [multiplier])(
+          (
+            isNumber(multiplier)
+              ? (
+                (value: number) => invertCondition(isNumber(value) && value % multiplier === 0, invert)
+              )
+              : throwValidatorError(invertError(validator, invert))
+          ), error
+        )
+      )
+    )
+  )
+);

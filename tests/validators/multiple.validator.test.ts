@@ -1,5 +1,5 @@
 import { V_MLP as VALIDATOR_NAME } from '@lib/names';
-import { integer, multiple as validator } from '@lib/validators/is';
+import { integer, multiple as validator } from '@lib/validators/multiple';
 import { baseCases, baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

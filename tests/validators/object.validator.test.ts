@@ -1,5 +1,6 @@
 import { G_CONS, V_OBJ as VALIDATOR_NAME } from '@lib/names';
-import { gte, length, maxLen } from '@lib/validators/is';
+import { gte } from '@lib/validators/is';
+import { length, maxLen } from '@lib/validators/length';
 import { number } from '@lib/validators/number';
 import { object as validator } from '@lib/validators/object';
 import { string } from '@lib/validators/string';
