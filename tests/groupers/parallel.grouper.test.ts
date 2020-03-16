@@ -1,8 +1,6 @@
 import { parallel as validator } from '@lib/groupers/parallel';
 import { G_PRLL as VALIDATOR_NAME, V_NUM } from '@lib/names';
-import { gte } from '@lib/validators/is';
-import { integer } from '@lib/validators/multiple';
-import { lte } from '@lib/validators/is';
+import { gte, integer, lte } from '@lib/validators/is';
 import { number } from '@lib/validators/number';
 import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 

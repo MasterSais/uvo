@@ -13,16 +13,6 @@ export const emptyObject = () => _emptyObject;
 const _emptyArray: Array<any> = [];
 export const emptyArray = () => _emptyArray;
 
-export const DEFINED_COMPARATOR_STR = '(value) => value !== undefined';
-
-export const GTE_COMPARATOR_STR = '(value) => value >= bound';
-
-export const LTE_COMPARATOR_STR = '(value) => value <= bound';
-
-export const EQUAL_COMPARATOR_STR = '(value) => value === match';
-
-export const NOT_EQUAL_COMPARATOR_STR = '(value) => value !== match';
-
 export const baseCases = <T = any, R = T>(validator: Validator<T, R>, rightCases: Array<T>, wrongCases: Array<T>, processor?: (value: T) => R) =>
   (
     rightCases.forEach((input, index) => {

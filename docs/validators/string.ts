@@ -8,7 +8,6 @@
  * @checkable
  * 
  * @desc Checks value to be a string compatible.
- * Can be in CheckOnly mode with .check call.
  * 
  * {@link docs/type-validator-processor}
  * 

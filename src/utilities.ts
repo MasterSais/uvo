@@ -1,4 +1,4 @@
-import { Checkable, Error, ErrorCallback, Invertible, MetaData, Validator } from './types';
+import { Checkable, Error, ErrorCallback, Invertible, Lengthy, MetaData, Validator } from './types';
 
 export const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
@@ -60,6 +60,8 @@ export const isObjectLike = (value: any): boolean => typeof value === 'object';
 export const isObject = (value: any): boolean => value && typeof value === 'object' && value.constructor === Object;
 
 export const isArray = (value: any): boolean => Array.isArray(value);
+
+export const isLengthy = <T extends Lengthy>(value: T) => value !== null && (isObjectLike(value) || isString(value)) && isFiniteNumber(value.length);
 
 export const isValidatorsSequence = (validators: Array<Validator<any, any>>): boolean =>
   validators.reduce((result: boolean, validator) => result && isFunction(validator), true);

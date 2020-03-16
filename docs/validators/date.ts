@@ -7,9 +7,7 @@
  * 
  * @checkable
  * 
- * @desc Checks value to be a date compatible.
- * Can be in CheckOnly mode with .check call.
- * Result in ms.
+ * @desc Checks value to be a date compatible. Result in ms.
  * 
  * {@link docs/type-validator-processor}
  * 

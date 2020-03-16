@@ -5,8 +5,9 @@
  * 
  * @invertible
  * 
+ * @shortcut {is(value => value.length === len)}
+ * 
  * @desc Compares length with 'len' param. Requires to be an object like or string.
- * Can be inverted with .not call.
  * 
  * {@link docs/type-validator}
  * 

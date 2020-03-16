@@ -5,9 +5,9 @@
  * 
  * @invertible
  * 
- * @shortcut {multiple(1)}
+ * @shortcut {is(value => value % 1 === 0)}
  * 
- * @desc Checks number to be an integer. Can be inverted with .not call.
+ * @desc Checks number to be an integer.
  * 
  * {@link docs/type-validator}
  * 

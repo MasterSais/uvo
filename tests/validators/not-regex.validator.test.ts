@@ -1,6 +1,6 @@
 import { V_REG as VALIDATOR_NAME } from '@lib/names';
 import { invertError } from '@lib/utilities';
-import { regex as validator } from '@lib/validators/regex';
+import { regex as validator } from '@lib/validators/is';
 import { baseCases, emptyFunction, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {

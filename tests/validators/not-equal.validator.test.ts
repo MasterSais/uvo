@@ -1,7 +1,7 @@
 import { V_IS as VALIDATOR_NAME } from '@lib/names';
 import { invertError } from '@lib/utilities';
 import { defined, equal as validator } from '@lib/validators/is';
-import { baseCases, baseCasesWithParams, DEFINED_COMPARATOR_STR, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, NOT_EQUAL_COMPARATOR_STR, withErrorCases } from '@test/utilities';
+import { baseCases, baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
   describe('base', () => {
@@ -59,7 +59,7 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
 
   describe('with meta', () => {
     withErrorCases(
-      validator.not(1, errorMetaCase([], [NOT_EQUAL_COMPARATOR_STR], VALIDATOR_NAME)),
+      validator.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
       [[1]],
       emptyMeta()
     );
@@ -74,7 +74,7 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
 
   describe('with meta › defined', () => {
     withErrorCases<any>(
-      defined(errorMetaCase([], [DEFINED_COMPARATOR_STR], VALIDATOR_NAME)),
+      defined(errorMetaCase([], [], VALIDATOR_NAME)),
       [[undefined]],
       emptyMeta()
     );

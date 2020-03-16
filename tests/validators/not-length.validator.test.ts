@@ -1,6 +1,6 @@
 import { V_LEN as VALIDATOR_NAME } from '@lib/names';
 import { invertError } from '@lib/utilities';
-import { length as validator, maxLen, minLen } from '@lib/validators/length';
+import { length as validator, maxLen, minLen } from '@lib/validators/is';
 import { baseCases, baseCasesWithParams, emptyFunction, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
@@ -35,29 +35,13 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
         [[1], 'abc'],
         [[1], true],
         [[1], { length: '1' }],
-        [[1], [0, 0]],
-        [[1, 'gte'], []],
-        [[1, 'lte'], [0, 0]]
+        [[1], [0, 0]]
       ],
       [
         [[1], [0]],
         [[1], ['0']],
         [[1], 'a'],
-        [[1], { length: 1 }],
-        [[1, 'gte'], [0]],
-        [[1, 'gte'], [0, 0]],
-        [[1, 'gte'], ['0']],
-        [[1, 'gte'], 'a'],
-        [[1, 'gte'], 'abc'],
-        [[1, 'gte'], { length: 1 }],
-        [[1, 'gte'], { length: 10 }],
-        [[1, 'lte'], [0]],
-        [[1, 'lte'], []],
-        [[1, 'lte'], ['0']],
-        [[1, 'lte'], 'a'],
-        [[1, 'lte'], ''],
-        [[1, 'lte'], { length: 1 }],
-        [[1, 'lte'], { length: 0 }]
+        [[1], { length: 1 }]
       ]
     );
   });
@@ -112,14 +96,14 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
 
   describe('with error', () => {
     withErrorCases<any>(
-      validator.not(1, 'equal', notNullError()),
+      validator.not(1, notNullError()),
       [[[]], [[0]]]
     );
   });
 
   describe('with meta', () => {
     withErrorCases<any>(
-      validator.not(1, 'equal', errorMetaCase([], [1, 'equal'], invertError(VALIDATOR_NAME, true))),
+      validator.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
       [[[0]]],
       emptyMeta()
     );
@@ -134,7 +118,7 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
 
   describe('with meta › minLen', () => {
     withErrorCases<any>(
-      minLen.not(1, errorMetaCase([], [1, 'gte'], invertError(VALIDATOR_NAME, true))),
+      minLen.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
       [[[0]]],
       emptyMeta()
     );
@@ -149,7 +133,7 @@ describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {
 
   describe('with meta › maxLen', () => {
     withErrorCases<any>(
-      maxLen.not(1, errorMetaCase([], [1, 'lte'], invertError(VALIDATOR_NAME, true))),
+      maxLen.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
       [[[0]]],
       emptyMeta()
     );

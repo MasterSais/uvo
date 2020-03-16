@@ -1,6 +1,6 @@
 import { V_IS as VALIDATOR_NAME } from '@lib/names';
 import { equal as validator } from '@lib/validators/is';
-import { baseCasesWithParams, emptyMeta, emptyObject, EQUAL_COMPARATOR_STR, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
+import { baseCasesWithParams, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('base', () => {
@@ -48,7 +48,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('with meta', () => {
     withErrorCases<any>(
-      validator(1, errorMetaCase([], [EQUAL_COMPARATOR_STR], VALIDATOR_NAME)),
+      validator(1, errorMetaCase([], [1], VALIDATOR_NAME)),
       [[0]],
       emptyMeta()
     );

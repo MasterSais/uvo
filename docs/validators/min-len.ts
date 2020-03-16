@@ -5,7 +5,7 @@
  * 
  * @invertible
  * 
- * @shortcut {length(len, 'gte')}
+ * @shortcut {is(value => value.length <= len)}
  * 
  * @desc Checks length to be equal to 'len' param. Requires to be an object like or string.
  * 

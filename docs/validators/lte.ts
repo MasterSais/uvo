@@ -3,7 +3,7 @@
  * 
  * @scheme {lte<T>(bound: T, error?: Error): Validator<T>}
  * 
- * @desc Checks value to be lower or equal to 'match' param. Requires the same type.
+ * @desc Checks value to be lower or equal to 'bound' param. Requires the same type.
  * 
  * @invertible
  * 

@@ -293,7 +293,7 @@ anotherOne([0, 1, 2, 3]); // too long.
 // scheme
 bool<T>(error?: Error): Validator<T, boolean>
 ```
-Checks value to be a boolean compatible. Can be in CheckOnly mode with .check call.
+Checks value to be a boolean compatible.
 
 ```js
 import * as v from 'uvo';
@@ -332,7 +332,7 @@ v.bool.check()('abc');
 // scheme
 date<T>(error?: Error): Validator<T, number>
 ```
-Checks value to be a date compatible. Can be in CheckOnly mode with .check call. Result in ms.
+Checks value to be a date compatible. Result in ms.
 
 ```js
 import * as v from 'uvo';
@@ -384,12 +384,12 @@ v.defined()(true);
 
 ```js
 // shortcut to
-oneOf([null, undefined, ''])
+is(value => [null, undefined, ''].indexOf(value) >= 0)
 
 // scheme
 empty<T>(error?: Error): Validator<T>
 ```
-Checks value to be empty. Can be inverted with .not call.
+Checks value to be empty.
 
 ```js
 import * as v from 'uvo';
@@ -428,7 +428,7 @@ is(value => value === match)
 // scheme
 equal<T>(match: T, error?: Error): Validator<T>
 ```
-Checks value to be equal to 'match' param. Requires the same type. Shallow comparison. Can be inverted with .not call.
+Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
 
 ```js
 import * as v from 'uvo';
@@ -504,7 +504,7 @@ is(value => value >= bound)
 // scheme
 gte<T>(bound: T, error?: Error): Validator<T>
 ```
-Checks value to be greater or equal to 'match' param. Requires the same type.
+Checks value to be greater or equal to 'bound' param. Requires the same type.
 
 ```js
 import * as v from 'uvo';
@@ -550,12 +550,12 @@ v.gte.not(0)(-1);
 
 ```js
 // shortcut to
-multiple(1)
+is(value => value % 1 === 0)
 
 // scheme
 integer(error?: Error): Validator<number>
 ```
-Checks number to be an integer. Can be inverted with .not call.
+Checks number to be an integer.
 
 ```js
 import * as v from 'uvo';
@@ -597,10 +597,13 @@ v.is((value) => value === 10)('10');
 #### `length <invertible>`
 
 ```js
+// shortcut to
+is(value => value.length === len)
+
 // scheme
 length<T extends Lengthy>(len: number, type: 'equal' | 'gte' | 'lte' = 'equal', error?: Error): Validator<T>
 ```
-Compares length with 'len' param. Requires to be an object like or string. Can be inverted with .not call.
+Compares length with 'len' param. Requires to be an object like or string.
 
 ```js
 import * as v from 'uvo';
@@ -651,7 +654,7 @@ is(value => value <= bound)
 // scheme
 lte<T>(bound: T, error?: Error): Validator<T>
 ```
-Checks value to be lower or equal to 'match' param. Requires the same type.
+Checks value to be lower or equal to 'bound' param. Requires the same type.
 
 ```js
 import * as v from 'uvo';
@@ -697,7 +700,7 @@ v.lte.not(0)(1);
 
 ```js
 // shortcut to
-length(len, 'lte')
+is(value => value.length >= len)
 
 // scheme
 maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
@@ -724,7 +727,7 @@ v.maxLen(3)({ length: 3 });
 
 ```js
 // shortcut to
-length(len, 'gte')
+is(value => value.length <= len)
 
 // scheme
 minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
@@ -750,10 +753,13 @@ v.minLen(3)({ length: 3 });
 #### `multiple <invertible>`
 
 ```js
+// shortcut to
+is(value => value % multiplier === 0)
+
 // scheme
 multiple(multiplier: number, error?: Error): Validator<number>
 ```
-Checks number to be an integer. Can be inverted with .not call.
+Checks number to be an integer.
 
 ```js
 import * as v from 'uvo';
@@ -783,7 +789,7 @@ v.multiple.not(3)(11);
 // scheme
 number<T>(error?: Error): Validator<T, number>
 ```
-Checks value to be a number compatible. Can be in CheckOnly mode with .check call.
+Checks value to be a number compatible.
 
 ```js
 import * as v from 'uvo';
@@ -929,10 +935,13 @@ advancedObj({
 #### `oneOf <invertible>`
 
 ```js
+// shortcut to
+is(value => candidates.indexOf(value) >= 0)
+
 // scheme
 oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>
 ```
-Checks value to be one of expected. Shallow comparison. Can be inverted with .not call.
+Checks value to be one of expected. Shallow comparison.
 
 ```js
 import * as v from 'uvo';
@@ -959,7 +968,7 @@ v.oneOf.not([0, 1, 2])(3);
 // scheme
 regex<T>(match: RegExp, error?: Error): Validator<T>
 ```
-Checks value to match a pattern. Can be inverted with .not call.
+Checks value to match a pattern.
 
 ```js
 import * as v from 'uvo';
@@ -983,7 +992,7 @@ v.regex(/^[0-9]$/)(11);
 // scheme
 string<T>(error?: Error): Validator<T, string>
 ```
-Checks value to be a string compatible. Can be in CheckOnly mode with .check call.
+Checks value to be a string compatible.
 
 ```js
 import * as v from 'uvo';

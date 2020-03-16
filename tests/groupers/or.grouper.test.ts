@@ -1,9 +1,8 @@
 import { or as validator } from '@lib/groupers/or';
 import { G_OR as VALIDATOR_NAME, V_IS, V_MLP } from '@lib/names';
-import { gte } from '@lib/validators/is';
-import { integer } from '@lib/validators/multiple';
+import { gte, integer } from '@lib/validators/is';
 import { number } from '@lib/validators/number';
-import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, GTE_COMPARATOR_STR, notNullError, paramsCases, withErrorCases } from '@test/utilities';
+import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('params', () => {
@@ -56,7 +55,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('with meta', () => {
     withErrorCases<any>(
-      validator(integer(errorMetaCase([], [1], V_MLP)), gte(0, errorMetaCase([], [GTE_COMPARATOR_STR], V_IS))),
+      validator(integer(errorMetaCase([], [1], V_MLP)), gte(0, errorMetaCase([], [0], V_IS))),
       [[-1.1]],
       emptyMeta()
     );

@@ -1,6 +1,6 @@
 import { V_OOF as VALIDATOR_NAME } from '@lib/names';
 import { invertError } from '@lib/utilities';
-import { empty, oneOf as validator } from '@lib/validators/one-of';
+import { empty, oneOf as validator } from '@lib/validators/is';
 import { baseCases, baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${invertError(VALIDATOR_NAME, true)}`, () => {

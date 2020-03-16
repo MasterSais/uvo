@@ -5,7 +5,9 @@
  * 
  * @invertible
  * 
- * @desc Checks value to be one of expected. Shallow comparison. Can be inverted with .not call.
+ * @shortcut {is(value => candidates.indexOf(value) >= 0)}
+ * 
+ * @desc Checks value to be one of expected. Shallow comparison.
  * 
  * {@link docs/type-validator}
  * 

@@ -5,9 +5,9 @@
  * 
  * @invertible
  * 
- * @shortcut {oneOf([null, undefined, ''])}
+ * @shortcut {is(value => [null, undefined, ''].indexOf(value) >= 0)}
  * 
- * @desc Checks value to be empty. Can be inverted with .not call.
+ * @desc Checks value to be empty.
  * 
  * {@link docs/type-validator}
  * 

@@ -1,5 +1,5 @@
 import { V_OOF as VALIDATOR_NAME } from '@lib/names';
-import { oneOf as validator, empty } from '@lib/validators/one-of';
+import { oneOf as validator, empty } from '@lib/validators/is';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases, emptyArray, emptyObject, emptyFunction, baseCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

@@ -1,8 +1,6 @@
 import { consecutive } from '@lib/groupers/consecutive';
 import { or } from '@lib/groupers/or';
-import { gte } from '@lib/validators/is';
-import { length } from '@lib/validators/length';
-import { minLen } from '@lib/validators/length';
+import { gte, length, minLen } from '@lib/validators/is';
 import { number } from '@lib/validators/number';
 import { object } from '@lib/validators/object';
 import { object2 } from '@lib/validators/object2';

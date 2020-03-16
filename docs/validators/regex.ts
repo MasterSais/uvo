@@ -5,7 +5,9 @@
  * 
  * @invertible
  * 
- * @desc Checks value to match a pattern. Can be inverted with .not call.
+ * @shortcut {is(value => match.test(value))}
+ * 
+ * @desc Checks value to match a pattern.
  * 
  * {@link docs/type-validator}
  * 

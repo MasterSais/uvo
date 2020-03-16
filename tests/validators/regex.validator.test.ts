@@ -1,5 +1,5 @@
 import { V_REG as VALIDATOR_NAME } from '@lib/names';
-import { regex as validator } from '@lib/validators/regex';
+import { regex as validator } from '@lib/validators/is';
 import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
