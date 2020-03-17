@@ -1,7 +1,7 @@
 /**
  * @name {oneOf}
  * 
- * @scheme {oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>}
+ * @scheme {oneOf<T>(candidates: Array<T> | string, error?: Error): Validator<T>}
  * 
  * @invertible
  * 
@@ -11,7 +11,7 @@
  * 
  * {@link docs/type-validator}
  * 
- * @param {Array} candidates List of possible expected values.
+ * @param {Array} candidates List of possible expected values or string.
  * 
  * {@link docs/error-param}
  * 
@@ -26,6 +26,9 @@ import * as v from 'uvo';
 v.oneOf([0, 1, 2])(1);
 // => 1
 
+v.oneOf('012')(1);
+// => 1
+
 v.oneOf([0, 1, 2])(3);
 // => null
 
@@ -37,3 +40,6 @@ v.oneOf.not([0, 1, 2])(1);
 
 v.oneOf.not([0, 1, 2])(3);
 // => 3
+
+v.oneOf.not('abcdefg')('f');
+// => null

@@ -10,6 +10,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [[0, 0]],
         [[0]],
         [[]],
+        ['0123'],
         [[null, undefined, '']]
       ],
       [
@@ -17,7 +18,6 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [1],
         [NaN],
         [Infinity],
-        ['1'],
         [true],
         [null],
         [undefined]
@@ -32,6 +32,8 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
       [
         [[[1]], 1],
         [[[0, 1, 2]], 1],
+        [['123'], 1],
+        [['abc'], 'a'],
         [[['0', '1', '2']], '1'],
         [[[true, false]], true],
         [[[true, null]], null],
@@ -45,6 +47,8 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
       [
         [[[]], 1],
         [[[0, 1, 2]], 3],
+        [['123'], 4],
+        [['abc'], 'ac'],
         [[['0', '1', '2']], '03'],
         [[[true, false]], 'true'],
         [[[true, false]], 0],

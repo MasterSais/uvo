@@ -970,7 +970,7 @@ advancedObj({
 is(value => candidates.indexOf(value) >= 0)
 
 // scheme
-oneOf<T>(candidates: Array<T>, error?: Error): Validator<T>
+oneOf<T>(candidates: Array<T> | string, error?: Error): Validator<T>
 ```
 Checks value to be one of expected. Shallow comparison.
 
@@ -978,6 +978,9 @@ Checks value to be one of expected. Shallow comparison.
 import * as v from 'uvo';
 
 v.oneOf([0, 1, 2])(1);
+// => 1
+
+v.oneOf('012')(1);
 // => 1
 
 v.oneOf([0, 1, 2])(3);
@@ -991,6 +994,9 @@ v.oneOf.not([0, 1, 2])(1);
 
 v.oneOf.not([0, 1, 2])(3);
 // => 3
+
+v.oneOf.not('abcdefg')('f');
+// => null
 ```
 
 #### `regex <invertible>`
@@ -1833,7 +1839,7 @@ v.consecutive(
   v.fields(['&', ['^', 'id', 'guid'], 'login']),
   v.object2([
     ['id', v.number(), v.gte(0)],
-    ['guid', v.string(), v.len(36)],
+    ['guid', v.string(), v.length(36)],
     ['login', v.string(), v.minLen(10)]
   ])
 )
@@ -1846,7 +1852,7 @@ Id can be an integer or a GUID:
 v.object2([
   ['id', v.or(
     v.consecutive(v.number(), v.integer(), v.gte(0)),
-    v.consecutive(v.string(), v.len(36)) // !notice: prefer to use 'regex' for GUID validation.
+    v.consecutive(v.string(), v.length(36)) // !notice: prefer to use 'regex' for GUID validation.
   )],
   ['name', v.string(), v.minLen(10)]
 ])

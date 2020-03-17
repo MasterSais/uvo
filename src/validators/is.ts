@@ -1,6 +1,6 @@
 import { V_DEF, V_EM, V_EQ, V_GTE, V_IS, V_LTE, V_OOF, V_REG } from '../names';
 import { Error, Validator } from '../types';
-import { invertCondition, invertError, isArray, isFactory, isOneType, isRegEx, makeInvertible, throwValidatorError } from '../utilities';
+import { invertCondition, invertError, isArray, isFactory, isOneType, isRegEx, isString, makeInvertible, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/validators/is}
@@ -63,10 +63,9 @@ export const gte = makeInvertible<(<T>(bound: T, error?: Error) => Validator<T>)
 export const lte = makeInvertible<(<T>(bound: T, error?: Error) => Validator<T>)>(
   (
     (invert: boolean) => (
-      <T>(bound: T, error?: Error) =>
-        isFactory(invertError(V_LTE, invert), [bound])(
-          (value: T) => invertCondition(isOneType(bound, value) && value <= bound, invert), error
-        )
+      <T>(bound: T, error?: Error) => isFactory(invertError(V_LTE, invert), [bound])(
+        (value: T) => invertCondition(isOneType(bound, value) && value <= bound, invert), error
+      )
     )
   )
 );
@@ -79,8 +78,10 @@ export const regex = makeInvertible<(<T>(match: RegExp, error?: Error) => Valida
     (invert: boolean) => <T>(match: RegExp, error?: Error): Validator<T> =>
       (
         isRegEx(match)
-          ? isFactory(invertError(V_REG, invert), [match])(
-            (value: T) => invertCondition(match.test(value as any), invert), error
+          ? (
+            isFactory(invertError(V_REG, invert), [match])(
+              (value: T) => invertCondition(match.test(value as any), invert), error
+            )
           )
           : throwValidatorError(invertError(V_REG, invert))
       )
@@ -90,13 +91,15 @@ export const regex = makeInvertible<(<T>(match: RegExp, error?: Error) => Valida
 /**
  * {@link docs/validators/one-of}
  */
-export const oneOf = makeInvertible<(<T>(candidates: Array<T>, error?: Error) => Validator<T>)>(
+export const oneOf = makeInvertible<(<T>(candidates: Array<T> | string, error?: Error) => Validator<T>)>(
   (
-    (invert: boolean) => <T>(candidates: Array<T>, error?: Error) => (
+    (invert: boolean) => <T>(candidates: Array<T> | string, error?: Error) => (
       (
-        isArray(candidates)
-          ? isFactory(invertError(V_OOF, invert), [candidates])(
-            (value: T) => invertCondition(candidates.indexOf(value) >= 0, invert), error
+        (isArray(candidates) || isString(candidates))
+          ? (
+            isFactory(invertError(V_OOF, invert), [candidates])(
+              (value: T) => invertCondition(candidates.indexOf(value as any) >= 0, invert), error
+            )
           )
           : throwValidatorError(V_OOF)
       )
