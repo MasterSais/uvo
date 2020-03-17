@@ -1,5 +1,2 @@
-v2: 
-  - Think of validator's error value
-
 v*:
   - compile()
