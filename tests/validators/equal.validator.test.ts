@@ -1,7 +1,6 @@
 import { V_EQ as VALIDATOR_NAME } from '@lib/names';
-import { invertError } from '@lib/utilities';
 import { equal as validator } from '@lib/validators/is';
-import { baseCasesWithParams, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
+import { baseCasesWithParams, emptyMeta, emptyObject, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('base', () => {

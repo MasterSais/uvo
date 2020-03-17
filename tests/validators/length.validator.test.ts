@@ -1,7 +1,6 @@
 import { V_LEN as VALIDATOR_NAME } from '@lib/names';
-import { invertError } from '@lib/utilities';
 import { length as validator } from '@lib/validators/length';
-import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
+import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, invertError, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('params', () => {

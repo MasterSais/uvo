@@ -1,7 +1,6 @@
 import { V_EM as VALIDATOR_NAME } from '@lib/names';
-import { invertError } from '@lib/utilities';
 import { empty as validator } from '@lib/validators/is';
-import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
+import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('base', () => {

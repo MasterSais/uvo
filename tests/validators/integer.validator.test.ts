@@ -1,7 +1,6 @@
 import { V_INT as VALIDATOR_NAME } from '@lib/names';
-import { invertError } from '@lib/utilities';
 import { integer as validator } from '@lib/validators/multiple';
-import { baseCases, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
+import { baseCases, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('base', () => {

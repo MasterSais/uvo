@@ -13,6 +13,8 @@ export const emptyObject = () => _emptyObject;
 const _emptyArray: Array<any> = [];
 export const emptyArray = () => _emptyArray;
 
+export const invertError = (name: string, invert: boolean) => invert ? `not:${name}` : name;
+
 export const baseCases = <T = any, R = T>(validator: (...args: any) => Validator<T, R>, params: Array<any>, rightCases: Array<T>, wrongCases: Array<T>, processor?: (value: T) => R) =>
   (
     rightCases.forEach((input, index) => {

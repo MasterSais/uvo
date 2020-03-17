@@ -1,7 +1,6 @@
 import { V_MXLEN as VALIDATOR_NAME } from '@lib/names';
-import { invertError } from '@lib/utilities';
 import { maxLen as validator } from '@lib/validators/length';
-import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
+import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, invertError, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('params', () => {
