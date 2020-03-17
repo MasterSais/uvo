@@ -1,7 +1,7 @@
 /**
  * @name {length}
  * 
- * @scheme {length<T extends Lengthy>(len: number, type: 'equal' | 'gte' | 'lte' = 'equal', error?: Error): Validator<T>}
+ * @scheme {length<T extends Lengthy>(len: number, error?: Error): Validator<T>}
  * 
  * @invertible
  * 
@@ -12,14 +12,12 @@
  * {@link docs/type-validator}
  * 
  * @param {number} len Reference length. Positive finite number.
- * 
- * @param {string=} type Comparison type. One of: 'equal', 'gte', 'lte'. Default to 'equal'.
- * 
+ *  * 
  * {@link docs/error-param}
  * 
  * {@link docs/validator-result}
  * 
- * @throws {string} Will throw an error if 'len' or 'type' is invalid.
+ * @throws {string} Will throw an error if 'len' is invalid.
  */
 
 //#example
@@ -27,15 +25,6 @@ import * as v from 'uvo';
 
 v.length(3)([0, 1, 2]);
 // => [0, 1, 2]
-
-v.length(3, 'gte')([0, 1, 2]);
-// => [0, 1, 2]
-
-v.length(3, 'lte')([0, 1, 2]);
-// => [0, 1, 2]
-
-v.length.not(3, 'lte')([0, 1, 2]);
-// => null
 
 v.length(3)('abc');
 // => 'abc'
