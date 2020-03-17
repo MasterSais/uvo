@@ -5,7 +5,7 @@ import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMeta
 describe(`validator › ${VALIDATOR_NAME} check`, () => {
   describe('base', () => {
     baseCases<any>(
-      validator.check(),
+      validator.check, [],
       [
         '', '2', 'abc',
         0, 2.2, -1.2, NaN, Infinity,

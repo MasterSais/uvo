@@ -30,6 +30,7 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`defined`](#defined)
     - [`empty <invertible>`](#empty-invertible)
     - [`equal <invertible>`](#equal-invertible)
+    - [`even <invertible>`](#even-invertible)
     - [`fields`](#fields)
     - [`gte <invertible>`](#gte-invertible)
     - [`integer <invertible>`](#integer-invertible)
@@ -447,6 +448,36 @@ v.equal.not(10)(10);
 
 v.equal.not(10)(1);
 // => 1
+```
+
+#### `even <invertible>`
+
+```js
+// shortcut to
+is(value => value % 2 === 0)
+
+// scheme
+even(error?: Error): Validator<number>
+```
+Checks number to be an even one.
+
+```js
+import * as v from 'uvo';
+
+v.even()(1);
+// => null
+
+v.even()(2);
+// => 2
+
+v.even()(2.1);
+// => null
+
+v.even.not()(1);
+// => 1
+
+v.even.not()(2);
+// => null
 ```
 
 #### `fields`

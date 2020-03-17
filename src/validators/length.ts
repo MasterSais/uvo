@@ -1,4 +1,4 @@
-import { V_LEN } from '../names';
+import { V_LEN, V_MNLEN, V_MXLEN } from '../names';
 import { lengthFactory } from '../utilities';
 
 /**
@@ -9,9 +9,9 @@ export const length = lengthFactory(V_LEN, (value: number, len: number) => value
 /**
  * {@link docs/validators/min-len}
  */
-export const minLen = lengthFactory(V_LEN, (value: number, len: number) => value >= len);
+export const minLen = lengthFactory(V_MNLEN, (value: number, len: number) => value >= len);
 
 /**
  * {@link docs/validators/max-len}
  */
-export const maxLen = lengthFactory(V_LEN, (value: number, len: number) => value <= len);
+export const maxLen = lengthFactory(V_MXLEN, (value: number, len: number) => value <= len);

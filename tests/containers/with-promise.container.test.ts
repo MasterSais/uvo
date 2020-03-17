@@ -27,9 +27,9 @@ test(`validator › ${VALIDATOR_NAME}`, async () => {
 
   promiseOne('abc').catch(errors => expect(errors).toEqual(['number']));
 
-  promiseOne(-1).catch(errors => expect(errors).toEqual(['is']));
+  promiseOne(-1).catch(errors => expect(errors).toEqual(['gte']));
 
-  promiseOne(2.2).catch(errors => expect(errors).toEqual(['multiple']));
+  promiseOne(2.2).catch(errors => expect(errors).toEqual(['integer']));
 
   const promiseToo = (
     withPromise(
@@ -51,9 +51,9 @@ test(`validator › ${VALIDATOR_NAME}`, async () => {
 
   promiseToo('abc').catch(errors => expect(errors).toEqual(['number']));
 
-  promiseToo(-1).catch(errors => expect(errors).toEqual(['is']));
+  promiseToo(-1).catch(errors => expect(errors).toEqual(['gte']));
 
-  promiseToo(2.2).catch(errors => expect(errors).toEqual(['multiple']));
+  promiseToo(2.2).catch(errors => expect(errors).toEqual(['integer']));
 
-  promiseToo(-2.2).catch(errors => expect(errors).toEqual(['is', 'multiple']));
+  promiseToo(-2.2).catch(errors => expect(errors).toEqual(['gte', 'integer']));
 });

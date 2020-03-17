@@ -1,5 +1,5 @@
-import { V_STR as VALIDATOR_NAME } from '@lib/names';
-import { string as validator } from '@lib/validators/string';
+import { V_DEF as VALIDATOR_NAME } from '@lib/names';
+import { defined as validator } from '@lib/validators/is';
 import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
@@ -7,35 +7,27 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     baseCases<any>(
       validator, [],
       [
-        0, 2.2, -1.2, NaN, Infinity,
-        '', '2', 'abc',
-        true, false
+        1, 'abc', true, null,
+        emptyObject(), emptyArray(), emptyFunction()
       ],
       [
-        null, undefined,
-        emptyObject(),
-        emptyFunction(),
-        emptyArray()
-      ],
-      String
+        undefined
+      ]
     );
   });
 
   describe('with error', () => {
-    withErrorCases(
+    withErrorCases<any>(
       validator(notNullError()),
-      [[0], [null]],
-      null,
-      String
+      [[1], [undefined]]
     );
   });
 
   describe('with meta', () => {
-    withErrorCases(
+    withErrorCases<any>(
       validator(errorMetaCase([], [], VALIDATOR_NAME)),
-      [[null]],
-      emptyMeta(),
-      String
+      [[undefined]],
+      emptyMeta()
     );
   });
 });

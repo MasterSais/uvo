@@ -1,4 +1,5 @@
-import { V_IS as VALIDATOR_NAME } from '@lib/names';
+import { V_EQ as VALIDATOR_NAME } from '@lib/names';
+import { invertError } from '@lib/utilities';
 import { equal as validator } from '@lib/validators/is';
 import { baseCasesWithParams, emptyMeta, emptyObject, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 
@@ -50,6 +51,21 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     withErrorCases<any>(
       validator(1, errorMetaCase([], [1], VALIDATOR_NAME)),
       [[0]],
+      emptyMeta()
+    );
+  });
+
+  describe('with error › not', () => {
+    withErrorCases<any>(
+      validator.not(1, notNullError()),
+      [[0], [1]]
+    );
+  });
+
+  describe('with meta › not', () => {
+    withErrorCases<any>(
+      validator.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
+      [[1]],
       emptyMeta()
     );
   });

@@ -13,18 +13,30 @@ export const emptyObject = () => _emptyObject;
 const _emptyArray: Array<any> = [];
 export const emptyArray = () => _emptyArray;
 
-export const baseCases = <T = any, R = T>(validator: Validator<T, R>, rightCases: Array<T>, wrongCases: Array<T>, processor?: (value: T) => R) =>
+export const baseCases = <T = any, R = T>(validator: (...args: any) => Validator<T, R>, params: Array<any>, rightCases: Array<T>, wrongCases: Array<T>, processor?: (value: T) => R) =>
   (
     rightCases.forEach((input, index) => {
       test('r_' + index, () => {
-        expect(validator(input)).toEqual(processor ? processor(input) : input);
+        expect(validator(...params)(input)).toEqual(processor ? processor(input) : input);
       });
     }),
     wrongCases.forEach((input, index) => {
       test('w_' + index, () => {
-        expect(validator(input)).toBeNull();
+        expect(validator(...params)(input)).toBeNull();
       });
-    })
+    }),
+    (validator as any).not && (
+      wrongCases.forEach((input, index) => {
+        test('› not r_' + index, () => {
+          expect((validator as any).not(...params)(input)).toEqual(processor ? processor(input) : input);
+        });
+      }),
+      rightCases.forEach((input, index) => {
+        test('› not w_' + index, () => {
+          expect((validator as any).not(...params)(input)).toBeNull();
+        });
+      })
+    )
   );
 
 export const baseCasesWithParams = <T = any, R = T>(validator: (...args: any) => Validator<T, R>, rightCases: Array<[Array<any>, T, T?]>, wrongCases: Array<[Array<any>, T]>, processor?: (value: T) => R) =>
@@ -42,7 +54,23 @@ export const baseCasesWithParams = <T = any, R = T>(validator: (...args: any) =>
       test('w_' + index, () => {
         expect(validator(...params)(input)).toEqual(null);
       });
-    })
+    }),
+    (validator as any).not && (
+      wrongCases.forEach(([params, input], index) => {
+        test('› not r_' + index, () => {
+          expect((validator as any).not(...params)(input)).toEqual(
+            processor
+              ? processor(input)
+              : (input)
+          );
+        });
+      }),
+      rightCases.forEach(([params, input], index) => {
+        test('› not w_' + index, () => {
+          expect((validator as any).not(...params)(input)).toEqual(null);
+        });
+      })
+    )
   );
 
 export const withErrorCases = <T = any, R = T>(validator: Validator<T, R>, values: [[T, R?], [T]?], meta?: MetaData, processor?: (value: T) => R) => {

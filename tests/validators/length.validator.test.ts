@@ -1,6 +1,7 @@
 import { V_LEN as VALIDATOR_NAME } from '@lib/names';
-import { length as validator, maxLen, minLen } from '@lib/validators/length';
-import { baseCases, baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
+import { invertError } from '@lib/utilities';
+import { length as validator } from '@lib/validators/length';
+import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('params', () => {
@@ -47,54 +48,6 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     );
   });
 
-  describe('base › minLen', () => {
-    baseCases<any>(
-      minLen(1),
-      [
-        [0],
-        [0, 0],
-        ['0'],
-        'a',
-        'abc',
-        { length: 1 },
-        { length: 10 }
-      ],
-      [
-        1,
-        Infinity,
-        NaN,
-        '',
-        true,
-        { length: '1' },
-        []
-      ]
-    );
-  });
-
-  describe('base › maxLen', () => {
-    baseCases<any>(
-      maxLen(1),
-      [
-        [0],
-        [],
-        ['0'],
-        'a',
-        '',
-        { length: 1 },
-        { length: 0 }
-      ],
-      [
-        1,
-        Infinity,
-        NaN,
-        'abc',
-        true,
-        { length: '1' },
-        [0, 0]
-      ]
-    );
-  });
-
   describe('with error', () => {
     withErrorCases<any>(
       validator(1, notNullError()),
@@ -110,32 +63,17 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     );
   });
 
-  describe('with error › minLen', () => {
+  describe('with error › not', () => {
     withErrorCases<any>(
-      minLen(1, notNullError()),
-      [[[0]], [[]]]
+      validator.not(1, notNullError()),
+      [[[]], [[0]]]
     );
   });
 
-  describe('with meta › minLen', () => {
+  describe('with meta › not', () => {
     withErrorCases<any>(
-      minLen(1, errorMetaCase([], [1], VALIDATOR_NAME)),
-      [[[]]],
-      emptyMeta()
-    );
-  });
-
-  describe('with error › maxLen', () => {
-    withErrorCases<any>(
-      maxLen(1, notNullError()),
-      [[[0]], [[0, 0]]]
-    );
-  });
-
-  describe('with meta › maxLen', () => {
-    withErrorCases<any>(
-      maxLen(1, errorMetaCase([], [1], VALIDATOR_NAME)),
-      [[[0, 0]]],
+      validator.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
+      [[[0]]],
       emptyMeta()
     );
   });

@@ -1,6 +1,6 @@
-import { V_IS, V_OOF, V_REG } from '../names';
+import { V_DEF, V_EM, V_EQ, V_GTE, V_IS, V_LTE, V_OOF, V_REG } from '../names';
 import { Error, Validator } from '../types';
-import { invertCondition, invertError, isArray, isFactory, isRegEx, makeInvertible, throwValidatorError } from '../utilities';
+import { invertCondition, invertError, isArray, isFactory, isOneType, isRegEx, makeInvertible, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/validators/is}
@@ -11,7 +11,7 @@ export const is = isFactory(V_IS);
  * {@link docs/validators/defined}
  */
 export const defined = (
-  <T>(error?: Error) => isFactory(V_IS)(
+  <T>(error?: Error) => isFactory(V_DEF)(
     (value: T) => value !== undefined, error
   )
 );
@@ -24,7 +24,7 @@ const EMPTY_VALUES = [null, undefined, ''];
 export const empty = makeInvertible<(<T>(error?: Error) => Validator<T>)>(
   (
     (invert: boolean) => (
-      <T>(error?: Error) => isFactory(invertError(V_OOF, invert), [EMPTY_VALUES])(
+      <T>(error?: Error) => isFactory(invertError(V_EM, invert), [EMPTY_VALUES])(
         (value: T) => invertCondition(EMPTY_VALUES.indexOf(value as any) >= 0, invert), error
       )
     )
@@ -37,7 +37,7 @@ export const empty = makeInvertible<(<T>(error?: Error) => Validator<T>)>(
 export const equal = makeInvertible<(<T>(match: T, error?: Error) => Validator<T>)>(
   (
     (invert: boolean) => (
-      <T>(match: T, error?: Error) => isFactory(invertError(V_IS, invert), [match])(
+      <T>(match: T, error?: Error) => isFactory(invertError(V_EQ, invert), [match])(
         (value: T) => invertCondition(value === match, invert), error
       )
     )
@@ -50,8 +50,8 @@ export const equal = makeInvertible<(<T>(match: T, error?: Error) => Validator<T
 export const gte = makeInvertible<(<T>(bound: T, error?: Error) => Validator<T>)>(
   (
     (invert: boolean) => (
-      <T>(bound: T, error?: Error) => isFactory(invertError(V_IS, invert), [bound])(
-        (value: T) => invertCondition(value >= bound, invert), error
+      <T>(bound: T, error?: Error) => isFactory(invertError(V_GTE, invert), [bound])(
+        (value: T) => invertCondition(isOneType(bound, value) && value >= bound, invert), error
       )
     )
   )
@@ -63,9 +63,10 @@ export const gte = makeInvertible<(<T>(bound: T, error?: Error) => Validator<T>)
 export const lte = makeInvertible<(<T>(bound: T, error?: Error) => Validator<T>)>(
   (
     (invert: boolean) => (
-      <T>(bound: T, error?: Error) => isFactory(invertError(V_IS, invert), [bound])(
-        (value: T) => invertCondition(value <= bound, invert), error
-      )
+      <T>(bound: T, error?: Error) =>
+        isFactory(invertError(V_LTE, invert), [bound])(
+          (value: T) => invertCondition(isOneType(bound, value) && value <= bound, invert), error
+        )
     )
   )
 );

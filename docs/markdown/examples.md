@@ -54,7 +54,7 @@ v.consecutive(
   v.fields(['&', ['^', 'id', 'guid'], 'login']),
   v.object2([
     ['id', v.number(), v.gte(0)],
-    ['guid', v.string(), v.len(36)],
+    ['guid', v.string(), v.length(36)],
     ['login', v.string(), v.minLen(10)]
   ])
 )
@@ -67,7 +67,7 @@ Id can be an integer or a GUID:
 v.object2([
   ['id', v.or(
     v.consecutive(v.number(), v.integer(), v.gte(0)),
-    v.consecutive(v.string(), v.len(36)) // !notice: prefer to use 'regex' for GUID validation.
+    v.consecutive(v.string(), v.length(36)) // !notice: prefer to use 'regex' for GUID validation.
   )],
   ['name', v.string(), v.minLen(10)]
 ])

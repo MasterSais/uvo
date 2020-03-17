@@ -1,6 +1,6 @@
-import { V_REG as VALIDATOR_NAME } from '@lib/names';
+import { V_MNLEN as VALIDATOR_NAME } from '@lib/names';
 import { invertError } from '@lib/utilities';
-import { regex as validator } from '@lib/validators/is';
+import { minLen as validator } from '@lib/validators/length';
 import { baseCases, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
@@ -8,12 +8,10 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     paramsCases(
       validator,
       [
-        [/1/],
-        [/a/],
-        [new RegExp('a')]
+        [1],
+        [1e3]
       ],
       [
-        [1],
         [-1],
         [NaN],
         [Infinity],
@@ -31,48 +29,54 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('base', () => {
     baseCases<any>(
-      validator, [/^(a|1|true)$/],
+      validator, [1],
       [
-        1, true, 'a'
+        [0],
+        [0, 0],
+        ['0'],
+        'a',
+        'abc',
+        { length: 1 },
+        { length: 10 }
       ],
       [
-        0, 11, Infinity, NaN,
-        'abc',
-        false,
-        {},
-        emptyFunction(),
-        [],
-        null, undefined
+        1,
+        Infinity,
+        NaN,
+        '',
+        true,
+        { length: '1' },
+        []
       ]
     );
   });
 
   describe('with error', () => {
     withErrorCases<any>(
-      validator(/a|1|true/, notNullError()),
-      [[1], [0]]
+      validator(1, notNullError()),
+      [[[0]], [[]]]
     );
   });
 
   describe('with meta', () => {
     withErrorCases<any>(
-      validator(/a|1|true/, errorMetaCase([], [/a|1|true/], VALIDATOR_NAME)),
-      [[0]],
+      validator(1, errorMetaCase([], [1], VALIDATOR_NAME)),
+      [[[]]],
       emptyMeta()
     );
   });
 
   describe('with error › not', () => {
     withErrorCases<any>(
-      validator.not(/a|1|true/, notNullError()),
-      [[0], [1]]
+      validator.not(1, notNullError()),
+      [[[]], [[0]]]
     );
   });
 
   describe('with meta › not', () => {
     withErrorCases<any>(
-      validator.not(/a|1|true/, errorMetaCase([], [/a|1|true/], invertError(VALIDATOR_NAME, true))),
-      [[1]],
+      validator.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))),
+      [[[0]]],
       emptyMeta()
     );
   });
