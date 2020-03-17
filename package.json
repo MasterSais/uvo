@@ -16,7 +16,7 @@
     "build:umd": "tsc -p tsconfig.umd.json",
     "build:umd-min": "terser --config-file ./terser.config.json -o ./dist/umd/index.min.js -- ./dist/umd/index.js",
     "build:es": "tsc -p tsconfig.es.json",
-    "build:es-min": "terser --config-file ./terser.config.json -o ./dist/es/index.min.js -- ./dist/es/index.js",
+    "build:es-min": "terser --config-file ./terser.config.json -o ./dist/es/index.min.js -- ./dist/es/index.js && node const-to-let.js ./dist/es/index.min.js",
     "build:types": "tsc -p tsconfig.types.json",
     "build:doc": "node generate-markdown.js README.md && doctoc README.md --github",
     "predeploy": "yarn run lint && yarn run test && yarn run build"

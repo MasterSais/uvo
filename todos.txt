@@ -1,8 +1,5 @@
 v2: 
   - Think of validator's error value
 
-minification:
-  - const => let
-
 v*:
   - compile()

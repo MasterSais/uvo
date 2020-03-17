@@ -632,7 +632,7 @@ v.is((value) => value === 10)('10');
 is(value => value.length === len)
 
 // scheme
-length<T extends Lengthy>(len: number, type: 'equal' | 'gte' | 'lte' = 'equal', error?: Error): Validator<T>
+length<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
 Compares length with 'len' param. Requires to be an object like or string.
 
@@ -641,15 +641,6 @@ import * as v from 'uvo';
 
 v.length(3)([0, 1, 2]);
 // => [0, 1, 2]
-
-v.length(3, 'gte')([0, 1, 2]);
-// => [0, 1, 2]
-
-v.length(3, 'lte')([0, 1, 2]);
-// => [0, 1, 2]
-
-v.length.not(3, 'lte')([0, 1, 2]);
-// => null
 
 v.length(3)('abc');
 // => 'abc'
