@@ -145,3 +145,23 @@ v.consecutive(
   ])
 )
 ```
+
+### `Multiple validations`
+
+Validate field two or more times
+```js
+v.withMeta( // for deps api.
+  v.object2([
+    [/createdAt|updatedAt|deletedAt/, v.date()],
+    ['createdAt', v.setDep('createdAt')],
+    ['updatedAt', 
+      v.getDep('createdAt', createdAt => createdAt && v.gte(createdAt)), // updatedAt >= createdAt.
+      v.setDep('updatedAt')
+    ],
+    ['deletedAt', 
+      v.getDep('updatedAt', updatedAt => updatedAt && v.gte(updatedAt)), // deletedAt >= updatedAt.
+    ],
+    [/createdAt|updatedAt|deletedAt/, date => date && new Date(date).toLocaleDateString()], // finally format all dates.
+  ])
+)
+```
