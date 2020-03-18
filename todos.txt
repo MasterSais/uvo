@@ -1,2 +1,4 @@
+  - dynamic tests
+
 v*:
   - compile()

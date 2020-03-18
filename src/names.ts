@@ -77,6 +77,9 @@ export const G_TRM: string = 'transform';
 export const S_GDP: string = 'getDep';
 
 /** @type {string} */
+export const S_DYN: string = 'dynamic';
+
+/** @type {string} */
 export const S_SDP: string = 'setDep';
 
 /** @type {string} */

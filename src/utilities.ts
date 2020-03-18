@@ -63,6 +63,8 @@ export const isArray = (value: any): boolean => Array.isArray(value);
 
 export const isLengthy = <T extends Lengthy>(value: T) => value !== null && (isObjectLike(value) || isString(value)) && isFiniteNumber(value.length);
 
+export const callee = (value: any): any => (isFunction(value) ? value : (() => value));
+
 export const isValidatorsSequence = (validators: Array<Validator<any, any>>): boolean =>
   validators.reduce((result: boolean, validator) => result && isFunction(validator), true);
 

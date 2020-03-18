@@ -75,7 +75,7 @@ v.object2([
 
 Conditional validators usage
 ```js
-v.withMeta(
+v.withMeta( // for deps api.
   v.object2([
     ['id', v.number(), v.gte(0), v.setDep('isIdValid', true)],
     ['name', getDep(
@@ -90,7 +90,7 @@ v.withMeta(
 
 Array with custom processor injection
 ```js
-v.consecutive(
+v.consecutive( // groups validators.
   v.array(
     v.object2([
       ['id', v.number(), v.gte(0)],
@@ -105,7 +105,7 @@ v.consecutive(
 
 Removes unnecessary fields
 ```js
-v.consecutive(
+v.consecutive( // groups validators.
   v.object2([
     ['id', v.number(), v.integer(), v.gte(0)],
     ['name', v.string(), v.minLen(10)],
@@ -121,7 +121,7 @@ v.consecutive(
 
 Camelize object fields
 ```js
-v.consecutive(
+v.consecutive( // groups validators.
   v.object2([
     ['--id--', v.number(), v.integer(), v.gte(0)],
     ['--name--', v.string(), v.minLen(10)]
@@ -134,16 +134,14 @@ v.consecutive(
 
 Maps 'yes' and 'no' on boolean
 ```js
-v.consecutive(
-  v.object2([
-    ['id', v.number(), v.integer(), v.gte(0)],
-    ['name', v.string(), v.minLen(10)],
-    ['disabled', 
-      v.valueMap(['yes', true], ['no', false]), // converts specific value to type compatible value.
-      v.bool() // just check and cast another boolean compatible values.
-    ]
-  ])
-)
+v.object2([
+  ['id', v.number(), v.integer(), v.gte(0)],
+  ['name', v.string(), v.minLen(10)],
+  ['disabled', 
+    v.valueMap(['yes', true], ['no', false]), // converts specific value to type compatible value.
+    v.bool() // just check and cast another boolean compatible values.
+  ]
+])
 ```
 
 ### `Multiple validations`

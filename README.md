@@ -69,6 +69,7 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`withOnError`](#withonerror)
     - [`withPromise`](#withpromise)
   - [`Spreaders`](#spreaders)
+    - [`dynamic`](#dynamic)
     - [`getDep`](#getdep)
     - [`setDep`](#setdep)
     - [`setVDep`](#setvdep)
@@ -83,6 +84,7 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
   - [`Fields strip`](#fields-strip)
   - [`Keys transformations`](#keys-transformations)
   - [`Custom value mapping`](#custom-value-mapping)
+  - [`Multiple validations`](#multiple-validations)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
@@ -1604,7 +1606,36 @@ try {
 
 ### `Spreaders`
 Spreads data through a validators scheme. Almost all spreaders requires meta schema to be provided with 'withMeta'.
-#### `getDep`
+#### `dynamic`
+
+```js
+// scheme
+dynamic<T>(preValidator: () => Validator<T> | Array<Validator<T>>): Validator<T>
+```
+Inserts new validators into scheme dynamically.
+
+```js
+import * as v from 'uvo';
+
+const validateNumbers = true; // external condition.
+
+v.consecutive(
+  v.number(),
+  v.dynamic(() => validateNumbers && [ // validate on condition.
+    v.gte(0),
+    v.integer()
+  ])
+);
+
+v.consecutive(
+  v.date(),
+  v.dynamic(() => [
+    v.gte(Date.now()) // Compare with current date.
+  ])
+);
+```
+
+#### `getDep`
 
 ```js
 // scheme
@@ -1851,7 +1882,7 @@ v.object2([
 
 Conditional validators usage
 ```js
-v.withMeta(
+v.withMeta( // for deps api.
   v.object2([
     ['id', v.number(), v.gte(0), v.setDep('isIdValid', true)],
     ['name', getDep(
@@ -1866,7 +1897,7 @@ v.withMeta(
 
 Array with custom processor injection
 ```js
-v.consecutive(
+v.consecutive( // groups validators.
   v.array(
     v.object2([
       ['id', v.number(), v.gte(0)],
@@ -1881,7 +1912,7 @@ v.consecutive(
 
 Removes unnecessary fields
 ```js
-v.consecutive(
+v.consecutive( // groups validators.
   v.object2([
     ['id', v.number(), v.integer(), v.gte(0)],
     ['name', v.string(), v.minLen(10)],
@@ -1897,7 +1928,7 @@ v.consecutive(
 
 Camelize object fields
 ```js
-v.consecutive(
+v.consecutive( // groups validators.
   v.object2([
     ['--id--', v.number(), v.integer(), v.gte(0)],
     ['--name--', v.string(), v.minLen(10)]
@@ -1910,14 +1941,32 @@ v.consecutive(
 
 Maps 'yes' and 'no' on boolean
 ```js
-v.consecutive(
+v.object2([
+  ['id', v.number(), v.integer(), v.gte(0)],
+  ['name', v.string(), v.minLen(10)],
+  ['disabled', 
+    v.valueMap(['yes', true], ['no', false]), // converts specific value to type compatible value.
+    v.bool() // just check and cast another boolean compatible values.
+  ]
+])
+```
+
+### `Multiple validations`
+
+Validate field two or more times
+```js
+v.withMeta( // for deps api.
   v.object2([
-    ['id', v.number(), v.integer(), v.gte(0)],
-    ['name', v.string(), v.minLen(10)],
-    ['disabled', 
-      v.valueMap(['yes', true], ['no', false]), // converts specific value to type compatible value.
-      v.bool() // just check and cast another boolean compatible values.
-    ]
+    [/createdAt|updatedAt|deletedAt/, v.date()],
+    ['createdAt', v.setDep('createdAt')],
+    ['updatedAt', 
+      v.getDep('createdAt', createdAt => createdAt && v.gte(createdAt)), // updatedAt >= createdAt.
+      v.setDep('updatedAt')
+    ],
+    ['deletedAt', 
+      v.getDep('updatedAt', updatedAt => updatedAt && v.gte(updatedAt)), // deletedAt >= updatedAt.
+    ],
+    [/createdAt|updatedAt|deletedAt/, date => date && new Date(date).toLocaleDateString()], // finally format all dates.
   ])
 )
 ```

@@ -1,11 +1,11 @@
 import { ObjectLike, Validator } from '../types';
-import { isFunction, isString } from '../utilities';
+import { callee, isString } from '../utilities';
 
 /**
  * {@link docs/processors/strip}
  */
 export const strip = <T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T> => {
-  const is = (isFunction(condition) ? condition : (() => condition)) as Function;
+  const is = callee(condition);
 
   return (
     isString(field)
