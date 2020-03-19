@@ -17,7 +17,7 @@ export const dynamic = <T>(preValidator: () => Validator<T> | Array<Validator<T>
           const validatorsList = toArray(validators);
 
           return (
-            (isValidatorsSequence(validatorsList) && meta)
+            isValidatorsSequence(validatorsList)
               ? reduceValidators(value, onError, meta, validatorsList)
               : throwValidatorError(S_DYN)
           );
