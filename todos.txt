@@ -1,4 +1,5 @@
   - dynamic tests
+  - templating
 
 v*:
   - compile()
