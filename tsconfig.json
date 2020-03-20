@@ -30,6 +30,7 @@
     "./src/**/*.ts",
     "./dist/**/*.ts",
     "./tests/**/*.ts",
-    "./docs/**/*.ts"
+    "./docs/**/*.ts",
+    "./compiler/**/*.js"
   ]
 }

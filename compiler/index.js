@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const literals = require('./literals');
 
 const analyze = (input) => {

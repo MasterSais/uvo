@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 let code = 0;
 
 const getCode = () => code++;
