@@ -1,35 +1,31 @@
-/* eslint-disable no-undef */
-
-const L_VALIDATOR_OPEN = '[';
-const L_VALIDATOR_CLOSE = ']';
-const L_VALIDATOR_SEPARATOR = ':';
-
-const lexemeBase = new Map([
-  [L_VALIDATOR_OPEN, { code: 0 }],
-  [L_VALIDATOR_CLOSE, { code: 1 }],
-  [L_VALIDATOR_SEPARATOR, { code: 2 }]
-]);
-
-[' ', '\n', '\r'].forEach(literal => lexemeBase.set(literal, { omit: true }));
+const literals = require('./literals');
 
 const analyze = (input) => {
-  const lexemes = new Int8Array(input.length).fill(null);
+  const lexemes = new Array(input.length);
 
   let index = 0;
 
   for (const literal of input) {
-    const lexeme = lexemeBase.get(literal);
+    const lexeme = literals.base.get(literal);
 
     if (lexeme === undefined) {
-      throw `Unexpected literal: ${literal}`;
+      throw `Unexpected literal: '${literal}'`;
     }
 
     if (!lexeme.omit) {
-      lexemes[index++] = lexeme.code;
+      const compound = (
+        lexeme.compound && index > 0 && lexemes[index - 1].compound && lexeme.code === lexemes[index - 1].code
+      );
+
+      if (compound) {
+        lexemes[index - 1].value = lexemes[index - 1].value + lexeme.value;
+      } else {
+        lexemes[index++] = { ...lexeme };
+      }
     }
   }
 
-  return lexemes.subarray(0, index);
+  return lexemes.slice(0, index);
 };
 
 const result = analyze(
@@ -46,4 +42,4 @@ const result = analyze(
   `
 );
 
-console.log(result.toString());
+console.log(result.map(({ value, code }) => ({ code, value })));

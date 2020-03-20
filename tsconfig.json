@@ -14,9 +14,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "baseUrl": ".",
     "paths": {
-      "uvo": [
-        "dist/types/index.d.ts"
-      ],
       "@lib/*": [
         "src/*"
       ],
@@ -33,7 +30,6 @@
     "./src/**/*.ts",
     "./dist/**/*.ts",
     "./tests/**/*.ts",
-    "./docs/**/*.ts",
-    "./compiler/**/*.js"
+    "./docs/**/*.ts"
   ]
 }
