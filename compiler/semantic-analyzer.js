@@ -16,19 +16,21 @@ const processState = (state, rules, lexemes, index = 0) => {
     }
 
     if (Array.isArray(state[i])) {
-      const rightOne = state[i].find((nestedState) => {
-        const nestedOffset = processState(nestedState, rules, lexemes, offset);
+      let nestedOffset = null;
+
+      for (const nestedState of state[i]) {
+        nestedOffset = processState(nestedState, rules, lexemes, offset);
 
         if (nestedOffset !== null) {
-          offset = nestedOffset;
-
-          return true;
+          break;
         }
-      });
+      }
 
-      if (rightOne === undefined) {
+      if (nestedOffset === null) {
         return null;
       }
+
+      offset = nestedOffset;
 
       continue;
     }
@@ -49,7 +51,9 @@ const processState = (state, rules, lexemes, index = 0) => {
   return offset;
 };
 
-const stateMachine = (rules, initialRuleIndex, lexemes) =>
+const semanticAnalyzer = (rules, initialRuleIndex, lexemes) =>
   processState(rules[initialRuleIndex], rules, lexemes) === lexemes.length;
 
-module.exports = stateMachine;
+module.exports = {
+  semanticAnalyzer
+};

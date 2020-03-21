@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const analyze = require('./analizer');
-const stateMachine = require('./state-machine');
-const rules = require('./rules');
+const { lexicalAnalyzer } = require('./lexical-analyzer');
+const { semanticAnalyzer } = require('./semantic-analyzer');
+const { semanticRules } = require('./semantic-rules');
 
-const lexemes = analyze(
+const lexemes = lexicalAnalyzer(
   `
     [object : 
       [createdAt : date : compare(>{0})]
@@ -21,4 +21,4 @@ const lexemes = analyze(
 
 console.log(lexemes.map(({ value, code }) => ({ code, value })));
 
-console.log(stateMachine(rules, 0, lexemes));
+console.log(semanticAnalyzer(semanticRules, 0, lexemes));

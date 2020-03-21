@@ -3,7 +3,7 @@
 
 const literals = require('./literals');
 
-const analyze = (input) => {
+const lexicalAnalyzer = (input) => {
   const lexemes = new Array(input.length);
 
   let index = 0;
@@ -31,4 +31,6 @@ const analyze = (input) => {
   return lexemes.slice(0, index);
 };
 
-module.exports = analyze;
+module.exports = {
+  lexicalAnalyzer
+};
