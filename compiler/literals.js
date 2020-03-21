@@ -4,52 +4,52 @@ let code = 0;
 
 const getCode = () => code++;
 
-const L_VALIDATOR_OPEN = {
+const LSB = {
   values: ['['], code: getCode()
 };
 
-const L_VALIDATOR_CLOSE = {
+const RSB = {
   values: [']'], code: getCode()
 };
 
-const L_PARAMS_OPEN = {
+const LRB = {
   values: ['('], code: getCode()
 };
 
-const L_PARAMS_CLOSE = {
+const RRB = {
   values: [')'], code: getCode()
 };
 
-const L_EXTERNAL_PARAMS_OPEN = {
+const LFB = {
   values: ['{'], code: getCode()
 };
 
-const L_EXTERNAL_PARAMS_CLOSE = {
+const RFB = {
   values: ['}'], code: getCode()
 };
 
-const L_VALIDATOR_SEPARATOR = {
+const DLM = {
   values: [':'], code: getCode()
 };
 
-const L_GREATER = {
+const GT = {
   values: ['>'], code: getCode()
 };
 
-const L_LOWER = {
+const LT = {
   values: ['<'], code: getCode()
 };
 
-const L_EQUAL = {
+const EQ = {
   values: ['='], code: getCode()
 };
 
-const L_EXCESS = {
+const OMT = {
   values: [' ', '\n', '\r'], code: getCode(),
   omit: true
 };
 
-const L_LITERALS = {
+const VL = {
   values: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-0123456789'.split(''), code: getCode(),
   compound: true
 };
@@ -57,12 +57,7 @@ const L_LITERALS = {
 const base = new Map();
 
 ([
-  L_VALIDATOR_OPEN, L_VALIDATOR_CLOSE,
-  L_PARAMS_OPEN, L_PARAMS_CLOSE,
-  L_EXTERNAL_PARAMS_OPEN, L_EXTERNAL_PARAMS_CLOSE,
-  L_VALIDATOR_SEPARATOR,
-  L_GREATER, L_LOWER, L_EQUAL,
-  L_EXCESS, L_LITERALS
+  LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, OMT, VL
 ])
   .forEach(
     ({ code, values, compound, omit }) => values
@@ -72,11 +67,5 @@ const base = new Map();
   );
 
 module.exports = {
-  L_VALIDATOR_OPEN, L_VALIDATOR_CLOSE,
-  L_PARAMS_OPEN, L_PARAMS_CLOSE,
-  L_EXTERNAL_PARAMS_OPEN, L_EXTERNAL_PARAMS_CLOSE,
-  L_VALIDATOR_SEPARATOR,
-  L_GREATER, L_LOWER, L_EQUAL,
-  L_EXCESS, L_LITERALS,
-  base
+  LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, OMT, VL, base
 };
