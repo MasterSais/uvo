@@ -7,17 +7,19 @@ const { semanticRules } = require('./semantic-rules');
 
 const lexemes = lexicalAnalyzer(
   `
-    [object : 
+    [object(
       [createdAt : date : compare(>{0})]
       [updatedAt : date : compare(>=createdAt)]
       [deletedAt : date : compare(>=updatedAt)]
-      [user : object : 
+      [user : object( 
         [id : number : compare(>=0)]
         [name : string : length(>10)]
-      ]
-    ]
+      )]
+    )]
   `
 );
+
+['object', ['createdAt', 'date', 'compare', ['>=', '{0}'], 'updatedAt']];
 
 console.log(lexemes.map(({ value, code }) => ({ code, value })));
 

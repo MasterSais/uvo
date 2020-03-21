@@ -5,52 +5,52 @@ let code = 0;
 const getCode = () => code++;
 
 const LSB = {
-  values: ['['], code: getCode()
+  literals: ['['], code: getCode()
 };
 
 const RSB = {
-  values: [']'], code: getCode()
+  literals: [']'], code: getCode()
 };
 
 const LRB = {
-  values: ['('], code: getCode()
+  literals: ['('], code: getCode()
 };
 
 const RRB = {
-  values: [')'], code: getCode()
+  literals: [')'], code: getCode()
 };
 
 const LFB = {
-  values: ['{'], code: getCode()
+  literals: ['{'], code: getCode()
 };
 
 const RFB = {
-  values: ['}'], code: getCode()
+  literals: ['}'], code: getCode()
 };
 
 const DLM = {
-  values: [':'], code: getCode()
+  literals: [':'], code: getCode()
 };
 
 const GT = {
-  values: ['>'], code: getCode()
+  literals: ['>'], code: getCode()
 };
 
 const LT = {
-  values: ['<'], code: getCode()
+  literals: ['<'], code: getCode()
 };
 
 const EQ = {
-  values: ['='], code: getCode()
+  literals: ['='], code: getCode()
 };
 
 const OMT = {
-  values: [' ', '\n', '\r'], code: getCode(),
+  literals: [' ', '\n', '\r'], code: getCode(),
   omit: true
 };
 
 const VL = {
-  values: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-0123456789'.split(''), code: getCode(),
+  literals: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-0123456789'.split(''), code: getCode(),
   compound: true
 };
 
@@ -60,7 +60,7 @@ const base = new Map();
   LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, OMT, VL
 ])
   .forEach(
-    ({ code, values, compound, omit }) => values
+    ({ code, literals, compound, omit }) => literals
       .forEach(
         literal => base.set(literal, { code, value: literal, compound, omit })
       )
