@@ -20,6 +20,5 @@ const lexemes = analyze(
 );
 
 console.log(lexemes.map(({ value, code }) => ({ code, value })));
-console.log(rules);
 
-stateMachine(rules, lexemes);
+console.log(stateMachine(rules, 0, lexemes));
