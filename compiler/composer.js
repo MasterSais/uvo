@@ -1,49 +1,25 @@
 /* eslint-disable no-undef */
 
-import { date, is, length, number, object2, string } from '../dist/es/index.min.js';
+import { consecutive, date, is, length, number, object2, string } from '../dist/es/index.min.js';
 import { EQ, GT, LFB, LRB, LSB, LT, RFB, RRB, RSB, VL } from './lexemes.js';
 
-const validatorBase = new Map([
-  ['object', { callee: object2 }],
-  ['date', { callee: date }],
-  ['compare', { callee: is }],
-  ['number', { callee: number }],
-  ['string', { callee: string }],
-  ['length', { callee: length }]
-]);
+const generateTree = (lexemes, base) => {
+  const tree = [];
 
-export const composer = (lexemes) => {
-  const validatorsTree = [];
-  const stack = [validatorsTree];
+  const stack = [tree];
+
   const states = [];
-  
-  let validators = validatorsTree;
 
-  lexemes = lexemes.slice(1);
+  let slice = tree;
 
-  for (const lexeme of lexemes) {
-    let state = states[states.length - 1];
+  for (let i = 1; i < lexemes.length; i++) {
+    const lexeme = lexemes[i];
 
-    if ([GT.code, LT.code, EQ.code].includes(lexeme.code)) {
-      if (state === 'comparator') {
-        validators[validators.length - 1] += lexeme.value;
-      } else {
-        validators.push(lexeme.value);
-        states.push('comparator');
-      }
-
-      continue;
-    } else {
-      if (state === 'comparator') {
-        states.pop();
-      }
-    }
-
-    state = states[states.length - 1];
+    const state = states[states.length - 1];
 
     if (lexeme.code === VL.code) {
       if (state === 'field') {
-        validators.push('f_' + lexeme.value);
+        slice.push(lexeme.value);
 
         states.pop();
 
@@ -51,42 +27,44 @@ export const composer = (lexemes) => {
       }
 
       if (state === 'injection') {
-        validators[validators.length - 1] += lexeme.value;
+        slice[slice.length - 1] += lexeme.value;
 
         continue;
       }
 
       if (state === 'params') {
-        validators.push('p_' + lexeme.value);
+        slice.push(lexeme.value);
 
         continue;
       }
 
-      const validator = validatorBase.get(lexeme.value);
+      const validator = base.get(lexeme.value);
 
       if (validator) {
-        validators.push('v_' + lexeme.value);
+        slice.push(validator);
       }
 
       continue;
     }
 
     if (lexeme.code === LSB.code) {
-      states.push('validator');
+      states.push('validator', 'field');
 
-      states.push('field');
+      continue;
     }
 
     if (lexeme.code === RSB.code) {
       states.pop();
+
+      continue;
     }
 
     if (lexeme.code === LRB.code) {
-      validators.push([]);
+      slice.push([]);
 
-      stack.push(validators[validators.length - 1]);
+      stack.push(slice[slice.length - 1]);
 
-      validators = validators[validators.length - 1];
+      slice = slice[slice.length - 1];
 
       states.push('params');
 
@@ -96,9 +74,9 @@ export const composer = (lexemes) => {
     if (lexeme.code === RRB.code) {
       stack.pop();
 
-      validators = stack[stack.length - 1];
-
       states.pop();
+
+      slice = stack[stack.length - 1];
 
       continue;
     }
@@ -106,7 +84,7 @@ export const composer = (lexemes) => {
     if (lexeme.code === LFB.code) {
       states.push('injection');
 
-      validators.push(lexeme.value);
+      slice.push(lexeme.value);
 
       continue;
     }
@@ -114,11 +92,81 @@ export const composer = (lexemes) => {
     if (lexeme.code === RFB.code) {
       states.pop();
 
-      validators[validators.length - 1] += lexeme.value;
+      slice[slice.length - 1] += lexeme.value;
+
+      continue;
+    }
+
+    const comparators = [GT.code, LT.code, EQ.code];
+
+    if (comparators.indexOf(lexeme.code) >= 0) {
+      if (comparators.indexOf(lexemes[i - 1].code) >= 0) {
+        slice[slice.length - 1] += lexeme.value;
+      } else {
+        slice.push(lexeme.value);
+      }
 
       continue;
     }
   }
 
-  console.log(validatorsTree);
+  return tree;
+};
+
+const validatorBase = new Map();
+
+validatorBase.set('object', (params) => {
+  params = params.reverse();
+  
+  object2;
+});
+
+validatorBase.set('date', () => {
+  date;
+});
+
+validatorBase.set('compare', () => {
+  is;
+});
+
+validatorBase.set('number', () => {
+  number;
+});
+
+validatorBase.set('string', () => {
+  string;
+});
+
+validatorBase.set('length', () => {
+  length;
+});
+
+const createValidator = (tree) => {
+  let params = null;
+
+  const validators = [];
+
+  for (const branch of tree) {
+    if (Array.isArray(branch)) {
+      params = branch;
+
+      continue;
+    }
+
+    if (typeof branch === 'function') {
+      validators.push(branch(params));
+
+      params = null;
+    }
+  }
+
+  return consecutive(...validators);
+};
+
+export const composer = (lexemes) => {
+  const tree = generateTree(lexemes, validatorBase).reverse();
+
+  console.log(tree);
+
+  return createValidator(tree);
 };
