@@ -1,15 +1,10 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
-const { base } = require('./lexemes');
-
-const lexicalAnalyzer = (input) => {
+export const lexicalAnalyzer = (input, lexemeBase) => {
   const lexemes = new Array(input.length);
 
   let index = 0;
 
   for (const literal of input) {
-    const lexeme = base.get(literal);
+    const lexeme = lexemeBase.get(literal);
 
     if (lexeme === undefined) {
       throw `Unexpected literal: '${literal}'`;
@@ -29,8 +24,4 @@ const lexicalAnalyzer = (input) => {
   }
 
   return lexemes.slice(0, index);
-};
-
-module.exports = {
-  lexicalAnalyzer
 };

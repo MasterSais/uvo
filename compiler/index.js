@@ -1,11 +1,10 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
+import { lexicalAnalyzer } from './lexical-analyzer.js';
+import { semanticAnalyzer } from './semantic-analyzer.js';
+import { composer } from './composer.js';
+import { lexemeBase } from './lexemes.js';
+import { semanticRules } from './semantic-rules.js';
 
-const { lexicalAnalyzer } = require('./lexical-analyzer');
-const { semanticAnalyzer } = require('./semantic-analyzer');
-const { semanticRules } = require('./semantic-rules');
-
-const lexemes = lexicalAnalyzer(
+const test = (
   `
     [object(
       [createdAt : date : compare(>{0})]
@@ -19,8 +18,18 @@ const lexemes = lexicalAnalyzer(
   `
 );
 
-['object', ['createdAt', 'date', 'compare', ['>=', '{0}'], 'updatedAt']];
+const lexemes = lexicalAnalyzer(test, lexemeBase);
 
 console.log(lexemes.map(({ value, code }) => ({ code, value })));
 
-console.log(semanticAnalyzer(semanticRules, 0, lexemes));
+semanticAnalyzer(semanticRules, 0, lexemes);
+
+console.log(composer(lexemes));
+
+export const template = (input) => {
+  const lexemes = lexicalAnalyzer(input, lexemeBase);
+
+  semanticAnalyzer(semanticRules, 0, lexemes);
+
+  return composer(lexemes);
+};

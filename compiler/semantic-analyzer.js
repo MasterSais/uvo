@@ -1,7 +1,4 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
-const processState = (state, rules, lexemes, index = 0) => {
+const processState = (state, rules, lexemes, index) => {
   let offset = index;
 
   for (let i = 0; i < state.length; i++) {
@@ -51,9 +48,10 @@ const processState = (state, rules, lexemes, index = 0) => {
   return offset;
 };
 
-const semanticAnalyzer = (rules, initialRuleIndex, lexemes) =>
-  processState(rules[initialRuleIndex], rules, lexemes) === lexemes.length;
+export const semanticAnalyzer = (rules, initialRuleIndex, lexemes) => {
+  const offset = processState(rules[initialRuleIndex], rules, lexemes, 0);
 
-module.exports = {
-  semanticAnalyzer
+  if (offset !== lexemes.length) {
+    throw 'Semantic error';
+  }
 };

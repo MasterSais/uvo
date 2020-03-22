@@ -4,57 +4,57 @@ let code = 0;
 
 const getCode = () => code++;
 
-const LSB = {
+export const LSB = {
   literals: ['['], code: getCode()
 };
 
-const RSB = {
+export const RSB = {
   literals: [']'], code: getCode()
 };
 
-const LRB = {
+export const LRB = {
   literals: ['('], code: getCode()
 };
 
-const RRB = {
+export const RRB = {
   literals: [')'], code: getCode()
 };
 
-const LFB = {
+export const LFB = {
   literals: ['{'], code: getCode()
 };
 
-const RFB = {
+export const RFB = {
   literals: ['}'], code: getCode()
 };
 
-const DLM = {
+export const DLM = {
   literals: [':'], code: getCode()
 };
 
-const GT = {
+export const GT = {
   literals: ['>'], code: getCode()
 };
 
-const LT = {
+export const LT = {
   literals: ['<'], code: getCode()
 };
 
-const EQ = {
+export const EQ = {
   literals: ['='], code: getCode()
 };
 
-const OMT = {
+export const OMT = {
   literals: [' ', '\n', '\r'], code: getCode(),
   omit: true
 };
 
-const VL = {
+export const VL = {
   literals: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-0123456789'.split(''), code: getCode(),
   compound: true
 };
 
-const base = new Map();
+export const lexemeBase = new Map();
 
 ([
   LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, OMT, VL
@@ -62,10 +62,6 @@ const base = new Map();
   .forEach(
     ({ code, literals, compound, omit }) => literals
       .forEach(
-        literal => base.set(literal, { code, value: literal, compound, omit })
+        literal => lexemeBase.set(literal, { code, value: literal, compound, omit })
       )
   );
-
-module.exports = {
-  LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, OMT, VL, base
-};
