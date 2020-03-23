@@ -1,8 +1,6 @@
 import { composer } from './composer.js';
-import { lexemeBase } from './lexemes.js';
 import { lexicalAnalyzer } from './lexical-analyzer.js';
 import { semanticAnalyzer } from './semantic-analyzer.js';
-import { semanticRules } from './semantic-rules.js';
 
 const test = (
   `
@@ -13,21 +11,24 @@ const test = (
         [id : number : compare(>=0)]
         [name : string : length(>10)]
       )]
+      [roles : array(
+        [string : length(<10)]
+      )]
       [deletedAt : date : compare(>=updatedAt)]
     )]
   `
 );
 
-const lexemes = lexicalAnalyzer(test, lexemeBase);
+const lexemes = lexicalAnalyzer(test);
 
-semanticAnalyzer(semanticRules, 0, lexemes);
+semanticAnalyzer(lexemes);
 
 // composer(lexemes);
 
 export const template = (input) => {
-  const lexemes = lexicalAnalyzer(input, lexemeBase);
+  const lexemes = lexicalAnalyzer(input);
 
-  semanticAnalyzer(semanticRules, 0, lexemes);
+  semanticAnalyzer(lexemes);
 
   return composer(lexemes);
 };

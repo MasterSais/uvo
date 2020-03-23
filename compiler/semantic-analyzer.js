@@ -1,9 +1,21 @@
-const processState = (state, rules, lexemes, index) => {
+import { PARAMS_STATE, semanticRules as rules, VALIDATOR_ENTRY_STATE } from './semantic-rules.js';
+
+const processState = (state, lexemes, index, stack) => {
   let offset = index;
 
   for (let i = 0; i < state.length; i++) {
     if (Number.isFinite(state[i])) {
-      offset = processState(rules[state[i]], rules, lexemes, offset);
+      if (state[i] === PARAMS_STATE) {
+        stack.push([]);
+
+        stack = stack[stack.length - 1];
+      }
+
+      if (state[i] === VALIDATOR_ENTRY_STATE) {
+        stack.push('$e');
+      }
+
+      offset = processState(rules[state[i]], lexemes, offset, stack);
 
       if (offset === null) {
         return null;
@@ -16,7 +28,7 @@ const processState = (state, rules, lexemes, index) => {
       let nestedOffset = null;
 
       for (const nestedState of state[i]) {
-        nestedOffset = processState(nestedState, rules, lexemes, offset);
+        nestedOffset = processState(nestedState, lexemes, offset, stack);
 
         if (nestedOffset !== null) {
           break;
@@ -37,6 +49,10 @@ const processState = (state, rules, lexemes, index) => {
     }
 
     if (state[i].code !== undefined && lexemes[offset].code === state[i].code) {
+      if (lexemes[offset].composerToken) {
+        stack.push(lexemes[offset].value);
+      }
+
       offset++;
 
       continue;
@@ -48,8 +64,12 @@ const processState = (state, rules, lexemes, index) => {
   return offset;
 };
 
-export const semanticAnalyzer = (rules, initialRuleIndex, lexemes) => {
-  const offset = processState(rules[initialRuleIndex], rules, lexemes, 0);
+export const semanticAnalyzer = (lexemes) => {
+  const stack = [];
+
+  const offset = processState(rules[0], lexemes, 0, stack);
+
+  console.log(stack);
 
   if (offset !== lexemes.length) {
     throw 'Semantic error';

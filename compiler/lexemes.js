@@ -21,11 +21,13 @@ export const RRB = {
 };
 
 export const LFB = {
-  literals: ['{'], code: getCode()
+  literals: ['{'], code: getCode(),
+  composerToken: true
 };
 
 export const RFB = {
-  literals: ['}'], code: getCode()
+  literals: ['}'], code: getCode(),
+  composerToken: true
 };
 
 export const DLM = {
@@ -33,15 +35,18 @@ export const DLM = {
 };
 
 export const GT = {
-  literals: ['>'], code: getCode()
+  literals: ['>'], code: getCode(),
+  composerToken: true
 };
 
 export const LT = {
-  literals: ['<'], code: getCode()
+  literals: ['<'], code: getCode(),
+  composerToken: true
 };
 
 export const EQ = {
-  literals: ['='], code: getCode()
+  literals: ['='], code: getCode(),
+  composerToken: true
 };
 
 export const OMT = {
@@ -51,7 +56,8 @@ export const OMT = {
 
 export const VL = {
   literals: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-0123456789'.split(''), code: getCode(),
-  compound: true
+  compound: true,
+  composerToken: true
 };
 
 export const lexemeBase = new Map();
@@ -60,8 +66,8 @@ export const lexemeBase = new Map();
   LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, OMT, VL
 ])
   .forEach(
-    ({ code, literals, compound, omit }) => literals
+    ({ code, literals, compound, omit, composerToken }) => literals
       .forEach(
-        literal => lexemeBase.set(literal, { code, value: literal, compound, omit })
+        literal => lexemeBase.set(literal, { code, value: literal, compound, omit, composerToken })
       )
   );
