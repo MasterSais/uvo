@@ -5,7 +5,7 @@ export const toArray = <T>(params?: Array<T> | T): Array<T> =>
 
 export const setMetaPath = (meta: MetaData, path: string | number): MetaData => (meta && {
   ...meta,
-  path: meta.path.concat(path ? [path] : [])
+  path: meta.path.concat(path)
 });
 
 export const setMetaValidator = (meta: MetaData, validator: string, params: Array<any> = []): MetaData => (meta && {
