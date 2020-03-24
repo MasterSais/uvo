@@ -21,14 +21,14 @@ const test = (
 
 const lexemes = lexicalAnalyzer(test);
 
-semanticAnalyzer(lexemes);
+const semanticTree = semanticAnalyzer(lexemes);
 
-// composer(lexemes);
+composer(semanticTree);
 
-export const template = (input) => {
-  const lexemes = lexicalAnalyzer(input);
-
-  semanticAnalyzer(lexemes);
-
-  return composer(lexemes);
-};
+export const template = (input) => (
+  composer(
+    semanticAnalyzer(
+      lexicalAnalyzer(input)
+    )
+  )
+);

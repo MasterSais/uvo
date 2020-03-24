@@ -1,5 +1,4 @@
-  - dynamic tests
-  - templating
+  - unique for array els
 
 v*:
   - compile()

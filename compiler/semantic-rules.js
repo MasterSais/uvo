@@ -7,6 +7,10 @@ export const VALIDATOR_ENTRY_STATE = 0;
 
 export const PARAMS_STATE = 3;
 
+export const COMPARATOR_STATE = 5;
+
+export const INJECTION_STATE = 6;
+
 export const semanticRules = [
   /* S0 */ [LSB, 1, RSB, [[0], []]],                      // validator closure
   /* S1 */ [2, [[DLM, 1], []]],                           // validation sequence
