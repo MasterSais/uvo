@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable no-undef */
-
-import { DLM, EQ, GT, LFB, LRB, LSB, LT, RFB, RRB, RSB, VL } from './lexemes.js';
+import { DLM, EQ, GT, LFB, LRB, LSB, LT, RFB, RRB, RSB, VL } from './lexemes';
 
 export const VALIDATOR_ENTRY_STATE = 0;
 

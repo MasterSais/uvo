@@ -31,6 +31,6 @@
     "./dist/**/*.ts",
     "./tests/**/*.ts",
     "./docs/**/*.ts",
-    "./compiler/**/*.js"
+    "./compiler/**/*.ts"
   ]
 }

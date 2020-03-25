@@ -1,66 +1,66 @@
-/* eslint-disable no-undef */
+import { Lexeme, LexemeScheme } from './types';
 
 let code = 0;
 
-const getCode = () => code++;
+const getCode = (): number => code++;
 
-export const LSB = {
+export const LSB: LexemeScheme = {
   literals: ['['], code: getCode()
 };
 
-export const RSB = {
+export const RSB: LexemeScheme = {
   literals: [']'], code: getCode()
 };
 
-export const LRB = {
+export const LRB: LexemeScheme = {
   literals: ['('], code: getCode()
 };
 
-export const RRB = {
+export const RRB: LexemeScheme = {
   literals: [')'], code: getCode()
 };
 
-export const LFB = {
+export const LFB: LexemeScheme = {
   literals: ['{'], code: getCode(),
   composerToken: true
 };
 
-export const RFB = {
+export const RFB: LexemeScheme = {
   literals: ['}'], code: getCode(),
   composerToken: true
 };
 
-export const DLM = {
+export const DLM: LexemeScheme = {
   literals: [':'], code: getCode()
 };
 
-export const GT = {
+export const GT: LexemeScheme = {
   literals: ['>'], code: getCode(),
   composerToken: true
 };
 
-export const LT = {
+export const LT: LexemeScheme = {
   literals: ['<'], code: getCode(),
   composerToken: true
 };
 
-export const EQ = {
+export const EQ: LexemeScheme = {
   literals: ['='], code: getCode(),
   composerToken: true
 };
 
-export const OMT = {
+export const OMT: LexemeScheme = {
   literals: [' ', '\n', '\r'], code: getCode(),
   omit: true
 };
 
-export const VL = {
+export const VL: LexemeScheme = {
   literals: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-0123456789'.split(''), code: getCode(),
   compound: true,
   composerToken: true
 };
 
-export const lexemeBase = new Map();
+export const lexemeBase = new Map<string, Lexeme>();
 
 ([
   LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, OMT, VL

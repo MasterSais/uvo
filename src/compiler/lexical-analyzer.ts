@@ -1,6 +1,7 @@
-import { lexemeBase } from './lexemes.js';
+import { lexemeBase } from './lexemes';
+import { Lexeme } from './types';
 
-export const lexicalAnalyzer = (input) => {
+export const lexicalAnalyzer = (input: string): Array<Lexeme> => {
   const lexemes = new Array(input.length);
 
   let index = 0;

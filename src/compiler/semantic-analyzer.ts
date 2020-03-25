@@ -1,8 +1,9 @@
-import { COMPARATOR_STATE, INJECTION_STATE, PARAMS_STATE, semanticRules as rules, VALIDATOR_ENTRY_STATE } from './semantic-rules.js';
+import { COMPARATOR_STATE, INJECTION_STATE, PARAMS_STATE, semanticRules, VALIDATOR_ENTRY_STATE } from './semantic-rules';
+import { Lexeme } from './types';
 
-const VALIDATOR_ENTRY_LEXEME = '$e';
+export const VALIDATOR_ENTRY_LEXEME = '$e';
 
-const processState = (state, lexemes, index, stack) => {
+const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, stack: Array<any>) => {
   let offset = index;
 
   for (let i = 0; i < state.length; i++) {
@@ -19,7 +20,7 @@ const processState = (state, lexemes, index, stack) => {
         nestedStack.push(VALIDATOR_ENTRY_LEXEME);
       }
 
-      offset = processState(rules[state[i]], lexemes, offset, nestedStack);
+      offset = processState(semanticRules[state[i]], lexemes, offset, nestedStack);
 
       if ([COMPARATOR_STATE, INJECTION_STATE].indexOf(state[i]) >= 0) {
         if (nestedStack.length > 0) {
@@ -27,6 +28,13 @@ const processState = (state, lexemes, index, stack) => {
         } else {
           stack.pop();
         }
+      }
+
+      if ([PARAMS_STATE].indexOf(state[i]) >= 0) {
+        stack[stack.length - 2] = {
+          name: stack[stack.length - 2],
+          params: stack.pop()
+        };
       }
 
       if (nestedStack[nestedStack.length - 1] === VALIDATOR_ENTRY_LEXEME) {
@@ -80,10 +88,10 @@ const processState = (state, lexemes, index, stack) => {
   return offset;
 };
 
-export const semanticAnalyzer = (lexemes) => {
-  const stack = [];
+export const semanticAnalyzer = (lexemes: Array<Lexeme>) => {
+  const stack: Array<any> = [];
 
-  const offset = processState(rules[0], lexemes, 0, stack);
+  const offset = processState(semanticRules[0], lexemes, 0, stack);
 
   if (offset !== lexemes.length) {
     throw 'Semantic error';

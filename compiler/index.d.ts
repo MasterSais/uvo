@@ -1,1 +1,0 @@
-export declare const template: <T, R>(input: string) => ((value: T) => R);
