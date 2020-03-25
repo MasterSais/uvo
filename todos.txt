@@ -1,4 +1,4 @@
-  - dynamic tests
+  - unique for array els
 
 v*:
   - compile()

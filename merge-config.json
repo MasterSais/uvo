@@ -23,5 +23,36 @@
   },
   {
     "dir": "./src/containers"
+  },
+  {
+    "file": "./src/compiler/types.ts",
+    "removeExports": true
+  },
+  {
+    "file": "./src/compiler/lexemes.ts",
+    "removeExports": true
+  },
+  {
+    "file": "./src/compiler/lexical-analyzer.ts",
+    "removeExports": true
+  },
+  {
+    "file": "./src/compiler/semantic-rules.ts",
+    "removeExports": true
+  },
+  {
+    "file": "./src/compiler/semantic-analyzer.ts",
+    "removeExports": true
+  },
+  {
+    "file": "./src/compiler/validators.ts",
+    "removeExports": true
+  },
+  {
+    "file": "./src/compiler/composer.ts",
+    "removeExports": true
+  },
+  {
+    "file": "./src/compiler/index.ts"
   }
 ]
