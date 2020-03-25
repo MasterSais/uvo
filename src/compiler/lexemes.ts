@@ -49,6 +49,16 @@ export const EQ: LexemeScheme = {
   composerToken: true
 };
 
+export const NOT: LexemeScheme = {
+  literals: ['!'], code: getCode(),
+  composerToken: true
+};
+
+export const MLP: LexemeScheme = {
+  literals: ['%'], code: getCode(),
+  composerToken: true
+};
+
 export const OMT: LexemeScheme = {
   literals: [' ', '\n', '\r'], code: getCode(),
   omit: true
@@ -63,7 +73,7 @@ export const VL: LexemeScheme = {
 export const lexemeBase = new Map<string, Lexeme>();
 
 ([
-  LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, OMT, VL
+  LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, NOT, MLP, OMT, VL
 ])
   .forEach(
     ({ code, literals, compound, omit, composerToken }) => literals

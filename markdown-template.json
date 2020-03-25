@@ -97,6 +97,12 @@
         ]
       },
       {
+        "title": "Templating (alpha)",
+        "content": [
+          "./docs/markdown/templating.md"
+        ]
+      },
+      {
         "title": "Custom validators",
         "content": [
           "./docs/markdown/validator-creation.md"

@@ -45,6 +45,10 @@
     "removeExports": true
   },
   {
+    "file": "./src/compiler/validators.ts",
+    "removeExports": true
+  },
+  {
     "file": "./src/compiler/composer.ts",
     "removeExports": true
   },
