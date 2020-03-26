@@ -6,6 +6,7 @@ import { number } from '../validators/number';
 import { object2 } from '../validators/object2';
 import { string } from '../validators/string';
 import { VALIDATOR_ENTRY_LEXEME } from './semantic-analyzer';
+import { CompilerMeta, ValidatorData, ValidatorWithParams } from './types';
 
 const validatorBase = new Map<string, any>([
   ['date', date],
@@ -14,24 +15,24 @@ const validatorBase = new Map<string, any>([
   ['bool', bool]
 ]);
 
-export const getValidator = (data: any) => {
-  const validator = validatorBase.get(data.name || data);
+export const getValidator = (meta: CompilerMeta, data: ValidatorData) => {
+  const validator = validatorBase.get((data as ValidatorWithParams).name || data as string);
 
   if (!validator) {
-    throw `Unsupported validator name '${data.name || data}'`;
+    throw `Unsupported validator name '${(data as ValidatorWithParams).name || data}'`;
   }
 
-  return validator(data.params);
+  return validator(meta, (data as ValidatorWithParams).params);
 };
 
-validatorBase.set('object', (params: Array<any>) => {
+validatorBase.set('object', (meta: CompilerMeta, params: Array<any>) => {
   const fields = [];
 
   for (let i = 0; i < params.length; i++) {
     if (params[i] === VALIDATOR_ENTRY_LEXEME) {
       fields.push([params[++i]]);
     } else {
-      fields[fields.length - 1].push(getValidator(params[i]));
+      fields[fields.length - 1].push(getValidator(meta, params[i]));
     }
   }
 
@@ -39,18 +40,18 @@ validatorBase.set('object', (params: Array<any>) => {
 });
 
 const comparators = {
-  '>': (param: any) => is((value: any) => value > param),
-  '>=': (param: any) => is((value: any) => value >= param),
-  '<': (param: any) => is((value: any) => value < param),
-  '<=': (param: any) => is((value: any) => value <= param),
-  '=': (param: any) => is((value: any) => value === param),
-  '!=': (param: any) => is((value: any) => value !== param),
-  '%': (param: any) => is((value: any) => value % param === 0),
-  '!%': (param: any) => is((value: any) => value % param !== 0)
+  '>': (param: any) => is((value: any) => value > param()),
+  '>=': (param: any) => is((value: any) => value >= param()),
+  '<': (param: any) => is((value: any) => value < param()),
+  '<=': (param: any) => is((value: any) => value <= param()),
+  '=': (param: any) => is((value: any) => value === param()),
+  '!=': (param: any) => is((value: any) => value !== param()),
+  '%': (param: any) => is((value: any) => value % param() === 0),
+  '!%': (param: any) => is((value: any) => value % param() !== 0)
 };
 
-validatorBase.set('compare', ([comparator, param]: Array<any>) =>
-  comparators[comparator](param)
+validatorBase.set('compare', (meta: CompilerMeta, [comparator, param]: Array<any>) =>
+  comparators[comparator](() => meta.injection ? null : param)
 );
 
 const lengthComparators = {
@@ -64,16 +65,16 @@ const lengthComparators = {
   '!%': (param: any) => is((value: any) => value.length % param !== 0)
 };
 
-validatorBase.set('length', ([comparator, param]: Array<any>) =>
+validatorBase.set('length', (meta: CompilerMeta, [comparator, param]: Array<any>) =>
   lengthComparators[comparator](param)
 );
 
-validatorBase.set('array', (params: Array<any>) => {
+validatorBase.set('array', (meta: CompilerMeta, params: Array<any>) => {
   const validators = [];
 
   for (let i = 0; i < params.length; i++) {
     if (params[i] !== VALIDATOR_ENTRY_LEXEME) {
-      validators.push(getValidator(params[i]));
+      validators.push(getValidator(meta, params[i]));
     }
   }
 

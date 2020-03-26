@@ -13,3 +13,16 @@ export type Lexeme = {
   compound?: boolean;
   composerToken?: boolean;
 };
+
+export type Injections = Array<any> | Record<any, any>;
+
+export type CompilerMeta = {
+  injections: Injections;
+};
+
+export type ValidatorWithParams = {
+  name: string;
+  params: Array<any>;
+};
+
+export type ValidatorData = string | ValidatorWithParams;

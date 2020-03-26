@@ -1,5 +1,5 @@
 import { COMPARATOR_STATE, INJECTION_STATE, PARAMS_STATE, semanticRules, VALIDATOR_ENTRY_STATE } from './semantic-rules';
-import { Lexeme } from './types';
+import { Lexeme, ValidatorData } from './types';
 
 export const VALIDATOR_ENTRY_LEXEME = '$e';
 
@@ -88,8 +88,8 @@ const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, 
   return offset;
 };
 
-export const semanticAnalyzer = (lexemes: Array<Lexeme>) => {
-  const stack: Array<any> = [];
+export const semanticAnalyzer = (lexemes: Array<Lexeme>): Array<ValidatorData> => {
+  const stack: Array<ValidatorData> = [];
 
   const offset = processState(semanticRules[0], lexemes, 0, stack);
 
