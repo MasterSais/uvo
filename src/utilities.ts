@@ -3,7 +3,7 @@ import { Checkable, Error, ErrorCallback, Invertible, Lengthy, MetaData, Validat
 export const toArray = <T>(params?: Array<T> | T): Array<T> =>
   Array.isArray(params) ? params : [params];
 
-export const setMetaPath = (meta: MetaData, path: string | number): MetaData => (meta && {
+export const setMetaPath = (meta: MetaData, path: string | number | Array<any>): MetaData => (meta && {
   ...meta,
   path: meta.path.concat(path)
 });
