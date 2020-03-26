@@ -20,6 +20,9 @@ export const V_DEF: string = 'defined';
 export const V_EM: string = 'empty';
 
 /** @type {string} */
+export const V_UQ: string = 'unique';
+
+/** @type {string} */
 export const V_GTE: string = 'gte';
 
 /** @type {string} */
