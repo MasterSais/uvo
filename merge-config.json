@@ -53,6 +53,6 @@
     "removeExports": true
   },
   {
-    "file": "./src/compiler/index.ts"
+    "file": "./src/compiler/template.ts"
   }
 ]

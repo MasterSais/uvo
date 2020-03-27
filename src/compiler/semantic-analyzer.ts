@@ -1,4 +1,4 @@
-import { COMPARATOR_STATE, INJECTION_STATE, PARAMS_STATE, semanticRules, VALIDATOR_ENTRY_STATE } from './semantic-rules';
+import { COMPARATOR_STATE, INJECTION_STATE, PARAMS_STATE, semanticRules, STRING_STATE, VALIDATOR_ENTRY_STATE } from './semantic-rules';
 import { Lexeme, ValidatorData } from './types';
 
 export const VALIDATOR_ENTRY_LEXEME = '$e';
@@ -10,7 +10,7 @@ const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, 
     if (Number.isFinite(state[i])) {
       let nestedStack = stack;
 
-      if ([COMPARATOR_STATE, INJECTION_STATE, PARAMS_STATE].indexOf(state[i]) >= 0) {
+      if ([COMPARATOR_STATE, INJECTION_STATE, STRING_STATE, PARAMS_STATE].indexOf(state[i]) >= 0) {
         nestedStack.push([]);
 
         nestedStack = nestedStack[stack.length - 1];
@@ -22,7 +22,7 @@ const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, 
 
       offset = processState(semanticRules[state[i]], lexemes, offset, nestedStack);
 
-      if ([COMPARATOR_STATE, INJECTION_STATE].indexOf(state[i]) >= 0) {
+      if ([COMPARATOR_STATE, INJECTION_STATE, STRING_STATE].indexOf(state[i]) >= 0) {
         if (nestedStack.length > 0) {
           stack[stack.length - 1] = nestedStack.join(String());
         } else {
@@ -30,7 +30,7 @@ const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, 
         }
       }
 
-      if ([PARAMS_STATE].indexOf(state[i]) >= 0) {
+      if (state[i] === PARAMS_STATE) {
         stack[stack.length - 2] = {
           name: stack[stack.length - 2],
           params: stack.pop()

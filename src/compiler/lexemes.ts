@@ -30,6 +30,11 @@ export const RFB: LexemeScheme = {
   composerToken: true
 };
 
+export const SQ: LexemeScheme = {
+  literals: ['\''], code: getCode(),
+  composerToken: true
+};
+
 export const DLM: LexemeScheme = {
   literals: [':'], code: getCode()
 };
@@ -65,7 +70,7 @@ export const OMT: LexemeScheme = {
 };
 
 export const VL: LexemeScheme = {
-  literals: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-0123456789'.split(''), code: getCode(),
+  literals: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.-0123456789'.split(''), code: getCode(),
   compound: true,
   composerToken: true
 };
@@ -73,7 +78,7 @@ export const VL: LexemeScheme = {
 export const lexemeBase = new Map<string, Lexeme>();
 
 ([
-  LSB, RSB, LRB, RRB, LFB, RFB, DLM, GT, LT, EQ, NOT, MLP, OMT, VL
+  LSB, RSB, LRB, RRB, LFB, RFB, SQ, DLM, GT, LT, EQ, NOT, MLP, OMT, VL
 ])
   .forEach(
     ({ code, literals, compound, omit, composerToken }) => literals

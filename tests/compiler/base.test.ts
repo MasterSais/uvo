@@ -1,16 +1,16 @@
-import { template } from '@lib/compiler';
+import { template } from '@lib/compiler/template';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('base', () => {
   const validator = template(`
     [object( 
-      [id : number : compare(>0) : compare(<=100)]
+      [id : number : compare(>{0}) : compare(<={1}) : dep('id')]
       [name : string : length(>=10)]
       [roles : array(
         [string : length(<8)]
       )]
     )]
-  `);
+  `)()([0, () => 100]);
 
   baseCasesWithParams(
     () => validator,

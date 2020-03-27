@@ -97,7 +97,7 @@ export const isFactory = (validator: string, params?: Array<any>) =>
             (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
               comparator(value)
                 ? value
-                : applyError(error, onError, setMetaValidator(meta, validator, params || []))
+                : applyError(error, onError, setMetaValidator(meta, validator, params))
           )
           : throwValidatorError(validator)
       )
