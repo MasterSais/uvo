@@ -3,7 +3,7 @@ import { baseCasesWithParams } from '@test/utilities';
 
 describe('base', () => {
   const validator = template(`
-    [object( 
+    [object(
       [id : number : compare(>{0}) : compare(<={1}) : dep('id')]
       [name : string : length(>=10)]
       [roles : array(

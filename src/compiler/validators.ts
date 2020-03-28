@@ -1,3 +1,4 @@
+import { getDep } from '../spreaders/get-dep';
 import { setDep } from '../spreaders/set-dep';
 import { Lengthy } from '../types';
 import { callee } from '../utilities';
@@ -77,9 +78,15 @@ const comparators = {
   '!%': (param: () => any) => is((value: any) => value % param() !== 0)
 };
 
-validatorBase.set('compare', (meta: CompilerMeta, [comparator, param]: Array<any>) =>
-  comparators[comparator](extractParam(meta, param))
-);
+validatorBase.set('compare', (meta: CompilerMeta, [comparator, param]: Array<any>) => {
+  const extracted = extractParam(meta, param);
+
+  if (!extracted) {
+    return getDep(param, (value: any) => value !== undefined && comparators[comparator](() => value));
+  }
+
+  return comparators[comparator](extractParam(meta, param));
+});
 
 const lengthComparators = {
   '>': (param: () => any) => is(({ length }: Lengthy) => length > param()),
