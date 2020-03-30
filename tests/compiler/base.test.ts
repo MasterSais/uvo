@@ -8,8 +8,20 @@ describe('base', () => {
       [name : string : length(>=10)]
       [roles : array(
         [string : length(<8)]
-      )]
+      ) : length(<2)]
     )]
+    
+    %o(
+      id %n %c(>$0) %c(<=$1) #id,
+      name %s %l(>=10),
+      roles %a(%s %l(<8)) %l(<2)
+    )
+
+    %object(
+      id : %number : %compare(>$0) : %compare(<=$1) : #id,
+      name : %string : %length(>=10),
+      roles : %array(%string : %length(<8)) : %length(<2)
+    )
   `)()([0, () => 100]);
 
   baseCasesWithParams(
