@@ -29,10 +29,12 @@ export const withErrors = <T, R>(validator: Validator<T, R>, commonErrorProcesso
 
           const result = validator(value, errorProcessor, meta);
 
+          const actualErrors = errors.filter(({ relevance }) => relevance.value);
+
           return {
             result,
-            errors: errors.length > 0
-              ? errors.filter(({ relevance }) => relevance.value).map(({ error }) => error)
+            errors: actualErrors.length > 0
+              ? actualErrors.map(({ error }) => error)
               : null
           };
         }
