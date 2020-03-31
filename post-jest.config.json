@@ -1,10 +1,11 @@
 {
   "moduleNameMapper": {
-    "^@lib/(.*)$": "<rootDir>/src/$1",
+    "^@lib/compiler/template$": "<rootDir>/compiler/index.js",
+    "^@lib/(.*)$": "<rootDir>/dist/es/index.min.js",
     "^@test/(.*)$": "<rootDir>/tests/$1"
   },
   "transform": {
-    "^.+\\.ts$": "babel-jest"
+    "^.+\\.(ts|js)$": "babel-jest"
   },
   "testRegex": "(/tests/.*)(test|spec)\\.ts$",
   "moduleFileExtensions": [

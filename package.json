@@ -8,6 +8,7 @@
     "lint": "eslint src/**/*.ts",
     "lint:fix": "yarn run lint --fix",
     "test": "jest --config jest.config.json",
+    "post-test": "jest --config post-jest.config.json",
     "test:watch": "yarn run test --watch",
     "build": "yarn run build:merge && yarn run build:modules && yarn run build:minify && yarn run build:doc",
     "build:merge": "concurrently \"yarn run build:merge:lib\" \"yarn run build:merge:compiler\"",
@@ -23,7 +24,7 @@
     "build:compiler-min": "terser --config-file config/terser.config.json -o ./compiler/index.js -- ./compiler/index.compiler.js && node config/const-to-let.js ./compiler/index.js",
     "build:types": "tsc -p config/tsconfig.types.json",
     "build:doc": "node config/generate-markdown.js README.md && doctoc README.md --github",
-    "predeploy": "yarn run lint && yarn run test && yarn run build"
+    "predeploy": "yarn run lint && yarn run build && yarn run post-test"
   },
   "sideEffects": false,
   "repository": {
@@ -51,16 +52,19 @@
   "license": "MIT",
   "homepage": "https://github.com/MasterSais/uvo",
   "devDependencies": {
+    "@babel/core": "7.9.0",
+    "@babel/preset-env": "7.9.0",
+    "@babel/preset-typescript": "7.9.0",
     "@types/jest": "25.1.4",
     "@types/node": "13.9.8",
     "@typescript-eslint/eslint-plugin": "2.26.0",
     "@typescript-eslint/parser": "2.26.0",
+    "babel-jest": "25.2.4",
     "concurrently": "5.1.0",
     "doctoc": "1.4.0",
     "eslint": "6.8.0",
     "jest": "25.2.4",
     "terser": "4.6.9",
-    "ts-jest": "25.3.0",
     "typescript": "3.8.3"
   },
   "typings": "./dist/types/index.d.ts"
