@@ -1,58 +1,31 @@
-[
-  {
-    "file": "./src/types.ts"
-  },
-  {
-    "file": "./src/names.ts"
-  },
-  {
-    "file": "./src/utilities.ts",
-    "removeExports": true
-  },
-  {
-    "dir": "./src/groupers"
-  },
-  {
-    "dir": "./src/spreaders"
-  },
-  {
-    "dir": "./src/validators"
-  },
-  {
-    "dir": "./src/processors"
-  },
-  {
-    "dir": "./src/containers"
-  },
-  {
-    "file": "./src/compiler/types.ts",
-    "removeExports": true
-  },
-  {
-    "file": "./src/compiler/lexemes.ts",
-    "removeExports": true
-  },
-  {
-    "file": "./src/compiler/lexical-analyzer.ts",
-    "removeExports": true
-  },
-  {
-    "file": "./src/compiler/semantic-rules.ts",
-    "removeExports": true
-  },
-  {
-    "file": "./src/compiler/semantic-analyzer.ts",
-    "removeExports": true
-  },
-  {
-    "file": "./src/compiler/validators.ts",
-    "removeExports": true
-  },
-  {
-    "file": "./src/compiler/composer.ts",
-    "removeExports": true
-  },
-  {
-    "file": "./src/compiler/template.ts"
-  }
-]
+{
+  "outDir": "dist",
+  "outFile": "index.ts",
+  "files": [
+    {
+      "file": "./src/types.ts"
+    },
+    {
+      "file": "./src/names.ts"
+    },
+    {
+      "file": "./src/utilities.ts",
+      "removeExports": true
+    },
+    {
+      "dir": "./src/groupers"
+    },
+    {
+      "dir": "./src/spreaders"
+    },
+    {
+      "dir": "./src/validators"
+    },
+    {
+      "dir": "./src/processors"
+    },
+    {
+      "dir": "./src/containers"
+    }
+  ]
+}

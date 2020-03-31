@@ -10,13 +10,17 @@
     "test": "jest --config ./jest.config.json",
     "test:watch": "yarn run test --watch",
     "build": "yarn run build:merge && yarn run build:modules && yarn run build:minify && yarn run build:doc",
-    "build:merge": "node merge-sources.js dist index.ts && node inline-docs.js ./dist/index.ts",
-    "build:modules": "concurrently --kill-others-on-fail \"yarn run build:umd\" \"yarn run build:es\" \"yarn run build:types\"",
-    "build:minify": "concurrently --kill-others-on-fail \"yarn run build:umd-min\" \"yarn run build:es-min\"",
+    "build:merge": "concurrently \"yarn run build:merge:lib\" \"yarn run build:merge:compiler\"",
+    "build:merge:lib": "node merge-sources.js merge-config.json && node build-doc.js ./dist/index.ts",
+    "build:merge:compiler": "node merge-sources.js compiler-merge-config.json",
+    "build:modules": "concurrently \"yarn run build:umd\" \"yarn run build:es\" \"yarn run build:compiler\" \"yarn run build:types\"",
+    "build:minify": "concurrently \"yarn run build:umd-min\" \"yarn run build:es-min\" \"yarn run build:compiler-min\"",
     "build:umd": "tsc -p tsconfig.umd.json",
     "build:umd-min": "terser --config-file ./terser.config.json -o ./dist/umd/index.min.js -- ./dist/umd/index.js",
     "build:es": "tsc -p tsconfig.es.json",
     "build:es-min": "terser --config-file ./terser.config.json -o ./dist/es/index.min.js -- ./dist/es/index.js && node const-to-let.js ./dist/es/index.min.js",
+    "build:compiler": "tsc -p tsconfig.compiler.json",
+    "build:compiler-min": "terser --config-file ./terser.config.json -o ./compiler/index.js -- ./compiler/index.compiler.js && node const-to-let.js ./compiler/index.js",
     "build:types": "tsc -p tsconfig.types.json",
     "build:doc": "node generate-markdown.js README.md && doctoc README.md --github",
     "predeploy": "yarn run lint && yarn run test && yarn run build"
@@ -29,7 +33,8 @@
   "files": [
     "dist/es",
     "dist/types",
-    "dist/umd"
+    "dist/umd",
+    "compiler/index.js"
   ],
   "keywords": [
     "es6",

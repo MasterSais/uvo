@@ -1,16 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 
-const [, , dir, file] = process.argv;
+const [, , configFile] = process.argv;
 
 const config = JSON.parse(
-  fs.readFileSync(path.resolve('merge-config.json'))
+  fs.readFileSync(path.resolve(configFile))
     .toString()
 );
 
 const files = [];
 
-config.forEach(part =>
+config.files.forEach(part =>
   part.file
     ? files.push(part)
     : fs.readdirSync(part.dir).forEach(file => files.push({ ...part, file: part.dir + '/' + file }))
@@ -27,8 +27,8 @@ const merged = files.reduce((parts, { file, removeExports }) =>
     ]), [])
   .join('\r\n\r\n');
 
-if (!fs.existsSync(dir)) {
-  fs.mkdirSync(dir);
+if (!fs.existsSync(config.outDir)) {
+  fs.mkdirSync(config.outDir);
 }
 
-fs.writeFileSync(dir + '/' + file, merged);
+fs.writeFileSync(config.outDir + '/' + config.outFile, merged);
