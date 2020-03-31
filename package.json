@@ -52,14 +52,14 @@
   "homepage": "https://github.com/MasterSais/uvo",
   "devDependencies": {
     "@types/jest": "25.1.4",
-    "@types/node": "13.9.5",
-    "@typescript-eslint/eslint-plugin": "2.25.0",
-    "@typescript-eslint/parser": "2.25.0",
+    "@types/node": "13.9.8",
+    "@typescript-eslint/eslint-plugin": "2.26.0",
+    "@typescript-eslint/parser": "2.26.0",
     "concurrently": "5.1.0",
     "doctoc": "1.4.0",
     "eslint": "6.8.0",
     "jest": "25.2.4",
-    "terser": "4.6.7",
+    "terser": "4.6.9",
     "ts-jest": "25.3.0",
     "typescript": "3.8.3"
   },
