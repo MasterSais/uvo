@@ -1,4 +1,4 @@
-import { DLM, EQ, GT, LFB, LRB, LSB, LT, MLP, NOT, RFB, RRB, RSB, SQ, VL } from './lexemes';
+import { VLD, INJ, REF, LRB, RRB, SQ, DLM, GT, LT, EQ, NOT, MLP, VL } from './lexemes';
 
 export const VALIDATOR_ENTRY_STATE = 0;
 
@@ -11,18 +11,16 @@ export const INJECTION_STATE = 6;
 export const STRING_STATE = 7;
 
 export const semanticRules = [
-  /* S0 */ [LSB, 1, RSB, [[0], []]],                                                  // validator closure
-  /* S1 */ [2, [[DLM, 1], []]],                                                       // validation sequence
-  /* S2 */ [VL, [[LRB, 3, RRB], []]],                                                 // validator
-  /* S3 */ [[[4], [0]]],                                                              // validator params
-  /* S4 */ [[[5], []], [[VL], [6], [7]]],                                             // simple validator params
+  /* S0 */ [[[1], [2], [VL]], [[DLM, 0], [0], []]],                                   // validators sequence
+  /* S1 */ [VLD, VL, [[LRB, 3, RRB], []]],                                            // validator
+  /* S2 */ [REF, VL],                                                                 // reference
+  /* S3 */ [[[0], [4]]],                                                              // validator params
+  /* S4 */ [[[5], []], [[VL], [INJ, VL], [REF, VL], [SQ, VL, SQ]]],                   // simple validator params
   /* S5 */ [[
     /* S5 */ [GT, [[EQ], []]],
     /* S5 */ [LT, [[EQ], []]],
     /* S5 */ [EQ],
     /* S5 */ [NOT, [[EQ], [MLP]]],
     /* S5 */ [MLP]
-  /* S5 */ ]],                                                                        // comparator
-  /* S6 */ [LFB, VL, RFB],                                                            // injection
-  /* S7 */ [SQ, VL, SQ]                                                               // string param
+  /* S5 */ ]]                                                                         // comparator
 ];

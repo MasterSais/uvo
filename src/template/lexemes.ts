@@ -4,12 +4,16 @@ let code = 0;
 
 const getCode = (): number => code++;
 
-export const LSB: LexemeScheme = {
-  literals: ['['], code: getCode()
+export const VLD: LexemeScheme = {
+  literals: ['@'], code: getCode()
 };
 
-export const RSB: LexemeScheme = {
-  literals: [']'], code: getCode()
+export const INJ: LexemeScheme = {
+  literals: ['$'], code: getCode()
+};
+
+export const REF: LexemeScheme = {
+  literals: ['#'], code: getCode()
 };
 
 export const LRB: LexemeScheme = {
@@ -20,23 +24,14 @@ export const RRB: LexemeScheme = {
   literals: [')'], code: getCode()
 };
 
-export const LFB: LexemeScheme = {
-  literals: ['{'], code: getCode(),
-  composerToken: true
-};
-
-export const RFB: LexemeScheme = {
-  literals: ['}'], code: getCode(),
-  composerToken: true
-};
-
 export const SQ: LexemeScheme = {
   literals: ['\''], code: getCode(),
   composerToken: true
 };
 
 export const DLM: LexemeScheme = {
-  literals: [':'], code: getCode()
+  literals: [','], code: getCode(),
+  composerToken: true
 };
 
 export const GT: LexemeScheme = {
@@ -65,7 +60,7 @@ export const MLP: LexemeScheme = {
 };
 
 export const OMT: LexemeScheme = {
-  literals: [' ', '\n', '\r'], code: getCode(),
+  literals: [' ', ':', '\n', '\r'], code: getCode(),
   omit: true
 };
 
@@ -78,7 +73,7 @@ export const VL: LexemeScheme = {
 export const lexemeBase = new Map<string, Lexeme>();
 
 ([
-  LSB, RSB, LRB, RRB, LFB, RFB, SQ, DLM, GT, LT, EQ, NOT, MLP, OMT, VL
+  VLD, INJ, REF, LRB, RRB, SQ, DLM, GT, LT, EQ, NOT, MLP, OMT, VL
 ])
   .forEach(
     ({ code, literals, compound, omit, composerToken }) => literals
