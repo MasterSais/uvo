@@ -1,12 +1,12 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/types",
+    "outDir": "../dist/types",
     "declaration": true,
     "emitDeclarationOnly": true,
     "removeComments": false
   },
   "include": [
-    "./dist/index.ts"
+    "../dist/index.ts"
   ]
 }

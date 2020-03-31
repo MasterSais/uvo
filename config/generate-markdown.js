@@ -4,7 +4,7 @@ const path = require('path');
 const [, , file] = process.argv;
 
 const config = JSON.parse(
-  fs.readFileSync(path.resolve('markdown-template.json'))
+  fs.readFileSync(path.resolve('config/markdown-template.json'))
     .toString()
 );
 
