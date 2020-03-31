@@ -1,6 +1,6 @@
 {
   "moduleNameMapper": {
-    "^@lib/compiler/template$": "<rootDir>/compiler/index.js",
+    "^@lib/template/template$": "<rootDir>/template/index.js",
     "^@lib/(.*)$": "<rootDir>/dist/es/index.min.js",
     "^@test/(.*)$": "<rootDir>/tests/$1"
   },

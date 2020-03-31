@@ -1,6 +1,6 @@
 {
   "outDir": "dist",
-  "outFile": "index.compiler.ts",
+  "outFile": "index.template.ts",
   "files": [
     {
       "file": "./src/types.ts",
@@ -35,35 +35,35 @@
       "removeExports": true
     },
     {
-      "file": "./src/compiler/types.ts",
+      "file": "./src/template/types.ts",
       "removeExports": true
     },
     {
-      "file": "./src/compiler/lexemes.ts",
+      "file": "./src/template/lexemes.ts",
       "removeExports": true
     },
     {
-      "file": "./src/compiler/lexical-analyzer.ts",
+      "file": "./src/template/lexical-analyzer.ts",
       "removeExports": true
     },
     {
-      "file": "./src/compiler/semantic-rules.ts",
+      "file": "./src/template/semantic-rules.ts",
       "removeExports": true
     },
     {
-      "file": "./src/compiler/semantic-analyzer.ts",
+      "file": "./src/template/semantic-analyzer.ts",
       "removeExports": true
     },
     {
-      "file": "./src/compiler/validators.ts",
+      "file": "./src/template/validators.ts",
       "removeExports": true
     },
     {
-      "file": "./src/compiler/composer.ts",
+      "file": "./src/template/composer.ts",
       "removeExports": true
     },
     {
-      "file": "./src/compiler/template.ts"
+      "file": "./src/template/template.ts"
     }
   ]
 }

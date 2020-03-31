@@ -1,4 +1,4 @@
-import { template } from '@lib/compiler/template';
+import { template } from '@lib/template/template';
 import { baseCasesWithParams } from '@test/utilities';
 
 // %o(

@@ -1,9 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../compiler"
+    "outDir": "../template"
   },
   "include": [
-    "../dist/index.compiler.ts"
+    "../dist/index.template.ts"
   ]
 }

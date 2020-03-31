@@ -5,7 +5,7 @@ Apis: `object`, `array`, `number`, `string`, `bool`, `date`, `compare` and `leng
 Comparators for `length` and `compare`: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
 
 ```js
-import { template } from 'uvo';
+import { template } from 'uvo/template';
 
 const validator = template(`
   [object( 

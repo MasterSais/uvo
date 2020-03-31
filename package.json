@@ -11,17 +11,17 @@
     "post-test": "jest --config post-jest.config.json",
     "test:watch": "yarn run test --watch",
     "build": "yarn run build:merge && yarn run build:modules && yarn run build:minify && yarn run build:doc",
-    "build:merge": "concurrently \"yarn run build:merge:lib\" \"yarn run build:merge:compiler\"",
+    "build:merge": "concurrently \"yarn run build:merge:lib\" \"yarn run build:merge:template\"",
     "build:merge:lib": "node config/merge-sources.js config/merge-config.json && node config/build-doc.js ./dist/index.ts",
-    "build:merge:compiler": "node config/merge-sources.js config/compiler-merge-config.json",
-    "build:modules": "concurrently \"yarn run build:umd\" \"yarn run build:es\" \"yarn run build:compiler\" \"yarn run build:types\"",
-    "build:minify": "concurrently \"yarn run build:umd-min\" \"yarn run build:es-min\" \"yarn run build:compiler-min\"",
+    "build:merge:template": "node config/merge-sources.js config/template-merge-config.json",
+    "build:modules": "concurrently \"yarn run build:umd\" \"yarn run build:es\" \"yarn run build:template\" \"yarn run build:types\"",
+    "build:minify": "concurrently \"yarn run build:umd-min\" \"yarn run build:es-min\" \"yarn run build:template-min\"",
     "build:umd": "tsc -p config/tsconfig.umd.json",
     "build:umd-min": "terser --config-file config/terser.config.json -o ./dist/umd/index.min.js -- ./dist/umd/index.js",
     "build:es": "tsc -p config/tsconfig.es.json",
     "build:es-min": "terser --config-file config/terser.config.json -o ./dist/es/index.min.js -- ./dist/es/index.js && node config/const-to-let.js ./dist/es/index.min.js",
-    "build:compiler": "tsc -p config/tsconfig.compiler.json",
-    "build:compiler-min": "terser --config-file config/terser.config.json -o ./compiler/index.js -- ./compiler/index.compiler.js && node config/const-to-let.js ./compiler/index.js",
+    "build:template": "tsc -p config/tsconfig.template.json",
+    "build:template-min": "terser --config-file config/terser.config.json -o ./template/index.js -- ./template/index.template.js && node config/const-to-let.js ./template/index.js",
     "build:types": "tsc -p config/tsconfig.types.json",
     "build:doc": "node config/generate-markdown.js README.md && doctoc README.md --github",
     "predeploy": "yarn run lint && yarn run build && yarn run post-test"
@@ -35,7 +35,7 @@
     "dist/es",
     "dist/types",
     "dist/umd",
-    "compiler/index.js"
+    "template/index.js"
   ],
   "keywords": [
     "es6",
