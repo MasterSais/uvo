@@ -3,7 +3,7 @@ export type LexemeScheme = {
   code: number;
   omit?: boolean;
   compound?: boolean;
-  composerToken?: boolean;
+  omitToken?: boolean;
 };
 
 export type Lexeme = {
@@ -11,7 +11,7 @@ export type Lexeme = {
   code: number;
   omit?: boolean;
   compound?: boolean;
-  composerToken?: boolean;
+  omitToken?: boolean;
 };
 
 export type Injections = Array<any> | Record<any, any>;

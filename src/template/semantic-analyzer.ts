@@ -1,7 +1,6 @@
-import { COMPARATOR_STATE, INJECTION_STATE, PARAMS_STATE, semanticRules, STRING_STATE, VALIDATOR_ENTRY_STATE } from './semantic-rules';
+import { GT, REF, VL, VLD, INJ, DLM } from './lexemes';
+import { COMPARATOR_STATE, PARAMS_STATE, semanticRules } from './semantic-rules';
 import { Lexeme, ValidatorData } from './types';
-
-export const VALIDATOR_ENTRY_LEXEME = '$e';
 
 const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, stack: Array<any>) => {
   let offset = index;
@@ -10,35 +9,27 @@ const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, 
     if (Number.isFinite(state[i])) {
       let nestedStack = stack;
 
-      if ([COMPARATOR_STATE, INJECTION_STATE, STRING_STATE, PARAMS_STATE].indexOf(state[i]) >= 0) {
+      if ([COMPARATOR_STATE, PARAMS_STATE].indexOf(state[i]) >= 0) {
         nestedStack.push([]);
 
         nestedStack = nestedStack[stack.length - 1];
       }
 
-      if (state[i] === VALIDATOR_ENTRY_STATE) {
-        nestedStack.push(VALIDATOR_ENTRY_LEXEME);
-      }
-
       offset = processState(semanticRules[state[i]], lexemes, offset, nestedStack);
 
-      if ([COMPARATOR_STATE, INJECTION_STATE, STRING_STATE].indexOf(state[i]) >= 0) {
+      if (state[i] === COMPARATOR_STATE) {
         if (nestedStack.length > 0) {
-          stack[stack.length - 1] = nestedStack.join(String());
+          stack[stack.length - 1] = {
+            code: GT.code,
+            value: nestedStack.join(String())
+          };
         } else {
           stack.pop();
         }
       }
 
       if (state[i] === PARAMS_STATE) {
-        stack[stack.length - 2] = {
-          name: stack[stack.length - 2],
-          params: stack.pop()
-        };
-      }
-
-      if (nestedStack[nestedStack.length - 1] === VALIDATOR_ENTRY_LEXEME) {
-        nestedStack.pop();
+        stack[stack.length - 2].params = stack.pop();
       }
 
       if (offset === null) {
@@ -72,9 +63,19 @@ const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, 
       return null;
     }
 
-    if (state[i].code !== undefined && lexemes[offset].code === state[i].code) {
-      if (lexemes[offset].composerToken) {
-        stack.push(lexemes[offset].value);
+    const lexeme = lexemes[offset];
+
+    if (state[i].code !== undefined && lexeme.code === state[i].code) {
+      if (!lexeme.omitToken) {
+        if (lexeme.code === VL.code && stack[stack.length - 1] && [VLD.code, REF.code, INJ.code].indexOf(stack[stack.length - 1].code) >= 0) {
+          stack[stack.length - 1].value = lexeme.value;
+        }
+        else if ([VLD.code, REF.code, INJ.code, DLM.code, VL.code].indexOf(lexeme.code) >= 0) {
+          stack.push({ code: lexeme.code, value: lexeme.value });
+        }
+        else {
+          stack.push(lexeme.value);
+        }
       }
 
       offset++;

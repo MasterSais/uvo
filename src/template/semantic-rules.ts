@@ -1,14 +1,8 @@
 import { VLD, INJ, REF, LRB, RRB, SQ, DLM, GT, LT, EQ, NOT, MLP, VL } from './lexemes';
 
-export const VALIDATOR_ENTRY_STATE = 0;
-
 export const PARAMS_STATE = 3;
 
 export const COMPARATOR_STATE = 5;
-
-export const INJECTION_STATE = 6;
-
-export const STRING_STATE = 7;
 
 export const semanticRules = [
   /* S0 */ [[[1], [2], [VL]], [[DLM, 0], [0], []]],                                   // validators sequence
