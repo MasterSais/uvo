@@ -20,9 +20,8 @@ export type CompilerMeta = {
   injections: Injections;
 };
 
-export type ValidatorWithParams = {
-  name: string;
+export type ValidatorData = {
+  code: number;
+  value: string;
   params: Array<any>;
 };
-
-export type ValidatorData = string | ValidatorWithParams;

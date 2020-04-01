@@ -34,6 +34,11 @@ export const DLM: LexemeScheme = {
   literals: [','], code: getCode()
 };
 
+export const DLM2: LexemeScheme = {
+  literals: [':'], code: getCode(),
+  omitToken: true
+};
+
 export const GT: LexemeScheme = {
   literals: ['>'], code: getCode()
 };
@@ -55,7 +60,7 @@ export const MLP: LexemeScheme = {
 };
 
 export const OMT: LexemeScheme = {
-  literals: [' ', ':', '\n', '\r'], code: getCode(),
+  literals: [' ', '\n', '\r'], code: getCode(),
   omit: true
 };
 
@@ -67,7 +72,7 @@ export const VL: LexemeScheme = {
 export const lexemeBase = new Map<string, Lexeme>();
 
 ([
-  VLD, INJ, REF, LRB, RRB, SQ, DLM, GT, LT, EQ, NOT, MLP, OMT, VL
+  VLD, INJ, REF, LRB, RRB, SQ, DLM, DLM2, GT, LT, EQ, NOT, MLP, OMT, VL
 ])
   .forEach(
     ({ code, literals, compound, omit, omitToken }) => literals

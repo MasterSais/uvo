@@ -4,7 +4,7 @@ import { withPromise } from '../containers/with-promise';
 import { consecutive } from '../groupers/consecutive';
 import { Validator } from '../types';
 import { CompilerMeta, Injections, ValidatorData } from './types';
-import { getValidator } from './validators';
+import { getValidator } from './validators/utilities';
 
 const wrapValidator = (containers: string, validator: Validator<any>) => {
   if (containers.indexOf('e') >= 0) {

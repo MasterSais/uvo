@@ -55,7 +55,11 @@
       "removeExports": true
     },
     {
-      "file": "./src/template/validators.ts",
+      "dir": "./src/template/validators",
+      "removeExports": true
+    },
+    {
+      "file": "./src/template/validators-base.ts",
       "removeExports": true
     },
     {
