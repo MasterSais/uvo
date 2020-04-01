@@ -2,11 +2,14 @@ import { isArray } from 'util';
 import { consecutive } from '../groupers/consecutive';
 import { V_OBJ } from '../names';
 import { Error, ErrorCallback, MetaData, ObjectLike, Validator } from '../types';
-import { applyError, isObject, isRegEx, isString, setMetaPath, setMetaValidator, throwValidatorError, toArray } from '../utilities';
+import { applyError, isDefined, isObject, isRegEx, isString, setMetaPath, setMetaValidator, throwValidatorError, toArray } from '../utilities';
 
 const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
   value.reduce((result, item) => result && isArray(item), true)
 );
+
+const getField = <T extends ObjectLike, R = T>(data: T, result: T, field: any) =>
+  isDefined(result[field]) ? result[field] : data[field];
 
 /**
  * {@link docs/validators/object2}
@@ -39,8 +42,8 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
               validators.reduce((result, [key, processor]) => (
                 (
                   isString(key)
-                    ? result[key as string] = processor(data[key as string], onError, setMetaPath(meta, key as string))
-                    : keys.forEach(objKey => ((key as RegExp).test(objKey) && (result[objKey] = processor(data[objKey], onError, setMetaPath(meta, objKey)))))
+                    ? result[key as string] = processor(getField(data, result, key), onError, setMetaPath(meta, key as string))
+                    : keys.forEach(objKey => ((key as RegExp).test(objKey) && (result[objKey] = processor(getField(data, result, objKey), onError, setMetaPath(meta, objKey)))))
                 ), result
               ), {})
             )

@@ -1,6 +1,6 @@
 import { V_UQ } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, isArray, isFunction, setMetaPath, setMetaValidator } from '../utilities';
+import { applyError, isArray, isDefined, isFunction, setMetaPath, setMetaValidator } from '../utilities';
 
 /**
  * {@link docs/validators/unique}
@@ -21,7 +21,7 @@ export const unique = <T>(field?: string | number | ((value: T) => any), error?:
           data.map((item, index) => {
             const value = mapper(item);
 
-            return valuesMap[value] === undefined
+            return !isDefined(valuesMap[value])
               ? (
                 valuesMap[value] = index, item
               )

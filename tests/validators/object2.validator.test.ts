@@ -1,5 +1,5 @@
 import { G_CONS, V_OBJ as VALIDATOR_NAME } from '@lib/names';
-import { gte } from '@lib/validators/is';
+import { gte, equal } from '@lib/validators/is';
 import { length, maxLen } from '@lib/validators/length';
 import { number } from '@lib/validators/number';
 import { object2 as validator } from '@lib/validators/object2';
@@ -63,6 +63,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         [[[['f1', number()], ['f2']]], { f1: 12, f2: 12 }],
         [[[['f1', number()], ['f2']]], { f1: 12, f2: null }],
         [[[['f1', number()]]], { f1: 12 }],
+        [[[['f1', number()], ['f1', equal(12)]]], { f1: '12' }, { f1: 12 }],
         [[[[/f1|f2/, number()]]], { f1: 12, f2: 12 }],
         [[[[/f1|f2/, number()]]], { f1: 12, f2: '12' }, { f1: 12, f2: 12 }],
         [[[[/f1|f2/, number()]]], { f1: 12, f2: 'abc' }, { f1: 12, f2: null }],
