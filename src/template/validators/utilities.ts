@@ -1,6 +1,6 @@
 import { callee } from '../../utilities';
 import { INJ, REF, SQ, VL, VLD } from '../lexemes';
-import { CompilerMeta, Lexeme, ValidatorData } from '../types';
+import { CompilerMeta, ValidatorData } from '../types';
 import { validatorBase } from '../validators-base';
 import { setDepBuilder } from './set-dep';
 

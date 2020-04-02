@@ -9,7 +9,7 @@ export const lexicalAnalyzer = (input: string): Array<Lexeme> => {
   for (const literal of input) {
     const lexeme = lexemeBase.get(literal);
 
-    if (lexeme === undefined) {
+    if (!lexeme) {
       throw `Unexpected literal: '${literal}'`;
     }
 
