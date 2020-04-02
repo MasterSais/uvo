@@ -8,7 +8,7 @@ export type LexemeScheme = {
 
 export type Lexeme = {
   value: string;
-  code: number;
+  codes: Array<number>;
   omit?: boolean;
   compound?: boolean;
   omitToken?: boolean;
@@ -24,4 +24,5 @@ export type ValidatorData = {
   code: number;
   value: string;
   params: Array<any>;
+  error?: number | string;
 };

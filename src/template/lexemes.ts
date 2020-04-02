@@ -8,6 +8,10 @@ export const VLD: LexemeScheme = {
   literals: ['@'], code: getCode()
 };
 
+export const ERR: LexemeScheme = {
+  literals: ['!'], code: getCode()
+};
+
 export const INJ: LexemeScheme = {
   literals: ['$'], code: getCode()
 };
@@ -71,12 +75,14 @@ export const VL: LexemeScheme = {
 
 export const lexemeBase = new Map<string, Lexeme>();
 
-([
-  VLD, INJ, REF, LRB, RRB, SQ, DLM, DLM2, GT, LT, EQ, NOT, MLP, OMT, VL
-])
+[VLD, ERR, INJ, REF, LRB, RRB, SQ, DLM, DLM2, GT, LT, EQ, NOT, MLP, OMT, VL]
   .forEach(
     ({ code, literals, compound, omit, omitToken }) => literals
       .forEach(
-        literal => lexemeBase.set(literal, { code, value: literal, compound, omit, omitToken })
+        literal => (
+          lexemeBase.has(literal)
+            ? lexemeBase.get(literal).codes.push(code)
+            : lexemeBase.set(literal, { codes: [code], value: literal, compound, omit, omitToken })
+        )
       )
   );

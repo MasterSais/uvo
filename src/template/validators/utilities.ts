@@ -4,7 +4,7 @@ import { CompilerMeta, Lexeme, ValidatorData } from '../types';
 import { validatorBase } from '../validators-base';
 import { setDepBuilder } from './set-dep';
 
-export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<Lexeme>) => (
+export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<ValidatorData>) => (
   (
     p1.code === INJ.code && (() => callee(meta.injections[p1.value])())
   ) || (

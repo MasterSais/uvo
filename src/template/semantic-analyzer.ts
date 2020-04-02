@@ -1,4 +1,5 @@
-import { GT, REF, VL, VLD, INJ, DLM } from './lexemes';
+import { isArray, isFiniteNumber } from '../utilities';
+import { DLM, ERR, GT, INJ, REF, VL, VLD } from './lexemes';
 import { COMPARATOR_STATE, PARAMS_STATE, semanticRules } from './semantic-rules';
 import { Lexeme, ValidatorData } from './types';
 
@@ -6,7 +7,7 @@ const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, 
   let offset = index;
 
   for (let i = 0; i < state.length; i++) {
-    if (Number.isFinite(state[i])) {
+    if (isFiniteNumber(state[i])) {
       let nestedStack = stack;
 
       if ([COMPARATOR_STATE, PARAMS_STATE].indexOf(state[i]) >= 0) {
@@ -39,7 +40,7 @@ const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, 
       continue;
     }
 
-    if (Array.isArray(state[i])) {
+    if (isArray(state[i])) {
       let nestedOffset = null;
 
       for (const nestedState of state[i]) {
@@ -63,22 +64,36 @@ const processState = (state: Array<any>, lexemes: Array<Lexeme>, index: number, 
       return null;
     }
 
-    const lexeme = lexemes[offset];
+    const lexeme = lexemes[offset++];
 
-    if (state[i].code !== undefined && lexeme.code === state[i].code) {
-      if (!lexeme.omitToken) {
-        if (lexeme.code === VL.code && stack[stack.length - 1] && [VLD.code, REF.code, INJ.code].indexOf(stack[stack.length - 1].code) >= 0) {
-          stack[stack.length - 1].value = lexeme.value;
-        }
-        else if ([VLD.code, REF.code, INJ.code, DLM.code, VL.code].indexOf(lexeme.code) >= 0) {
-          stack.push({ code: lexeme.code, value: lexeme.value });
-        }
-        else {
-          stack.push(lexeme.value);
-        }
+    if (state[i].code !== undefined && lexeme.codes.indexOf(state[i].code) >= 0) {
+      if (lexeme.omitToken) {
+        continue;
       }
 
-      offset++;
+      if (state[i].code === VL.code && stack[stack.length - 1] && [VLD.code, REF.code, INJ.code].indexOf(stack[stack.length - 1].code) >= 0) {
+        stack[stack.length - 1].value = lexeme.value;
+
+        continue;
+      }
+
+      if (state[i].code === ERR.code && lexemes[offset] && stack[stack.length - 1] && lexemes[offset].codes.indexOf(VL.code) >= 0) {
+        stack[stack.length - 1].error = lexemes[offset++].value;
+
+        i++;
+
+        continue;
+      }
+
+      const groupCode = [VLD.code, REF.code, INJ.code, DLM.code, VL.code].indexOf(state[i].code) >= 0;
+
+      if (groupCode) {
+        stack.push({ code: state[i].code, value: lexeme.value });
+
+        continue;
+      }
+
+      stack.push(lexeme.value);
 
       continue;
     }
@@ -93,6 +108,7 @@ export const semanticAnalyzer = (lexemes: Array<Lexeme>): Array<ValidatorData> =
   const stack: Array<ValidatorData> = [];
 
   const offset = processState(semanticRules[0], lexemes, 0, stack);
+  console.log(JSON.stringify(stack))
 
   if (offset !== lexemes.length) {
     throw 'Semantic error';

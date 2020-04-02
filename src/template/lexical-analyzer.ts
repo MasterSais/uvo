@@ -2,7 +2,7 @@ import { lexemeBase } from './lexemes';
 import { Lexeme } from './types';
 
 export const lexicalAnalyzer = (input: string): Array<Lexeme> => {
-  const lexemes = new Array(input.length);
+  const lexemes = new Array<Lexeme>(input.length);
 
   let index = 0;
 
@@ -15,7 +15,7 @@ export const lexicalAnalyzer = (input: string): Array<Lexeme> => {
 
     if (!lexeme.omit) {
       const compound = (
-        lexeme.compound && index > 0 && lexemes[index - 1].compound && lexeme.code === lexemes[index - 1].code
+        lexeme.compound && index > 0 && lexemes[index - 1].compound && lexeme.codes[0] === lexemes[index - 1].codes[0]
       );
 
       if (compound) {

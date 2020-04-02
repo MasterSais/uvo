@@ -59,11 +59,11 @@
     "@types/node": "13.9.8",
     "@typescript-eslint/eslint-plugin": "2.26.0",
     "@typescript-eslint/parser": "2.26.0",
-    "babel-jest": "25.2.4",
+    "babel-jest": "25.2.6",
     "concurrently": "5.1.0",
     "doctoc": "1.4.0",
     "eslint": "6.8.0",
-    "jest": "25.2.4",
+    "jest": "25.2.6",
     "terser": "4.6.10",
     "typescript": "3.8.3"
   },
