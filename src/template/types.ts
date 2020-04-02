@@ -18,6 +18,7 @@ export type Injections = Array<any> | Record<any, any>;
 
 export type CompilerMeta = {
   injections: Injections;
+  errors: Injections;
 };
 
 export type ValidatorData = {

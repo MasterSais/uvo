@@ -18,10 +18,10 @@ const wrapValidator = (containers: string, validator: Validator<any>) => {
   return validator;
 };
 
-export const composer = <T, R>(semanticTree: Array<ValidatorData>): ((containers?: string) => (injections: Injections) => Validator<T, R>) => {
+export const composer = <T, R>(semanticTree: Array<ValidatorData>): ((containers?: string) => (injections?: Injections, errors?: Injections) => Validator<T, R>) => {
   const validators: Array<Validator<any>> = [];
 
-  const meta: CompilerMeta = { injections: {} };
+  const meta: CompilerMeta = { injections: {}, errors: {} };
 
   for (const node of semanticTree) {
     validators.push(getValidator(meta, node));
@@ -36,6 +36,10 @@ export const composer = <T, R>(semanticTree: Array<ValidatorData>): ((containers
   return (containers: string = '') => {
     const wrapped = wrapValidator(containers, composed);
 
-    return (injections: Injections) => (meta.injections = injections, wrapped);
+    return (injections: Injections = {}, errors: Injections = {}) => (
+      meta.injections = injections,
+      meta.errors = errors,
+      wrapped
+    );
   };
 };

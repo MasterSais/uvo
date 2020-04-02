@@ -6,17 +6,15 @@ import { getValidator } from './utilities';
 export const objectBuilder = (meta: CompilerMeta, { params }: ValidatorData) => {
   const fields: Array<Array<any>> = [[]];
 
-  for (let i = 0; i < params.length; i++) {
-    if (params[i].code === DLM.code) {
-      fields.push([]);
-    } else {
-      fields[fields.length - 1].push(
-        params[i].code === VL.code
-          ? params[i].value
-          : getValidator(meta, params[i])
-      );
-    }
-  }
+  params.forEach(param => (
+    param.code === DLM.code
+      ? fields.push([])
+      : (
+        fields[fields.length - 1].push(
+          param.code === VL.code ? param.value : getValidator(meta, param)
+        )
+      )
+  ));
 
   return object2(fields as any);
 };
