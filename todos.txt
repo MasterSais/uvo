@@ -1,0 +1,4 @@
+  - throwable container for validators: throwable('name', () => any)
+    e.g. wrap Array and remove input array check
+  - logs tracking in dev mode
+    e.g. 'compare': 12 with 13
