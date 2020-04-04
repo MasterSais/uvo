@@ -29,12 +29,12 @@ export const baseCases = <T = any, R = T>(validator: (...args: any) => Validator
     }),
     (validator as any).not && (
       wrongCases.forEach((input, index) => {
-        test('› not r_' + index, () => {
+        test('not r_' + index, () => {
           expect((validator as any).not(...params)(input)).toEqual(processor ? processor(input) : input);
         });
       }),
       rightCases.forEach((input, index) => {
-        test('› not w_' + index, () => {
+        test('not w_' + index, () => {
           expect((validator as any).not(...params)(input)).toBeNull();
         });
       })
@@ -59,7 +59,7 @@ export const baseCasesWithParams = <T = any, R = T>(validator: (...args: any) =>
     }),
     (validator as any).not && (
       wrongCases.forEach(([params, input], index) => {
-        test('› not r_' + index, () => {
+        test('not r_' + index, () => {
           expect((validator as any).not(...params)(input)).toEqual(
             processor
               ? processor(input)
@@ -68,7 +68,7 @@ export const baseCasesWithParams = <T = any, R = T>(validator: (...args: any) =>
         });
       }),
       rightCases.forEach(([params, input], index) => {
-        test('› not w_' + index, () => {
+        test('not w_' + index, () => {
           expect((validator as any).not(...params)(input)).toEqual(null);
         });
       })

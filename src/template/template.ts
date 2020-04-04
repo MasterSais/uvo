@@ -11,3 +11,6 @@ export const template = <T, R>(input: string): ((containers?: string) => (inject
     )
   )
 );
+
+export const tml = <T, R>([input]: TemplateStringsArray): ((containers?: string) => (injections?: Injections, errors?: Injections) => Validator<T, R>) =>
+  template(input);

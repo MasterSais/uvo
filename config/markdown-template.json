@@ -97,9 +97,15 @@
         ]
       },
       {
-        "title": "Templating (alpha)",
+        "title": "Templating (alpha 2)",
         "content": [
           "./docs/markdown/templating.md"
+        ]
+      },
+      {
+        "title": "Logs",
+        "content": [
+          "./docs/markdown/logs.md"
         ]
       },
       {

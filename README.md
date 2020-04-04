@@ -75,7 +75,8 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`setDep`](#setdep)
     - [`setVDep`](#setvdep)
     - [`useDefault`](#usedefault)
-- [`Templating (alpha)`](#templating-alpha)
+- [`Templating (alpha 2)`](#templating-alpha-2)
+- [`Logs`](#logs)
 - [`Custom validators`](#custom-validators)
 - [`Examples`](#examples)
   - [`Schema with custom user errors`](#schema-with-custom-user-errors)
@@ -1813,25 +1814,32 @@ simpleOne('Stringuuuuuuuuuu');
 // => 'Stringuuuuuuuuuu'
 ```
 
-## `Templating (alpha)`
+## `Templating (alpha 2)`
 New templating api provides string based validators creation.
 
-Apis: `object`, `array`, `number`, `string`, `bool`, `date`, `compare` and `length`.
+Apis: `object | o`, `array | a`, `number | n`, `string | s`, `bool | b`, `date | d`, `compare | c` and `length | l`.
 
 Comparators for `length` and `compare`: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
+
+Symbol `$` declares injection name.
+
+Symbol `#` sets or gets reference.
 
 ```js
 import { template } from 'uvo/template';
 
 const validator = template(`
-  [object( 
-    [id : number : compare(>0) : compare(<=100)]
-    [name : string : length(>=10)]
-    [roles : array(
-      [string : length(<8)]
-    )]
-  )]
-`);
+  @object(
+    id : @number : @compare(>$min) : @compare(<=$max),
+    name : @string : @length(>=10),
+    roles : @array(
+      @string : @length(<8)
+    )
+  )
+`)(/* containers here. will be removed */)({
+  min: 0,
+  max: () => 100
+});
 
 validator({ id: 1, name: 'MasterSais', roles: ['Admin'] });
 // => { id: 1, name: 'MasterSais', roles: ['Admin'] }
@@ -1841,6 +1849,43 @@ validator({ id: -1, name: 'Master' });
 
 validator({ id: -1, name: 'Master', roles: ['NotAdmin'] });
 // => { id: null, name: null, roles: [null] }
+
+// the shortest version
+const shortestOne = tml`
+  @o(
+    id @n @c(>$0) @c(<=$1),
+    name @s @l(>=10),
+    roles @a(
+      @s @l(<8)
+    )
+  )
+`(/* containers here. will be removed */)([0, () => 100]);
+```
+## `Logs`
+`withMeta` container provides logs capturing via `onLogs` parameter.
+
+```js
+import * as v from 'uvo';
+
+v.withMeta(
+  v.object2([
+    ['id', v.empty.not(), v.number(), v.gte.not(0)],
+    ['name', v.string(), v.maxLen(25)]
+  ]), console.log
+)({
+  id: 10,
+  name: 'MasterSais'
+})
+// => { id: 10, name: 'MasterSais' }
+//
+// [
+//   ['object', { id: 10, name: 'MasterSais' }, []],
+//   ['not:empty', 10, [null, undefined, '']],
+//   ['number', 10, []],
+//   ['not:gte', 10, [0]],
+//   ['string', 'MasterSais', []],
+//   ['maxLen', 'MasterSais', [25]]
+// ]
 ```
 ## `Custom validators`
 You can create your own validator or processor.

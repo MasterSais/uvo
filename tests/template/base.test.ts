@@ -1,4 +1,4 @@
-import { template } from '@lib/template/template';
+import { template, tml } from '@lib/template/template';
 import { baseCasesWithParams } from '@test/utilities';
 
 '!->[10, 20, 30]';
@@ -31,7 +31,7 @@ describe('base', () => {
 });
 
 describe('base › short', () => {
-  const validator = template(`
+  const validator = tml`
     @o(
       id @n @c(>$0) @c(<=$1) #id,
       name @s @l(>=10),
@@ -39,7 +39,7 @@ describe('base › short', () => {
         @s @l(<8)
       )
     )
-  `)();
+  `();
 
   baseCasesWithParams(
     () => validator([0, () => 100]),

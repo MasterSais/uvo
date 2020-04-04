@@ -24,7 +24,7 @@ const EMPTY_VALUES = [null, undefined, ''];
 export const empty = makeInvertible<(<T>(error?: Error) => Validator<T>)>(
   (
     (invert: boolean) => (
-      <T>(error?: Error) => isFactory(invertError(V_EM, invert), [EMPTY_VALUES])(
+      <T>(error?: Error) => isFactory(invertError(V_EM, invert), EMPTY_VALUES)(
         (value: T) => invertCondition(EMPTY_VALUES.indexOf(value as any) >= 0, invert), error
       )
     )

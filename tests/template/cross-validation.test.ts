@@ -1,4 +1,4 @@
-import { template } from '@lib/template/template';
+import { template, tml } from '@lib/template/template';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('cross validation', () => {
@@ -26,13 +26,13 @@ describe('cross validation', () => {
 });
 
 describe('cross validation › short', () => {
-  const validator = template(`
+  const validator = tml`
     @o(
       a @d @c(>$now) #a,
       b @d @c(>=#a) #b,
       c @d @c(>=#b)
     )
-  `)()({
+  `()({
     now: 1000
   });
 

@@ -24,7 +24,7 @@ export const object = <T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: E
 
   return (data: T, onError?: ErrorCallback, meta?: MetaData): R =>
     (
-      extendMeta(meta, data, V_OBJ, [spec]),
+      extendMeta(meta, data, V_OBJ),
 
       isObject(data)
         ? (

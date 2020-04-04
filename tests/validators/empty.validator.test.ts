@@ -25,7 +25,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('with meta', () => {
     withErrorCases<any>(
-      validator(errorMetaCase([], [[null, undefined, '']], VALIDATOR_NAME)),
+      validator(errorMetaCase([], [null, undefined, ''], VALIDATOR_NAME)),
       [[3]],
       emptyMeta()
     );
@@ -40,7 +40,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('with meta › not', () => {
     withErrorCases<any>(
-      validator.not(errorMetaCase([], [[null, undefined, '']], invertError(VALIDATOR_NAME, true))),
+      validator.not(errorMetaCase([], [null, undefined, ''], invertError(VALIDATOR_NAME, true))),
       [[null]],
       emptyMeta()
     );

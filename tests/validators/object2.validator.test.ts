@@ -106,7 +106,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('with meta', () => {
     withErrorCases<any>(
-      validator(null, errorMetaCase([], [null], VALIDATOR_NAME)),
+      validator(null, errorMetaCase([], [], VALIDATOR_NAME)),
       [[1]],
       emptyMeta()
     );

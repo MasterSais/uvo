@@ -34,7 +34,7 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
     spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
 
   return (data: T, onError?: ErrorCallback, meta?: MetaData): R => {
-    extendMeta(meta, data, V_OBJ, [spec]);
+    extendMeta(meta, data, V_OBJ);
 
     if (isObject(data)) {
       const keys = Object.keys(data);
