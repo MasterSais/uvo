@@ -28,32 +28,30 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
     ), true)
   );
 
-  if (isSpecValid || !spec) {
-    const validators: Array<[string | RegExp, Validator<any, any>]> =
-      spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
+  spec && !isSpecValid && throwValidatorError(V_OBJ);
 
-    return (data: T, onError?: ErrorCallback, meta?: MetaData): R => {
-      if (isObject(data)) {
-        const keys = Object.keys(data);
+  const validators: Array<[string | RegExp, Validator<any, any>]> =
+    spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
 
-        return (
-          validators
-            ? (
-              validators.reduce((result, [key, processor]) => (
-                (
-                  isString(key)
-                    ? result[key as string] = processor(getField(data, result, key), onError, setMetaPath(meta, key as string))
-                    : keys.forEach(objKey => ((key as RegExp).test(objKey) && (result[objKey] = processor(getField(data, result, objKey), onError, setMetaPath(meta, objKey)))))
-                ), result
-              ), {})
-            )
-            : data
-        ) as R;
-      }
+  return (data: T, onError?: ErrorCallback, meta?: MetaData): R => {
+    if (isObject(data)) {
+      const keys = Object.keys(data);
 
-      return applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
-    };
-  }
+      return (
+        validators
+          ? (
+            validators.reduce((result, [key, processor]) => (
+              (
+                isString(key)
+                  ? result[key as string] = processor(getField(data, result, key), onError, setMetaPath(meta, key as string))
+                  : keys.forEach(objKey => ((key as RegExp).test(objKey) && (result[objKey] = processor(getField(data, result, objKey), onError, setMetaPath(meta, objKey)))))
+              ), result
+            ), {})
+          )
+          : data
+      ) as R;
+    }
 
-  return throwValidatorError(V_OBJ);
+    return applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
+  };
 };

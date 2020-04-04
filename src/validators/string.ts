@@ -14,6 +14,11 @@ export const string = makeCheckable<(<T>(error?: Error) => Validator<T, string>)
           && !isObjectLike(value)
           && !isFunction(value)
         )
-          ? (checkOnly ? value as any : String(value)) : applyError(error, onError, setMetaValidator(meta, V_STR))
+          ? (
+            checkOnly
+              ? value as any
+              : String(value)
+          )
+          : applyError(error, onError, setMetaValidator(meta, V_STR))
     )
 );

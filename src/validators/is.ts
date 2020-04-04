@@ -1,6 +1,6 @@
 import { V_DEF, V_EM, V_EQ, V_GTE, V_IS, V_LTE, V_OOF, V_REG } from '../names';
 import { Error, Validator } from '../types';
-import { invertCondition, invertError, isArray, isFactory, isOneType, isRegEx, isString, makeInvertible, throwValidatorError } from '../utilities';
+import { invertCondition, invertError, isArray, isDefined, isFactory, isOneType, isRegEx, isString, makeInvertible, throwValidatorError } from '../utilities';
 
 /**
  * {@link docs/validators/is}
@@ -12,7 +12,7 @@ export const is = isFactory(V_IS);
  */
 export const defined = (
   <T>(error?: Error) => isFactory(V_DEF)(
-    (value: T) => value !== undefined, error
+    (value: T) => isDefined(value), error
   )
 );
 

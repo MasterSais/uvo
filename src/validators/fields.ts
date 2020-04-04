@@ -38,10 +38,7 @@ export const fields = <T extends ObjectLike>(spec: FieldsSpec, error?: Error): V
       ? (
         (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
           (
-            isObject(value)
-            && (
-              fieldsMap.op(value, [spec]) > 0
-            )
+            isObject(value) && fieldsMap.op(value, [spec]) > 0
           )
             ? value : applyError(error, onError, setMetaValidator(meta, V_FIELDS, [spec]))
       )

@@ -1,6 +1,10 @@
 import { template } from '@lib/template/template';
 import { baseCasesWithParams } from '@test/utilities';
 
+'!->[10, 20, 30]';
+
+'~p ~e';
+
 describe('base', () => {
   const validator = template(`
     @object(
@@ -10,10 +14,10 @@ describe('base', () => {
         @string : @length(<8)
       )
     )
-  `)()([0, () => 100]);
+  `)();
 
   baseCasesWithParams(
-    () => validator,
+    () => validator([0, () => 100]),
     [
       [[], { id: 1, name: 'MasterSais', roles: [] }],
       [[], { id: 100, name: 'MasterSais', roles: ['ADMIN'] }],
@@ -35,10 +39,10 @@ describe('base › short', () => {
         @s @l(<8)
       )
     )
-  `)()([0, () => 100]);
+  `)();
 
   baseCasesWithParams(
-    () => validator,
+    () => validator([0, () => 100]),
     [
       [[], { id: 1, name: 'MasterSais', roles: [] }],
       [[], { id: 100, name: 'MasterSais', roles: ['ADMIN'] }],

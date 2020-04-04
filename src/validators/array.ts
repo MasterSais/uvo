@@ -11,20 +11,18 @@ export const array = <T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>
 
   const isValidSequence = isValidatorsSequence(validators);
 
-  if (!itemSpec || isValidSequence) {
-    const validator = isValidSequence && consecutive(...validators);
+  itemSpec && !isValidSequence && throwValidatorError(V_ARR);
 
-    return (
-      (data: Array<any>, onError?: ErrorCallback, meta?: MetaData): Array<T> =>
-        isArray(data)
-          ? (
-            validator
-              ? data.map((value, index) => validator(value, onError, setMetaPath(meta, index)))
-              : data
-          )
-          : applyError(error, onError, setMetaValidator(meta, V_ARR, [data]))
-    );
-  } else {
-    return throwValidatorError(V_ARR);
-  }
+  const validator = isValidSequence && consecutive(...validators);
+
+  return (
+    (data: Array<any>, onError?: ErrorCallback, meta?: MetaData): Array<T> =>
+      isArray(data)
+        ? (
+          validator
+            ? data.map((value, index) => validator(value, onError, setMetaPath(meta, index)))
+            : data
+        )
+        : applyError(error, onError, setMetaValidator(meta, V_ARR, []))
+  );
 };

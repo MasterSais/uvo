@@ -15,6 +15,11 @@ export const number = makeCheckable<(<T>(error?: Error) => Validator<T, number>)
           && !isArray(value)
           && isFinite(value)
         )
-          ? (checkOnly ? value as any : +value) : applyError(error, onError, setMetaValidator(meta, V_NUM))
+          ? (
+            checkOnly
+              ? value as any
+              : +value
+          )
+          : applyError(error, onError, setMetaValidator(meta, V_NUM))
     )
 );

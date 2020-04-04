@@ -13,6 +13,11 @@ export const date = makeCheckable<(<T>(error?: Error) => Validator<T, number>), 
           value !== null
           && !isNaN(new Date(value as any) as any)
         )
-          ? (checkOnly ? value as any : new Date(value as any).getTime()) : applyError(error, onError, setMetaValidator(meta, V_DTE))
+          ? (
+            checkOnly
+              ? value as any
+              : new Date(value as any).getTime()
+          )
+          : applyError(error, onError, setMetaValidator(meta, V_DTE))
     )
 );

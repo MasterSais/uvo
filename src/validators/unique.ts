@@ -16,7 +16,9 @@ export const unique = <T>(field?: string | number | ((value: T) => any), error?:
 
       meta = setMetaValidator(meta, V_UQ, [data]);
 
-      return isArray(data)
+      return (
+        isArray(data)
+      )
         ? (
           data.map((item, index) => {
             const value = mapper(item);

@@ -17,21 +17,19 @@ export const object = <T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: E
       .forEach((key) => specList.push([key, toArray(spec[key])]))
   );
 
-  if (isSpecObject || !spec) {
-    const validators: Array<[string, Validator<any, any>]> =
-      spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
+  spec && !isSpecObject && throwValidatorError(V_OBJ);
 
-    return (data: T, onError?: ErrorCallback, meta?: MetaData): R =>
-      isObject(data)
-        ? (
-          validators
-            ? validators.reduce((result: R, [key, validator]) => (
-              result[key as keyof R] = validator(data[key], onError, setMetaPath(meta, key)), result), {} as R
-            )
-            : data as unknown as R
-        )
-        : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
-  }
+  const validators: Array<[string, Validator<any, any>]> =
+    spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
 
-  return throwValidatorError(V_OBJ);
+  return (data: T, onError?: ErrorCallback, meta?: MetaData): R =>
+    isObject(data)
+      ? (
+        validators
+          ? validators.reduce((result: R, [key, validator]) => (
+            result[key as keyof R] = validator(data[key], onError, setMetaPath(meta, key)), result), {} as R
+          )
+          : data as unknown as R
+      )
+      : applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
 };
