@@ -4,6 +4,8 @@ import { CompilerMeta, ValidatorData } from '../types';
 import { getValidator } from './utilities';
 
 export const objectBuilder = (meta: CompilerMeta, { params }: ValidatorData) => {
+  if (!params) return object2();
+  
   const fields: Array<Array<any>> = [[]];
 
   params.forEach(param => (

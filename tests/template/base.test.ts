@@ -1,14 +1,22 @@
 import { template, tml } from '@lib/template/template';
 import { baseCasesWithParams } from '@test/utilities';
 
+'#value(10)'; // set 10 to 'value' dep
+
+'#value(@string)'; // set validator to 'value' dep
+
+'##value'; // force fetching from meta to val. seq.
+
+'->[10, 20, 30]';
+
 '!->[10, 20, 30]';
 
-'~p ~e';
+'~p ~e ~m';
 
 describe('base', () => {
   const validator = template(`
     @object(
-      id : @number!0 : @compare(>$0) : @compare(<=$1) : #id,
+      id : @number : @compare(>$0) : @compare(<=$1) : #id,
       name : @string : @length(>=10),
       roles : @array(
         @string : @length(<8)

@@ -28,9 +28,7 @@
   },
   "include": [
     "./src/**/*.ts",
-    "./dist/**/*.ts",
     "./tests/**/*.ts",
-    "./docs/**/*.ts",
     "./template/**/*.ts"
   ]
 }

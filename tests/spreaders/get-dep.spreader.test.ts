@@ -36,7 +36,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
     test('base › r_2', () => {
       expect(
-        validator('f1', (f1: any) => null)('value', null, { ...emptyMeta(), _deps: { f1: '' } })
+        validator('f1', () => null)('value', null, { ...emptyMeta(), _deps: { f1: '' } })
       ).toEqual('value');
     });
 
@@ -54,7 +54,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
     test('base › w_0', () => {
       expect(
-        () => validator('f1', (_: any) => 1 as unknown as any)('value', null, { ...emptyMeta(), _deps: { f1: '' } })
+        () => validator('f1', () => 1 as any)('value', null, { ...emptyMeta(), _deps: { f1: '' } })
       ).toThrow(VALIDATOR_NAME);
     });
   });

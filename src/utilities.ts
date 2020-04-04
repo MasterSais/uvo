@@ -99,7 +99,7 @@ export const isFactory = (validator: string, params?: Array<any>) =>
             (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
               (
                 extendMeta(meta, value, validator, params),
-                
+
                 comparator(value)
                   ? value
                   : applyError(error, onError, meta)
@@ -117,7 +117,7 @@ export const lengthFactory = (validator: string, comparator: ((value: number, le
           (
             (isFiniteNumber(len) && len >= 0)
               ? (
-                (value: T) => invertCondition(isLengthy(value) && comparator(value.length, len), invert)
+                (value: T) => isLengthy(value) && invertCondition(comparator(value.length, len), invert)
               )
               : throwValidatorError(invertError(validator, invert))
           ), error
@@ -135,7 +135,7 @@ export const multipleFactory = (validator: string) => (
           (
             isNumber(multiplier)
               ? (
-                (value: number) => invertCondition(isNumber(value) && value % multiplier === 0, invert)
+                (value: number) => isNumber(value) && invertCondition(value % multiplier === 0, invert)
               )
               : throwValidatorError(invertError(validator, invert))
           ), error

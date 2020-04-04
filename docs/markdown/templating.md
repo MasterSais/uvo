@@ -9,7 +9,7 @@ Symbol `$` declares injection name.
 Symbol `#` sets or gets reference.
 
 ```js
-import { template } from 'uvo/template';
+import { template, tml } from 'uvo/template';
 
 const validator = template(`
   @object(
