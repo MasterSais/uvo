@@ -1,6 +1,6 @@
 import { V_UQ } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, isArray, isDefined, isFunction, setMetaPath, setMetaValidator } from '../utilities';
+import { applyError, extendMeta, isArray, isDefined, isFunction, setMetaPath } from '../utilities';
 
 /**
  * {@link docs/validators/unique}
@@ -14,7 +14,7 @@ export const unique = <T>(field?: string | number | ((value: T) => any), error?:
     (data: Array<T>, onError?: ErrorCallback, meta?: MetaData): Array<T> => {
       const valuesMap = {};
 
-      meta = setMetaValidator(meta, V_UQ, [data]);
+      extendMeta(meta, data, V_UQ, [data]);
 
       return (
         isArray(data)

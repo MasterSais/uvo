@@ -2,7 +2,7 @@ import { isArray } from 'util';
 import { consecutive } from '../groupers/consecutive';
 import { V_OBJ } from '../names';
 import { Error, ErrorCallback, MetaData, ObjectLike, Validator } from '../types';
-import { applyError, isDefined, isObject, isRegEx, isString, setMetaPath, setMetaValidator, throwValidatorError, toArray } from '../utilities';
+import { applyError, extendMeta, isDefined, isObject, isRegEx, isString, setMetaPath, throwValidatorError, toArray } from '../utilities';
 
 const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
   value.reduce((result, item) => result && isArray(item), true)
@@ -34,6 +34,8 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
     spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
 
   return (data: T, onError?: ErrorCallback, meta?: MetaData): R => {
+    extendMeta(meta, data, V_OBJ, [spec]);
+
     if (isObject(data)) {
       const keys = Object.keys(data);
 
@@ -52,6 +54,6 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
       ) as R;
     }
 
-    return applyError(error, onError, setMetaValidator(meta, V_OBJ, [spec]));
+    return applyError(error, onError, meta);
   };
 };

@@ -8,9 +8,11 @@ export const setMetaPath = (meta: MetaData, path: string | number | Array<any>):
   path: meta.path.concat(path)
 });
 
-export const setMetaValidator = (meta: MetaData, validator: string, params: Array<any> = []): MetaData => (meta && {
-  ...meta, params, validator
-});
+export const extendMeta = (meta: MetaData, value: any, validator: string, params: Array<any> = []): MetaData => (meta && (
+  meta.validator = validator,
+  meta.params = params,
+  meta._logs.push([validator, value, params])
+), meta);
 
 export const postToMeta = <T>(value: T, field: string, meta: MetaData): T => (
   meta
@@ -95,9 +97,13 @@ export const isFactory = (validator: string, params?: Array<any>) =>
         isFunction(comparator)
           ? (
             (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-              comparator(value)
-                ? value
-                : applyError(error, onError, setMetaValidator(meta, validator, params))
+              (
+                extendMeta(meta, value, validator, params),
+                
+                comparator(value)
+                  ? value
+                  : applyError(error, onError, meta)
+              )
           )
           : throwValidatorError(validator)
       )

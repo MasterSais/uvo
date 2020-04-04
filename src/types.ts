@@ -20,6 +20,7 @@ export declare type MetaData = {
   validator?: string;
   params: Array<any>;
   _deps: ObjectLike;
+  _logs: Array<[string, any, Array<any>]>;
 };
 
 /**

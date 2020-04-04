@@ -1,6 +1,6 @@
 import { V_BLN } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, makeCheckable, setMetaValidator } from '../utilities';
+import { applyError, extendMeta, makeCheckable } from '../utilities';
 
 const possibleValues = [false, true, 0, 1, '0', '1', 'false', 'true'];
 
@@ -15,6 +15,8 @@ export const bool = makeCheckable<(<T>(error?: Error) => Validator<T, boolean>),
           possibleValues.indexOf(value as any)
         );
 
+        extendMeta(meta, value, V_BLN);
+
         return (
           index >= 0
             ? (
@@ -22,7 +24,7 @@ export const bool = makeCheckable<(<T>(error?: Error) => Validator<T, boolean>),
                 ? possibleValues[index] as any
                 : Boolean(index % 2)
             )
-            : applyError(error, onError, setMetaValidator(meta, V_BLN))
+            : applyError(error, onError, meta)
         );
       }
     )

@@ -192,6 +192,7 @@ type MetaData = {
   validator?: string;
   params: Array<any>;
   _deps: Record<string, any>;
+  _logs: Array<[string, any, Array<any>]>;
 };
 ```
 
@@ -1546,9 +1547,9 @@ simpleOne('Stringuuuuuuuuuu');
 
 ```js
 // scheme
-withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>
+withMeta<T, R>(validator: Validator<T, R>, onLogs?: (logs: Array<[string, any, Array<any>]>): Validator<T, R>
 ```
-Provides meta structure.
+Provides meta structure. Can catch scheme logs.
 
 ```js
 import * as v from 'uvo';

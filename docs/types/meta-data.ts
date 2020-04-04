@@ -12,6 +12,8 @@
  * @property {Array} params - Validator input params.
  * 
  * @property {ObjectLike} _deps - Internal dependencies storage.
+ * 
+ * @property {Array} _logs - Internal logs storage.
  */
 
 //#example
@@ -20,4 +22,5 @@ type MetaData = {
   validator?: string;
   params: Array<any>;
   _deps: Record<string, any>;
+  _logs: Array<[string, any, Array<any>]>;
 };

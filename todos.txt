@@ -1,2 +1,0 @@
-  - logs tracking in dev mode
-    e.g. 'compare': 12 with 13

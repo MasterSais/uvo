@@ -2,7 +2,7 @@ import { Error, MetaData, Validator } from '@lib/types';
 
 export const notNullError = () => 'error';
 
-export const emptyMeta = (): MetaData => ({ _deps: {}, path: [], params: [] });
+export const emptyMeta = (): MetaData => ({ _deps: {}, _logs: [], path: [], params: [] });
 
 const _emptyFunction = (): null => null;
 export const emptyFunction = () => _emptyFunction;

@@ -1,6 +1,6 @@
 import { V_STR } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, isDefined, isFunction, isObjectLike, makeCheckable, setMetaValidator } from '../utilities';
+import { applyError, extendMeta, isDefined, isFunction, isObjectLike, makeCheckable } from '../utilities';
 
 /**
  * {@link docs/validators/string}
@@ -10,15 +10,18 @@ export const string = makeCheckable<(<T>(error?: Error) => Validator<T, string>)
     (
       (value: T, onError?: ErrorCallback, meta?: MetaData): string =>
         (
-          isDefined(value)
-          && !isObjectLike(value)
-          && !isFunction(value)
-        )
-          ? (
-            checkOnly
-              ? value as any
-              : String(value)
+          extendMeta(meta, value, V_STR),
+          (
+            isDefined(value)
+            && !isObjectLike(value)
+            && !isFunction(value)
           )
-          : applyError(error, onError, setMetaValidator(meta, V_STR))
+            ? (
+              checkOnly
+                ? value as any
+                : String(value)
+            )
+            : applyError(error, onError, meta)
+        )
     )
 );

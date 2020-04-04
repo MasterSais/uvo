@@ -1,13 +1,15 @@
 /**
  * @name {withMeta}
  * 
- * @scheme {withMeta<T, R>(validator: Validator<T, R>): Validator<T, R>}
+ * @scheme {withMeta<T, R>(validator: Validator<T, R>, onLogs?: (logs: Array<[string, any, Array<any>]>): Validator<T, R>}
  * 
- * @desc Provides meta structure.
+ * @desc Provides meta structure. Can catch scheme logs.
  * 
  * {@link docs/type-container}
  * 
  * @param {Validator} validator Validator.
+ * 
+ * @param {callback=} onLogs On Logs callback.
  * 
  * {@link docs/validator-result}
  * 

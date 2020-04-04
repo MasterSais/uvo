@@ -1,7 +1,7 @@
 import { consecutive } from '../groupers/consecutive';
 import { V_ARR } from '../names';
 import { Error, ErrorCallback, MetaData, Validator } from '../types';
-import { applyError, isArray, isValidatorsSequence, setMetaPath, setMetaValidator, throwValidatorError, toArray } from '../utilities';
+import { applyError, extendMeta, isArray, isValidatorsSequence, setMetaPath, throwValidatorError, toArray } from '../utilities';
 
 /**
  * {@link docs/validators/array}
@@ -17,12 +17,16 @@ export const array = <T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>
 
   return (
     (data: Array<any>, onError?: ErrorCallback, meta?: MetaData): Array<T> =>
-      isArray(data)
-        ? (
-          validator
-            ? data.map((value, index) => validator(value, onError, setMetaPath(meta, index)))
-            : data
-        )
-        : applyError(error, onError, setMetaValidator(meta, V_ARR, []))
+      (
+        extendMeta(meta, data, V_ARR),
+
+        isArray(data)
+          ? (
+            validator
+              ? data.map((value, index) => validator(value, onError, setMetaPath(meta, index)))
+              : data
+          )
+          : applyError(error, onError, meta)
+      )
   );
 };
