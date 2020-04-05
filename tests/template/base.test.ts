@@ -11,6 +11,39 @@ import { baseCasesWithParams } from '@test/utilities';
 
 '!->[10, 20, 30]';
 
+'@compare(>$0)!0 : @compare(<=$1)!0';
+'@compare(>$0, <=$1)!0';
+
+'defined'; //??? m.b use only long name. Short only via 'compare'. m.b. defined | def
+
+'empty'; //??? m.b. empty | emp
+
+'fields'; // fields | f
+
+'is'; // is | i
+
+'unique'; // unique | u
+
+'regex'; // regex | r or 'compare(*$0)'
+
+'keysMap'; // keysMap | km
+
+'valueMap'; // valueMap | vm
+
+'consecutive'; // @seq
+
+'parallel'; // @prll
+
+'withFallback'; // ~f(123)
+
+'useDefault'; // @default(123)
+
+'dynamic'; // $... in seq
+
+'or'; // @or
+
+'strip'; // strip | stp ???
+
 describe('base', () => {
   const validator = template(`
     @object(

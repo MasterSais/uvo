@@ -1,12 +1,4 @@
-New templating api provides string based validators creation.
-
-Apis: `object | o`, `array | a`, `number | n`, `string | s`, `bool | b`, `date | d`, `compare | c` and `length | l`.
-
-Comparators for `length` and `compare`: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
-
-Symbol `$` declares injection name.
-
-Symbol `#` sets or gets reference.
+#### `Base example`
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -19,10 +11,7 @@ const validator = template(`
       @string : @length(<8)
     )
   )
-`)(/* containers here. will be removed */)({
-  min: 0,
-  max: () => 100
-});
+`)({ min: 0, max: () => 100 });
 
 validator({ id: 1, name: 'MasterSais', roles: ['Admin'] });
 // => { id: 1, name: 'MasterSais', roles: ['Admin'] }
@@ -42,5 +31,5 @@ const shortestOne = tml`
       @s @l(<8)
     )
   )
-`(/* containers here. will be removed */)([0, () => 100]);
+`([0, () => 100]);
 ```

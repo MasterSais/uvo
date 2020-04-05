@@ -19,7 +19,7 @@
         ]
       },
       {
-        "title": "API",
+        "title": "Classic API",
         "content": [],
         "sub": [
           {
@@ -97,9 +97,33 @@
         ]
       },
       {
-        "title": "Templating (alpha 2)",
+        "title": "Templating API (beta)",
         "content": [
-          "./docs/markdown/templating.md"
+          "./docs/templating/description.txt"
+        ],
+        "sub": [
+          {
+            "title": "Usage",
+            "content": [
+              "./docs/templating/usage.md"
+            ]
+          },
+          {
+            "title": "Keys",
+            "content": [],
+            "sub": [
+              {
+                "parse": true,
+                "contentDir": "./docs/templating/keys"
+              }
+            ]
+          },
+          {
+            "title": "Examples",
+            "content": [
+              "./docs/templating/examples.md"
+            ]
+          }
         ]
       },
       {

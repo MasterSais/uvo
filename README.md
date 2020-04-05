@@ -13,7 +13,7 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
 
 - [`Install`](#install)
 - [`Usage`](#usage)
-- [`API`](#api)
+- [`Classic API`](#classic-api)
   - [`Types`](#types)
     - [`ErrorCallback`](#errorcallback)
     - [`Error`](#error)
@@ -75,10 +75,25 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`setDep`](#setdep)
     - [`setVDep`](#setvdep)
     - [`useDefault`](#usedefault)
-- [`Templating (alpha 2)`](#templating-alpha-2)
+- [`Templating API (beta)`](#templating-api-beta)
+  - [`Usage`](#usage-1)
+  - [`Keys`](#keys)
+    - [`array`](#array-1)
+    - [`bool`](#bool)
+    - [`compare`](#compare)
+    - [`containers`](#containers)
+    - [`date`](#date)
+    - [`injection`](#injection)
+    - [`length`](#length)
+    - [`number`](#number)
+    - [`object`](#object-1)
+    - [`reference`](#reference)
+    - [`string`](#string)
+  - [`Examples`](#examples)
+    - [`Base example`](#base-example)
 - [`Logs`](#logs)
 - [`Custom validators`](#custom-validators)
-- [`Examples`](#examples)
+- [`Examples`](#examples-1)
   - [`Schema with custom user errors`](#schema-with-custom-user-errors)
   - [`Schema with common error processor`](#schema-with-common-error-processor)
   - [`Fields validation`](#fields-validation)
@@ -137,7 +152,7 @@ simpleObj({
 });
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 ```
-## `API`
+## `Classic API`
 ### `Types`
 The main types used in the library.
 #### `ErrorCallback`
@@ -1727,7 +1742,7 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 // scheme
 setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>
 ```
-Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value.
+Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value. i.e. reference api.
 
 ```js
 import * as v from 'uvo';
@@ -1814,16 +1829,272 @@ simpleOne('Stringuuuuuuuuuu');
 // => 'Stringuuuuuuuuuu'
 ```
 
-## `Templating (alpha 2)`
-New templating api provides string based validators creation.
+## `Templating API (beta)`
+Templating api provides string based validators creation. Much more compact and flexible against classic API.
+All errors and injections are placed in separated structures.
+### `Usage`
+```js
+import { template, tml } from 'uvo/template';
 
-Apis: `object | o`, `array | a`, `number | n`, `string | s`, `bool | b`, `date | d`, `compare | c` and `length | l`.
+// base version
+template(`...`)(
+  {/* injections for template (object or array) */},
+  {/* errors for template (object or array) */}
+);
 
-Comparators for `length` and `compare`: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
+// short version
+tml`...`(
+  {/* injections for template (object or array) */},
+  {/* errors for template (object or array) */}
+);
+```
+### `Keys`
+#### `array`
 
-Symbol `$` declares injection name.
 
-Symbol `#` sets or gets reference.
+Checks value to be an array. `a` - short version.
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@array`)()({});
+
+tml`@array`()({});
+
+tml`
+  @array(
+    @string : @length(<8)
+  )
+`()({});
+
+tml`@a`()({});
+
+tml`
+  @a(
+    @s @l(<8)
+  )
+`()({});
+```
+
+#### `bool`
+
+
+Checks value to be a boolean compatible. `b` - short version.
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@bool`)()(true);
+
+tml`@bool`()(true);
+
+tml`@b`()(true);
+```
+
+#### `compare`
+
+
+Checks value with provided comparator. `c` - short version.
+Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@compare(>=0)`)()(2);
+
+template(`@compare(!=null)`)()(10);
+
+template(`@compare(=true)`)()(true);
+
+tml`@compare(='2')`()('2');
+
+tml`@compare(>#refName)`()(2);
+
+tml`@compare(!=$param)`({ param: 10 })(2);
+
+tml`@c(%2)`()(2);
+
+tml`@c(<=$0)`([10])(2);
+```
+
+#### `containers`
+
+
+Provides specific container for scheme.
+`~error` - provides `withErrors` container. `~e` - short version.
+`~meta` - provides `withMeta` container. `~m` - short version.
+`~promise` - provides `withPromise` container. `~p` - short version.
+The last container will be an outer one. `promise` must go later than others containers.
+
+```js
+import { tml } from 'uvo/template';
+
+tml`
+  @object(
+    a : @date : #a,
+    b : @date : @compare(>=#a) : #b,
+    c : @date : @compare(>=#b)
+  ) ~error ~meta
+`()();
+
+tml`
+  @o(
+    a @d #a,
+    b @d @c(>=#a) #b,
+    c @d @c(>=#b)
+  ) ~e ~m
+`()();
+```
+
+#### `date`
+
+
+Checks value to be a date compatible. `d` - short version.
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@date`)()(851720400000);
+
+tml`@date`()(851720400000);
+
+tml`@d`()(851720400000);
+```
+
+#### `injection`
+
+
+External injections for scheme.
+
+```js
+import { tml } from 'uvo/template';
+
+tml`
+  @object(
+    id : @number : @compare(>$0),
+    name : @string : @length(>=$1)
+  )
+`([0, () => 10])();
+
+tml`
+  @object(
+    id : @number : @compare(>$minId),
+    name : @string : @length(>=$minNameLength)
+  )
+`({ minId: 0, minNameLength: () => 10 })();
+```
+
+#### `length`
+
+
+Checks value's length with provided comparator. `l` - short version.
+Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@length(>=0)`)()('abc');
+
+tml`@length(=2)`()([1, 2]);
+
+tml`@length(>#refName)`()('abc');
+
+tml`@length(!=$param)`({ param: 10 })({ length: 2 });
+
+tml`@l(%2)`()('abcd');
+
+tml`@l(<=$0)`([10])([0]);
+```
+
+#### `number`
+
+
+Checks value to be a number. `n` - short version.
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@number`)()(10);
+
+tml`@number`()(10);
+
+tml`@n`()(10);
+```
+
+#### `object`
+
+
+Checks value to be an object. `o` - short version.
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@object`)()({});
+
+tml`@object`()({});
+
+tml`
+  @object(
+    id : @number : @compare(>0),
+    name : @string : @length(>=10)
+  )
+`()({});
+
+tml`@o`()({});
+
+tml`
+  @o(
+    id @n @c(>0),
+    name @s @l(>=10)
+  )
+`()({});
+```
+
+#### `reference`
+
+
+Provides references across the scheme.
+`#...` in validation sequence settles current value as specific reference. 
+`#...` in parameters retrieves value from specific reference. 
+Meta required.
+
+```js
+import { tml } from 'uvo/template';
+
+tml`
+  @object(
+    a : @date : @compare(>$now) : #a,
+    b : @date : @compare(>=#a) : #b,
+    c : @date : @compare(>=#b)
+  ) ~meta
+`({ now: Date.now() })();
+
+tml`
+  @o(
+    a @d @c(>$now) #a,
+    b @d @c(>=#a) #b,
+    c @d @c(>=#b)
+  ) ~m
+`({ now: Date.now() })();
+```
+
+#### `string`
+
+
+Checks value to be a string. `s` - short version.
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@string`)()('str');
+
+tml`@string`()('str');
+
+tml`@s`()('str');
+```
+
+### `Examples`
+#### `Base example`
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -1836,10 +2107,7 @@ const validator = template(`
       @string : @length(<8)
     )
   )
-`)(/* containers here. will be removed */)({
-  min: 0,
-  max: () => 100
-});
+`)({ min: 0, max: () => 100 });
 
 validator({ id: 1, name: 'MasterSais', roles: ['Admin'] });
 // => { id: 1, name: 'MasterSais', roles: ['Admin'] }
@@ -1859,7 +2127,7 @@ const shortestOne = tml`
       @s @l(<8)
     )
   )
-`(/* containers here. will be removed */)([0, () => 100]);
+`([0, () => 100]);
 ```
 ## `Logs`
 `withMeta` container provides logs capturing via `onLogs` parameter.

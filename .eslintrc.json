@@ -17,6 +17,7 @@
     "quotes": ["warn", "single"],
     "eol-last": ["warn", "never"],
     "comma-dangle": ["warn", "never"],
+    "no-prototype-builtins": 0,
     "@typescript-eslint/prefer-includes": 0,
     "@typescript-eslint/no-inferrable-types": 0,
     "@typescript-eslint/quotes": ["warn", "single"],

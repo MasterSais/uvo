@@ -15,7 +15,7 @@ export const lexicalAnalyzer = (input: string): Array<Lexeme> => {
 
     if (!lexeme.omit) {
       const compound = (
-        lexeme.compound && index > 0 && lexemes[index - 1].compound && lexeme.codes[0] === lexemes[index - 1].codes[0]
+        lexeme.compound && index > 0 && lexemes[index - 1].compound && lexemes[index - 1].codes.find(code => lexeme.codes.indexOf(code) >= 0)
       );
 
       if (compound) {

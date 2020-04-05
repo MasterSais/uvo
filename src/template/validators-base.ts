@@ -44,4 +44,4 @@ setContainer('error', 'e', errorsBuilder);
 
 setContainer('meta', 'm', metaBuilder);
 
-setContainer('async', 'a', promiseBuilder);
+setContainer('promise', 'p', promiseBuilder);

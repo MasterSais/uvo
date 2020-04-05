@@ -4,13 +4,26 @@ import { CompilerMeta, ValidatorData } from '../types';
 import { containerBase, validatorBase } from '../validators-base';
 import { setDepBuilder } from './set-dep';
 
+const reservedValues: { [name: string]: any } = {
+  'true': true,
+  'false': false,
+  'null': null,
+  'undefined': undefined
+};
+
+const extractValue = (value: string) => (
+  reservedValues.hasOwnProperty(value)
+    ? reservedValues[value]
+    : !isNaN(+value) && callee(+value)
+);
+
 export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<ValidatorData>) => (
   (
     p1.code === INJ.code && (() => callee(meta.injections[p1.value])())
   ) || (
     p1.code === SQ.code && callee(p2.value)
   ) || (
-    p1.code === VL.code && !isNaN(+p1.value) && callee(+p1.value)
+    p1.code === VL.code && extractValue(p1.value)
   ) || (
     p1.code === REF.code && { code: REF.code, value: p1.value }
   ) || null

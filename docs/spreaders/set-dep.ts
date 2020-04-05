@@ -4,7 +4,7 @@
  * @scheme {setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>}
  * 
  * @desc Puts value into spreaded structure.
- * If 'extValue' is provided, puts it instead of current value.
+ * If 'extValue' is provided, puts it instead of current value. i.e. reference api.
  * 
  * {@link docs/type-spreader}
  * 
