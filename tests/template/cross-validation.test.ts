@@ -7,8 +7,8 @@ describe('cross validation', () => {
       a : @date : @compare(>$now) : #a,
       b : @date : @compare(>=#a) : #b,
       c : @date : @compare(>=#b)
-    )
-  `)()({
+    ) ~meta
+  `)({
     now: 1000
   });
 
@@ -31,8 +31,8 @@ describe('cross validation › short', () => {
       a @d @c(>$now) #a,
       b @d @c(>=#a) #b,
       c @d @c(>=#b)
-    )
-  `()({
+    ) ~m
+  `({
     now: 1000
   });
 

@@ -11,18 +11,16 @@ import { baseCasesWithParams } from '@test/utilities';
 
 '!->[10, 20, 30]';
 
-'~p ~e ~m';
-
 describe('base', () => {
   const validator = template(`
     @object(
-      id : @number : @compare(>$0) : @compare(<=$1) : #id,
+      id : @number : @compare(>$0) : @compare(<=$1),
       name : @string : @length(>=10),
       roles : @array(
         @string : @length(<8)
       )
     )
-  `)();
+  `);
 
   baseCasesWithParams(
     () => validator([0, () => 100]),
@@ -41,13 +39,13 @@ describe('base', () => {
 describe('base › short', () => {
   const validator = tml`
     @o(
-      id @n @c(>$0) @c(<=$1) #id,
+      id @n @c(>$0) @c(<=$1),
       name @s @l(>=10),
       roles @a(
         @s @l(<8)
       )
     )
-  `();
+  `;
 
   baseCasesWithParams(
     () => validator([0, () => 100]),

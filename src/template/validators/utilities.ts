@@ -1,7 +1,7 @@
 import { callee } from '../../utilities';
-import { INJ, REF, SQ, VL, VLD } from '../lexemes';
+import { CNT, INJ, REF, SQ, VL, VLD } from '../lexemes';
 import { CompilerMeta, ValidatorData } from '../types';
-import { validatorBase } from '../validators-base';
+import { containerBase, validatorBase } from '../validators-base';
 import { setDepBuilder } from './set-dep';
 
 export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<ValidatorData>) => (
@@ -19,6 +19,7 @@ export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<ValidatorData>)
 export const getValidator = (meta: CompilerMeta, data: ValidatorData) => {
   const validator = (
     data.code === VLD.code && validatorBase.get(data.value) ||
+    data.code === CNT.code && containerBase.get(data.value) ||
     data.code === REF.code && setDepBuilder
   ) || null;
 

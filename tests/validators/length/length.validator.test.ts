@@ -18,19 +18,19 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('base › template', () =>
-    baseCasesWithParams((...args) => template('@length(=$0)')()(args), right, wrong)
+    baseCasesWithParams((...args) => template('@length(=$0)')(args), right, wrong)
   );
 
   describe('base › template › short', () =>
-    baseCasesWithParams((...args) => template('@l(=$0)')()(args), [right[0]], [wrong[0]])
+    baseCasesWithParams((...args) => template('@l(=$0)')(args), [right[0]], [wrong[0]])
   );
 
   describe('base › template › not', () =>
-    baseCasesWithParams((...args) => template('@length(!=$0)')()(args), rightForNot, wrongForNot)
+    baseCasesWithParams((...args) => template('@length(!=$0)')(args), rightForNot, wrongForNot)
   );
 
   describe('base › template › short › not', () =>
-    baseCasesWithParams((...args) => template('@l(!=$0)')()(args), [rightForNot[0]], [wrongForNot[0]])
+    baseCasesWithParams((...args) => template('@l(!=$0)')(args), [rightForNot[0]], [wrongForNot[0]])
   );
 
   describe('with error', () =>

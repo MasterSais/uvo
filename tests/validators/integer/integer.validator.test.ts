@@ -14,19 +14,19 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('base › template', () =>
-    baseCases(template('@compare(%1)')(), [], right, wrong)
+    baseCases(template('@compare(%1)'), [], right, wrong)
   );
 
   describe('base › template › short', () =>
-    baseCases(template('@c(%1)')(), [], [right[0]], [wrong[0]])
+    baseCases(template('@c(%1)'), [], [right[0]], [wrong[0]])
   );
 
   describe('base › template › not', () =>
-    baseCases(template('@compare(!%1)')(), [], [wrong[0]], [right[0]])
+    baseCases(template('@compare(!%1)'), [], [wrong[0]], [right[0]])
   );
 
   describe('base › template › short › not', () =>
-    baseCases(template('@c(!%1)')(), [], [wrong[0]], [right[0]])
+    baseCases(template('@c(!%1)'), [], [wrong[0]], [right[0]])
   );
 
   describe('with error', () =>

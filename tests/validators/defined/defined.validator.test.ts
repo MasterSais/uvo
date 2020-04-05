@@ -9,11 +9,11 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   // describe('base › template', () =>
-  //   baseCases(template('@string')(), [], right, wrong)
+  //   baseCases(template('@string'), [], right, wrong)
   // );
 
   // describe('base › template › short', () =>
-  //   baseCases(tml`@s`(), [], [right[0]], [wrong[0]])
+  //   baseCases(tml`@s`, [], [right[0]], [wrong[0]])
   // );
 
   describe('with error', () =>

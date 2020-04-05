@@ -1,5 +1,5 @@
 import { isArray, isFiniteNumber } from '../utilities';
-import { DLM, ERR, INJ, REF, VL, VLD } from './lexemes';
+import { DLM, ERR, INJ, REF, VL, VLD, CNT } from './lexemes';
 import { COMPARATOR_STATE, PARAMS_STATE, semanticRules } from './semantic-rules';
 import { Lexeme, ValidatorData } from './types';
 
@@ -30,11 +30,9 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
 
   const prevLexeme = stack[stack.length - 1];
 
-  if (state.code === VL.code && prevLexeme && [VLD.code, REF.code, INJ.code].indexOf(prevLexeme.code) >= 0) {
+  if (state.code === VL.code && prevLexeme && [VLD.code, REF.code, INJ.code, CNT.code].indexOf(prevLexeme.code) >= 0) {
     prevLexeme[
-      prevLexeme.error === true
-        ? 'error'
-        : 'value'
+      prevLexeme.error === true ? 'error' : 'value'
     ] = lexeme.value;
 
     return;
@@ -46,7 +44,7 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
     return;
   }
 
-  const groupCode = [VLD.code, REF.code, INJ.code, DLM.code, VL.code].indexOf(state.code) >= 0;
+  const groupCode = [VLD.code, REF.code, INJ.code, DLM.code, CNT.code, VL.code].indexOf(state.code) >= 0;
 
   if (groupCode) {
     stack.push({ code: state.code, value: lexeme.value });

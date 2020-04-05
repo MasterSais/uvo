@@ -14,11 +14,11 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('base › template', () =>
-    baseCases(template('@array')(), [], rightTemplate, wrongTemplate)
+    baseCases(template('@array'), [], rightTemplate, wrongTemplate)
   );
 
   describe('base › template › short', () =>
-    baseCases(tml`@a`(), [], [rightTemplate[0]], [wrongTemplate[0]])
+    baseCases(tml`@a`, [], [rightTemplate[0]], [wrongTemplate[0]])
   );
 
   describe('with error', () =>

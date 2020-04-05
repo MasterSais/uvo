@@ -16,11 +16,11 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('base › template', () =>
-    baseCases(template('@date')(), [], right, wrong, toDate)
+    baseCases(template('@date'), [], right, wrong, toDate)
   );
 
   describe('base › template › short', () =>
-    baseCases(tml`@d`(), [], [right[0]], [wrong[0]], toDate)
+    baseCases(tml`@d`, [], [right[0]], [wrong[0]], toDate)
   );
 
   describe('with error', () =>

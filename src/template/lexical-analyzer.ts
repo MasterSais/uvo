@@ -26,5 +26,7 @@ export const lexicalAnalyzer = (input: string): Array<Lexeme> => {
     }
   }
 
-  return lexemes.slice(0, index);
+  lexemes.length = index;
+
+  return lexemes;
 };
