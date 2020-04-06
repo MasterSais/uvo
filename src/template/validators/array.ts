@@ -1,7 +1,7 @@
 import { array } from '../../validators/array';
 import { CompilerMeta, ValidatorData } from '../types';
-import { getValidator } from './utilities';
+import { extractError, extractValidator } from './utilities';
 
-export const arrayBuilder = (meta: CompilerMeta, { params = [] }: ValidatorData) => (
-  array(params.map(param => getValidator(meta, param)))
+export const arrayBuilder = (meta: CompilerMeta, { params = [], error }: ValidatorData) => (
+  array(params.map(param => extractValidator(meta, param)), extractError(meta, error))
 );

@@ -1,3 +1,4 @@
+import { MetaData } from '../../types';
 import { callee } from '../../utilities';
 import { CNT, INJ, REF, SQ, VL, VLD } from '../lexemes';
 import { CompilerMeta, ValidatorData } from '../types';
@@ -17,6 +18,10 @@ const extractValue = (value: string) => (
     : !isNaN(+value) && callee(+value)
 );
 
+export const extractError = (cmeta: CompilerMeta, error: string | number) => (
+  (meta: MetaData) => callee(cmeta.errors[error])(meta)
+);
+
 export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<ValidatorData>) => (
   (
     p1.code === INJ.code && (() => callee(meta.injections[p1.value])())
@@ -29,7 +34,7 @@ export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<ValidatorData>)
   ) || null
 );
 
-export const getValidator = (meta: CompilerMeta, data: ValidatorData) => {
+export const extractValidator = (meta: CompilerMeta, data: ValidatorData) => {
   const validator = (
     data.code === VLD.code && validatorBase.get(data.value) ||
     data.code === CNT.code && containerBase.get(data.value) ||

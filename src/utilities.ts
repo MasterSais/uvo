@@ -32,8 +32,8 @@ export const throwValidatorError = (validator: string) => {
 };
 
 export const reduceValidators = (value: any, onError: ErrorCallback, meta: MetaData, validators: Array<Validator<any>>): any =>
-  validators.reduce((value: any, nextValidator: Validator<any>): any =>
-    (value !== null ? nextValidator(value, onError, meta) : null), value);
+  validators.reduce((value: any, nextValidator: Validator<any>, index: number): any =>
+    ((value !== null || index === 0) ? nextValidator(value, onError, meta) : null), value);
 
 export const valueOf = (value: any) => (value !== null && value !== undefined) ? value.valueOf() : value;
 

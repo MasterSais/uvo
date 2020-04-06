@@ -2,7 +2,7 @@ import { consecutive } from '../groupers/consecutive';
 import { Validator } from '../types';
 import { CNT } from './lexemes';
 import { CompilerMeta, Injections, ValidatorData } from './types';
-import { getValidator } from './validators/utilities';
+import { extractValidator } from './validators/utilities';
 
 const wrapValidator = (validator: Validator<any>, containers: Array<Validator<any>>) => (
   containers.reduce((wrapped, wrappee) => wrappee(wrapped), validator)
@@ -17,8 +17,8 @@ export const composer = <T, R>(semanticTree: Array<ValidatorData>): ((injections
 
   for (const node of semanticTree) {
     node.code === CNT.code
-      ? containers.push(getValidator(meta, node))
-      : validators.push(getValidator(meta, node));
+      ? containers.push(extractValidator(meta, node))
+      : validators.push(extractValidator(meta, node));
   }
 
   const wrapped = wrapValidator(

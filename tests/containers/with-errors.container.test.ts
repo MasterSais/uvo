@@ -22,6 +22,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
       [[params1], 12, { result: 12, errors: null }],
       [[params1], 'abc', { result: null, errors: ['E1'] }],
       [[params1], -1, { result: null, errors: ['E2'] }],
+      [[params1], null, { result: null, errors: ['E1'] }],
       [[params1], 2.2, { result: null, errors: ['E3'] }]
     ],
     []
@@ -44,6 +45,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
       [[params2], 'abc', { result: null, errors: ['E1'] }],
       [[params2], -1, { result: null, errors: ['E2'] }],
       [[params2], 2.2, { result: null, errors: ['E3'] }],
+      [[params2], null, { result: null, errors: ['E1'] }],
       [[params2], -2.2, { result: null, errors: ['E2', 'E3'] }]
     ],
     []

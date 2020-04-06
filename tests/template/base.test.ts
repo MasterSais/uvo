@@ -93,3 +93,45 @@ describe('base › short', () => {
     []
   );
 });
+
+describe('errors', () => {
+  const validator = tml`
+    @object(
+      id : @number!err1 : @compare(>0)!err2,
+      name : @string!err3 : @length(>=10)!err4
+    ) ~error
+  `;
+
+  baseCasesWithParams(
+    () => validator(null, { err1: 'ERR1', err2: () => 'ERR2', err3: 'ERR3', err4: () => 'ERR4' }),
+    [
+      [[], { id: 1, name: 'MasterSais' }, { result: { id: 1, name: 'MasterSais' }, errors: null }],
+      [[], { id: 'abc', name: 'MasterSais' }, { result: { id: null, name: 'MasterSais' }, errors: ['ERR1'] }],
+      [[], { id: 'abc', name: 'Master' }, { result: { id: null, name: null }, errors: ['ERR1', 'ERR4'] }],
+      [[], { id: -1, name: 'Master' }, { result: { id: null, name: null }, errors: ['ERR2', 'ERR4'] }],
+      [[], { id: -1, name: null }, { result: { id: null, name: null }, errors: ['ERR2', 'ERR3'] }]
+    ],
+    []
+  );
+});
+
+describe('errors › short', () => {
+  const validator = tml`
+    @o(
+      id @n!0 @c(>0)!1,
+      name @s!2 @l(>=10)!3
+    ) ~e
+  `;
+
+  baseCasesWithParams(
+    () => validator(null, ['ERR1', () => 'ERR2', 'ERR3', () => 'ERR4']),
+    [
+      [[], { id: 1, name: 'MasterSais' }, { result: { id: 1, name: 'MasterSais' }, errors: null }],
+      [[], { id: 'abc', name: 'MasterSais' }, { result: { id: null, name: 'MasterSais' }, errors: ['ERR1'] }],
+      [[], { id: 'abc', name: 'Master' }, { result: { id: null, name: null }, errors: ['ERR1', 'ERR4'] }],
+      [[], { id: -1, name: 'Master' }, { result: { id: null, name: null }, errors: ['ERR2', 'ERR4'] }],
+      [[], { id: -1, name: null }, { result: { id: null, name: null }, errors: ['ERR2', 'ERR3'] }]
+    ],
+    []
+  );
+});
