@@ -1,3 +1,5 @@
+import { Error } from '../types';
+
 export type LexemeScheme = {
   literals: Array<string>;
   code: number;
@@ -14,7 +16,9 @@ export type Lexeme = {
   omitToken?: boolean;
 };
 
-export type Injections = Array<any> | Record<any, any>;
+export type Injections = Array<any> | Record<string, any>;
+
+export type Errors = Array<Error> | Record<string, Error>;
 
 export type CompilerMeta = {
   injections: Injections;

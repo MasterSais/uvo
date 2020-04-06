@@ -1,14 +1,14 @@
 import { consecutive } from '../groupers/consecutive';
 import { Validator } from '../types';
 import { CNT } from './lexemes';
-import { CompilerMeta, Injections, ValidatorData } from './types';
+import { CompilerMeta, Errors, Injections, ValidatorData } from './types';
 import { extractValidator } from './validators/utilities';
 
 const wrapValidator = (validator: Validator<any>, containers: Array<Validator<any>>) => (
   containers.reduce((wrapped, wrappee) => wrappee(wrapped), validator)
 );
 
-export const composer = <T, R>(semanticTree: Array<ValidatorData>): ((injections?: Injections, errors?: Injections) => Validator<T, R>) => {
+export const composer = <T, R>(semanticTree: Array<ValidatorData>): ((injections?: Injections, errors?: Errors) => Validator<T, R>) => {
   const validators: Array<Validator<any>> = [];
 
   const containers: Array<Validator<any>> = [];

@@ -1,5 +1,5 @@
-import { MetaData } from '../../types';
-import { callee } from '../../utilities';
+import { Error, ErrorCallback, MetaData } from '../../types';
+import { applyError, callee, extendMeta } from '../../utilities';
 import { CNT, INJ, REF, SQ, VL, VLD } from '../lexemes';
 import { CompilerMeta, ValidatorData } from '../types';
 import { containerBase, validatorBase } from '../validators-base';
@@ -47,3 +47,17 @@ export const extractValidator = (meta: CompilerMeta, data: ValidatorData) => {
 
   return validator(meta, data);
 };
+
+export const not = (name: string) => `not:${name}`;
+
+export const c_is = <T>(validator: string, param: () => any, comparator: ((value: T) => boolean), error?: Error) =>
+  (
+    (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
+      (
+        extendMeta(meta, value, validator, [param()]),
+
+        comparator(value)
+          ? value
+          : applyError(error, onError, meta)
+      )
+  );

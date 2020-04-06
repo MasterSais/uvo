@@ -36,4 +36,12 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('with meta › check', () =>
     withErrorCases(validator.check(errorMetaCase([], [], VALIDATOR_NAME)), [[wrong[0]]], emptyMeta())
   );
+
+  describe('with error › template', () =>
+    withErrorCases(template('@string!0')([], [notNullError()]), [[right[0]], [wrong[0]]], null, String)
+  );
+
+  describe('with meta › template', () =>
+    withErrorCases(template('@string!0')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [[wrong[0]]], emptyMeta(), String)
+  );
 });

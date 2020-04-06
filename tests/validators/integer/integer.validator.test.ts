@@ -1,4 +1,4 @@
-import { V_INT as VALIDATOR_NAME } from '@lib/names';
+import { V_INT as VALIDATOR_NAME, V_MLP } from '@lib/names';
 import { template } from '@lib/template/template';
 import { integer as validator } from '@lib/validators/multiple';
 import { baseCases, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
@@ -43,5 +43,21 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('with meta › not', () =>
     withErrorCases(validator.not(errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))), [[right[0]]], emptyMeta())
+  );
+
+  describe('with error › template', () =>
+    withErrorCases(template('@compare(%1)!0')([], [notNullError()]), [[right[0]], [wrong[0]]])
+  );
+
+  describe('with meta › template', () =>
+    withErrorCases(template('@compare(%1)!0')([], [errorMetaCase([], [1], V_MLP)]), [[wrong[0]]], emptyMeta())
+  );
+
+  describe('with error › template › not', () =>
+    withErrorCases(template('@compare(!%1)!0')([], [notNullError()]), [[wrong[0]], [right[0]]])
+  );
+
+  describe('with meta › template › not', () =>
+    withErrorCases(template('@compare(!%1)!0')([], [errorMetaCase([], [1], invertError(V_MLP, true))]), [[right[0]]], emptyMeta())
   );
 });

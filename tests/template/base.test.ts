@@ -14,6 +14,14 @@ import { baseCasesWithParams } from '@test/utilities';
 '@compare(>$0)!0 : @compare(<=$1)!0';
 '@compare(>$0, <=$1)!0';
 
+'@compare(>$0+100)';
+
+`
+  @object(
+    $0 @number $1
+  )
+`;
+
 'defined'; //??? m.b use only long name. Short only via 'compare'. m.b. defined | def
 
 'empty'; //??? m.b. empty | emp

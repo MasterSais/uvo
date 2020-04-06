@@ -48,4 +48,20 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('with meta › not', () =>
     withErrorCases(validator.not(1, errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))), [[wrongForNot[0][1]]], emptyMeta())
   );
+
+  describe('with error › template', () =>
+    withErrorCases(template('@length(<=$0)!0')([1], [notNullError()]), [[right[0][1]], [wrong[0][1]]])
+  );
+
+  describe('with meta › template', () =>
+    withErrorCases(template('@length(<=$0)!0')([1], [errorMetaCase([], [1], VALIDATOR_NAME)]), [[wrong[0][1]]], emptyMeta())
+  );
+
+  describe('with error › template › not', () =>
+    withErrorCases(template('@length(>$0)!0')([1], [notNullError()]), [[rightForNot[0][1]], [wrongForNot[0][1]]])
+  );
+
+  describe('with meta › template › not', () =>
+    withErrorCases(template('@length(>$0)!0')([1], [errorMetaCase([], [1], invertError(VALIDATOR_NAME, true))]), [[wrongForNot[0][1]]], emptyMeta())
+  );
 });
