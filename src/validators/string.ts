@@ -3,7 +3,7 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, extendMeta, isDefined, isFunction, isObjectLike, makeCheckable } from '../utilities';
 
 /**
- * {@link docs/validators/string}
+ * {@link docs/classic-api/validators/string}
  */
 export const string = makeCheckable<(<T>(error?: Error) => Validator<T, string>), (<T>(error?: Error) => Validator<T, T>)>(
   (checkOnly: boolean) => <T>(error?: Error): Validator<T, string> =>

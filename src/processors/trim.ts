@@ -6,7 +6,7 @@ const trimMethods = {
 };
 
 /**
- * {@link docs/processors/trim}
+ * {@link docs/classic-api/processors/trim}
  */
 export const trim = (method?: 'left' | 'right'): Validator<string, string> =>
   (value: string): string => value[trimMethods[method] || 'trim']();

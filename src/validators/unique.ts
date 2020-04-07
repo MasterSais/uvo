@@ -3,7 +3,7 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, extendMeta, isArray, isDefined, isFunction, setMetaPath } from '../utilities';
 
 /**
- * {@link docs/validators/unique}
+ * {@link docs/classic-api/validators/unique}
  */
 export const unique = <T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>> => {
   const isMapperFunction = isFunction(field);

@@ -3,7 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { isString, isValidatorsSequence, postToMeta, reduceValidators, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/spreaders/set-v-dep}
+ * {@link docs/classic-api/spreaders/set-v-dep}
  */
 export const setVDep = <T>(field: string, ...validators: Array<Validator<T>>): Validator<T> =>
   (

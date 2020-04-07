@@ -5,7 +5,7 @@ import { applyError, extendMeta, makeCheckable } from '../utilities';
 const possibleValues = [false, true, 0, 1, '0', '1', 'false', 'true'];
 
 /**
- * {@link docs/validators/bool}
+ * {@link docs/classic-api/validators/bool}
  */
 export const bool = makeCheckable<(<T>(error?: Error) => Validator<T, boolean>), (<T>(error?: Error) => Validator<T, T>)>(
   (checkOnly: boolean) => <T>(error?: Error): Validator<T, boolean> =>

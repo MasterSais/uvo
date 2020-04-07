@@ -3,7 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { getFromMeta, isFunction, isString, isValidatorsSequence, reduceValidators, throwValidatorError, toArray } from '../utilities';
 
 /**
- * {@link docs/spreaders/get-dep}
+ * {@link docs/classic-api/spreaders/get-dep}
  */
 export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
   (

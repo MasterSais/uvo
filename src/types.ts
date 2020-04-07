@@ -13,7 +13,7 @@ export declare type Lengthy = {
 };
 
 /**
- * {@link docs/types/meta-data}
+ * {@link docs/classic-api/types/meta-data}
  */
 export declare type MetaData = {
   path: Array<string | number>;
@@ -24,24 +24,24 @@ export declare type MetaData = {
 };
 
 /**
- * {@link docs/types/error}
+ * {@link docs/classic-api/types/error}
  */
 export declare type Error = string | boolean | number | Record<any, any> | Array<any> | ((meta: MetaData) => any);
 
 /**
- * {@link docs/types/relevance}
+ * {@link docs/classic-api/types/relevance}
  */
 export declare type Relevance = {
   value: boolean;
 };
 
 /**
- * {@link docs/types/error-callback}
+ * {@link docs/classic-api/types/error-callback}
  */
 export declare type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => void;
 
 /**
- * {@link docs/types/result}
+ * {@link docs/classic-api/types/result}
  */
 export declare type Result<T> = {
   result: T;
@@ -49,7 +49,7 @@ export declare type Result<T> = {
 };
 
 /**
- * {@link docs/types/validator}
+ * {@link docs/classic-api/types/validator}
  */
 export declare type Validator<T, R = T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => R;
 
@@ -69,11 +69,11 @@ export declare type Primitive = string | number | boolean;
 export declare type Checkable<T, R> = T & { check: R };
 
 /**
- * {@link docs/types/fields-spec}
+ * {@link docs/classic-api/types/fields-spec}
  */
 export declare type FieldsSpec = string | [('&' | '|' | '^'), FieldsSpec | string, FieldsSpec | string, ...Array<FieldsSpec | string>];
 
 /**
- * {@link docs/types/object-spec}
+ * {@link docs/classic-api/types/object-spec}
  */
 export declare type ObjectSpec = Record<string, Array<Validator<any, any>> | Validator<any, any>>;

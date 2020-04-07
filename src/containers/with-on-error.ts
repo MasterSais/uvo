@@ -3,7 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { isFunction, isValidatorsSequence, reduceValidators, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/containers/with-on-error}
+ * {@link docs/classic-api/containers/with-on-error}
  */
 export const withOnError = <T>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<any, T> =>
   (

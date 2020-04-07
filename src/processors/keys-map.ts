@@ -1,7 +1,7 @@
 import { ObjectLike, Validator } from '../types';
 
 /**
- * {@link docs/processors/keys-map}
+ * {@link docs/classic-api/processors/keys-map}
  */
 export const keysMap = <T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T> => (
   (value: T): T => (Object

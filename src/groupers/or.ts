@@ -3,7 +3,7 @@ import { Error, ErrorCallback, MetaData, Validator, Relevance } from '../types';
 import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/groupers/or}
+ * {@link docs/classic-api/groupers/or}
  */
 export const or = (...validators: Array<Validator<any, any>>): Validator<any, any> =>
   (

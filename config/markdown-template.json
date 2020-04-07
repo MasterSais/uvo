@@ -2,20 +2,20 @@
   {
     "title": "Uvo",
     "content": [
-      "./docs/markdown/description.txt",
-      "./docs/markdown/doctoc-tree.txt"
+      "./docs/classic-api/markdown/description.txt",
+      "./docs/classic-api/markdown/doctoc-tree.txt"
     ],
     "sub": [
       {
         "title": "Install",
         "content": [
-          "./docs/markdown/installation.txt"
+          "./docs/classic-api/markdown/installation.txt"
         ]
       },
       {
         "title": "Usage",
         "content": [
-          "./docs/markdown/usage.md"
+          "./docs/classic-api/markdown/usage.md"
         ]
       },
       {
@@ -25,78 +25,78 @@
           {
             "title": "Types",
             "content": [
-              "./docs/markdown/types-description.txt"
+              "./docs/classic-api/markdown/types-description.txt"
             ],
             "sub": [
               {
                 "parse": true,
                 "collapse": true,
-                "contentDir": "./docs/types"
+                "contentDir": "./docs/classic-api/types"
               }
             ]
           },
           {
             "title": "Validators",
             "content": [
-              "./docs/markdown/validations-description.txt"
+              "./docs/classic-api/markdown/validations-description.txt"
             ],
             "sub": [
               {
                 "parse": true,
                 "collapse": true,
-                "contentDir": "./docs/validators"
+                "contentDir": "./docs/classic-api/validators"
               }
             ]
           },
           {
             "title": "Processors",
             "content": [
-              "./docs/markdown/processors-description.txt"
+              "./docs/classic-api/markdown/processors-description.txt"
             ],
             "sub": [
               {
                 "parse": true,
                 "collapse": true,
-                "contentDir": "./docs/processors"
+                "contentDir": "./docs/classic-api/processors"
               }
             ]
           },
           {
             "title": "Groupers",
             "content": [
-              "./docs/markdown/groupers-description.txt"
+              "./docs/classic-api/markdown/groupers-description.txt"
             ],
             "sub": [
               {
                 "parse": true,
                 "collapse": true,
-                "contentDir": "./docs/groupers"
+                "contentDir": "./docs/classic-api/groupers"
               }
             ]
           },
           {
             "title": "Containers",
             "content": [
-              "./docs/markdown/containers-description.txt"
+              "./docs/classic-api/markdown/containers-description.txt"
             ],
             "sub": [
               {
                 "parse": true,
                 "collapse": true,
-                "contentDir": "./docs/containers"
+                "contentDir": "./docs/classic-api/containers"
               }
             ]
           },
           {
             "title": "Spreaders",
             "content": [
-              "./docs/markdown/spreaders-description.txt"
+              "./docs/classic-api/markdown/spreaders-description.txt"
             ],
             "sub": [
               {
                 "parse": true,
                 "collapse": true,
-                "contentDir": "./docs/spreaders"
+                "contentDir": "./docs/classic-api/spreaders"
               }
             ]
           }
@@ -105,13 +105,13 @@
       {
         "title": "Templating API (beta)",
         "content": [
-          "./docs/templating/description.txt"
+          "./docs/templating-api/description.txt"
         ],
         "sub": [
           {
             "title": "Usage",
             "content": [
-              "./docs/templating/usage.md"
+              "./docs/templating-api/usage.md"
             ]
           },
           {
@@ -121,14 +121,14 @@
               {
                 "parse": true,
                 "collapse": true,
-                "contentDir": "./docs/templating/keys"
+                "contentDir": "./docs/templating-api/keys"
               }
             ]
           },
           {
             "title": "Examples",
             "content": [
-              "./docs/templating/examples.md"
+              "./docs/templating-api/examples.md"
             ]
           }
         ]
@@ -136,19 +136,19 @@
       {
         "title": "Logs",
         "content": [
-          "./docs/markdown/logs.md"
+          "./docs/classic-api/markdown/logs.md"
         ]
       },
       {
         "title": "Custom validators",
         "content": [
-          "./docs/markdown/validator-creation.md"
+          "./docs/classic-api/markdown/validator-creation.md"
         ]
       },
       {
         "title": "Examples",
         "content": [
-          "./docs/markdown/examples.md"
+          "./docs/classic-api/markdown/examples.md"
         ]
       }
     ]

@@ -3,7 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { isFunction, isValidatorsSequence, reduceValidators, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/containers/with-fallback}
+ * {@link docs/classic-api/containers/with-fallback}
  */
 export const withFallback = <T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R> =>
   (

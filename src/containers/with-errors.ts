@@ -3,7 +3,7 @@ import { Error, ErrorCallback, MetaData, Validator, Relevance, Result } from '..
 import { isFunction, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/containers/with-errors}
+ * {@link docs/classic-api/containers/with-errors}
  */
 export const withErrors = <T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>> =>
   (

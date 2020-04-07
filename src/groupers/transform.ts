@@ -3,7 +3,7 @@ import { Validator } from '../types';
 import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/groupers/transform}
+ * {@link docs/classic-api/groupers/transform}
  */
 export const transform = <T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R> =>
   (

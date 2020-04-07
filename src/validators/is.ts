@@ -3,12 +3,12 @@ import { Error, Validator } from '../types';
 import { invertCondition, invertError, isArray, isDefined, isFactory, isOneType, isRegEx, isString, makeInvertible, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/validators/is}
+ * {@link docs/classic-api/validators/is}
  */
 export const is = isFactory(V_IS);
 
 /**
- * {@link docs/validators/defined}
+ * {@link docs/classic-api/validators/defined}
  */
 export const defined = (
   <T>(error?: Error) => isFactory(V_DEF)(
@@ -19,7 +19,7 @@ export const defined = (
 const EMPTY_VALUES = [null, undefined, ''];
 
 /**
- * {@link docs/validators/empty}
+ * {@link docs/classic-api/validators/empty}
  */
 export const empty = makeInvertible<(<T>(error?: Error) => Validator<T>)>(
   (
@@ -32,7 +32,7 @@ export const empty = makeInvertible<(<T>(error?: Error) => Validator<T>)>(
 );
 
 /**
- * {@link docs/validators/equal}
+ * {@link docs/classic-api/validators/equal}
  */
 export const equal = makeInvertible<(<T>(match: T, error?: Error) => Validator<T>)>(
   (
@@ -45,7 +45,7 @@ export const equal = makeInvertible<(<T>(match: T, error?: Error) => Validator<T
 );
 
 /**
- * {@link docs/validators/gte}
+ * {@link docs/classic-api/validators/gte}
  */
 export const gte = makeInvertible<(<T>(bound: T, error?: Error) => Validator<T>)>(
   (
@@ -58,7 +58,7 @@ export const gte = makeInvertible<(<T>(bound: T, error?: Error) => Validator<T>)
 );
 
 /**
- * {@link docs/validators/lte}
+ * {@link docs/classic-api/validators/lte}
  */
 export const lte = makeInvertible<(<T>(bound: T, error?: Error) => Validator<T>)>(
   (
@@ -71,7 +71,7 @@ export const lte = makeInvertible<(<T>(bound: T, error?: Error) => Validator<T>)
 );
 
 /**
- * {@link docs/validators/regex}
+ * {@link docs/classic-api/validators/regex}
  */
 export const regex = makeInvertible<(<T>(match: RegExp, error?: Error) => Validator<T>)>(
   (
@@ -89,7 +89,7 @@ export const regex = makeInvertible<(<T>(match: RegExp, error?: Error) => Valida
 );
 
 /**
- * {@link docs/validators/one-of}
+ * {@link docs/classic-api/validators/one-of}
  */
 export const oneOf = makeInvertible<(<T>(candidates: Array<T> | string, error?: Error) => Validator<T>)>(
   (

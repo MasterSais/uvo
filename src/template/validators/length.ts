@@ -42,4 +42,4 @@ const lengthComparators = {
 
 export const lengthBuilder = (meta: CompilerMeta, { params: [comparator, ...params], error }: ValidatorData) => (
   lengthComparators[comparator.value](extractParam(meta, params), extractError(meta, error))
-)
+);

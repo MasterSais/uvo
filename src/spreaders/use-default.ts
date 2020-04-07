@@ -3,7 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { isEmpty, isFunction, isValidatorsSequence, reduceValidators, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/spreaders/use-default}
+ * {@link docs/classic-api/spreaders/use-default}
  */
 export const useDefault = <T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R> =>
   (

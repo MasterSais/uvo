@@ -4,7 +4,7 @@ import { Error, ErrorCallback, MetaData, ObjectLike, ObjectSpec, Validator } fro
 import { applyError, extendMeta, isObject, setMetaPath, throwValidatorError, toArray } from '../utilities';
 
 /**
- * {@link docs/validators/object}
+ * {@link docs/classic-api/validators/object}
  */
 export const object = <T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R> => {
   const specList: Array<[string, Array<Validator<any, any>>]> = [];

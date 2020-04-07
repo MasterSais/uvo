@@ -3,7 +3,7 @@ import { Error, ErrorCallback, MetaData, Validator, Result } from '../types';
 import { isFunction, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/containers/with-promise}
+ * {@link docs/classic-api/containers/with-promise}
  */
 export const withPromise = <T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>> =>
   (

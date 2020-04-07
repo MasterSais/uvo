@@ -3,7 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { isValidatorsSequence, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/groupers/parallel}
+ * {@link docs/classic-api/groupers/parallel}
  */
 export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
   (

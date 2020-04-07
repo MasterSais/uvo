@@ -12,7 +12,7 @@ const getField = <T extends ObjectLike, R = T>(data: T, result: T, field: any) =
   isDefined(result[field]) ? result[field] : data[field];
 
 /**
- * {@link docs/validators/object2}
+ * {@link docs/classic-api/validators/object2}
  */
 export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegExp, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R> => {
   const specList: Array<[string | RegExp, Array<Validator<any, any>>]> = [];

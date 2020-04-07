@@ -6,7 +6,7 @@ const roundMethods = {
 };
 
 /**
- * {@link docs/processors/round}
+ * {@link docs/classic-api/processors/round}
  */
 export const round = (method?: 'floor' | 'ceil'): Validator<number, number> =>
   Math[roundMethods[method] || 'round'];

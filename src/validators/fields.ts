@@ -30,7 +30,7 @@ const validateFieldsSpec = (spec: FieldsSpec): boolean =>
   );
 
 /**
- * {@link docs/validators/fields}
+ * {@link docs/classic-api/validators/fields}
  */
 export const fields = <T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T> =>
   (

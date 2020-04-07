@@ -4,7 +4,7 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, extendMeta, isArray, isValidatorsSequence, setMetaPath, throwValidatorError, toArray } from '../utilities';
 
 /**
- * {@link docs/validators/array}
+ * {@link docs/classic-api/validators/array}
  */
 export const array = <T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>> => {
   const validators = toArray(itemSpec);

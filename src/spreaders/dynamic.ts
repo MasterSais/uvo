@@ -3,7 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { isFunction, isValidatorsSequence, reduceValidators, throwValidatorError, toArray } from '../utilities';
 
 /**
- * {@link docs/spreaders/dynamic}
+ * {@link docs/classic-api/spreaders/dynamic}
  */
 export const dynamic = <T>(preValidator: () => Validator<T> | Array<Validator<T>>): Validator<T> =>
   (

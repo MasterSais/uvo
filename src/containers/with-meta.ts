@@ -3,7 +3,7 @@ import { ErrorCallback, Validator } from '../types';
 import { isFunction, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/containers/with-meta}
+ * {@link docs/classic-api/containers/with-meta}
  */
 export const withMeta = <T, R>(validator: Validator<T, R>, onLogs?: (logs: Array<[string, any, Array<any>]>) => void): Validator<T, R> =>
   (

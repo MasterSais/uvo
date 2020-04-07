@@ -2,7 +2,7 @@ import { Primitive, Validator } from '../types';
 import { isFunction, isRegEx } from '../utilities';
 
 /**
- * {@link docs/processors/value-map}
+ * {@link docs/classic-api/processors/value-map}
  */
 export const valueMap = <T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R> => (
   (value: T): R => {

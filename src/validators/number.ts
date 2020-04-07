@@ -3,7 +3,7 @@ import { Error, ErrorCallback, MetaData, Validator } from '../types';
 import { applyError, extendMeta, isArray, isFinite, makeCheckable } from '../utilities';
 
 /**
- * {@link docs/validators/number}
+ * {@link docs/classic-api/validators/number}
  */
 export const number = makeCheckable<(<T>(error?: Error) => Validator<T, number>), (<T>(error?: Error) => Validator<T, T>)>(
   (checkOnly: boolean) => <T>(error?: Error): Validator<T, number> =>

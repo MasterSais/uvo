@@ -3,7 +3,7 @@ import { ErrorCallback, MetaData, Validator } from '../types';
 import { isValidatorsSequence, reduceValidators, throwValidatorError } from '../utilities';
 
 /**
- * {@link docs/groupers/consecutive}
+ * {@link docs/classic-api/groupers/consecutive}
  */
 export const consecutive = <T>(...validators: Array<Validator<any, T>>): Validator<any, T> =>
   (
