@@ -1,8 +1,8 @@
-import { parallel as validator } from '@lib/groupers/parallel';
-import { G_PRLL as VALIDATOR_NAME, V_NUM } from '@lib/names';
-import { gte, lte } from '@lib/validators/is';
-import { integer } from '@lib/validators/multiple';
-import { number } from '@lib/validators/number';
+import { parallel as validator } from '@lib/classic-api/groupers/parallel';
+import { G_PRLL as VALIDATOR_NAME, V_NUM } from '@lib/classic-api/names';
+import { gte, lte } from '@lib/classic-api/validators/is';
+import { integer } from '@lib/classic-api/validators/multiple';
+import { number } from '@lib/classic-api/validators/number';
 import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

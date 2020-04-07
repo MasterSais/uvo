@@ -1,6 +1,6 @@
-import { V_BLN as VALIDATOR_NAME } from '@lib/names';
-import { template, tml } from '@lib/template/template';
-import { bool as validator } from '@lib/validators/bool';
+import { V_BLN as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { template, tml } from '@lib/templating-api/template';
+import { bool as validator } from '@lib/classic-api/validators/bool';
 import { baseCases, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
 

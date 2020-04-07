@@ -1,4 +1,4 @@
-import { round as processor } from '@lib/processors/round';
+import { round as processor } from '@lib/classic-api/processors/round';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('processor › round', () => {

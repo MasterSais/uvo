@@ -1,8 +1,8 @@
-import { or as validator } from '@lib/groupers/or';
-import { G_OR as VALIDATOR_NAME, V_GTE, V_INT } from '@lib/names';
-import { gte } from '@lib/validators/is';
-import { integer } from '@lib/validators/multiple';
-import { number } from '@lib/validators/number';
+import { or as validator } from '@lib/classic-api/groupers/or';
+import { G_OR as VALIDATOR_NAME, V_GTE, V_INT } from '@lib/classic-api/names';
+import { gte } from '@lib/classic-api/validators/is';
+import { integer } from '@lib/classic-api/validators/multiple';
+import { number } from '@lib/classic-api/validators/number';
 import { baseCasesWithParams, emptyArray, emptyFunction, emptyMeta, emptyObject, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

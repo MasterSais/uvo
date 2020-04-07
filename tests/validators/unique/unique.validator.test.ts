@@ -1,5 +1,5 @@
-import { V_UQ as VALIDATOR_NAME } from '@lib/names';
-import { unique as validator } from '@lib/validators/unique';
+import { V_UQ as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { unique as validator } from '@lib/classic-api/validators/unique';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 import { objCases, right, wrong } from './cases';
 

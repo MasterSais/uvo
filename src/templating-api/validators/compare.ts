@@ -1,0 +1,51 @@
+import { V_EQ, V_GTE, V_LTE, V_MLP } from '@lib/classic-api/names';
+import { getDep } from '@lib/classic-api/spreaders/get-dep';
+import { Error } from '@lib/classic-api/types';
+import { isDefined, isNumber, isOneType } from '@lib/classic-api/utilities';
+import { REF } from '@lib/templating-api/lexemes';
+import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
+import { c_is, extractError, extractParam, not } from '@lib/templating-api/utilities';
+
+const comparators = {
+  '>': (param: () => any, error: Error) => (
+    c_is(not(V_LTE), param, (value: any) => isOneType(value, param()) && value > param(), error)
+  ),
+
+  '>=': (param: () => any, error: Error) => (
+    c_is(V_GTE, param, (value: any) => isOneType(value, param()) && value >= param(), error)
+  ),
+
+  '<': (param: () => any, error: Error) => (
+    c_is(not(V_GTE), param, (value: any) => isOneType(value, param()) && value < param(), error)
+  ),
+
+  '<=': (param: () => any, error: Error) => (
+    c_is(V_LTE, param, (value: any) => isOneType(value, param()) && value <= param(), error)
+  ),
+
+  '=': (param: () => any, error: Error) => (
+    c_is(V_EQ, param, (value: any) => value === param(), error)
+  ),
+
+  '!=': (param: () => any, error: Error) => (
+    c_is(not(V_EQ), param, (value: any) => value !== param(), error)
+  ),
+
+  '%': (param: () => any, error: Error) => (
+    c_is(V_MLP, param, (value: any) => isNumber(value) && isNumber(param()) && value % param() === 0, error)
+  ),
+
+  '!%': (param: () => any, error: Error) => (
+    c_is(not(V_MLP), param, (value: any) => isNumber(value) && isNumber(param()) && value % param() !== 0, error)
+  )
+};
+
+export const compareBuilder = (meta: CompilerMeta, { params: [comparator, ...params], error }: ValidatorData) => {
+  const calleeParam = extractParam(meta, params);
+
+  return (
+    calleeParam.code === REF.code
+      ? getDep(calleeParam.value, (value: any) => isDefined(value) && comparators[comparator.value](() => value))
+      : comparators[comparator.value](calleeParam, extractError(meta, error))
+  );
+};

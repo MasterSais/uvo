@@ -1,8 +1,8 @@
-import { consecutive } from '@lib/groupers/consecutive';
-import { S_DYN as VALIDATOR_NAME } from '@lib/names';
-import { dynamic as validator } from '@lib/spreaders/dynamic';
-import { equal, gte } from '@lib/validators/is';
-import { number } from '@lib/validators/number';
+import { consecutive } from '@lib/classic-api/groupers/consecutive';
+import { S_DYN as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { dynamic as validator } from '@lib/classic-api/spreaders/dynamic';
+import { equal, gte } from '@lib/classic-api/validators/is';
+import { number } from '@lib/classic-api/validators/number';
 import { emptyFunction, paramsCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

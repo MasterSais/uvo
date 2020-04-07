@@ -1,5 +1,5 @@
-import { V_DEF as VALIDATOR_NAME } from '@lib/names';
-import { defined as validator } from '@lib/validators/is';
+import { V_DEF as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { defined as validator } from '@lib/classic-api/validators/is';
 import { baseCases, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
 

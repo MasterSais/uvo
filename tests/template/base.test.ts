@@ -1,4 +1,4 @@
-import { template, tml } from '@lib/template/template';
+import { template, tml } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 
 '#value(10)'; // set 10 to 'value' dep

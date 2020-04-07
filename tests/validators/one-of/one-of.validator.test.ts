@@ -1,5 +1,5 @@
-import { V_OOF as VALIDATOR_NAME } from '@lib/names';
-import { oneOf as validator } from '@lib/validators/is';
+import { V_OOF as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { oneOf as validator } from '@lib/classic-api/validators/is';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightParams, wrong, wrongParams } from './cases';
 

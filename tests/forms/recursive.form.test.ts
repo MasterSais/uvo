@@ -1,10 +1,10 @@
-import { withMeta } from '@lib/containers/with-meta';
-import { getDep } from '@lib/spreaders/get-dep';
-import { setVDep } from '@lib/spreaders/set-v-dep';
-import { gte } from '@lib/validators/is';
-import { number } from '@lib/validators/number';
-import { object } from '@lib/validators/object';
-import { object2 } from '@lib/validators/object2';
+import { withMeta } from '@lib/classic-api/containers/with-meta';
+import { getDep } from '@lib/classic-api/spreaders/get-dep';
+import { setVDep } from '@lib/classic-api/spreaders/set-v-dep';
+import { gte } from '@lib/classic-api/validators/is';
+import { number } from '@lib/classic-api/validators/number';
+import { object } from '@lib/classic-api/validators/object';
+import { object2 } from '@lib/classic-api/validators/object2';
 
 test('recursive', () => {
   const validator = (

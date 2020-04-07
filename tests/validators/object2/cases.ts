@@ -1,7 +1,7 @@
-import { equal, gte } from '@lib/validators/is';
-import { length, maxLen } from '@lib/validators/length';
-import { number } from '@lib/validators/number';
-import { string } from '@lib/validators/string';
+import { equal, gte } from '@lib/classic-api/validators/is';
+import { length, maxLen } from '@lib/classic-api/validators/length';
+import { number } from '@lib/classic-api/validators/number';
+import { string } from '@lib/classic-api/validators/string';
 import { emptyArray, emptyFunction, emptyObject } from '@test/utilities';
 
 export const rightParams: Array<any> = [

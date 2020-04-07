@@ -1,5 +1,5 @@
-import { V_REG as VALIDATOR_NAME } from '@lib/names';
-import { regex as validator } from '@lib/validators/is';
+import { V_REG as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { regex as validator } from '@lib/classic-api/validators/is';
 import { baseCases, emptyMeta, errorMetaCase, invertError, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightParams, wrong, wrongParams } from './cases';
 

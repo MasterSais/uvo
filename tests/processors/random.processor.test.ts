@@ -1,7 +1,7 @@
-import { consecutive } from '@lib/groupers/consecutive';
-import { random } from '@lib/processors/random';
-import { gte, lte, oneOf } from '@lib/validators/is';
-import { number } from '@lib/validators/number';
+import { consecutive } from '@lib/classic-api/groupers/consecutive';
+import { random } from '@lib/classic-api/processors/random';
+import { gte, lte, oneOf } from '@lib/classic-api/validators/is';
+import { number } from '@lib/classic-api/validators/number';
 
 test('processor › random', () => {
   for (let i = 0; i < 10; i++) {

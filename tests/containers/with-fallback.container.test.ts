@@ -1,6 +1,6 @@
-import { withFallback as validator } from '@lib/containers/with-fallback';
-import { C_FLB as VALIDATOR_NAME } from '@lib/names';
-import { number } from '@lib/validators/number';
+import { withFallback as validator } from '@lib/classic-api/containers/with-fallback';
+import { C_FLB as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { number } from '@lib/classic-api/validators/number';
 import { emptyFunction, paramsCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

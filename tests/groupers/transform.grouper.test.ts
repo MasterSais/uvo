@@ -1,6 +1,6 @@
-import { transform as validator } from '@lib/groupers/transform';
-import { G_TRM as VALIDATOR_NAME } from '@lib/names';
-import { clamp } from '@lib/processors/clamp';
+import { transform as validator } from '@lib/classic-api/groupers/transform';
+import { G_TRM as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { clamp } from '@lib/classic-api/processors/clamp';
 import { baseCasesWithParams, emptyArray, emptyFunction, emptyObject, paramsCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

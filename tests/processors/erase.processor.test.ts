@@ -1,4 +1,4 @@
-import { erase as processor } from '@lib/processors/erase';
+import { erase as processor } from '@lib/classic-api/processors/erase';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('processor › erase', () => {

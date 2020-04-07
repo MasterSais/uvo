@@ -1,6 +1,6 @@
-import { V_GTE as VALIDATOR_NAME } from '@lib/names';
-import { template } from '@lib/template/template';
-import { gte as validator } from '@lib/validators/is';
+import { V_GTE as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { template } from '@lib/templating-api/template';
+import { gte as validator } from '@lib/classic-api/validators/is';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
 

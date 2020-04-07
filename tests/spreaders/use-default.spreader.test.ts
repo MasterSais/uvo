@@ -1,6 +1,6 @@
-import { S_DFT as VALIDATOR_NAME } from '@lib/names';
-import { clamp } from '@lib/processors/clamp';
-import { useDefault as validator } from '@lib/spreaders/use-default';
+import { S_DFT as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { clamp } from '@lib/classic-api/processors/clamp';
+import { useDefault as validator } from '@lib/classic-api/spreaders/use-default';
 import { emptyFunction, paramsCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

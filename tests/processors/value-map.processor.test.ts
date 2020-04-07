@@ -1,4 +1,4 @@
-import { valueMap as processor } from '@lib/processors/value-map';
+import { valueMap as processor } from '@lib/classic-api/processors/value-map';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('processor › strip', () => {

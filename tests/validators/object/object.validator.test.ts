@@ -1,6 +1,6 @@
-import { V_OBJ as VALIDATOR_NAME } from '@lib/names';
-import { template, tml } from '@lib/template/template';
-import { object as validator } from '@lib/validators/object';
+import { V_OBJ as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { template, tml } from '@lib/templating-api/template';
+import { object as validator } from '@lib/classic-api/validators/object';
 import { baseCases, baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightParams, rightTemplate, wrong, wrongParams, wrongTemplate } from './cases';
 

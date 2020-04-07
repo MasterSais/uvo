@@ -3,71 +3,75 @@
   "outFile": "index.template.ts",
   "files": [
     {
-      "file": "./src/types.ts",
+      "file": "./src/classic-api/types.ts",
       "removeExports": true
     },
     {
-      "file": "./src/names.ts",
+      "file": "./src/classic-api/names.ts",
       "removeExports": true
     },
     {
-      "file": "./src/utilities.ts",
+      "file": "./src/classic-api/utilities.ts",
       "removeExports": true
     },
     {
-      "dir": "./src/groupers",
+      "dir": "./src/classic-api/groupers",
       "removeExports": true
     },
     {
-      "dir": "./src/spreaders",
+      "dir": "./src/classic-api/spreaders",
       "removeExports": true
     },
     {
-      "dir": "./src/validators",
+      "dir": "./src/classic-api/validators",
       "removeExports": true
     },
     {
-      "dir": "./src/processors",
+      "dir": "./src/classic-api/processors",
       "removeExports": true
     },
     {
-      "dir": "./src/containers",
+      "dir": "./src/classic-api/containers",
       "removeExports": true
     },
     {
-      "file": "./src/template/types.ts",
+      "file": "./src/templating-api/types.ts",
       "removeExports": true
     },
     {
-      "file": "./src/template/lexemes.ts",
+      "file": "./src/templating-api/lexemes.ts",
       "removeExports": true
     },
     {
-      "file": "./src/template/lexical-analyzer.ts",
+      "file": "./src/templating-api/lexical-analyzer.ts",
       "removeExports": true
     },
     {
-      "file": "./src/template/semantic-rules.ts",
+      "file": "./src/templating-api/semantic-rules.ts",
       "removeExports": true
     },
     {
-      "file": "./src/template/semantic-analyzer.ts",
+      "file": "./src/templating-api/semantic-analyzer.ts",
       "removeExports": true
     },
     {
-      "dir": "./src/template/validators",
+      "dir": "./src/templating-api/validators",
       "removeExports": true
     },
     {
-      "file": "./src/template/validators-base.ts",
+      "file": "./src/templating-api/utilities.ts",
       "removeExports": true
     },
     {
-      "file": "./src/template/composer.ts",
+      "file": "./src/templating-api/validators-base.ts",
       "removeExports": true
     },
     {
-      "file": "./src/template/template.ts"
+      "file": "./src/templating-api/composer.ts",
+      "removeExports": true
+    },
+    {
+      "file": "./src/templating-api/template.ts"
     }
   ]
 }

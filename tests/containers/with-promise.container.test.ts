@@ -1,12 +1,12 @@
-import { withErrors } from '@lib/containers/with-errors';
-import { withMeta } from '@lib/containers/with-meta';
-import { withPromise } from '@lib/containers/with-promise';
-import { consecutive } from '@lib/groupers/consecutive';
-import { parallel } from '@lib/groupers/parallel';
-import { C_PRM as VALIDATOR_NAME } from '@lib/names';
-import { gte } from '@lib/validators/is';
-import { integer } from '@lib/validators/multiple';
-import { number } from '@lib/validators/number';
+import { withErrors } from '@lib/classic-api/containers/with-errors';
+import { withMeta } from '@lib/classic-api/containers/with-meta';
+import { withPromise } from '@lib/classic-api/containers/with-promise';
+import { consecutive } from '@lib/classic-api/groupers/consecutive';
+import { parallel } from '@lib/classic-api/groupers/parallel';
+import { C_PRM as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { gte } from '@lib/classic-api/validators/is';
+import { integer } from '@lib/classic-api/validators/multiple';
+import { number } from '@lib/classic-api/validators/number';
 
 test(`validator › ${VALIDATOR_NAME}`, async () => {
   const promiseOne = (

@@ -1,12 +1,12 @@
-import { withErrors } from '@lib/containers/with-errors';
-import { parallel } from '@lib/groupers/parallel';
-import { empty, gte } from '@lib/validators/is';
-import { minLen } from '@lib/validators/length';
-import { integer } from '@lib/validators/multiple';
-import { number } from '@lib/validators/number';
-import { object } from '@lib/validators/object';
-import { object2 } from '@lib/validators/object2';
-import { string } from '@lib/validators/string';
+import { withErrors } from '@lib/classic-api/containers/with-errors';
+import { parallel } from '@lib/classic-api/groupers/parallel';
+import { empty, gte } from '@lib/classic-api/validators/is';
+import { minLen } from '@lib/classic-api/validators/length';
+import { integer } from '@lib/classic-api/validators/multiple';
+import { number } from '@lib/classic-api/validators/number';
+import { object } from '@lib/classic-api/validators/object';
+import { object2 } from '@lib/classic-api/validators/object2';
+import { string } from '@lib/classic-api/validators/string';
 
 test('errors', () => {
   const validator = (

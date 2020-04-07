@@ -1,5 +1,5 @@
-import { V_FIELDS as VALIDATOR_NAME } from '@lib/names';
-import { fields as validator } from '@lib/validators/fields';
+import { V_FIELDS as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { fields as validator } from '@lib/classic-api/validators/fields';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightParams, wrong, wrongParams } from './cases';
 

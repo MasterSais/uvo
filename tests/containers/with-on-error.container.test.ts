@@ -1,9 +1,9 @@
-import { withOnError } from '@lib/containers/with-on-error';
-import { parallel } from '@lib/groupers/parallel';
-import { C_OER as VALIDATOR_NAME } from '@lib/names';
-import { gte } from '@lib/validators/is';
-import { integer } from '@lib/validators/multiple';
-import { number } from '@lib/validators/number';
+import { withOnError } from '@lib/classic-api/containers/with-on-error';
+import { parallel } from '@lib/classic-api/groupers/parallel';
+import { C_OER as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { gte } from '@lib/classic-api/validators/is';
+import { integer } from '@lib/classic-api/validators/multiple';
+import { number } from '@lib/classic-api/validators/number';
 
 test(`validator › ${VALIDATOR_NAME}`, () => {
   let errors: Array<any> = [];

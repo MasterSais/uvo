@@ -1,6 +1,6 @@
-import { V_MXLEN as VALIDATOR_NAME } from '@lib/names';
-import { template } from '@lib/template/template';
-import { maxLen as validator } from '@lib/validators/length';
+import { V_MXLEN as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { template } from '@lib/templating-api/template';
+import { maxLen as validator } from '@lib/classic-api/validators/length';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightForNot, rightParams, wrong, wrongForNot, wrongParams } from './cases';
 

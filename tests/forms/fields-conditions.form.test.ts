@@ -1,11 +1,11 @@
-import { consecutive } from '@lib/groupers/consecutive';
-import { fields } from '@lib/validators/fields';
-import { gte } from '@lib/validators/is';
-import { length, minLen } from '@lib/validators/length';
-import { number } from '@lib/validators/number';
-import { object } from '@lib/validators/object';
-import { object2 } from '@lib/validators/object2';
-import { string } from '@lib/validators/string';
+import { consecutive } from '@lib/classic-api/groupers/consecutive';
+import { fields } from '@lib/classic-api/validators/fields';
+import { gte } from '@lib/classic-api/validators/is';
+import { length, minLen } from '@lib/classic-api/validators/length';
+import { number } from '@lib/classic-api/validators/number';
+import { object } from '@lib/classic-api/validators/object';
+import { object2 } from '@lib/classic-api/validators/object2';
+import { string } from '@lib/classic-api/validators/string';
 
 test('fields conditions', () => {
   const validator = (

@@ -1,5 +1,5 @@
-import { gte } from '@lib/validators/is';
-import { integer } from '@lib/validators/multiple';
+import { gte } from '@lib/classic-api/validators/is';
+import { integer } from '@lib/classic-api/validators/multiple';
 import { emptyArray, emptyFunction, emptyObject } from '@test/utilities';
 
 export const rightParams: Array<any> = [

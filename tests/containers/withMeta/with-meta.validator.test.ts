@@ -1,12 +1,12 @@
-import { withErrors } from '@lib/containers/with-errors';
-import { withMeta as validator } from '@lib/containers/with-meta';
-import { consecutive } from '@lib/groupers/consecutive';
-import { parallel } from '@lib/groupers/parallel';
-import { C_MET as VALIDATOR_NAME } from '@lib/names';
-import { template } from '@lib/template/template';
-import { gte } from '@lib/validators/is';
-import { integer } from '@lib/validators/multiple';
-import { number } from '@lib/validators/number';
+import { withErrors } from '@lib/classic-api/containers/with-errors';
+import { withMeta as validator } from '@lib/classic-api/containers/with-meta';
+import { consecutive } from '@lib/classic-api/groupers/consecutive';
+import { parallel } from '@lib/classic-api/groupers/parallel';
+import { C_MET as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { template } from '@lib/templating-api/template';
+import { gte } from '@lib/classic-api/validators/is';
+import { integer } from '@lib/classic-api/validators/multiple';
+import { number } from '@lib/classic-api/validators/number';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases1, cases2, templateCases1 } from './cases';
 

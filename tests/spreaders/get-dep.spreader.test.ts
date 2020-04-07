@@ -1,6 +1,6 @@
-import { S_GDP as VALIDATOR_NAME } from '@lib/names';
-import { getDep as validator } from '@lib/spreaders/get-dep';
-import { equal } from '@lib/validators/is';
+import { S_GDP as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { getDep as validator } from '@lib/classic-api/spreaders/get-dep';
+import { equal } from '@lib/classic-api/validators/is';
 import { emptyFunction, emptyMeta, paramsCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {

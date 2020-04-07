@@ -1,4 +1,4 @@
-import { trim as processor } from '@lib/processors/trim';
+import { trim as processor } from '@lib/classic-api/processors/trim';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('processor › trim', () => {

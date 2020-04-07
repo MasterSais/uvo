@@ -1,7 +1,7 @@
-import { consecutive } from '@lib/groupers/consecutive';
-import { array } from '@lib/validators/array';
-import { gte } from '@lib/validators/is';
-import { number } from '@lib/validators/number';
+import { consecutive } from '@lib/classic-api/groupers/consecutive';
+import { array } from '@lib/classic-api/validators/array';
+import { gte } from '@lib/classic-api/validators/is';
+import { number } from '@lib/classic-api/validators/number';
 
 test('processor injection', () => {
   const simpleOne = (

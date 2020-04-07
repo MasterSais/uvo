@@ -1,4 +1,4 @@
-import { strip as processor } from '@lib/processors/strip';
+import { strip as processor } from '@lib/classic-api/processors/strip';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('processor › strip', () => {
