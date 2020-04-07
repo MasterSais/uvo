@@ -1,6 +1,6 @@
 {
   "name": "uvo",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "JavaScript Universal Single Object Validator",
   "main": "./index.js",
   "module": "./dist/esm/index.js",
