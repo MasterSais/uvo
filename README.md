@@ -160,15 +160,24 @@ simpleObj({
 
 
 Calls on validation error.
+<details>
+<summary>details</summary>
+
 
 ```js
 type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => void;
 ```
+</details>
+
+---
 
 #### `Error`
 
 
 Any type's error.  Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
+<details>
+<summary>details</summary>
+
 
 ```js
 type Error = (
@@ -180,11 +189,17 @@ type Error = (
   | ((meta: MetaData) => any)
 );
 ```
+</details>
+
+---
 
 #### `FieldsSpec`
 
 
 Specification for 'fields' validator.
+<details>
+<summary>details</summary>
+
 
 ```js
 type FieldsSpec = (
@@ -197,11 +212,17 @@ type FieldsSpec = (
   ]
 );
 ```
+</details>
+
+---
 
 #### `MetaData`
 
 
 Internal data for errors and dependencies.
+<details>
+<summary>details</summary>
+
 
 ```js
 type MetaData = {
@@ -212,31 +233,49 @@ type MetaData = {
   _logs: Array<[string, any, Array<any>]>;
 };
 ```
+</details>
+
+---
 
 #### `ObjectSpec`
 
 
 Specification for 'object' and 'object2' validators.
+<details>
+<summary>details</summary>
+
 
 ```js
 type ObjectSpec = Record<string, Array<Validator<any, any>> | Validator<any, any>>;
 ```
+</details>
+
+---
 
 #### `Relevance`
 
 
 Error's relevancy status.
+<details>
+<summary>details</summary>
+
 
 ```js
 type Relevance = {
   value: boolean;
 };
 ```
+</details>
+
+---
 
 #### `Result`
 
 
 'WithError' container's result. Will be null if no errors.
+<details>
+<summary>details</summary>
+
 
 ```js
 type Result<T> = {
@@ -244,15 +283,24 @@ type Result<T> = {
   errors?: Array<any>;
 };
 ```
+</details>
+
+---
 
 #### `Validator`
 
 
 Validates value.
+<details>
+<summary>details</summary>
+
 
 ```js
 type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 ```
+</details>
+
+---
 
 ### `Validators`
 Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.
@@ -263,6 +311,9 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>
 ```
 Checks value to be an array.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -309,6 +360,9 @@ anotherOne([0, 1, 20]); // '20' will be clamped to '10'.
 anotherOne([0, 1, 2, 3]); // too long.
 // => null
 ```
+</details>
+
+---
 
 #### `bool <checkable>`
 
@@ -317,6 +371,9 @@ anotherOne([0, 1, 2, 3]); // too long.
 bool<T>(error?: Error): Validator<T, boolean>
 ```
 Checks value to be a boolean compatible.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -348,6 +405,9 @@ v.bool.check()(1);
 v.bool.check()('abc');
 // => null
 ```
+</details>
+
+---
 
 #### `date <checkable>`
 
@@ -356,6 +416,9 @@ v.bool.check()('abc');
 date<T>(error?: Error): Validator<T, number>
 ```
 Checks value to be a date compatible. Result in ms.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -375,17 +438,20 @@ v.date.check()('12.12.2020');
 v.date.check()('99.12.2020');
 // => null
 ```
+</details>
+
+---
 
 #### `defined`
 
 ```js
-// shortcut to
-is(value => value !== undefined)
-
 // scheme
 defined<T>(error?: Error): Validator<T>
 ```
 Checks value to be defined.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -402,17 +468,20 @@ v.defined()('');
 v.defined()(true);
 // => true
 ```
+</details>
+
+---
 
 #### `empty <invertible>`
 
 ```js
-// shortcut to
-is(value => [null, undefined, ''].indexOf(value) >= 0)
-
 // scheme
 empty<T>(error?: Error): Validator<T>
 ```
 Checks value to be empty.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -441,17 +510,20 @@ v.empty.not()(undefined);
 v.empty.not()(0);
 // => 0
 ```
+</details>
+
+---
 
 #### `equal <invertible>`
 
 ```js
-// shortcut to
-is(value => value === match)
-
 // scheme
 equal<T>(match: T, error?: Error): Validator<T>
 ```
 Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -471,17 +543,20 @@ v.equal.not(10)(10);
 v.equal.not(10)(1);
 // => 1
 ```
+</details>
+
+---
 
 #### `even <invertible>`
 
 ```js
-// shortcut to
-is(value => value % 2 === 0)
-
 // scheme
 even(error?: Error): Validator<number>
 ```
 Checks number to be an even one.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -501,6 +576,9 @@ v.even.not()(1);
 v.even.not()(2);
 // => null
 ```
+</details>
+
+---
 
 #### `fields`
 
@@ -509,6 +587,9 @@ v.even.not()(2);
 fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>
 ```
 Checks for fields in the input object.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -547,17 +628,20 @@ v.fields(['^', 'f1', 'f2'])({ f1: null });
 v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 // requires identifier ('id' either 'guid'), 'role', name ('fullname' or 'nickname' or both).
 ```
+</details>
+
+---
 
 #### `gte <invertible>`
 
 ```js
-// shortcut to
-is(value => value >= bound)
-
 // scheme
 gte<T>(bound: T, error?: Error): Validator<T>
 ```
 Checks value to be greater or equal to 'bound' param. Requires the same type.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -598,17 +682,20 @@ v.gte.not(false)(true);
 v.gte.not(0)(-1);
 // => -1
 ```
+</details>
+
+---
 
 #### `integer <invertible>`
 
 ```js
-// shortcut to
-is(value => value % 1 === 0)
-
 // scheme
 integer(error?: Error): Validator<number>
 ```
 Checks number to be an integer.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -628,6 +715,9 @@ v.integer.not()(1);
 v.integer.not()(1.1);
 // => 1.1
 ```
+</details>
+
+---
 
 #### `is`
 
@@ -636,6 +726,9 @@ v.integer.not()(1.1);
 is<T>(comparator: ((value: T) => boolean), error?: Error): Validator<T>
 ```
 Checks value with custom comparator.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -646,17 +739,20 @@ v.is((value: number) => value === 10)(10);
 v.is((value) => value === 10)('10');
 // => null
 ```
+</details>
+
+---
 
 #### `length <invertible>`
 
 ```js
-// shortcut to
-is(value => value.length === len)
-
 // scheme
 length<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
 Compares length with 'len' param. Requires to be an object like or string.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -688,17 +784,20 @@ v.length.not(3)([0, 1, 2, 3]);
 v.length.not(3)('abcd');
 // => 'abcd'
 ```
+</details>
+
+---
 
 #### `lte <invertible>`
 
 ```js
-// shortcut to
-is(value => value <= bound)
-
 // scheme
 lte<T>(bound: T, error?: Error): Validator<T>
 ```
 Checks value to be lower or equal to 'bound' param. Requires the same type.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -739,17 +838,20 @@ v.lte.not(true)(true);
 v.lte.not(0)(1);
 // => 1
 ```
+</details>
+
+---
 
 #### `maxLen <invertible>`
 
 ```js
-// shortcut to
-is(value => value.length >= len)
-
 // scheme
 maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -766,17 +868,20 @@ v.maxLen(3)('abc');
 v.maxLen(3)({ length: 3 });
 // => { length: 3 }
 ```
+</details>
+
+---
 
 #### `minLen <invertible>`
 
 ```js
-// shortcut to
-is(value => value.length <= len)
-
 // scheme
 minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -793,17 +898,20 @@ v.minLen(3)('abc');
 v.minLen(3)({ length: 3 });
 // => { length: 3 }
 ```
+</details>
+
+---
 
 #### `multiple <invertible>`
 
 ```js
-// shortcut to
-is(value => value % multiplier === 0)
-
 // scheme
 multiple(multiplier: number, error?: Error): Validator<number>
 ```
 Checks number to be an integer.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -826,6 +934,9 @@ v.multiple.not(3)(12);
 v.multiple.not(3)(11);
 // => 11
 ```
+</details>
+
+---
 
 #### `number <checkable>`
 
@@ -834,6 +945,9 @@ v.multiple.not(3)(11);
 number<T>(error?: Error): Validator<T, number>
 ```
 Checks value to be a number compatible.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -862,6 +976,9 @@ v.number.check()('10');
 v.number.check()('true');
 // => null
 ```
+</details>
+
+---
 
 #### `object`
 
@@ -870,6 +987,9 @@ v.number.check()('true');
 object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>
 ```
 Checks value to be an object.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -911,6 +1031,9 @@ fieldsKeeper({
 });
 // => { id: 3, name: 'YourAwesomeUserName' }
 ```
+</details>
+
+---
 
 #### `object2`
 
@@ -919,6 +1042,9 @@ fieldsKeeper({
 object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>
 ```
 Checks value to be an object. Provides strict ordering. Each key can be a Regex.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -975,17 +1101,20 @@ advancedObj({
 });
 // => { id: 3, name: 'YourAwesomeUserName', surname: 'YourAwesomeUserSurname', thirdname: 'YourAwesomeUserThirdname' }
 ```
+</details>
+
+---
 
 #### `oneOf <invertible>`
 
 ```js
-// shortcut to
-is(value => candidates.indexOf(value) >= 0)
-
 // scheme
 oneOf<T>(candidates: Array<T> | string, error?: Error): Validator<T>
 ```
 Checks value to be one of expected. Shallow comparison.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1011,17 +1140,20 @@ v.oneOf.not([0, 1, 2])(3);
 v.oneOf.not('abcdefg')('f');
 // => null
 ```
+</details>
+
+---
 
 #### `regex <invertible>`
 
 ```js
-// shortcut to
-is(value => match.test(value))
-
 // scheme
 regex<T>(match: RegExp, error?: Error): Validator<T>
 ```
 Checks value to match a pattern.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1038,6 +1170,9 @@ v.regex.not(/^[0-9]$/)(1);
 v.regex(/^[0-9]$/)(11);
 // => 11
 ```
+</details>
+
+---
 
 #### `string <checkable>`
 
@@ -1046,6 +1181,9 @@ v.regex(/^[0-9]$/)(11);
 string<T>(error?: Error): Validator<T, string>
 ```
 Checks value to be a string compatible.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1071,6 +1209,9 @@ v.string.check()('1');
 v.string.check()([1, 2]);
 // => null
 ```
+</details>
+
+---
 
 #### `unique`
 
@@ -1079,6 +1220,9 @@ v.string.check()([1, 2]);
 array<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>
 ```
 Checks array's elements to be unique.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1123,6 +1267,9 @@ validator([{ id: 1 }, { id: 2 }, { id: 1 }]);
 validator([1, 2, 1, 2]);
 // => { result: [1, 2, null, null], errors: ['2', '3'] }
 ```
+</details>
+
+---
 
 ### `Processors`
 Processes input value. No input types check. Recommended to use validators before.
@@ -1133,6 +1280,9 @@ validator([1, 2, 1, 2]);
 clamp<T>(min: T, max: T): Validator<T, T>
 ```
 Clamps value to required boundaries.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1155,6 +1305,9 @@ v.clamp('c', 'e')('a');
 v.clamp('c', 'e')('f');
 // => 'e'
 ```
+</details>
+
+---
 
 #### `erase`
 
@@ -1163,6 +1316,9 @@ v.clamp('c', 'e')('f');
 erase<T>(): Validator<T, null>
 ```
 Erase input.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1170,6 +1326,9 @@ import * as v from 'uvo';
 v.erase()(2);
 // => null
 ```
+</details>
+
+---
 
 #### `keysMap`
 
@@ -1178,6 +1337,9 @@ v.erase()(2);
 keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>
 ```
 Maps object keys with custom mapper.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1191,6 +1353,9 @@ v.keysMap((key: string) => key.toUpperCase())({ f1: 'abc', f2: 10 });
 v.keysMap((key: string) => key === 'f1' ? 'f2' : key)({ f1: 'abc' }); // moves/renames field
 // => { f2: 'abc' }
 ```
+</details>
+
+---
 
 #### `lowercase`
 
@@ -1199,6 +1364,9 @@ v.keysMap((key: string) => key === 'f1' ? 'f2' : key)({ f1: 'abc' }); // moves/r
 lowercase(): Validator<string, string>
 ```
 Lowercase input string.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1206,6 +1374,9 @@ import * as v from 'uvo';
 v.lowercase()('ABC');
 // => 'abc'
 ```
+</details>
+
+---
 
 #### `random`
 
@@ -1214,6 +1385,9 @@ v.lowercase()('ABC');
 random(min: number, max: number, precision: number): Validator<any, number>
 ```
 Returns random value according to params.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1230,6 +1404,9 @@ v.random(5, 10, 0)(null);
 v.random(0, 1, 0)(null);
 // => in [0, 1]
 ```
+</details>
+
+---
 
 #### `round`
 
@@ -1238,6 +1415,9 @@ v.random(0, 1, 0)(null);
 round(method?: 'floor' | 'ceil'): Validator<number, number>
 ```
 Round input number with specific method.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1269,6 +1449,9 @@ v.round('ceil')(10.2);
 v.round('ceil')(9.8);
 // => 10
 ```
+</details>
+
+---
 
 #### `strip`
 
@@ -1277,6 +1460,9 @@ v.round('ceil')(9.8);
 strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>
 ```
 Removes field from object conditionally.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1302,6 +1488,9 @@ v.strip(/f1|f2/, (value: any) => value === null)({ f1: null, f2: null });
 v.strip(/f1|f2/)({ f1: 10, f2: 'abc' });
 // => {}
 ```
+</details>
+
+---
 
 #### `trim`
 
@@ -1310,6 +1499,9 @@ v.strip(/f1|f2/)({ f1: 10, f2: 'abc' });
 trim(method?: 'left' | 'right'): Validator<string, string>
 ```
 Trim input string with specific method.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1323,6 +1515,9 @@ v.trim('left')(' abc ');
 v.trim('right')(' abc ');
 // => ' abc'
 ```
+</details>
+
+---
 
 #### `uppercase`
 
@@ -1331,6 +1526,9 @@ v.trim('right')(' abc ');
 uppercase(): Validator<string, string>
 ```
 Uppercase input string.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1338,6 +1536,9 @@ import * as v from 'uvo';
 v.uppercase()('abc');
 // => 'ABC'
 ```
+</details>
+
+---
 
 #### `valueMap`
 
@@ -1346,6 +1547,9 @@ v.uppercase()('abc');
 valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>
 ```
 Maps value with custom mappers.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1368,6 +1572,9 @@ v.valueMap(['yes', true], [/no|nope/, false])('nope');
 v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 // => 'nope?'
 ```
+</details>
+
+---
 
 ### `Groupers`
 Groups validators in a specific way.
@@ -1378,6 +1585,9 @@ v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>
 ```
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1398,6 +1608,9 @@ unchi(-1);
 unchi('a');
 // => null
 ```
+</details>
+
+---
 
 #### `or`
 
@@ -1406,6 +1619,9 @@ unchi('a');
 or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>
 ```
 Groups validators sequentially. Searches for first successful validator's result.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1426,6 +1642,9 @@ unchi('true');
 unchi('abc');
 // => null
 ```
+</details>
+
+---
 
 #### `parallel`
 
@@ -1434,6 +1653,9 @@ unchi('abc');
 parallel<T>(...validators: Array<Validator<T>>): Validator<T>
 ```
 Groups validators in parallel. The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere). Beware of using processors inside.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1460,6 +1682,9 @@ unchi(11);
 unchi(11.2);
 // => { result: null, errors: ['ERR1', 'ERR3'] }
 ```
+</details>
+
+---
 
 #### `transform`
 
@@ -1468,6 +1693,9 @@ unchi(11.2);
 transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1495,6 +1723,9 @@ niUnchi(10.5);
 niUnchi(8.3);
 // => 9.3
 ```
+</details>
+
+---
 
 ### `Containers`
 Embraces validators with additional data processing.
@@ -1505,6 +1736,9 @@ niUnchi(8.3);
 withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>
 ```
 Provides error handling mechanism.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1531,6 +1765,9 @@ unchi(11);
 unchi(11.2);
 // => { result: null, errors: ['ERR1', 'ERR3'] }
 ```
+</details>
+
+---
 
 #### `withFallback`
 
@@ -1539,6 +1776,9 @@ unchi(11.2);
 withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Provides fallback value on error.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1559,6 +1799,9 @@ simpleOne('Stringu'); // too short.
 simpleOne('Stringuuuuuuuuuu');
 // => 'Stringuuuuuuuuuu'
 ```
+</details>
+
+---
 
 #### `withMeta`
 
@@ -1567,6 +1810,9 @@ simpleOne('Stringuuuuuuuuuu');
 withMeta<T, R>(validator: Validator<T, R>, onLogs?: (logs: Array<[string, any, Array<any>]>): Validator<T, R>
 ```
 Provides meta structure. Can catch scheme logs.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1595,6 +1841,9 @@ unchi(11);
 unchi(11.2);
 // => { result: null, errors: ['lte', 'integer'] }
 ```
+</details>
+
+---
 
 #### `withOnError`
 
@@ -1603,6 +1852,9 @@ unchi(11.2);
 withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>
 ```
 Provides custom error handler.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1634,6 +1886,9 @@ unchi(11.2);
 // console.error => 'ERR1'
 // console.error => 'ERR3'
 ```
+</details>
+
+---
 
 #### `withPromise`
 
@@ -1642,6 +1897,9 @@ unchi(11.2);
 withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>
 ```
 Convert result to promise. Use it for async validation.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1675,6 +1933,9 @@ try {
   // => ['ERR']
 }
 ```
+</details>
+
+---
 
 ### `Spreaders`
 Spreads data through a validators scheme. Almost all spreaders requires meta schema to be provided with 'withMeta'.
@@ -1685,6 +1946,9 @@ try {
 dynamic<T>(preValidator: () => Validator<T> | Array<Validator<T>>): Validator<T>
 ```
 Inserts new validators into scheme dynamically.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1706,6 +1970,9 @@ v.consecutive(
   ])
 );
 ```
+</details>
+
+---
 
 #### `getDep`
 
@@ -1714,6 +1981,9 @@ v.consecutive(
 getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>
 ```
 Takes value from spreaded structure. Might be used for dynamic validators creation. If 'preValidator' not provided, just replaces current value. Works only with provided meta object.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1736,6 +2006,9 @@ simpleOne({ pass: 'YourAwesomePassword', pass2: 'YourAwesomePass..' });
 simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 // => { pass: null, pass2: null }
 ```
+</details>
+
+---
 
 #### `setDep`
 
@@ -1744,6 +2017,9 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>
 ```
 Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value. i.e. reference api.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1769,6 +2045,9 @@ v.withMeta(
   )
 );
 ```
+</details>
+
+---
 
 #### `setVDep`
 
@@ -1777,6 +2056,9 @@ v.withMeta(
 setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>
 ```
 Puts validators into spreaded structure. Might be used for recursive schemes.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1801,6 +2083,9 @@ recursiveOne({ id: 1, node: { id: -1, node: { id: 3, node: { id: 4 } } } });
 recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 // => { id: 1, node: { id: null, node: null } }
 ```
+</details>
+
+---
 
 #### `useDefault`
 
@@ -1809,6 +2094,9 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators. If you need fallback value on error use 'withFallback' container instead.
+<details>
+<summary>details</summary>
+
 
 ```js
 import * as v from 'uvo';
@@ -1829,6 +2117,9 @@ simpleOne('Stringu'); // too short.
 simpleOne('Stringuuuuuuuuuu');
 // => 'Stringuuuuuuuuuu'
 ```
+</details>
+
+---
 
 ## `Templating API (beta)`
 Templating api provides string based validators creation. Much more compact and flexible against classic API.
@@ -1854,6 +2145,9 @@ tml`...`(
 
 
 Checks value to be an array. `a` - short version.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -1876,11 +2170,17 @@ tml`
   )
 `()({});
 ```
+</details>
+
+---
 
 #### `bool`
 
 
 Checks value to be a boolean compatible. `b` - short version.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -1891,12 +2191,18 @@ tml`@bool`()(true);
 
 tml`@b`()(true);
 ```
+</details>
+
+---
 
 #### `compare`
 
 
 Checks value with provided comparator. `c` - short version.
 Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
+<details>
+<summary>details</summary>
+
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -1917,6 +2223,9 @@ tml`@c(%2)`()(2);
 
 tml`@c(<=$0)`([10])(2);
 ```
+</details>
+
+---
 
 #### `containers`
 
@@ -1926,6 +2235,9 @@ Provides specific container for scheme.
 `~meta` - provides `withMeta` container. `~m` - short version.
 `~promise` - provides `withPromise` container. `~p` - short version.
 The last container will be an outer one. `promise` must go later than others containers.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { tml } from 'uvo/template';
@@ -1946,11 +2258,17 @@ tml`
   ) ~e ~m
 `()();
 ```
+</details>
+
+---
 
 #### `date`
 
 
 Checks value to be a date compatible. `d` - short version.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -1961,11 +2279,17 @@ tml`@date`()(851720400000);
 
 tml`@d`()(851720400000);
 ```
+</details>
+
+---
 
 #### `errors`
 
 
 Errors for scheme. Use `!` after validator.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -1984,11 +2308,17 @@ tml`
   ) ~e
 `(null, ['ERR1', () => 'ERR2', 'ERR3', () => 'ERR4'])({});
 ```
+</details>
+
+---
 
 #### `injection`
 
 
 External injections for scheme.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { tml } from 'uvo/template';
@@ -2007,12 +2337,18 @@ tml`
   )
 `({ minId: 0, minNameLength: () => 10 })();
 ```
+</details>
+
+---
 
 #### `length`
 
 
 Checks value's length with provided comparator. `l` - short version.
 Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
+<details>
+<summary>details</summary>
+
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -2029,11 +2365,17 @@ tml`@l(%2)`()('abcd');
 
 tml`@l(<=$0)`([10])([0]);
 ```
+</details>
+
+---
 
 #### `number`
 
 
 Checks value to be a number. `n` - short version.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -2044,11 +2386,17 @@ tml`@number`()(10);
 
 tml`@n`()(10);
 ```
+</details>
+
+---
 
 #### `object`
 
 
 Checks value to be an object. `o` - short version.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -2073,6 +2421,9 @@ tml`
   )
 `()({});
 ```
+</details>
+
+---
 
 #### `reference`
 
@@ -2081,6 +2432,9 @@ Provides references across the scheme.
 `#...` in validation sequence settles current value as specific reference. 
 `#...` in parameters retrieves value from specific reference. 
 Meta required.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { tml } from 'uvo/template';
@@ -2101,11 +2455,17 @@ tml`
   ) ~m
 `({ now: Date.now() })();
 ```
+</details>
+
+---
 
 #### `string`
 
 
 Checks value to be a string. `s` - short version.
+<details>
+<summary>details</summary>
+
 
 ```js
 import { template, tml } from 'uvo/template';
@@ -2116,6 +2476,9 @@ tml`@string`()('str');
 
 tml`@s`()('str');
 ```
+</details>
+
+---
 
 ### `Examples`
 #### `Base example`

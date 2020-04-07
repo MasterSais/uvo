@@ -22,13 +22,13 @@ const loadFiles = (files) => files.map(file => `${fs.readFileSync(path.resolve(f
 
 const readDir = (dirName) => fs.readdirSync(dirName).map(fileName => dirName + '/' + fileName);
 
-const parseDoc = (files, level) => files
+const parseDoc = (files, level, collapse) => files
   .map(file => fs.readFileSync(path.resolve(file)).toString())
   .map(file => {
     const [, name] = file.match(/@name \{([^\}]+)\}/);
     const checkable = file.match(/@checkable/);
     const invertible = file.match(/@invertible/);
-    const [, shortcut] = file.match(/@shortcut \{([^\}]+)\}/) || [];
+    // const [, shortcut] = file.match(/@shortcut \{([^\}]+)\}/) || [];
     const [, scheme] = file.match(/@scheme \{([^\}]+)\}/) || [];
     const [, desc] = file.match(/@desc([^@\/\{]+)((\*\/)|(\{?@))/)
     const example = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/)
@@ -36,8 +36,8 @@ const parseDoc = (files, level) => files
     return (
       `${genTitle(name, level, !!checkable, !!invertible)}\n${
       (
-        (scheme || shortcut)
-          ? `\`\`\`js\n${shortcut ? `// shortcut to\n${shortcut}\n\n` : ''}${scheme ? `// scheme\n${scheme}` : ''}\n\`\`\``
+        (scheme/* || shortcut*/)
+          ? `\`\`\`js\n${/*shortcut ? `// shortcut to\n${shortcut}\n\n` :*/ ''}${scheme ? `// scheme\n${scheme}` : ''}\n\`\`\``
           : ''
       )
       }\n${
@@ -49,13 +49,17 @@ const parseDoc = (files, level) => files
           .replace(/\*/g, ' ')
           .trim()
       )
-      }\n\n${example ? `\`\`\`js${example[1]}\n\`\`\`\n\n` : String()}`
+      }\n${
+        collapse ? '<details>\n<summary>details</summary>\n\n' : ''
+      }\n${example ? `\`\`\`js${example[1]}\n\`\`\`${
+        collapse ? '\n</details>' : ''
+      }\n\n---\n\n` : String()}`
     )
   });
 
 const build = (config, level = 1) => (
   config
-    .map(({ title, content, contentDir, sub, parse }) => [
+    .map(({ title, content, contentDir, sub, parse, collapse }) => [
       (
         title
           ? genTitle(title, level)
@@ -63,7 +67,7 @@ const build = (config, level = 1) => (
       ),
       ...(
         parse
-          ? parseDoc(content || readDir(contentDir), level)
+          ? parseDoc(content || readDir(contentDir), level, collapse)
           : loadFiles(content || readDir(contentDir))
       ),
       (
