@@ -13,15 +13,15 @@
         ]
       },
       {
-        "title": "Usage",
-        "content": [
-          "./docs/classic-api/markdown/usage.md"
-        ]
-      },
-      {
         "title": "Classic API",
         "content": [],
         "sub": [
+          {
+            "title": "Usage",
+            "content": [
+              "./docs/classic-api/markdown/usage.md"
+            ]
+          },
           {
             "title": "Types",
             "content": [
@@ -99,6 +99,24 @@
                 "contentDir": "./docs/classic-api/spreaders"
               }
             ]
+          },
+          {
+            "title": "Logs",
+            "content": [
+              "./docs/classic-api/markdown/logs.md"
+            ]
+          },
+          {
+            "title": "Custom validators",
+            "content": [
+              "./docs/classic-api/markdown/validator-creation.md"
+            ]
+          },
+          {
+            "title": "Examples",
+            "content": [
+              "./docs/classic-api/markdown/examples.md"
+            ]
           }
         ]
       },
@@ -131,24 +149,6 @@
               "./docs/templating-api/examples.md"
             ]
           }
-        ]
-      },
-      {
-        "title": "Logs",
-        "content": [
-          "./docs/classic-api/markdown/logs.md"
-        ]
-      },
-      {
-        "title": "Custom validators",
-        "content": [
-          "./docs/classic-api/markdown/validator-creation.md"
-        ]
-      },
-      {
-        "title": "Examples",
-        "content": [
-          "./docs/classic-api/markdown/examples.md"
         ]
       }
     ]

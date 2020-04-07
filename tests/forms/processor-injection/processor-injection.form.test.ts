@@ -2,9 +2,11 @@ import { consecutive } from '@lib/classic-api/groupers/consecutive';
 import { array } from '@lib/classic-api/validators/array';
 import { gte } from '@lib/classic-api/validators/is';
 import { number } from '@lib/classic-api/validators/number';
+import { baseCasesWithParams } from '@test/utilities';
+import { cases } from './cases';
 
-test('processor injection', () => {
-  const simpleOne = (
+describe('processor injection form', () => {
+  baseCasesWithParams(() => (
     consecutive(
       array([
         number(),
@@ -12,11 +14,5 @@ test('processor injection', () => {
       ]),
       (data: Array<number>) => data.filter(value => !!value)
     )
-  );
-
-  expect(simpleOne([-1, 2, 3])).toEqual([2, 3]);
-  
-  expect(simpleOne([-1, -2, 3])).toEqual([3]);
-
-  expect(simpleOne([-1, -2, 'abc'])).toEqual([]);
+  ), cases, []);
 });

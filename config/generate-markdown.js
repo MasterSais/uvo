@@ -28,7 +28,6 @@ const parseDoc = (files, level, collapse) => files
     const [, name] = file.match(/@name \{([^\}]+)\}/);
     const checkable = file.match(/@checkable/);
     const invertible = file.match(/@invertible/);
-    // const [, shortcut] = file.match(/@shortcut \{([^\}]+)\}/) || [];
     const [, scheme] = file.match(/@scheme \{([^\}]+)\}/) || [];
     const [, desc] = file.match(/@desc([^@\/\{]+)((\*\/)|(\{?@))/)
     const example = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/)
@@ -37,7 +36,7 @@ const parseDoc = (files, level, collapse) => files
       `${genTitle(name, level, !!checkable, !!invertible)}\n${
       (
         (scheme/* || shortcut*/)
-          ? `\`\`\`js\n${/*shortcut ? `// shortcut to\n${shortcut}\n\n` :*/ ''}${scheme ? `// scheme\n${scheme}` : ''}\n\`\`\``
+          ? `\`\`\`js\n${scheme ? scheme : ''}\n\`\`\``
           : ''
       )
       }\n${

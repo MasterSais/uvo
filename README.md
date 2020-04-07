@@ -12,8 +12,8 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
 
 
 - [`Install`](#install)
-- [`Usage`](#usage)
 - [`Classic API`](#classic-api)
+  - [`Usage`](#usage)
   - [`Types`](#types)
     - [`ErrorCallback`](#errorcallback)
     - [`Error`](#error)
@@ -75,6 +75,9 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`setDep`](#setdep)
     - [`setVDep`](#setvdep)
     - [`useDefault`](#usedefault)
+  - [`Logs`](#logs)
+  - [`Custom validators`](#custom-validators)
+  - [`Examples`](#examples)
 - [`Templating API (beta)`](#templating-api-beta)
   - [`Usage`](#usage-1)
   - [`Keys`](#keys)
@@ -90,10 +93,7 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`object`](#object-1)
     - [`reference`](#reference)
     - [`string`](#string)
-  - [`Examples`](#examples)
-- [`Logs`](#logs)
-- [`Custom validators`](#custom-validators)
-- [`Examples`](#examples-1)
+  - [`Examples`](#examples-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## `Install`
@@ -102,7 +102,8 @@ npm install uvo
 //or
 yarn add uvo
 ```
-## `Usage`
+## `Classic API`
+### `Usage`
 ```js
 import * as v from 'uvo'; // for everything (recommended for better minification results e.g. in webpack)
 // or
@@ -143,7 +144,6 @@ simpleObj({
 });
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 ```
-## `Classic API`
 ### `Types`
 The main types used in the library.
 #### `ErrorCallback`
@@ -297,7 +297,6 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 #### `array`
 
 ```js
-// scheme
 array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>
 ```
 Checks value to be an array.
@@ -357,7 +356,6 @@ anotherOne([0, 1, 2, 3]); // too long.
 #### `bool <checkable>`
 
 ```js
-// scheme
 bool<T>(error?: Error): Validator<T, boolean>
 ```
 Checks value to be a boolean compatible.
@@ -402,7 +400,6 @@ v.bool.check()('abc');
 #### `date <checkable>`
 
 ```js
-// scheme
 date<T>(error?: Error): Validator<T, number>
 ```
 Checks value to be a date compatible. Result in ms.
@@ -435,7 +432,6 @@ v.date.check()('99.12.2020');
 #### `defined`
 
 ```js
-// scheme
 defined<T>(error?: Error): Validator<T>
 ```
 Checks value to be defined.
@@ -465,7 +461,6 @@ v.defined()(true);
 #### `empty <invertible>`
 
 ```js
-// scheme
 empty<T>(error?: Error): Validator<T>
 ```
 Checks value to be empty.
@@ -507,7 +502,6 @@ v.empty.not()(0);
 #### `equal <invertible>`
 
 ```js
-// scheme
 equal<T>(match: T, error?: Error): Validator<T>
 ```
 Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
@@ -540,7 +534,6 @@ v.equal.not(10)(1);
 #### `even <invertible>`
 
 ```js
-// scheme
 even(error?: Error): Validator<number>
 ```
 Checks number to be an even one.
@@ -573,7 +566,6 @@ v.even.not()(2);
 #### `fields`
 
 ```js
-// scheme
 fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>
 ```
 Checks for fields in the input object.
@@ -625,7 +617,6 @@ v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 #### `gte <invertible>`
 
 ```js
-// scheme
 gte<T>(bound: T, error?: Error): Validator<T>
 ```
 Checks value to be greater or equal to 'bound' param. Requires the same type.
@@ -679,7 +670,6 @@ v.gte.not(0)(-1);
 #### `integer <invertible>`
 
 ```js
-// scheme
 integer(error?: Error): Validator<number>
 ```
 Checks number to be an integer.
@@ -712,7 +702,6 @@ v.integer.not()(1.1);
 #### `is`
 
 ```js
-// scheme
 is<T>(comparator: ((value: T) => boolean), error?: Error): Validator<T>
 ```
 Checks value with custom comparator.
@@ -736,7 +725,6 @@ v.is((value) => value === 10)('10');
 #### `length <invertible>`
 
 ```js
-// scheme
 length<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
 Compares length with 'len' param. Requires to be an object like or string.
@@ -781,7 +769,6 @@ v.length.not(3)('abcd');
 #### `lte <invertible>`
 
 ```js
-// scheme
 lte<T>(bound: T, error?: Error): Validator<T>
 ```
 Checks value to be lower or equal to 'bound' param. Requires the same type.
@@ -835,7 +822,6 @@ v.lte.not(0)(1);
 #### `maxLen <invertible>`
 
 ```js
-// scheme
 maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
@@ -865,7 +851,6 @@ v.maxLen(3)({ length: 3 });
 #### `minLen <invertible>`
 
 ```js
-// scheme
 minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
@@ -895,7 +880,6 @@ v.minLen(3)({ length: 3 });
 #### `multiple <invertible>`
 
 ```js
-// scheme
 multiple(multiplier: number, error?: Error): Validator<number>
 ```
 Checks number to be an integer.
@@ -931,7 +915,6 @@ v.multiple.not(3)(11);
 #### `number <checkable>`
 
 ```js
-// scheme
 number<T>(error?: Error): Validator<T, number>
 ```
 Checks value to be a number compatible.
@@ -973,7 +956,6 @@ v.number.check()('true');
 #### `object`
 
 ```js
-// scheme
 object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>
 ```
 Checks value to be an object.
@@ -1028,7 +1010,6 @@ fieldsKeeper({
 #### `object2`
 
 ```js
-// scheme
 object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>
 ```
 Checks value to be an object. Provides strict ordering. Each key can be a Regex.
@@ -1098,7 +1079,6 @@ advancedObj({
 #### `oneOf <invertible>`
 
 ```js
-// scheme
 oneOf<T>(candidates: Array<T> | string, error?: Error): Validator<T>
 ```
 Checks value to be one of expected. Shallow comparison.
@@ -1137,7 +1117,6 @@ v.oneOf.not('abcdefg')('f');
 #### `regex <invertible>`
 
 ```js
-// scheme
 regex<T>(match: RegExp, error?: Error): Validator<T>
 ```
 Checks value to match a pattern.
@@ -1167,7 +1146,6 @@ v.regex(/^[0-9]$/)(11);
 #### `string <checkable>`
 
 ```js
-// scheme
 string<T>(error?: Error): Validator<T, string>
 ```
 Checks value to be a string compatible.
@@ -1206,7 +1184,6 @@ v.string.check()([1, 2]);
 #### `unique`
 
 ```js
-// scheme
 array<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>
 ```
 Checks array's elements to be unique.
@@ -1266,7 +1243,6 @@ validator([1, 2, 1, 2]);
 #### `clamp`
 
 ```js
-// scheme
 clamp<T>(min: T, max: T): Validator<T, T>
 ```
 Clamps value to required boundaries.
@@ -1302,7 +1278,6 @@ v.clamp('c', 'e')('f');
 #### `erase`
 
 ```js
-// scheme
 erase<T>(): Validator<T, null>
 ```
 Erase input.
@@ -1323,7 +1298,6 @@ v.erase()(2);
 #### `keysMap`
 
 ```js
-// scheme
 keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>
 ```
 Maps object keys with custom mapper.
@@ -1350,7 +1324,6 @@ v.keysMap((key: string) => key === 'f1' ? 'f2' : key)({ f1: 'abc' }); // moves/r
 #### `lowercase`
 
 ```js
-// scheme
 lowercase(): Validator<string, string>
 ```
 Lowercase input string.
@@ -1371,7 +1344,6 @@ v.lowercase()('ABC');
 #### `random`
 
 ```js
-// scheme
 random(min: number, max: number, precision: number): Validator<any, number>
 ```
 Returns random value according to params.
@@ -1401,7 +1373,6 @@ v.random(0, 1, 0)(null);
 #### `round`
 
 ```js
-// scheme
 round(method?: 'floor' | 'ceil'): Validator<number, number>
 ```
 Round input number with specific method.
@@ -1446,7 +1417,6 @@ v.round('ceil')(9.8);
 #### `strip`
 
 ```js
-// scheme
 strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>
 ```
 Removes field from object conditionally.
@@ -1485,7 +1455,6 @@ v.strip(/f1|f2/)({ f1: 10, f2: 'abc' });
 #### `trim`
 
 ```js
-// scheme
 trim(method?: 'left' | 'right'): Validator<string, string>
 ```
 Trim input string with specific method.
@@ -1512,7 +1481,6 @@ v.trim('right')(' abc ');
 #### `uppercase`
 
 ```js
-// scheme
 uppercase(): Validator<string, string>
 ```
 Uppercase input string.
@@ -1533,7 +1501,6 @@ v.uppercase()('abc');
 #### `valueMap`
 
 ```js
-// scheme
 valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>
 ```
 Maps value with custom mappers.
@@ -1571,7 +1538,6 @@ v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 #### `consecutive`
 
 ```js
-// scheme
 consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>
 ```
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
@@ -1605,7 +1571,6 @@ unchi('a');
 #### `or`
 
 ```js
-// scheme
 or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>
 ```
 Groups validators sequentially. Searches for first successful validator's result.
@@ -1639,7 +1604,6 @@ unchi('abc');
 #### `parallel`
 
 ```js
-// scheme
 parallel<T>(...validators: Array<Validator<T>>): Validator<T>
 ```
 Groups validators in parallel. The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere). Beware of using processors inside.
@@ -1679,7 +1643,6 @@ unchi(11.2);
 #### `transform`
 
 ```js
-// scheme
 transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
@@ -1722,7 +1685,6 @@ niUnchi(8.3);
 #### `withErrors`
 
 ```js
-// scheme
 withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>
 ```
 Provides error handling mechanism.
@@ -1762,7 +1724,6 @@ unchi(11.2);
 #### `withFallback`
 
 ```js
-// scheme
 withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Provides fallback value on error.
@@ -1796,7 +1757,6 @@ simpleOne('Stringuuuuuuuuuu');
 #### `withMeta`
 
 ```js
-// scheme
 withMeta<T, R>(validator: Validator<T, R>, onLogs?: (logs: Array<[string, any, Array<any>]>): Validator<T, R>
 ```
 Provides meta structure. Can catch scheme logs.
@@ -1838,7 +1798,6 @@ unchi(11.2);
 #### `withOnError`
 
 ```js
-// scheme
 withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>
 ```
 Provides custom error handler.
@@ -1883,7 +1842,6 @@ unchi(11.2);
 #### `withPromise`
 
 ```js
-// scheme
 withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>
 ```
 Convert result to promise. Use it for async validation.
@@ -1932,7 +1890,6 @@ try {
 #### `dynamic`
 
 ```js
-// scheme
 dynamic<T>(preValidator: () => Validator<T> | Array<Validator<T>>): Validator<T>
 ```
 Inserts new validators into scheme dynamically.
@@ -1967,7 +1924,6 @@ v.consecutive(
 #### `getDep`
 
 ```js
-// scheme
 getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>
 ```
 Takes value from spreaded structure. Might be used for dynamic validators creation. If 'preValidator' not provided, just replaces current value. Works only with provided meta object.
@@ -2003,7 +1959,6 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 #### `setDep`
 
 ```js
-// scheme
 setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>
 ```
 Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value. i.e. reference api.
@@ -2042,7 +1997,6 @@ v.withMeta(
 #### `setVDep`
 
 ```js
-// scheme
 setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>
 ```
 Puts validators into spreaded structure. Might be used for recursive schemes.
@@ -2080,7 +2034,6 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 #### `useDefault`
 
 ```js
-// scheme
 useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators. If you need fallback value on error use 'withFallback' container instead.
@@ -2111,7 +2064,285 @@ simpleOne('Stringuuuuuuuuuu');
 
 ---
 
-## `Templating API (beta)`
+### `Logs`
+`withMeta` container provides logs capturing via `onLogs` parameter.
+
+```js
+import * as v from 'uvo';
+
+v.withMeta(
+  v.object2([
+    ['id', v.empty.not(), v.number(), v.gte.not(0)],
+    ['name', v.string(), v.maxLen(25)]
+  ]), console.log
+)({
+  id: 10,
+  name: 'MasterSais'
+})
+// => { id: 10, name: 'MasterSais' }
+//
+// [
+//   ['object', { id: 10, name: 'MasterSais' }, []],
+//   ['not:empty', 10, [null, undefined, '']],
+//   ['number', 10, []],
+//   ['not:gte', 10, [0]],
+//   ['string', 'MasterSais', []],
+//   ['maxLen', 'MasterSais', [25]]
+// ]
+```
+### `Custom validators`
+You can create your own validator or processor.
+
+Base validator template:
+```js
+yourValidatorName(...yourProbableParams: Array<any>, error?: Error): Validator<any> =>
+  (
+    (value: any, onError?: ErrorCallback, meta?: MetaData): any =>
+      (
+        ... check input value
+      )
+        ? value : (onError && onError(error, meta), null)
+  );
+```
+
+Simple example:
+```js
+const gte = (bound: number, error?: Error): Validator<number> =>
+  (
+    (value: number, onError?: ErrorCallback, meta?: MetaData): number =>
+      (
+        value >= bound
+      )
+        ? value : (onError && onError(error, meta), null)
+  );
+```
+
+You must provide validator name and params into meta scheme for proper errors handling.
+```js
+... onError(error, meta && { ...meta, validator: 'name', params: [... your params] }) ...
+```
+
+Processor injection example:
+```js
+import * as v from 'uvo';
+
+const simpleOne = (
+  v.consecutive(
+    v.array([
+      v.number(),
+      v.gte(0)
+    ]),
+    (data: Array<number>) => data.filter(value => !!value) // Remove null values.
+  )
+);
+```
+### `Examples`
+All examples use advanced object schema 'object2' as recommended solution.
+
+<details>
+  <summary>Schema with custom user errors</summary>
+  
+  ```js
+  v.withErrors(
+    v.object2([
+      ['id',
+        v.empty.not('Empty id'),
+        v.number('Not a number'),
+        v.parallel(
+          v.gte(0, 'Must not be negative'),
+          v.integer('Must be an integer')
+        )
+      ],
+      ['name',
+        v.empty.not('Empty name'),
+        v.string(),
+        v.minLen(10, 'Min length is 10')
+      ]
+    ])
+  )
+  ```
+
+</details>
+
+<br />
+
+<details>
+  <summary>Schema with common error processor</summary>
+
+  ```js
+  // Each error will be represented as `{ path, validator, error }`
+  v.withErrors(
+    v.object2([
+      ['id',
+        v.empty.not(),
+        v.number('Custom error message'), // wanna add some info for common error processor?
+        v.parallel(
+          v.gte(0),
+          v.integer()
+        )
+      ],
+      ['name',
+        v.empty.not(),
+        v.string(),
+        v.minLen(10)
+      ]
+    ]), (error, { path, validator }) => ({ path, validator, error }) // catches all errors in the schema.
+  )
+  ```
+
+</details>
+
+<br />
+
+<details>
+  <summary>Fields validation</summary>
+
+  ```js
+  // Before validation checks required fields existence
+  v.consecutive(
+    v.fields(['&', ['^', 'id', 'guid'], 'login']),
+    v.object2([
+      ['id', v.number(), v.gte(0)],
+      ['guid', v.string(), v.length(36)],
+      ['login', v.string(), v.minLen(10)]
+    ])
+  )
+  ```
+
+</details>
+
+<br />
+
+<details>
+  <summary>Conditional validation</summary>
+
+  ```js
+  // Id can be an integer or a GUID
+  v.object2([
+    ['id', v.or(
+      v.consecutive(v.number(), v.integer(), v.gte(0)),
+      v.consecutive(v.string(), v.length(36)) // !notice: prefer to use 'regex' for GUID validation.
+    )],
+    ['name', v.string(), v.minLen(10)]
+  ])
+  ```
+  ```js
+  v.withMeta( // for deps api.
+    v.object2([
+      ['id', v.number(), v.gte(0), v.setDep('isIdValid', true)],
+      ['name', getDep(
+        'isIdValid',
+        (isIdValid: boolean) => isIdValid && [v.string(), v.minLen(10)]
+      )]
+    ])
+  )
+  ```
+
+</details>
+
+<br />
+
+<details>
+  <summary>Injections</summary>
+
+  ```js
+  // Array with custom processor injection
+  v.consecutive( // groups validators.
+    v.array(
+      v.object2([
+        ['id', v.number(), v.gte(0)],
+        ['name', v.string(), v.minLen(10), v.regex.not(/invalid_name_regex/)]
+      ])
+    ),
+    (data: Array<number>) => data.filter(value => !!value)
+  )
+  ```
+
+</details>
+
+<br />
+
+<details>
+  <summary>Fields strip</summary>
+
+  ```js
+  // Removes unnecessary fields
+  v.consecutive( // groups validators.
+    v.object2([
+      ['id', v.number(), v.integer(), v.gte(0)],
+      ['name', v.string(), v.minLen(10)],
+      [/createdAt|updatedAt/, v.date()]
+    ]),
+    v.strip('role'), // just removes one field.
+    v.strip('address', (address: string) => address === null), // removes if empty.
+    v.strip(/createdAt|updatedAt/, () => (/* condition */)), // removes matched fields conditionally.
+  )
+  ```
+
+</details>
+
+<br />
+
+<details>
+  <summary>Keys transformations</summary>
+
+  ```js
+  // Camelize object fields
+  v.consecutive( // groups validators.
+    v.object2([
+      ['--id--', v.number(), v.integer(), v.gte(0)],
+      ['--name--', v.string(), v.minLen(10)]
+    ]),
+    v.keysMap(_.camelCase) // e.g. using lodash
+  )
+  ```
+
+</details>
+
+<br />
+
+<details>
+  <summary>Custom value mapping</summary>
+
+  ```js
+  // Maps 'yes' and 'no' on boolean
+  v.object2([
+    ['id', v.number(), v.integer(), v.gte(0)],
+    ['name', v.string(), v.minLen(10)],
+    ['disabled', 
+      v.valueMap(['yes', true], ['no', false]), // converts specific value to type compatible value.
+      v.bool() // just check and cast another boolean compatible values.
+    ]
+  ])
+  ```
+
+</details>
+
+<br />
+
+<details>
+  <summary>Multiple validations</summary>
+
+  ```js
+  // Validate field two or more times
+  v.withMeta( // for deps api.
+    v.object2([
+      [/createdAt|updatedAt|deletedAt/, v.date()],
+      ['createdAt', v.setDep('createdAt')],
+      ['updatedAt', 
+        v.getDep('createdAt', createdAt => createdAt && v.gte(createdAt)), // updatedAt >= createdAt.
+        v.setDep('updatedAt')
+      ],
+      ['deletedAt', 
+        v.getDep('updatedAt', updatedAt => updatedAt && v.gte(updatedAt)), // deletedAt >= updatedAt.
+      ],
+      [/createdAt|updatedAt|deletedAt/, date => date && new Date(date).toLocaleDateString()], // finally format all dates.
+    ])
+  )
+  ```
+
+</details>
+## `Templating API (beta)`
 Templating api provides string based validators creation. Much more compact and flexible against classic API.
 All errors and injections are placed in separated structures.
 ### `Usage`
@@ -2507,284 +2738,6 @@ const shortestOne = tml`
   )
 `([0, () => 100]);
 ```
-
-</details>
-## `Logs`
-`withMeta` container provides logs capturing via `onLogs` parameter.
-
-```js
-import * as v from 'uvo';
-
-v.withMeta(
-  v.object2([
-    ['id', v.empty.not(), v.number(), v.gte.not(0)],
-    ['name', v.string(), v.maxLen(25)]
-  ]), console.log
-)({
-  id: 10,
-  name: 'MasterSais'
-})
-// => { id: 10, name: 'MasterSais' }
-//
-// [
-//   ['object', { id: 10, name: 'MasterSais' }, []],
-//   ['not:empty', 10, [null, undefined, '']],
-//   ['number', 10, []],
-//   ['not:gte', 10, [0]],
-//   ['string', 'MasterSais', []],
-//   ['maxLen', 'MasterSais', [25]]
-// ]
-```
-## `Custom validators`
-You can create your own validator or processor.
-
-Base validator template:
-```js
-yourValidatorName(...yourProbableParams: Array<any>, error?: Error): Validator<any> =>
-  (
-    (value: any, onError?: ErrorCallback, meta?: MetaData): any =>
-      (
-        ... check input value
-      )
-        ? value : (onError && onError(error, meta), null)
-  );
-```
-
-Simple example:
-```js
-const gte = (bound: number, error?: Error): Validator<number> =>
-  (
-    (value: number, onError?: ErrorCallback, meta?: MetaData): number =>
-      (
-        value >= bound
-      )
-        ? value : (onError && onError(error, meta), null)
-  );
-```
-
-You must provide validator name and params into meta scheme for proper errors handling.
-```js
-... onError(error, meta && { ...meta, validator: 'name', params: [... your params] }) ...
-```
-
-Processor injection example:
-```js
-import * as v from 'uvo';
-
-const simpleOne = (
-  v.consecutive(
-    v.array([
-      v.number(),
-      v.gte(0)
-    ]),
-    (data: Array<number>) => data.filter(value => !!value) // Remove null values.
-  )
-);
-```
-## `Examples`
-All examples use advanced object schema 'object2' as recommended solution.
-
-<details>
-  <summary>Schema with custom user errors</summary>
-  
-  ```js
-  v.withErrors(
-    v.object2([
-      ['id',
-        v.empty.not('Empty id'),
-        v.number('Not a number'),
-        v.parallel(
-          v.gte(0, 'Must not be negative'),
-          v.integer('Must be an integer')
-        )
-      ],
-      ['name',
-        v.empty.not('Empty name'),
-        v.string(),
-        v.minLen(10, 'Min length is 10')
-      ]
-    ])
-  )
-  ```
-
-</details>
-
-<br />
-
-<details>
-  <summary>Schema with common error processor</summary>
-
-  ```js
-  // Each error will be represented as `{ path, validator, error }`
-  v.withErrors(
-    v.object2([
-      ['id',
-        v.empty.not(),
-        v.number('Custom error message'), // wanna add some info for common error processor?
-        v.parallel(
-          v.gte(0),
-          v.integer()
-        )
-      ],
-      ['name',
-        v.empty.not(),
-        v.string(),
-        v.minLen(10)
-      ]
-    ]), (error, { path, validator }) => ({ path, validator, error }) // catches all errors in the schema.
-  )
-  ```
-
-</details>
-
-<br />
-
-<details>
-  <summary>Fields validation</summary>
-
-  ```js
-  // Before validation checks required fields existence
-  v.consecutive(
-    v.fields(['&', ['^', 'id', 'guid'], 'login']),
-    v.object2([
-      ['id', v.number(), v.gte(0)],
-      ['guid', v.string(), v.length(36)],
-      ['login', v.string(), v.minLen(10)]
-    ])
-  )
-  ```
-
-</details>
-
-<br />
-
-<details>
-  <summary>Conditional validation</summary>
-
-  ```js
-  // Id can be an integer or a GUID
-  v.object2([
-    ['id', v.or(
-      v.consecutive(v.number(), v.integer(), v.gte(0)),
-      v.consecutive(v.string(), v.length(36)) // !notice: prefer to use 'regex' for GUID validation.
-    )],
-    ['name', v.string(), v.minLen(10)]
-  ])
-  ```
-  ```js
-  v.withMeta( // for deps api.
-    v.object2([
-      ['id', v.number(), v.gte(0), v.setDep('isIdValid', true)],
-      ['name', getDep(
-        'isIdValid',
-        (isIdValid: boolean) => isIdValid && [v.string(), v.minLen(10)]
-      )]
-    ])
-  )
-  ```
-
-</details>
-
-<br />
-
-<details>
-  <summary>Injections</summary>
-
-  ```js
-  // Array with custom processor injection
-  v.consecutive( // groups validators.
-    v.array(
-      v.object2([
-        ['id', v.number(), v.gte(0)],
-        ['name', v.string(), v.minLen(10), v.regex.not(/invalid_name_regex/)]
-      ])
-    ),
-    (data: Array<number>) => data.filter(value => !!value)
-  )
-  ```
-
-</details>
-
-<br />
-
-<details>
-  <summary>Fields strip</summary>
-
-  ```js
-  // Removes unnecessary fields
-  v.consecutive( // groups validators.
-    v.object2([
-      ['id', v.number(), v.integer(), v.gte(0)],
-      ['name', v.string(), v.minLen(10)],
-      [/createdAt|updatedAt/, v.date()]
-    ]),
-    v.strip('role'), // just removes one field.
-    v.strip('address', (address: string) => address === null), // removes if empty.
-    v.strip(/createdAt|updatedAt/, () => (/* condition */)), // removes matched fields conditionally.
-  )
-  ```
-
-</details>
-
-<br />
-
-<details>
-  <summary>Keys transformations</summary>
-
-  ```js
-  // Camelize object fields
-  v.consecutive( // groups validators.
-    v.object2([
-      ['--id--', v.number(), v.integer(), v.gte(0)],
-      ['--name--', v.string(), v.minLen(10)]
-    ]),
-    v.keysMap(_.camelCase) // e.g. using lodash
-  )
-  ```
-
-</details>
-
-<br />
-
-<details>
-  <summary>Custom value mapping</summary>
-
-  ```js
-  // Maps 'yes' and 'no' on boolean
-  v.object2([
-    ['id', v.number(), v.integer(), v.gte(0)],
-    ['name', v.string(), v.minLen(10)],
-    ['disabled', 
-      v.valueMap(['yes', true], ['no', false]), // converts specific value to type compatible value.
-      v.bool() // just check and cast another boolean compatible values.
-    ]
-  ])
-  ```
-
-</details>
-
-<br />
-
-<details>
-  <summary>Multiple validations</summary>
-
-  ```js
-  // Validate field two or more times
-  v.withMeta( // for deps api.
-    v.object2([
-      [/createdAt|updatedAt|deletedAt/, v.date()],
-      ['createdAt', v.setDep('createdAt')],
-      ['updatedAt', 
-        v.getDep('createdAt', createdAt => createdAt && v.gte(createdAt)), // updatedAt >= createdAt.
-        v.setDep('updatedAt')
-      ],
-      ['deletedAt', 
-        v.getDep('updatedAt', updatedAt => updatedAt && v.gte(updatedAt)), // deletedAt >= updatedAt.
-      ],
-      [/createdAt|updatedAt|deletedAt/, date => date && new Date(date).toLocaleDateString()], // finally format all dates.
-    ])
-  )
-  ```
 
 </details>
 

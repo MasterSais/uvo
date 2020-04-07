@@ -7,9 +7,11 @@ import { number } from '@lib/classic-api/validators/number';
 import { object } from '@lib/classic-api/validators/object';
 import { object2 } from '@lib/classic-api/validators/object2';
 import { string } from '@lib/classic-api/validators/string';
+import { baseCasesWithParams } from '@test/utilities';
+import { cases } from './cases';
 
-test('conditions', () => {
-  const validator = (
+describe('conditions form', () => {
+  baseCasesWithParams(() => (
     withMeta(
       object({
         id: [number(), gte(0), setDep('isIdValid', true)],
@@ -19,23 +21,11 @@ test('conditions', () => {
         )]
       })
     )
-  );
-
-  expect(
-    validator({ id: 3, name: 'AwesomeLogin' })
-  ).toEqual({ id: 3, name: 'AwesomeLogin' });
-
-  expect(
-    validator({ id: 3, name: 'BadLogin' })
-  ).toEqual({ id: 3, name: null });
-
-  expect(
-    validator({ id: -2, name: 'BadLogin' })
-  ).toEqual({ id: null, name: 'BadLogin' });
+  ), cases, []);
 });
 
-test('conditions 2', () => {
-  const validator = (
+describe('conditions form › advanced', () => {
+  baseCasesWithParams(() => (
     withMeta(
       object2([
         ['id', number(), gte(0), setDep('isIdValid', true)],
@@ -45,17 +35,5 @@ test('conditions 2', () => {
         )]
       ])
     )
-  );
-
-  expect(
-    validator({ id: 3, name: 'AwesomeLogin' })
-  ).toEqual({ id: 3, name: 'AwesomeLogin' });
-
-  expect(
-    validator({ id: 3, name: 'BadLogin' })
-  ).toEqual({ id: 3, name: null });
-
-  expect(
-    validator({ id: -2, name: 'BadLogin' })
-  ).toEqual({ id: null, name: 'BadLogin' });
+  ), cases, []);
 });
