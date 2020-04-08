@@ -13,7 +13,7 @@ describe('cross validation form › advanced', () => {
     withMeta(
       object2([
         ['a', date(), lte.not(1000), setDep('a')],
-        ['b', date(), getDep('a', a => a && gte(a)), setDep('b')],
+        ['b', date(), getDep('a', a => a && gte(a + 1000)), setDep('b')],
         ['c', date(), getDep('b', b => b && gte(b))]
       ])
     )
@@ -25,10 +25,10 @@ describe('cross validation form › template', () => {
     template(`
       @object(
         a : @date : @compare(>$now) : #a,
-        b : @date : @compare(>=#a) : #b,
+        b : @date : @compare(>=#a$plusOne) : #b,
         c : @date : @compare(>=#b)
       ) ~meta
-    `)({ now: 1000 })
+    `)({ now: 1000, plusOne: (a: number) => a + 1000 })
   ), cases, []);
 });
 
@@ -37,9 +37,9 @@ describe('cross validation form › template › short', () => {
     tml`
       @o(
         a @d @c(>$0) #a,
-        b @d @c(>=#a) #b,
+        b @d @c(>=#a$1) #b,
         c @d @c(>=#b)
       ) ~m
-    `([1000])
+    `([1000, (a: number) => a + 1000])
   ), cases, []);
 });

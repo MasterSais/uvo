@@ -28,7 +28,7 @@ export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<ValidatorData>)
   ) || (
     p1.code === SQ.code && callee(p2.value)
   ) || (
-    p1.code === REF.code && { code: REF.code, value: p1.value }
+    p1.code === REF.code && { code: REF.code, value: p1.value, callee: p2.code === INJ.code && ((refValue: any) => callee(meta.injections[p2.value])(refValue)) }
   ) || (
     p1.code === VL.code && callee(extractValue(p1.value))
   )

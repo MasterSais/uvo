@@ -43,9 +43,17 @@ const comparators = {
 export const compareBuilder = (meta: CompilerMeta, { params: [comparator, ...params], error }: ValidatorData) => {
   const calleeParam = extractParam(meta, params);
 
+  const valueMapper = (
+    calleeParam.callee
+      ? (value: any) => () => calleeParam.callee(value)
+      : (value: any) => () => value
+  );
+
   return (
     calleeParam.code === REF.code
-      ? getDep(calleeParam.value, (value: any) => isDefined(value) && comparators[comparator.value](() => value))
+      ? getDep(calleeParam.value, (value: any) =>
+        isDefined(value) && comparators[comparator.value](valueMapper(value))
+      )
       : comparators[comparator.value](calleeParam, extractError(meta, error))
   );
 };

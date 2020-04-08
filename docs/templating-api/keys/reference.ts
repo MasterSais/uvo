@@ -23,8 +23,20 @@ template(`
 
 tml`
   @o(
-    a @d @c(>$now) #a,
+    a @d @c(>$0) #a,
     b @d @c(>=#a) #b,
     c @d @c(>=#b)
   ) ~m
-`({ now: Date.now() });
+`([Date.now()]);
+
+// Additional reference value processing via injected function.
+tml`
+  @o(
+    a @d @c(>$0) #a,
+    b @d @c(>=#a$1) #b,
+    c @d @c(>=#b)
+  ) ~m
+`([
+  Date.now(),
+  a => a + 1000 // 'b' must be greater or equal than 'a' + 1000.
+]);

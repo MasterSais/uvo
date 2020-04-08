@@ -17,8 +17,6 @@
     '@compare(>$0)!0 : @compare(<=$1)!0';
     '@compare(>$0, <=$1)!0';
 
-    '@compare(>#0+100)'; // @compare(>#0$0)
-
     `
       @object(
         $0 @number $1
