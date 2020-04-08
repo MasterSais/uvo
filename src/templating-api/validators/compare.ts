@@ -45,7 +45,7 @@ const comparators = {
 
   '!->': (param: () => Array<any>, error: Error) => (
     c_is(not(V_OOF), param, (value: any) => (isArray(param()) || isString(param())) && param().indexOf(value) < 0, error)
-  ),
+  )
 };
 
 export const compareBuilder = (meta: CompilerMeta, { params: [comparator, ...params], error }: ValidatorData) => {
