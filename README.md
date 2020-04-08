@@ -2420,17 +2420,19 @@ Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
 ```js
 import { template, tml } from 'uvo/template';
 
-template(`@compare(>=0)`)();
+template(`@compare(>=0)`)(); // number
 
-template(`@compare(!=null)`)();
+template(`@compare(!=null)`)(); // null literal
 
-tml`@c(='2')`();
+tml`@c(='2')`(); // string literal
 
-tml`@c(>#refName)`();
+tml`@c(>#refName)`(); // reference
 
-tml`@c(!=$param)`({ param: 10 });
+tml`@c(!=$param)`({ param: 10 }); // injection.
 
-tml`@c(%2)`();
+tml`@c(%2)`(); // multiple to.
+
+tml`@c(->$0)`([[1, 2, 3]]); // one of.
 ```
 </details>
 
@@ -2648,11 +2650,23 @@ template(`
 
 tml`
   @o(
-    a @d @c(>$now) #a,
+    a @d @c(>$0) #a,
     b @d @c(>=#a) #b,
     c @d @c(>=#b)
   ) ~m
-`({ now: Date.now() });
+`([Date.now()]);
+
+// Additional reference value processing via injected function.
+tml`
+  @o(
+    a @d @c(>$0) #a,
+    b @d @c(>=#a$1) #b,
+    c @d @c(>=#b)
+  ) ~m
+`([
+  Date.now(),
+  a => a + 1000 // 'b' must be greater or equal than 'a' + 1000.
+]);
 ```
 </details>
 

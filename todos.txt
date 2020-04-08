@@ -1,6 +1,10 @@
   - CI/CD service (gitlab e.g.)
 
-  - Templating api docs refactoring
+  - Promise validator
+
+  - 'uvo/extended' validators e.g https://www.npmjs.com/package/class-validator#manual-validation
+
+  - isArray(param()) || isString(param()) -> hasIndex(.indexOf)
 
   - Templating api
 
@@ -10,12 +14,8 @@
 
     '##value'; // force fetching from meta to val. seq.
 
-    '->[10, 20, 30]';
-
-    '!->[10, 20, 30]';
-
     '@compare(>$0)!0 : @compare(<=$1)!0';
-    '@compare(>$0, <=$1)!0';
+    '@compare(>$0 <=$1)!0';
 
     `
       @object(

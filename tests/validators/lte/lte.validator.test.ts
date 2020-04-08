@@ -1,8 +1,8 @@
 import { V_LTE as VALIDATOR_NAME } from '@lib/classic-api/names';
-import { template } from '@lib/templating-api/template';
 import { lte as validator } from '@lib/classic-api/validators/is';
+import { template } from '@lib/templating-api/template';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
-import { right, wrong } from './cases';
+import { right, rightForNot, wrong, wrongForNot } from './cases';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
   describe('base', () =>
@@ -10,7 +10,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('base › not', () =>
-    baseCasesWithParams(validator.not, [wrong[0]], [right[0]])
+    baseCasesWithParams(validator.not, rightForNot, wrongForNot)
   );
 
   describe('base › template', () =>
@@ -22,11 +22,11 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('base › template › not', () =>
-    baseCasesWithParams((...args) => template('@compare(>$0)')(args), [wrong[0]], [right[0]])
+    baseCasesWithParams((...args) => template('@compare(>$0)')(args), rightForNot, wrongForNot)
   );
 
   describe('base › template › short › not', () =>
-    baseCasesWithParams((...args) => template('@c(>$0)')(args), [wrong[0]], [right[0]])
+    baseCasesWithParams((...args) => template('@c(>$0)')(args), [rightForNot[0]], [wrongForNot[0]])
   );
 
   describe('with error', () =>
@@ -38,11 +38,11 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('with error › not', () =>
-    withErrorCases(validator.not(0, notNullError()), [[wrong[0][1]], [right[0][1]]])
+    withErrorCases(validator.not(0, notNullError()), [[rightForNot[0][1]], [wrongForNot[0][1]]])
   );
 
   describe('with meta › not', () =>
-    withErrorCases(validator.not(0, errorMetaCase([], [0], invertError(VALIDATOR_NAME, true))), [[right[0][1]]], emptyMeta())
+    withErrorCases(validator.not(0, errorMetaCase([], [0], invertError(VALIDATOR_NAME, true))), [[wrongForNot[0][1]]], emptyMeta())
   );
 
   describe('with error › template', () =>
@@ -54,10 +54,10 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('with error › template › not', () =>
-    withErrorCases(template('@compare(>$0)!0')([0], [notNullError()]), [[wrong[0][1]], [right[0][1]]])
+    withErrorCases(template('@compare(>$0)!0')([0], [notNullError()]), [[rightForNot[0][1]], [wrongForNot[0][1]]])
   );
 
   describe('with meta › template › not', () =>
-    withErrorCases(template('@compare(>$0)!0')([0], [errorMetaCase([], [0], invertError(VALIDATOR_NAME, true))]), [[right[0][1]]], emptyMeta())
+    withErrorCases(template('@compare(>$0)!0')([0], [errorMetaCase([], [0], invertError(VALIDATOR_NAME, true))]), [[wrongForNot[0][1]]], emptyMeta())
   );
 });

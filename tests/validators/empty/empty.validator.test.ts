@@ -9,7 +9,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('base › not', () =>
-    baseCases(validator.not, [], [wrong[0]], [right[0]])
+    baseCases(validator.not, [], wrong, right)
   );
 
   describe('with error', () =>

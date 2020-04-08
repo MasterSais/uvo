@@ -10,7 +10,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('base › not', () =>
-    baseCases(validator.not, [], [wrong[0]], [right[0]])
+    baseCases(validator.not, [], wrong, right)
   );
 
   describe('base › template', () =>
@@ -22,7 +22,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('base › template › not', () =>
-    baseCases(template('@compare(!%2)'), [], [wrong[0]], [right[0]])
+    baseCases(template('@compare(!%2)'), [], wrong, right)
   );
 
   describe('base › template › short › not', () =>

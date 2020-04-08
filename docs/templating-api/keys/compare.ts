@@ -9,14 +9,16 @@
 //#example
 import { template, tml } from 'uvo/template';
 
-template(`@compare(>=0)`)();
+template(`@compare(>=0)`)(); // number
 
-template(`@compare(!=null)`)();
+template(`@compare(!=null)`)(); // null literal
 
-tml`@c(='2')`();
+tml`@c(='2')`(); // string literal
 
-tml`@c(>#refName)`();
+tml`@c(>#refName)`(); // reference
 
-tml`@c(!=$param)`({ param: 10 });
+tml`@c(!=$param)`({ param: 10 }); // injection.
 
-tml`@c(%2)`();
+tml`@c(%2)`(); // multiple to.
+
+tml`@c(->$0)`([[1, 2, 3]]); // one of.

@@ -9,8 +9,8 @@ export const semanticRules = [
   /* S1 */ [VLD, VL, [[LRB, 4, RRB], []], [[ERR, VL], []]],                           // validator
   /* S2 */ [REF, VL],                                                                 // reference
   /* S3 */ [INJ, VL],                                                                 // injection
-  /* S4 */ [[[0], [5]]],                                                              // validator params
-  /* S5 */ [[[6], []], [[VL], [2, 3], [2], [3], [SQ, VL, SQ]]],                       // simple validator params
+  /* S4 */ [[[5], [0]]],                                                              // validator params
+  /* S5 */ [6, [[VL], [2, 3], [2], [3], [SQ, VL, SQ]]],                               // simple validator params
   /* S6 */ [[
     /* S6 */ [GT, [[EQ], []]],
     /* S6 */ [LT, [[EQ], []]],
