@@ -7,20 +7,14 @@
 //#example
 import { template, tml } from 'uvo/template';
 
-template(`@array`)()({});
-
-tml`@array`()({});
-
-tml`
+template(`
   @array(
     @string : @length(<8)
   )
-`()({});
-
-tml`@a`()({});
+`)();
 
 tml`
   @a(
     @s @l(<8)
   )
-`()({});
+`();

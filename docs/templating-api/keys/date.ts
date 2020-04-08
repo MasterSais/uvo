@@ -7,8 +7,6 @@
 //#example
 import { template, tml } from 'uvo/template';
 
-template(`@date`)()(851720400000);
+template(`@date`)();
 
-tml`@date`()(851720400000);
-
-tml`@d`()(851720400000);
+tml`@d`();

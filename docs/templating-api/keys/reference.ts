@@ -11,15 +11,15 @@
  */
 
 //#example
-import { tml } from 'uvo/template';
+import { template, tml } from 'uvo/template';
 
-tml`
+template(`
   @object(
     a : @date : @compare(>$now) : #a,
     b : @date : @compare(>=#a) : #b,
     c : @date : @compare(>=#b)
   ) ~meta
-`({ now: Date.now() })();
+`)({ now: Date.now() });
 
 tml`
   @o(
@@ -27,4 +27,4 @@ tml`
     b @d @c(>=#a) #b,
     c @d @c(>=#b)
   ) ~m
-`({ now: Date.now() })();
+`({ now: Date.now() });

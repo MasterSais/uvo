@@ -9,14 +9,14 @@
 //#example
 import { template, tml } from 'uvo/template';
 
-template(`@length(>=0)`)()('abc');
+template(`@length(>=0)`)();
 
-tml`@length(=2)`()([1, 2]);
+template(`@length(=2)`)();
 
-tml`@length(>#refName)`()('abc');
+tml`@l(>#refName)`();
 
-tml`@length(!=$param)`({ param: 10 })({ length: 2 });
+tml`@l(!=$param)`({ param: 10 });
 
-tml`@l(%2)`()('abcd');
+tml`@l(%2)`();
 
-tml`@l(<=$0)`([10])([0]);
+tml`@l(<=$0)`([10]);

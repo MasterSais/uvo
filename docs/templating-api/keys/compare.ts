@@ -9,18 +9,14 @@
 //#example
 import { template, tml } from 'uvo/template';
 
-template(`@compare(>=0)`)()(2);
+template(`@compare(>=0)`)();
 
-template(`@compare(!=null)`)()(10);
+template(`@compare(!=null)`)();
 
-template(`@compare(=true)`)()(true);
+tml`@c(='2')`();
 
-tml`@compare(='2')`()('2');
+tml`@c(>#refName)`();
 
-tml`@compare(>#refName)`()(2);
+tml`@c(!=$param)`({ param: 10 });
 
-tml`@compare(!=$param)`({ param: 10 })(2);
-
-tml`@c(%2)`()(2);
-
-tml`@c(<=$0)`([10])(2);
+tml`@c(%2)`();

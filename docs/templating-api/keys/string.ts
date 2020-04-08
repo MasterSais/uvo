@@ -7,8 +7,6 @@
 //#example
 import { template, tml } from 'uvo/template';
 
-template(`@string`)()('str');
+template(`@string`)();
 
-tml`@string`()('str');
-
-tml`@s`()('str');
+tml`@s`();

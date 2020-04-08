@@ -7,8 +7,6 @@
 //#example
 import { template, tml } from 'uvo/template';
 
-template(`@bool`)()(true);
+template(`@bool`)();
 
-tml`@bool`()(true);
-
-tml`@b`()(true);
+tml`@b`();

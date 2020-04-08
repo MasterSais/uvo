@@ -13,15 +13,15 @@
  */
 
 //#example
-import { tml } from 'uvo/template';
+import { template, tml } from 'uvo/template';
 
-tml`
+template(`
   @object(
     a : @date : #a,
     b : @date : @compare(>=#a) : #b,
     c : @date : @compare(>=#b)
   ) ~error ~meta
-`()();
+`)();
 
 tml`
   @o(
@@ -29,4 +29,4 @@ tml`
     b @d @c(>=#a) #b,
     c @d @c(>=#b)
   ) ~e ~m
-`()();
+`();

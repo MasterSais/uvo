@@ -2373,23 +2373,17 @@ Checks value to be an array. `a` - short version.
 ```js
 import { template, tml } from 'uvo/template';
 
-template(`@array`)()({});
-
-tml`@array`()({});
-
-tml`
+template(`
   @array(
     @string : @length(<8)
   )
-`()({});
-
-tml`@a`()({});
+`)();
 
 tml`
   @a(
     @s @l(<8)
   )
-`()({});
+`();
 ```
 </details>
 
@@ -2406,11 +2400,9 @@ Checks value to be a boolean compatible. `b` - short version.
 ```js
 import { template, tml } from 'uvo/template';
 
-template(`@bool`)()(true);
+template(`@bool`)();
 
-tml`@bool`()(true);
-
-tml`@b`()(true);
+tml`@b`();
 ```
 </details>
 
@@ -2428,21 +2420,17 @@ Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
 ```js
 import { template, tml } from 'uvo/template';
 
-template(`@compare(>=0)`)()(2);
+template(`@compare(>=0)`)();
 
-template(`@compare(!=null)`)()(10);
+template(`@compare(!=null)`)();
 
-template(`@compare(=true)`)()(true);
+tml`@c(='2')`();
 
-tml`@compare(='2')`()('2');
+tml`@c(>#refName)`();
 
-tml`@compare(>#refName)`()(2);
+tml`@c(!=$param)`({ param: 10 });
 
-tml`@compare(!=$param)`({ param: 10 })(2);
-
-tml`@c(%2)`()(2);
-
-tml`@c(<=$0)`([10])(2);
+tml`@c(%2)`();
 ```
 </details>
 
@@ -2461,15 +2449,15 @@ The last container will be an outer one. `promise` must go later than others con
 
 
 ```js
-import { tml } from 'uvo/template';
+import { template, tml } from 'uvo/template';
 
-tml`
+template(`
   @object(
     a : @date : #a,
     b : @date : @compare(>=#a) : #b,
     c : @date : @compare(>=#b)
   ) ~error ~meta
-`()();
+`)();
 
 tml`
   @o(
@@ -2477,7 +2465,7 @@ tml`
     b @d @c(>=#a) #b,
     c @d @c(>=#b)
   ) ~e ~m
-`()();
+`();
 ```
 </details>
 
@@ -2494,11 +2482,9 @@ Checks value to be a date compatible. `d` - short version.
 ```js
 import { template, tml } from 'uvo/template';
 
-template(`@date`)()(851720400000);
+template(`@date`)();
 
-tml`@date`()(851720400000);
-
-tml`@d`()(851720400000);
+tml`@d`();
 ```
 </details>
 
@@ -2520,14 +2506,14 @@ template(`
     id : @number!err1 : @compare(>0)!err2,
     name : @string!err3 : @length(>=10)!err4
   ) ~error
-`)(null, { err1: 'ERR1', err2: () => 'ERR2', err3: 'ERR3', err4: () => 'ERR4' })({});
+`)(null, { err1: 'ERR1', err2: () => 'ERR2', err3: 'ERR3', err4: () => 'ERR4' });
 
 tml`
   @o(
     id @n!0 @c(>0)!1,
     name @s!2 @l(>=10)!3
   ) ~e
-`(null, ['ERR1', () => 'ERR2', 'ERR3', () => 'ERR4'])({});
+`(null, ['ERR1', () => 'ERR2', 'ERR3', () => 'ERR4']);
 ```
 </details>
 
@@ -2542,21 +2528,21 @@ External injections for scheme.
 
 
 ```js
-import { tml } from 'uvo/template';
+import { template, tml } from 'uvo/template';
 
-tml`
+template(`
   @object(
     id : @number : @compare(>$0),
     name : @string : @length(>=$1)
   )
-`([0, () => 10])();
+`)([0, () => 10]);
 
 tml`
   @object(
     id : @number : @compare(>$minId),
     name : @string : @length(>=$minNameLength)
   )
-`({ minId: 0, minNameLength: () => 10 })();
+`({ minId: 0, minNameLength: () => 10 });
 ```
 </details>
 
@@ -2574,17 +2560,17 @@ Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
 ```js
 import { template, tml } from 'uvo/template';
 
-template(`@length(>=0)`)()('abc');
+template(`@length(>=0)`)();
 
-tml`@length(=2)`()([1, 2]);
+template(`@length(=2)`)();
 
-tml`@length(>#refName)`()('abc');
+tml`@l(>#refName)`();
 
-tml`@length(!=$param)`({ param: 10 })({ length: 2 });
+tml`@l(!=$param)`({ param: 10 });
 
-tml`@l(%2)`()('abcd');
+tml`@l(%2)`();
 
-tml`@l(<=$0)`([10])([0]);
+tml`@l(<=$0)`([10]);
 ```
 </details>
 
@@ -2601,11 +2587,9 @@ Checks value to be a number. `n` - short version.
 ```js
 import { template, tml } from 'uvo/template';
 
-template(`@number`)()(10);
+template(`@number`)();
 
-tml`@number`()(10);
-
-tml`@n`()(10);
+tml`@n`();
 ```
 </details>
 
@@ -2622,25 +2606,19 @@ Checks value to be an object. `o` - short version.
 ```js
 import { template, tml } from 'uvo/template';
 
-template(`@object`)()({});
-
-tml`@object`()({});
-
-tml`
+template(`
   @object(
     id : @number : @compare(>0),
     name : @string : @length(>=10)
   )
-`()({});
-
-tml`@o`()({});
+`)();
 
 tml`
   @o(
     id @n @c(>0),
     name @s @l(>=10)
   )
-`()({});
+`();
 ```
 </details>
 
@@ -2658,15 +2636,15 @@ Meta required.
 
 
 ```js
-import { tml } from 'uvo/template';
+import { template, tml } from 'uvo/template';
 
-tml`
+template(`
   @object(
     a : @date : @compare(>$now) : #a,
     b : @date : @compare(>=#a) : #b,
     c : @date : @compare(>=#b)
   ) ~meta
-`({ now: Date.now() })();
+`)({ now: Date.now() });
 
 tml`
   @o(
@@ -2674,7 +2652,7 @@ tml`
     b @d @c(>=#a) #b,
     c @d @c(>=#b)
   ) ~m
-`({ now: Date.now() })();
+`({ now: Date.now() });
 ```
 </details>
 
@@ -2691,11 +2669,9 @@ Checks value to be a string. `s` - short version.
 ```js
 import { template, tml } from 'uvo/template';
 
-template(`@string`)()('str');
+template(`@string`)();
 
-tml`@string`()('str');
-
-tml`@s`()('str');
+tml`@s`();
 ```
 </details>
 
