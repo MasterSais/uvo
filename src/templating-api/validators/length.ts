@@ -1,3 +1,4 @@
+import { consecutive } from '@lib/classic-api/groupers/consecutive';
 import { V_LEN, V_MNLEN, V_MXLEN } from '@lib/classic-api/names';
 import { Lengthy } from '@lib/classic-api/types';
 import { isLengthy } from '@lib/classic-api/utilities';
@@ -40,6 +41,14 @@ const lengthComparators = {
   )
 };
 
-export const lengthBuilder = (meta: CompilerMeta, { params: [comparator, ...params], error }: ValidatorData) => (
-  lengthComparators[comparator.value](extractParam(meta, params), extractError(meta, error))
-);
+export const lengthBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {
+  const validators = []
+
+  for (let i = 0; i < params.length; i += 3) {
+    validators.push(
+      lengthComparators[params[i].value](extractParam(meta, params[i + 1]), extractError(meta, error))
+    );
+  }
+
+  return consecutive(...validators);
+};

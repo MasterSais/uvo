@@ -1,3 +1,4 @@
+import { consecutive } from '@lib/classic-api/groupers/consecutive';
 import { V_EQ, V_GTE, V_LTE, V_MLP, V_OOF } from '@lib/classic-api/names';
 import { getDep } from '@lib/classic-api/spreaders/get-dep';
 import { Error } from '@lib/classic-api/types';
@@ -48,20 +49,26 @@ const comparators = {
   )
 };
 
-export const compareBuilder = (meta: CompilerMeta, { params: [comparator, ...params], error }: ValidatorData) => {
-  const calleeParam = extractParam(meta, params);
+export const compareBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {
+  const validators = []
 
-  const valueMapper = (
-    calleeParam.callee
-      ? (value: any) => () => calleeParam.callee(value)
-      : (value: any) => () => value
-  );
+  for (let i = 0; i < params.length; i += 3) {
+    const calleeParam = extractParam(meta, params[i + 1]);
 
-  return (
-    calleeParam.code === REF.code
-      ? getDep(calleeParam.value, (value: any) =>
-        isDefined(value) && comparators[comparator.value](valueMapper(value))
-      )
-      : comparators[comparator.value](calleeParam, extractError(meta, error))
-  );
+    const valueMapper = (
+      calleeParam.callee
+        ? (value: any) => () => calleeParam.callee(value)
+        : (value: any) => () => value
+    );
+
+    validators.push(
+      calleeParam.code === REF.code
+        ? getDep(calleeParam.value, (value: any) =>
+          isDefined(value) && comparators[params[i].value](valueMapper(value))
+        )
+        : comparators[params[i].value](calleeParam, extractError(meta, error))
+    );
+  }
+
+  return consecutive(...validators);
 };

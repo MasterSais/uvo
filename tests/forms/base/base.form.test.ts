@@ -1,5 +1,5 @@
-import { gte } from '@lib/classic-api/validators/is';
-import { minLen } from '@lib/classic-api/validators/length';
+import { gte, lte } from '@lib/classic-api/validators/is';
+import { maxLen, minLen } from '@lib/classic-api/validators/length';
 import { number } from '@lib/classic-api/validators/number';
 import { object } from '@lib/classic-api/validators/object';
 import { object2 } from '@lib/classic-api/validators/object2';
@@ -11,8 +11,8 @@ import { cases } from './cases';
 describe('base form', () => {
   baseCasesWithParams(() => (
     object({
-      id: [number(), gte(0)],
-      name: [string(), minLen(10)]
+      id: [number(), gte(0), lte(100)],
+      name: [string(), minLen(10), maxLen(100)]
     })
   ), cases, []);
 });
@@ -20,8 +20,8 @@ describe('base form', () => {
 describe('base form › advanced', () => {
   baseCasesWithParams(() => (
     object2([
-      ['id', number(), gte(0)],
-      ['name', string(), minLen(10)]
+      ['id', number(), gte(0), lte(100)],
+      ['name', string(), minLen(10), maxLen(100)]
     ])
   ), cases, []);
 });
@@ -30,8 +30,8 @@ describe('base form › template', () => {
   baseCasesWithParams(() => (
     template(`
       @object(
-        id : @number : @compare(>=0),
-        name : @string : @length(>=10)
+        id : @number : @compare(>=0) : @compare(<=100),
+        name : @string : @length(>=10) : @length(<=100)
       )
     `)()
   ), cases, []);
@@ -41,9 +41,9 @@ describe('base form › template › short', () => {
   baseCasesWithParams(() => (
     tml`
       @o(
-        id @n @c(>=0),
-        name @s @l(>=10)
+        id @n @c(>=0,<=100),
+        name @s @l(>=10,<=100)
       )
     `()
-  ), [cases[0]], []);
+  ), cases, []);
 });

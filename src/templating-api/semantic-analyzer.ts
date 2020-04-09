@@ -1,5 +1,5 @@
 import { isArray, isFiniteNumber } from '@lib/classic-api/utilities';
-import { CNT, DLM, ERR, INJ, REF, VL, VLD } from '@lib/templating-api/lexemes';
+import { CNT, DLM, ERR, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { COMPARATOR_STATE, PARAMS_STATES, semanticRules } from '@lib/templating-api/semantic-rules';
 import { Lexeme, ValidatorData } from '@lib/templating-api/types';
 
@@ -30,11 +30,15 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
 
   const prevLexeme = stack[stack.length - 1];
 
-  if (state.code === VL.code && prevLexeme && [VLD.code, REF.code, INJ.code, CNT.code].indexOf(prevLexeme.code) >= 0) {
+  if (state.code === VL.code && prevLexeme && [VLD.code, REF.code, INJ.code, CNT.code, SQ.code].indexOf(prevLexeme.code) >= 0) {
     prevLexeme[
       prevLexeme.error === true ? 'error' : 'value'
     ] = lexeme.value;
 
+    return;
+  }
+
+  if (state.code === SQ.code && prevLexeme && prevLexeme.code === SQ.code) {
     return;
   }
 

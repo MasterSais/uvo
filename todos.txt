@@ -6,6 +6,8 @@
 
   - Templating api should accept Vbase as parameter
 
+  - Templating compare params return as array, not cons
+
   - Templating api CJS module
 
   - Templating api
@@ -13,8 +15,6 @@
     '#value(@string)'; // set validator to 'value' dep
 
     '##value'; // force fetching from meta to val. seq.
-
-    '@compare(>$0)!0 : @compare(<=$1)!0'; -> '@compare(>$0,<=$1)!0';
 
     `
       @object(

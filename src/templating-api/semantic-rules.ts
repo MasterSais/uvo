@@ -13,7 +13,7 @@ export const semanticRules = [
   /* S05 */ [[[LRB, 6, RRB], [LRB, 7, RRB], []]],                                      // validator params
   /* S06 */ [8],                                                                       // validator params 1
   /* S07 */ [1],                                                                       // validator params 2
-  /* S08 */ [[[9], []], [[VL], [3], [4], [SQ, VL, SQ]]],                               // simple validator params
+  /* S08 */ [[[9], []], [[VL], [3], [4], [SQ, VL, SQ]], [[DLM, 8], []]],               // simple validator params
   /* S09 */ [[
     /* S09 */ [GT, [[EQ], []]],
     /* S09 */ [LT, [[EQ], []]],

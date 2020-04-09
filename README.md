@@ -2422,6 +2422,8 @@ import { template, tml } from 'uvo/template';
 
 template(`@compare(>=0)`)(); // number
 
+template(`@compare(>=0,<=100)`)(); // few comparisons
+
 template(`@compare(!=null)`)(); // null literal
 
 tml`@c(='2')`(); // string literal
@@ -2563,6 +2565,8 @@ Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
 import { template, tml } from 'uvo/template';
 
 template(`@length(>=0)`)();
+
+template(`@length(>=10,<=100)`)();
 
 template(`@length(=2)`)();
 

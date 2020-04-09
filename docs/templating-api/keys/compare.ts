@@ -11,6 +11,8 @@ import { template, tml } from 'uvo/template';
 
 template(`@compare(>=0)`)(); // number
 
+template(`@compare(>=0,<=100)`)(); // few comparisons
+
 template(`@compare(!=null)`)(); // null literal
 
 tml`@c(='2')`(); // string literal

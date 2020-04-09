@@ -22,7 +22,7 @@ export const extractError = (cmeta: CompilerMeta, error: string | number) => (
   (meta: MetaData) => callee(cmeta.errors[error])(meta)
 );
 
-export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<ValidatorData>) => (
+export const extractParam = (meta: CompilerMeta, p1: ValidatorData) => (
   (
     p1.code === INJ.code && p1.params && p1.params[0].code === REF.code && ({
       code: REF.code,
@@ -32,7 +32,7 @@ export const extractParam = (meta: CompilerMeta, [p1, p2]: Array<ValidatorData>)
   ) || (
     p1.code === INJ.code && (() => callee(meta.injections[p1.value])())
   ) || (
-    p1.code === SQ.code && callee(p2.value)
+    p1.code === SQ.code && callee(p1.value)
   ) || (
     p1.code === REF.code && { code: REF.code, value: p1.value }
   ) || (
