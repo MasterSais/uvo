@@ -10,9 +10,11 @@
 
   - Templating api CJS module
 
+  - Docs 'All Features' block with all validators and features in one schema. ???
+
   - Templating api
 
-    '#value(@string)'; // set validator to 'value' dep
+    '#value(@string : @length(>=0))'; // set validator to 'value' dep
 
     '##value'; // force fetching from meta to val. seq.
 
