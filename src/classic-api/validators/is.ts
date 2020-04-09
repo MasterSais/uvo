@@ -1,6 +1,6 @@
 import { V_DEF, V_EM, V_EQ, V_GTE, V_IS, V_LTE, V_OOF, V_REG } from '@lib/classic-api/names';
 import { Error, Validator } from '@lib/classic-api/types';
-import { invertCondition, invertError, isArray, isDefined, isFactory, isOneType, isRegEx, isString, makeInvertible, throwValidatorError } from '@lib/classic-api/utilities';
+import { hasIndex, invertCondition, invertError, isDefined, isFactory, isOneType, isRegEx, makeInvertible, throwValidatorError } from '@lib/classic-api/utilities';
 
 /**
  * {@link docs/classic-api/validators/is}
@@ -95,7 +95,7 @@ export const oneOf = makeInvertible<(<T>(candidates: Array<T> | string, error?: 
   (
     (invert: boolean) => <T>(candidates: Array<T> | string, error?: Error) => (
       (
-        (isArray(candidates) || isString(candidates))
+        hasIndex(candidates)
           ? (
             isFactory(invertError(V_OOF, invert), [candidates])(
               (value: T) => invertCondition(candidates.indexOf(value as any) >= 0, invert), error

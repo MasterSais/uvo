@@ -4,18 +4,17 @@
 
   - 'uvo/extended' validators e.g https://www.npmjs.com/package/class-validator#manual-validation
 
-  - isArray(param()) || isString(param()) -> hasIndex(.indexOf)
+  - Templating api should accept Vbase as parameter
+
+  - Templating api CJS module
 
   - Templating api
-
-    '#value(10)'; // set 10 to 'value' dep
 
     '#value(@string)'; // set validator to 'value' dep
 
     '##value'; // force fetching from meta to val. seq.
 
-    '@compare(>$0)!0 : @compare(<=$1)!0';
-    '@compare(>$0 <=$1)!0';
+    '@compare(>$0)!0 : @compare(<=$1)!0'; -> '@compare(>$0,<=$1)!0';
 
     `
       @object(

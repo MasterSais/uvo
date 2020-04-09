@@ -2412,7 +2412,7 @@ tml`@b`();
 
 
 Checks value with provided comparator. `c` - short version.
-Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
+Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` `->` (one of) `!->`
 <details>
 <summary>details</summary>
 
@@ -2660,7 +2660,7 @@ tml`
 tml`
   @o(
     a @d @c(>$0) #a,
-    b @d @c(>=#a$1) #b,
+    b @d @c(>=$1(#a)) #b,
     c @d @c(>=#b)
   ) ~m
 `([

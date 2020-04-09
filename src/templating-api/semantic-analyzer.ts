@@ -1,10 +1,10 @@
 import { isArray, isFiniteNumber } from '@lib/classic-api/utilities';
 import { CNT, DLM, ERR, INJ, REF, VL, VLD } from '@lib/templating-api/lexemes';
-import { COMPARATOR_STATE, PARAMS_STATE, semanticRules } from '@lib/templating-api/semantic-rules';
+import { COMPARATOR_STATE, PARAMS_STATES, semanticRules } from '@lib/templating-api/semantic-rules';
 import { Lexeme, ValidatorData } from '@lib/templating-api/types';
 
 const onBeforeNestedState = (state: any, stack: Array<any>): Array<any> => (
-  ([COMPARATOR_STATE, PARAMS_STATE].indexOf(state) >= 0)
+  ([COMPARATOR_STATE, ...PARAMS_STATES].indexOf(state) >= 0)
     ? (stack.push([]), stack[stack.length - 1])
     : stack
 );
@@ -18,7 +18,7 @@ const onAfterNestedState = (state: any, stack: Array<any>, nestedStack: Array<an
     }
   }
 
-  if (state === PARAMS_STATE) {
+  if (PARAMS_STATES.indexOf(state) >= 0) {
     stack[stack.length - 2].params = stack.pop();
   }
 };

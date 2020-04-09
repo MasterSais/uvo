@@ -18,5 +18,7 @@ export const objectBuilder = (meta: CompilerMeta, { params, error }: ValidatorDa
       )
   ));
 
+  fields[fields.length - 1].length === 0 && fields.pop();
+
   return object2(fields as any, extractError(meta, error));
 };

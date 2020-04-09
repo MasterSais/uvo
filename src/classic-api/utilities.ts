@@ -61,6 +61,8 @@ export const isObjectLike = (value: any): boolean => typeof value === 'object';
 
 export const isObject = (value: any): boolean => value && typeof value === 'object' && value.constructor === Object;
 
+export const hasIndex = (value: any): boolean => value && value.indexOf;
+
 export const isArray = (value: any): boolean => Array.isArray(value);
 
 export const isLengthy = <T extends Lengthy>(value: T) => value !== null && (isObjectLike(value) || isString(value)) && isFiniteNumber(value.length);

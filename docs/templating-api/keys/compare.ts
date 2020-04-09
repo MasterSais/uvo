@@ -3,7 +3,7 @@
  * 
  * @desc Checks value with provided comparator. `c` - short version.
  * 
- * Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` (not multiple to)
+ * Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` `->` (one of) `!->`
  */
 
 //#example
