@@ -16,7 +16,7 @@
 
     `
       @object(
-        $0 @number $1
+        $0 @number
       )
     `;
 
@@ -36,16 +36,14 @@
 
     'valueMap'; // valueMap | vm
 
-    'consecutive'; // @seq
+    'or'; // [@number : @string]
 
-    'parallel'; // @prll
+    'parallel'; // {@number : @string} ???
 
     'withFallback'; // ~f(123)
 
     'useDefault'; // @default(123)
 
     'dynamic'; // $... in seq
-
-    'or'; // @or
 
     'strip'; // strip | stp ???

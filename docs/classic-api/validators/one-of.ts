@@ -1,7 +1,7 @@
 /**
  * @name {oneOf}
  * 
- * @scheme {oneOf<T>(candidates: Array<T> | string, error?: Error): Validator<T>}
+ * @scheme {oneOf<T>(candidates: Array<T> | string | (() => Array<T> | string), error?: Error): Validator<T>}
  * 
  * @invertible
  * 

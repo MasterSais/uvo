@@ -1,44 +1,22 @@
 import { consecutive } from '@lib/classic-api/groupers/consecutive';
-import { V_LEN, V_MNLEN, V_MXLEN } from '@lib/classic-api/names';
-import { Lengthy } from '@lib/classic-api/types';
-import { isLengthy } from '@lib/classic-api/utilities';
+import { lengthFactory } from '@lib/classic-api/utilities';
+import { length, maxLen, minLen } from '@lib/classic-api/validators/length';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
-import { c_is, extractError, extractParam, not } from '@lib/templating-api/utilities';
+import { extractError, extractParam } from '@lib/templating-api/utilities';
 
 const LEN_MLP = 'len-mlp';
 
+const lenMultiple = lengthFactory(LEN_MLP, (value: number, len: number) => value % len === 0);
+
 const lengthComparators = {
-  '>': (param: () => any, error: Error) => (
-    c_is(not(V_MXLEN), param, (value: Lengthy) => isLengthy(value) && value.length > param(), error)
-  ),
-
-  '>=': (param: () => any, error: Error) => (
-    c_is(V_MNLEN, param, (value: Lengthy) => isLengthy(value) && value.length >= param(), error)
-  ),
-
-  '<': (param: () => any, error: Error) => (
-    c_is(not(V_MNLEN), param, (value: Lengthy) => isLengthy(value) && value.length < param(), error)
-  ),
-
-  '<=': (param: () => any, error: Error) => (
-    c_is(V_MXLEN, param, (value: Lengthy) => isLengthy(value) && value.length <= param(), error)
-  ),
-
-  '=': (param: () => any, error: Error) => (
-    c_is(V_LEN, param, (value: Lengthy) => isLengthy(value) && value.length === param(), error)
-  ),
-
-  '!=': (param: () => any, error: Error) => (
-    c_is(not(V_LEN), param, (value: Lengthy) => isLengthy(value) && value.length !== param(), error)
-  ),
-
-  '%': (param: () => any, error: Error) => (
-    c_is(LEN_MLP, param, (value: Lengthy) => isLengthy(value) && value.length % param() === 0, error)
-  ),
-
-  '!%': (param: () => any, error: Error) => (
-    c_is(not(LEN_MLP), param, (value: Lengthy) => isLengthy(value) && value.length % param() !== 0, error)
-  )
+  '>': maxLen.not,
+  '>=': minLen,
+  '<': minLen.not,
+  '<=': maxLen,
+  '=': length,
+  '!=': length.not,
+  '%': lenMultiple,
+  '!%': lenMultiple.not
 };
 
 export const lengthBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {

@@ -1,14 +1,10 @@
 import { V_MNLEN as VALIDATOR_NAME } from '@lib/classic-api/names';
-import { template } from '@lib/templating-api/template';
 import { minLen as validator } from '@lib/classic-api/validators/length';
-import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, paramsCases, withErrorCases } from '@test/utilities';
-import { right, rightForNot, rightParams, wrong, wrongForNot, wrongParams } from './cases';
+import { template } from '@lib/templating-api/template';
+import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
+import { right, rightForNot, wrong, wrongForNot } from './cases';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
-  describe('params', () =>
-    paramsCases(validator, rightParams, wrongParams, VALIDATOR_NAME)
-  );
-
   describe('base', () =>
     baseCasesWithParams(validator, right, wrong)
   );

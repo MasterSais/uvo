@@ -1,7 +1,7 @@
 /**
  * @name {regex}
  * 
- * @scheme {regex<T>(match: RegExp, error?: Error): Validator<T>}
+ * @scheme {regex<T>(match: RegExp | (() => RegExp), error?: Error): Validator<T>}
  * 
  * @invertible
  * 

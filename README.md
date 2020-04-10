@@ -14,15 +14,6 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
 - [`Install`](#install)
 - [`Classic API`](#classic-api)
   - [`Usage`](#usage)
-  - [`Types`](#types)
-    - [`ErrorCallback`](#errorcallback)
-    - [`Error`](#error)
-    - [`FieldsSpec`](#fieldsspec)
-    - [`MetaData`](#metadata)
-    - [`ObjectSpec`](#objectspec)
-    - [`Relevance`](#relevance)
-    - [`Result`](#result)
-    - [`Validator`](#validator)
   - [`Validators`](#validators)
     - [`array`](#array)
     - [`bool <checkable>`](#bool-checkable)
@@ -78,6 +69,15 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
   - [`Logs`](#logs)
   - [`Custom validators`](#custom-validators)
   - [`Examples`](#examples)
+  - [`Types`](#types)
+    - [`ErrorCallback`](#errorcallback)
+    - [`Error`](#error)
+    - [`FieldsSpec`](#fieldsspec)
+    - [`MetaData`](#metadata)
+    - [`ObjectSpec`](#objectspec)
+    - [`Relevance`](#relevance)
+    - [`Result`](#result)
+    - [`Validator`](#validator)
 - [`Templating API (beta)`](#templating-api-beta)
   - [`Usage`](#usage-1)
   - [`Keys`](#keys)
@@ -144,155 +144,7 @@ simpleObj({
 });
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 ```
-### `Types`
-The main types used in the library.
-#### `ErrorCallback`
-
-
-Calls on validation error.
-<details>
-<summary>details</summary>
-
-
-```js
-type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => void;
-```
-</details>
-
----
-
-#### `Error`
-
-
-Any type's error.  Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
-<details>
-<summary>details</summary>
-
-
-```js
-type Error = (
-  string
-  | boolean
-  | number
-  | Record<any, any>
-  | Array<any>
-  | ((meta: MetaData) => any)
-);
-```
-</details>
-
----
-
-#### `FieldsSpec`
-
-
-Specification for 'fields' validator.
-<details>
-<summary>details</summary>
-
-
-```js
-type FieldsSpec = (
-  string
-  | [
-    ('&' | '|' | '^'),
-    FieldsSpec | string,
-    FieldsSpec | string,
-    ...Array<FieldsSpec | string>
-  ]
-);
-```
-</details>
-
----
-
-#### `MetaData`
-
-
-Internal data for errors and dependencies.
-<details>
-<summary>details</summary>
-
-
-```js
-type MetaData = {
-  path: Array<string | number>;
-  validator?: string;
-  params: Array<any>;
-  _deps: Record<string, any>;
-  _logs: Array<[string, any, Array<any>]>;
-};
-```
-</details>
-
----
-
-#### `ObjectSpec`
-
-
-Specification for 'object' and 'object2' validators.
-<details>
-<summary>details</summary>
-
-
-```js
-type ObjectSpec = Record<string, Array<Validator<any, any>> | Validator<any, any>>;
-```
-</details>
-
----
-
-#### `Relevance`
-
-
-Error's relevancy status.
-<details>
-<summary>details</summary>
-
-
-```js
-type Relevance = {
-  value: boolean;
-};
-```
-</details>
-
----
-
-#### `Result`
-
-
-'WithError' container's result. Will be null if no errors.
-<details>
-<summary>details</summary>
-
-
-```js
-type Result<T> = {
-  result: T;
-  errors?: Array<any>;
-};
-```
-</details>
-
----
-
-#### `Validator`
-
-
-Validates value.
-<details>
-<summary>details</summary>
-
-
-```js
-type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
-```
-</details>
-
----
-
-### `Validators`
+### `Validators`
 Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.
 #### `array`
 
@@ -502,7 +354,7 @@ v.empty.not()(0);
 #### `equal <invertible>`
 
 ```js
-equal<T>(match: T, error?: Error): Validator<T>
+equal<T>(match: T | (() => T), error?: Error): Validator<T>
 ```
 Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
 <details>
@@ -617,7 +469,7 @@ v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 #### `gte <invertible>`
 
 ```js
-gte<T>(bound: T, error?: Error): Validator<T>
+gte<T>(bound: T | (() => T), error?: Error): Validator<T>
 ```
 Checks value to be greater or equal to 'bound' param. Requires the same type.
 <details>
@@ -725,7 +577,7 @@ v.is((value) => value === 10)('10');
 #### `length <invertible>`
 
 ```js
-length<T extends Lengthy>(len: number, error?: Error): Validator<T>
+length<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>
 ```
 Compares length with 'len' param. Requires to be an object like or string.
 <details>
@@ -769,7 +621,7 @@ v.length.not(3)('abcd');
 #### `lte <invertible>`
 
 ```js
-lte<T>(bound: T, error?: Error): Validator<T>
+lte<T>(bound: T | (() => T), error?: Error): Validator<T>
 ```
 Checks value to be lower or equal to 'bound' param. Requires the same type.
 <details>
@@ -822,7 +674,7 @@ v.lte.not(0)(1);
 #### `maxLen <invertible>`
 
 ```js
-maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
+maxLen<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
 <details>
@@ -851,7 +703,7 @@ v.maxLen(3)({ length: 3 });
 #### `minLen <invertible>`
 
 ```js
-minLen<T extends Lengthy>(len: number, error?: Error): Validator<T>
+minLen<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
 <details>
@@ -880,7 +732,7 @@ v.minLen(3)({ length: 3 });
 #### `multiple <invertible>`
 
 ```js
-multiple(multiplier: number, error?: Error): Validator<number>
+multiple(multiplier: number | (() => number), error?: Error): Validator<number>
 ```
 Checks number to be an integer.
 <details>
@@ -1079,7 +931,7 @@ advancedObj({
 #### `oneOf <invertible>`
 
 ```js
-oneOf<T>(candidates: Array<T> | string, error?: Error): Validator<T>
+oneOf<T>(candidates: Array<T> | string | (() => Array<T> | string), error?: Error): Validator<T>
 ```
 Checks value to be one of expected. Shallow comparison.
 <details>
@@ -1117,7 +969,7 @@ v.oneOf.not('abcdefg')('f');
 #### `regex <invertible>`
 
 ```js
-regex<T>(match: RegExp, error?: Error): Validator<T>
+regex<T>(match: RegExp | (() => RegExp), error?: Error): Validator<T>
 ```
 Checks value to match a pattern.
 <details>
@@ -2342,7 +2194,155 @@ const simpleOne = (
   ```
 
 </details>
-## `Templating API (beta)`
+### `Types`
+The main types used in the library.
+#### `ErrorCallback`
+
+
+Calls on validation error.
+<details>
+<summary>details</summary>
+
+
+```js
+type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => void;
+```
+</details>
+
+---
+
+#### `Error`
+
+
+Any type's error.  Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
+<details>
+<summary>details</summary>
+
+
+```js
+type Error = (
+  string
+  | boolean
+  | number
+  | Record<any, any>
+  | Array<any>
+  | ((meta: MetaData) => any)
+);
+```
+</details>
+
+---
+
+#### `FieldsSpec`
+
+
+Specification for 'fields' validator.
+<details>
+<summary>details</summary>
+
+
+```js
+type FieldsSpec = (
+  string
+  | [
+    ('&' | '|' | '^'),
+    FieldsSpec | string,
+    FieldsSpec | string,
+    ...Array<FieldsSpec | string>
+  ]
+);
+```
+</details>
+
+---
+
+#### `MetaData`
+
+
+Internal data for errors and dependencies.
+<details>
+<summary>details</summary>
+
+
+```js
+type MetaData = {
+  path: Array<string | number>;
+  validator?: string;
+  params: Array<any>;
+  _deps: Record<string, any>;
+  _logs: Array<[string, any, Array<any>]>;
+};
+```
+</details>
+
+---
+
+#### `ObjectSpec`
+
+
+Specification for 'object' and 'object2' validators.
+<details>
+<summary>details</summary>
+
+
+```js
+type ObjectSpec = Record<string, Array<Validator<any, any>> | Validator<any, any>>;
+```
+</details>
+
+---
+
+#### `Relevance`
+
+
+Error's relevancy status.
+<details>
+<summary>details</summary>
+
+
+```js
+type Relevance = {
+  value: boolean;
+};
+```
+</details>
+
+---
+
+#### `Result`
+
+
+'WithError' container's result. Will be null if no errors.
+<details>
+<summary>details</summary>
+
+
+```js
+type Result<T> = {
+  result: T;
+  errors?: Array<any>;
+};
+```
+</details>
+
+---
+
+#### `Validator`
+
+
+Validates value.
+<details>
+<summary>details</summary>
+
+
+```js
+type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
+```
+</details>
+
+---
+
+## `Templating API (beta)`
 Templating api provides string based validators creation. Much more compact and flexible against classic API.
 All errors and injections are placed in separated structures.
 ### `Usage`

@@ -1,23 +1,5 @@
 import { emptyArray, emptyFunction, emptyObject } from '@test/utilities';
 
-export const rightParams: Array<any> = [
-  [[0, 0]],
-  [[0]],
-  [[]],
-  ['0123'],
-  [[null, undefined, '']]
-];
-
-export const wrongParams: Array<any> = [
-  [{}],
-  [1],
-  [NaN],
-  [Infinity],
-  [true],
-  [null],
-  [undefined]
-];
-
 export const right: Array<any> = [
   [[[1]], 1],
   [[[0, 1, 2]], 1],

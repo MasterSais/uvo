@@ -1,7 +1,7 @@
 /**
  * @name {maxLen}
  * 
- * @scheme {maxLen<T extends Lengthy>(len: number, error?: Error): Validator<T>}
+ * @scheme {maxLen<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>}
  * 
  * @invertible
  * 

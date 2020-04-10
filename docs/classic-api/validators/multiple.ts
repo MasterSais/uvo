@@ -1,7 +1,7 @@
 /**
  * @name {multiple}
  * 
- * @scheme {multiple(multiplier: number, error?: Error): Validator<number>}
+ * @scheme {multiple(multiplier: number | (() => number), error?: Error): Validator<number>}
  * 
  * @invertible
  * 

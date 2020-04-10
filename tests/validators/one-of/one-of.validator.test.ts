@@ -1,14 +1,10 @@
 import { V_OOF as VALIDATOR_NAME } from '@lib/classic-api/names';
 import { oneOf as validator } from '@lib/classic-api/validators/is';
 import { template } from '@lib/templating-api/template';
-import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, paramsCases, withErrorCases } from '@test/utilities';
-import { right, rightParams, wrong, wrongParams } from './cases';
+import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
+import { right, wrong } from './cases';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
-  describe('params', () =>
-    paramsCases(validator, rightParams, wrongParams, VALIDATOR_NAME)
-  );
-
   describe('base', () =>
     baseCasesWithParams(validator, right, wrong)
   );

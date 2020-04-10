@@ -8,7 +8,7 @@ const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
   value.reduce((result, item) => result && isArray(item), true)
 );
 
-const getField = <T extends ObjectLike, R = T>(data: T, result: T, field: any) =>
+const getField = <T extends ObjectLike, R = T>(data: T, result: R, field: any) =>
   isDefined(result[field]) ? result[field] : data[field];
 
 /**

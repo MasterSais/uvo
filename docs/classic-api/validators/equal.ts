@@ -1,7 +1,7 @@
 /**
  * @name {equal}
  * 
- * @scheme {equal<T>(match: T, error?: Error): Validator<T>}
+ * @scheme {equal<T>(match: T | (() => T), error?: Error): Validator<T>}
  * 
  * @invertible
  * 

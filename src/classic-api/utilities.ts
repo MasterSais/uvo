@@ -92,20 +92,25 @@ export const invertCondition = (condition: boolean, invert: boolean) => invert ?
 
 export const invertError = (name: string, invert: boolean) => invert ? `not:${name}` : name;
 
-export const isFactory = (validator: string, params?: Array<any>) =>
+export const isFactory = (validator: string, param?: any) =>
   (
-    <T>(comparator: ((value: T) => boolean), error?: Error): Validator<T> =>
+    <T>(comparator: ((value: T, ...args: any) => boolean), error?: Error): Validator<T> =>
       (
         isFunction(comparator)
           ? (
-            (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-              (
-                extendMeta(meta, value, validator, params),
+            param = callee(param),
 
-                comparator(value)
+            (value: T, onError?: ErrorCallback, meta?: MetaData): T => {
+              const paramData = param();
+
+              extendMeta(meta, value, validator, isDefined(paramData) ? [paramData] : []);
+
+              return (
+                comparator(value, paramData)
                   ? value
                   : applyError(error, onError, meta)
-              )
+              );
+            }
           )
           : throwValidatorError(validator)
       )
@@ -113,16 +118,11 @@ export const isFactory = (validator: string, params?: Array<any>) =>
 
 export const lengthFactory = (validator: string, comparator: ((value: number, len: number) => boolean)) => (
   (
-    makeInvertible<(<T extends Lengthy>(len: number, error?: Error) => Validator<T>)>(
+    makeInvertible<(<T extends Lengthy>(len: number | (() => number), error?: Error) => Validator<T>)>(
       (
-        (invert: boolean) => <T extends Lengthy>(len: number, error?: Error) => isFactory(invertError(validator, invert), [len])(
-          (
-            (isFiniteNumber(len) && len >= 0)
-              ? (
-                (value: T) => isLengthy(value) && invertCondition(comparator(value.length, len), invert)
-              )
-              : throwValidatorError(invertError(validator, invert))
-          ), error
+        (invert: boolean) => <T extends Lengthy>(len: number | (() => number), error?: Error) => isFactory(invertError(validator, invert), len)(
+          (value: T, param: number) => isLengthy(value) && invertCondition(comparator(value.length, param), invert),
+          error
         )
       )
     )
@@ -131,16 +131,11 @@ export const lengthFactory = (validator: string, comparator: ((value: number, le
 
 export const multipleFactory = (validator: string) => (
   (
-    makeInvertible<((multiplier: number, error?: Error) => Validator<number>)>(
+    makeInvertible<((multiplier: number | (() => number), error?: Error) => Validator<number>)>(
       (
-        (invert: boolean) => (multiplier: number, error?: Error): Validator<number> => isFactory(invertError(validator, invert), [multiplier])(
-          (
-            isNumber(multiplier)
-              ? (
-                (value: number) => isNumber(value) && invertCondition(value % multiplier === 0, invert)
-              )
-              : throwValidatorError(invertError(validator, invert))
-          ), error
+        (invert: boolean) => (multiplier: number | (() => number), error?: Error): Validator<number> => isFactory(invertError(validator, invert), multiplier)(
+          (value: number, param: number) => isNumber(value) && invertCondition(value % param === 0, invert),
+          error
         )
       )
     )

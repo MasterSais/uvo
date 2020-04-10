@@ -1,5 +1,5 @@
-import { Error, ErrorCallback, MetaData } from '@lib/classic-api/types';
-import { applyError, callee, extendMeta } from '@lib/classic-api/utilities';
+import { MetaData } from '@lib/classic-api/types';
+import { callee } from '@lib/classic-api/utilities';
 import { CNT, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 import { containerBase, validatorBase } from '@lib/templating-api/validators-base';
@@ -57,15 +57,3 @@ export const extractValidator = (meta: CompilerMeta, data: ValidatorData) => {
 };
 
 export const not = (name: string) => `not:${name}`;
-
-export const c_is = <T>(validator: string, param: () => any, comparator: ((value: T) => boolean), error?: Error) =>
-  (
-    (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
-      (
-        extendMeta(meta, value, validator, [param()]),
-
-        comparator(value)
-          ? value
-          : applyError(error, onError, meta)
-      )
-  );

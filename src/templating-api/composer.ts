@@ -21,14 +21,7 @@ export const composer = <T, R>(semanticTree: Array<ValidatorData>): ((injections
       : validators.push(extractValidator(meta, node));
   }
 
-  const wrapped = wrapValidator(
-    (
-      validators.length > 1
-        ? consecutive(...validators)
-        : validators[0]
-    ),
-    containers
-  );
+  const wrapped = wrapValidator(consecutive(...validators), containers);
 
   return (
     (injections: Injections = {}, errors: Injections = {}) => (

@@ -23,19 +23,6 @@
             ]
           },
           {
-            "title": "Types",
-            "content": [
-              "./docs/classic-api/markdown/types-description.txt"
-            ],
-            "sub": [
-              {
-                "parse": true,
-                "collapse": true,
-                "contentDir": "./docs/classic-api/types"
-              }
-            ]
-          },
-          {
             "title": "Validators",
             "content": [
               "./docs/classic-api/markdown/validations-description.txt"
@@ -116,6 +103,19 @@
             "title": "Examples",
             "content": [
               "./docs/classic-api/markdown/examples.md"
+            ]
+          },
+          {
+            "title": "Types",
+            "content": [
+              "./docs/classic-api/markdown/types-description.txt"
+            ],
+            "sub": [
+              {
+                "parse": true,
+                "collapse": true,
+                "contentDir": "./docs/classic-api/types"
+              }
             ]
           }
         ]

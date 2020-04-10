@@ -1,7 +1,7 @@
 /**
  * @name {length}
  * 
- * @scheme {length<T extends Lengthy>(len: number, error?: Error): Validator<T>}
+ * @scheme {length<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>}
  * 
  * @invertible
  * 
