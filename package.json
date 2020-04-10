@@ -7,16 +7,16 @@
   "unpkg": "./dist/esm/index.min.js",
   "scripts": {
     "lint": "eslint src/**/*.ts",
-    "lint:fix": "yarn run lint --fix",
+    "lint:fix": "yarn lint --fix",
     "test": "jest --config jest.config.json",
-    "test:watch": "yarn run test --watch",
+    "test:watch": "yarn test --watch",
     "post-test": "jest --config post-jest.config.json",
-    "build": "yarn run build:merge && yarn run build:modules && yarn run build:minify && yarn run build:doc",
-    "build:merge": "concurrently \"yarn run build:merge:lib\" \"yarn run build:merge:template\"",
+    "build": "yarn build:merge && yarn build:modules && yarn build:minify && yarn build:doc",
+    "build:merge": "concurrently \"yarn build:merge:lib\" \"yarn build:merge:template\"",
     "build:merge:lib": "node config/merge-sources.js config/merge-config.json && node config/build-doc.js ./dist/index.ts",
     "build:merge:template": "node config/merge-sources.js config/template-merge-config.json",
-    "build:modules": "concurrently \"yarn run build:umd\" \"yarn run build:cjs\" \"yarn run build:esm\" \"yarn run build:template\" \"yarn run build:types\"",
-    "build:minify": "concurrently \"yarn run build:umd-min\" \"yarn run build:cjs-min\" \"yarn run build:esm-min\" \"yarn run build:template-min\"",
+    "build:modules": "concurrently \"yarn build:umd\" \"yarn build:cjs\" \"yarn build:esm\" \"yarn build:template\" \"yarn build:types\"",
+    "build:minify": "concurrently \"yarn build:umd-min\" \"yarn build:cjs-min\" \"yarn build:esm-min\" \"yarn build:template-min\"",
     "build:umd": "tsc -p config/tsconfig.umd.json",
     "build:umd-min": "terser --config-file config/terser.config.json -o ./dist/umd/index.min.js -- ./dist/umd/index.js",
     "build:cjs": "tsc -p config/tsconfig.cjs.json",
@@ -27,7 +27,7 @@
     "build:template-min": "terser --config-file config/terser.config.json -o ./template/index.js -- ./template/index.template.js && node config/const-to-let.js ./template/index.js",
     "build:types": "tsc -p config/tsconfig.types.json",
     "build:doc": "node config/generate-markdown.js README.md && doctoc README.md --github",
-    "predeploy": "yarn run lint && yarn run build && yarn run post-test"
+    "predeploy": "yarn lint && yarn build && yarn post-test"
   },
   "sideEffects": false,
   "repository": {
@@ -62,7 +62,7 @@
     "@babel/preset-env": "7.9.5",
     "@babel/preset-typescript": "7.9.0",
     "@types/jest": "25.2.1",
-    "@types/node": "13.11.0",
+    "@types/node": "13.11.1",
     "@typescript-eslint/eslint-plugin": "2.27.0",
     "@typescript-eslint/parser": "2.27.0",
     "babel-jest": "25.3.0",
@@ -70,7 +70,7 @@
     "doctoc": "1.4.0",
     "eslint": "6.8.0",
     "jest": "25.3.0",
-    "terser": "4.6.10",
+    "terser": "4.6.11",
     "typescript": "3.8.3"
   },
   "typings": "./dist/types/index.d.ts"

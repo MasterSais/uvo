@@ -30,4 +30,5 @@ export type ValidatorData = {
   value: string;
   params: Array<any>;
   error?: number | string;
+  state?: number;
 };

@@ -42,7 +42,7 @@ const lengthComparators = {
 };
 
 export const lengthBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {
-  const validators = []
+  const validators = [];
 
   for (let i = 0; i < params.length; i += 3) {
     validators.push(

@@ -50,7 +50,7 @@ const comparators = {
 };
 
 export const compareBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {
-  const validators = []
+  const validators = [];
 
   for (let i = 0; i < params.length; i += 3) {
     const calleeParam = extractParam(meta, params[i + 1]);

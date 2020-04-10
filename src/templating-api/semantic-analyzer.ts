@@ -38,6 +38,12 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
     return;
   }
 
+  if (state.code === REF.code && prevLexeme && prevLexeme.code === REF.code) {
+    prevLexeme.state = 1;
+
+    return;
+  }
+
   if (state.code === SQ.code && prevLexeme && prevLexeme.code === SQ.code) {
     return;
   }

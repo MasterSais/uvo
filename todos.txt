@@ -14,10 +14,6 @@
 
   - Templating api
 
-    '#value(@string : @length(>=0))'; // set validator to 'value' dep
-
-    '##value'; // force fetching from meta to val. seq.
-
     `
       @object(
         $0 @number $1

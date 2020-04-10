@@ -3,7 +3,7 @@ import { applyError, callee, extendMeta } from '@lib/classic-api/utilities';
 import { CNT, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 import { containerBase, validatorBase } from '@lib/templating-api/validators-base';
-import { setDepBuilder } from '@lib/templating-api/validators/set-dep';
+import { referenceBuilder } from '@lib/templating-api/validators/reference';
 
 const reservedValues: { [name: string]: any } = {
   'true': true,
@@ -22,21 +22,23 @@ export const extractError = (cmeta: CompilerMeta, error: string | number) => (
   (meta: MetaData) => callee(cmeta.errors[error])(meta)
 );
 
-export const extractParam = (meta: CompilerMeta, p1: ValidatorData) => (
+export const extractParam = (meta: CompilerMeta, { code, value, params }: ValidatorData) => (
   (
-    p1.code === INJ.code && p1.params && p1.params[0].code === REF.code && ({
+    code === INJ.code && params && params[0].code === REF.code && ({
       code: REF.code,
-      value: p1.params[0].value,
-      callee: (refValue: any) => callee(meta.injections[p1.value])(refValue)
+      value: params[0].value,
+      callee: (refValue: any) => callee(meta.injections[value])(refValue)
     })
   ) || (
-    p1.code === INJ.code && (() => callee(meta.injections[p1.value])())
+    code === INJ.code && (() => callee(meta.injections[value])())
   ) || (
-    p1.code === SQ.code && callee(p1.value)
+    code === SQ.code && callee(value)
   ) || (
-    p1.code === REF.code && { code: REF.code, value: p1.value }
+    code === REF.code && { code: REF.code, value: value }
   ) || (
-    p1.code === VL.code && callee(extractValue(p1.value))
+    code === VL.code && callee(extractValue(value))
+  ) || (
+    code === VLD.code && validatorBase.get(value)
   )
 );
 
@@ -44,7 +46,7 @@ export const extractValidator = (meta: CompilerMeta, data: ValidatorData) => {
   const validator = (
     data.code === VLD.code && validatorBase.get(data.value) ||
     data.code === CNT.code && containerBase.get(data.value) ||
-    data.code === REF.code && setDepBuilder
+    data.code === REF.code && referenceBuilder
   ) || null;
 
   if (!validator) {

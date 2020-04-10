@@ -5,10 +5,10 @@ export const PARAMS_STATES = [6, 7];
 export const COMPARATOR_STATE = 9;
 
 export const semanticRules = [
-  /* S00 */ [2, [[DLM2, 0], [0], [10], []]],                                           // validators sequence
+  /* S00 */ [[[2], [3]], [[DLM2, 0], [0], [10], []]],                                  // validators sequence
   /* S01 */ [[[2], [3], [VL]], [[DLM], [DLM2], []], [[1], []]],                        // validators as params
   /* S02 */ [VLD, VL, 5, [[ERR, VL], []]],                                             // validator
-  /* S03 */ [REF, VL, 5],                                                              // reference
+  /* S03 */ [REF, [[REF], []], VL, 5],                                                 // reference
   /* S04 */ [INJ, VL, 5],                                                              // injection
   /* S05 */ [[[LRB, 6, RRB], [LRB, 7, RRB], []]],                                      // validator params
   /* S06 */ [8],                                                                       // validator params 1

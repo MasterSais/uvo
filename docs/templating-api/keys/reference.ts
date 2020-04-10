@@ -40,3 +40,13 @@ tml`
   Date.now(),
   a => a + 1000 // 'b' must be greater or equal than 'a' + 1000.
 ]);
+
+// Recursive
+template(`
+  #node(
+    @object(
+      id : @number : @compare(>=0),
+      node : ##node
+    )
+  ) ~meta
+`)()
