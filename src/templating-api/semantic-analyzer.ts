@@ -1,27 +1,21 @@
-import { isArray, isFiniteNumber } from '@lib/classic-api/utilities';
-import { CNT, DLM, ERR, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
-import { COMPARATOR_STATE, PARAMS_STATES, semanticRules } from '@lib/templating-api/semantic-rules';
+import { isArray, isFiniteNumber, toArray } from '@lib/classic-api/utilities';
+import { CND, CNT, ERR, GRC, GRO, GT, INJ, MNS, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
+import { semanticRules } from '@lib/templating-api/semantic-rules';
 import { Lexeme, ValidatorData } from '@lib/templating-api/types';
 
 const onBeforeNestedState = (state: any, stack: Array<any>): Array<any> => (
-  ([COMPARATOR_STATE, ...PARAMS_STATES].indexOf(state) >= 0)
+  state < 0
     ? (stack.push([]), stack[stack.length - 1])
     : stack
 );
 
-const onAfterNestedState = (state: any, stack: Array<any>, nestedStack: Array<any>) => {
-  if (state === COMPARATOR_STATE) {
-    if (nestedStack.length > 0) {
-      stack[stack.length - 1] = { value: nestedStack.join('') };
-    } else {
-      stack.pop();
-    }
-  }
-
-  if (PARAMS_STATES.indexOf(state) >= 0) {
+const onAfterNestedState = (state: any, stack: Array<any>) => {
+  if (state < 0) {
     stack[stack.length - 2].params = stack.pop();
   }
 };
+
+const withValueCodes = [VLD.code, REF.code, INJ.code, CNT.code, SQ.code];
 
 const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
   if (lexeme.omitToken) {
@@ -30,51 +24,70 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
 
   const prevLexeme = stack[stack.length - 1];
 
-  if (state.code === VL.code && prevLexeme && [VLD.code, REF.code, INJ.code, CNT.code, SQ.code].indexOf(prevLexeme.code) >= 0) {
-    prevLexeme[
-      prevLexeme.error === true ? 'error' : 'value'
-    ] = lexeme.value;
+  if (prevLexeme) {
+    if (state.code === VL.code) {
+      if (prevLexeme.error === true && VLD.code === prevLexeme.code) {
+        prevLexeme.error = lexeme.value;
 
-    return;
+        return;
+      }
+
+      if (withValueCodes.indexOf(prevLexeme.code) >= 0) {
+        prevLexeme.value = lexeme.value;
+
+        return;
+      }
+    }
+
+    if (state.code === CND.code) {
+      prevLexeme.cond = 1;
+
+      return;
+    }
+
+    if (state.code === REF.code && prevLexeme.code === REF.code) {
+      prevLexeme.state = 1;
+
+      return;
+    }
+
+    if (state.code === SQ.code && prevLexeme.code === SQ.code) {
+      return;
+    }
+
+    if (state.code === ERR.code) {
+      prevLexeme.error = true;
+
+      return;
+    }
+
+    if (state.code >= GT.code && state.code <= MNS.code && prevLexeme.code >= GT.code && prevLexeme.code <= MNS.code) {
+      prevLexeme.value += lexeme.value;
+
+      return;
+    }
+
+    if (state.code === GRC.code) {
+      prevLexeme.value = 'c';
+      prevLexeme.code = GRO.code;
+
+      return;
+    }
   }
 
-  if (state.code === REF.code && prevLexeme && prevLexeme.code === REF.code) {
-    prevLexeme.state = 1;
-
-    return;
-  }
-
-  if (state.code === SQ.code && prevLexeme && prevLexeme.code === SQ.code) {
-    return;
-  }
-
-  if (state.code === ERR.code) {
-    prevLexeme.error = true;
-
-    return;
-  }
-
-  const groupCode = [VLD.code, REF.code, INJ.code, DLM.code, CNT.code, VL.code].indexOf(state.code) >= 0;
-
-  if (groupCode) {
-    stack.push({ code: state.code, value: lexeme.value });
-
-    return;
-  }
-
-  stack.push(lexeme.value);
+  stack.push(lexeme);
 };
 
-const processState = (states: Array<any>, lexemes: Array<Lexeme>, offset: number, stack: Array<any>) => {
+const processState = (states: Array<any>, tokens: Array<Array<Lexeme>>, offset: number, stack: Array<any>) => {
   for (let i = 0; i < states.length; i++) {
     const state = states[i];
 
     if (isFiniteNumber(state)) {
       const nestedStack = onBeforeNestedState(state, stack);
 
-      offset = processState(semanticRules[state], lexemes, offset, nestedStack);
+      offset = processState(semanticRules[Math.abs(state)], tokens, offset, nestedStack);
 
-      onAfterNestedState(state, stack, nestedStack);
+      onAfterNestedState(state, stack);
 
       if (offset === null) {
         return null;
@@ -87,7 +100,7 @@ const processState = (states: Array<any>, lexemes: Array<Lexeme>, offset: number
       let nestedOffset = null;
 
       for (const nestedState of state) {
-        nestedOffset = processState(nestedState, lexemes, offset, stack);
+        nestedOffset = processState(toArray(nestedState), tokens, offset, stack);
 
         if (nestedOffset !== null) {
           break;
@@ -103,13 +116,15 @@ const processState = (states: Array<any>, lexemes: Array<Lexeme>, offset: number
       continue;
     }
 
-    if (offset === lexemes.length) {
+    if (offset === tokens.length) {
       return null;
     }
 
-    const lexeme = lexemes[offset++];
+    const lexeme = state.code >= 0 && tokens[offset].find(({ code }) => state.code === code);
 
-    if (state.code >= 0 && lexeme.codes.indexOf(state.code) >= 0) {
+    offset++;
+
+    if (lexeme) {
       onLexeme(lexeme, state, stack);
 
       continue;
@@ -121,7 +136,7 @@ const processState = (states: Array<any>, lexemes: Array<Lexeme>, offset: number
   return offset;
 };
 
-export const semanticAnalyzer = (lexemes: Array<Lexeme>): Array<ValidatorData> => {
+export const semanticAnalyzer = (lexemes: Array<Array<Lexeme>>): Array<ValidatorData> => {
   const stack: Array<ValidatorData> = [];
 
   const offset = processState(semanticRules[0], lexemes, 0, stack);

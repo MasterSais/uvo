@@ -33,7 +33,7 @@ describe('cross validation form › template', () => {
   ), cases, []);
 });
 
-describe('cross validation form 2 › template › short', () => {
+describe('cross validation form › template › short', () => {
   baseCasesWithParams(() => (
     tml`
       @o(

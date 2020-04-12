@@ -105,14 +105,6 @@ yarn add uvo
 ## `Classic API`
 ### `Usage`
 ```js
-import * as v from 'uvo'; // for everything (recommended for better minification results e.g. in webpack)
-// or
-import { number, array } from 'uvo'; // for only what you need
-// or
-const { object, setDep } = require('uvo');
-```
-
-```js
 import * as v from 'uvo';
 
 v.number()(10);
@@ -122,14 +114,6 @@ v.number()('abc');
 // => null
 
 const simpleObj = (
-  v.object({
-    id: [v.number(), v.gte(0)],
-    name: [v.string(), v.minLen(10)],
-    role: [v.string(), v.regex(/^[A-Z]{5,20}$/)]
-  })
-);
-// or extended solution (recommended)
-const extObj = (
   v.object2([
     ['id', v.number(), v.gte(0)],
     ['name', v.string(), v.minLen(10)],
@@ -140,7 +124,7 @@ const extObj = (
 simpleObj({
   id: 3, // right
   name: 'YourAwesomeUserName', // right
-  role: 'invalidRole' // wrong. Will be null
+  role: 'invalidRole' // wrong
 });
 // => { id: 3, name: 'YourAwesomeUserName', role: null }
 ```
@@ -2536,17 +2520,45 @@ import { template, tml } from 'uvo/template';
 
 template(`
   @object(
-    id : @number : @compare(>$0),
-    name : @string : @length(>=$1)
-  )
-`)([0, () => 10]);
-
-tml`
-  @object(
     id : @number : @compare(>$minId),
     name : @string : @length(>=$minNameLength)
   )
-`({ minId: 0, minNameLength: () => 10 });
+`)({ minId: 0, minNameLength: () => 10 });
+
+tml`
+  @o(
+    id @n @c(>$0),
+    name @s @l(>=$1)
+  )
+`([0, () => 10]);
+
+// Dynamic validators. `<( ... )>` - consecutive grouper.
+template(`
+  @object(
+    id : @number : @compare(>0),
+    name : $cond ? <( @string : @length(>=10) )>
+  )
+`)({ 
+  cond: () => true // Condition for dynamic validation.
+});
+
+// Dynamic validators on reference
+template(`
+  @object(
+    id : @number : @compare(>0) : #id,
+    name : #id ? <( @string : @length(>=10) )>
+  )
+`)(); // Will validate name if 'id' ref is defined.
+
+// Dynamic validators with reference in injection
+template(`
+  @object(
+    id : @number : @compare(>0) : #id,
+    name : $cond(#id) ? <( @string : @length(>=10) )>
+  )
+`)({ 
+  cond: (id: number) => !!id
+});
 ```
 </details>
 

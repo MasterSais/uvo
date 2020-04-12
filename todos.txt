@@ -4,11 +4,11 @@
 
   - 'uvo/extended' validators e.g https://www.npmjs.com/package/class-validator#manual-validation
 
-  - Templating api should accept Vbase as parameter
-
-  - Templating compare params return as array, not cons
-
   - Templating api CJS module
+
+  - Docs. Examples to I block, then Api
+
+  - Templating optimize. Make all inj's callable on injection.
 
   - Docs 'All Features' block with all validators and features in one schema. ???
 
@@ -19,6 +19,10 @@
         $0 @number
       )
     `;
+
+    ~m($0); // logger
+
+    ~e($0); // common error processor
 
     'defined'; //??? m.b use only long name. Short only via 'compare'. m.b. defined | def
 
@@ -43,7 +47,5 @@
     'withFallback'; // ~f(123)
 
     'useDefault'; // @default(123)
-
-    'dynamic'; // $... in seq
 
     'strip'; // strip | stp ???

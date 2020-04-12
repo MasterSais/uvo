@@ -1,13 +1,28 @@
 import { consecutive } from '@lib/classic-api/groupers/consecutive';
-import { getDep } from '@lib/classic-api/spreaders/get-dep';
-import { isDefined } from '@lib/classic-api/utilities';
+import { Error, Validator } from '@lib/classic-api/types';
+import { lengthFactory } from '@lib/classic-api/utilities';
 import { equal, gte, lte, oneOf } from '@lib/classic-api/validators/is';
+import { length, maxLen, minLen } from '@lib/classic-api/validators/length';
 import { multiple } from '@lib/classic-api/validators/multiple';
-import { REF } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
-import { extractError, extractParam } from '@lib/templating-api/utilities';
+import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractLiteral } from '@lib/templating-api/utilities';
 
-const comparators = {
+const LEN_MLP = 'len-mlp';
+
+const lenMultiple = lengthFactory(LEN_MLP, (value: number, len: number) => value % len === 0);
+
+const lengthComparators = {
+  '>': maxLen.not,
+  '>=': minLen,
+  '<': minLen.not,
+  '<=': maxLen,
+  '=': length,
+  '!=': length.not,
+  '%': lenMultiple,
+  '!%': lenMultiple.not
+};
+
+const baseComparators = {
   '>=': gte,
   '<': gte.not,
   '<=': lte,
@@ -20,26 +35,25 @@ const comparators = {
   '!->': oneOf.not
 };
 
-export const compareBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {
+const builder = (comparators: Record<string, (param: any, error: Error) => Validator<any>>) => (meta: CompilerMeta, { params, error }: ValidatorData) => {
   const validators = [];
 
   for (let i = 0; i < params.length; i += 3) {
-    const calleeParam = extractParam(meta, params[i + 1]);
+    const comparator = (value: any) => comparators[params[i].value](value, error);
 
-    const valueMapper = (
-      calleeParam.callee
-        ? (value: any) => () => calleeParam.callee(value)
-        : (value: any) => () => value
-    );
+    const param = params[i + 1];
 
     validators.push(
-      calleeParam.code === REF.code
-        ? getDep(calleeParam.value, (value: any) =>
-          isDefined(value) && comparators[params[i].value](valueMapper(value))
-        )
-        : comparators[params[i].value](calleeParam, extractError(meta, error))
+      extractInnerInjectionReference(meta, param, comparator) ||
+      extractInjection(meta, param, comparator) ||
+      extractLiteral(param, comparator) ||
+      extractInnerReference(param, comparator)
     );
   }
 
   return consecutive(...validators);
-};
+}
+
+export const compareBuilder = builder(baseComparators);
+
+export const lengthBuilder = builder(lengthComparators);

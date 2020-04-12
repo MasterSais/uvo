@@ -1,7 +1,7 @@
 import { Error } from '@lib/classic-api/types';
 
 export type LexemeScheme = {
-  literals: Array<string>;
+  literals: string;
   code: number;
   omit?: boolean;
   compound?: boolean;
@@ -10,7 +10,7 @@ export type LexemeScheme = {
 
 export type Lexeme = {
   value: string;
-  codes: Array<number>;
+  code: number;
   omit?: boolean;
   compound?: boolean;
   omitToken?: boolean;

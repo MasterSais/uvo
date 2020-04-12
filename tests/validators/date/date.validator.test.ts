@@ -40,10 +40,10 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
   );
 
   describe('with error › template', () =>
-    withErrorCases(template('@date!0')([], [notNullError()]), [[right[0]], [wrong[0]]])
+    withErrorCases(template('@date!0')([], [notNullError()]), [[right[0]], [wrong[0]]], null, toDate)
   );
 
   describe('with meta › template', () =>
-    withErrorCases(template('@date!0')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [[wrong[0]]], emptyMeta())
+    withErrorCases(template('@date!0')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [[wrong[0]]], emptyMeta(), toDate)
   );
 });

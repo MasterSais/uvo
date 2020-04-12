@@ -1,26 +1,22 @@
-import { CNT, DLM, DLM2, EQ, ERR, GT, INJ, LRB, LT, MLP, MNS, NOT, REF, RRB, SQ, VL, VLD } from '@lib/templating-api/lexemes';
+import { CND, CNT, DLM, DLM2, EQ, ERR, GRC, GRO, GT, INJ, LRB, LT, MLP, MNS, NOT, REF, RRB, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 
-export const PARAMS_STATES = [6, 7];
-
-export const COMPARATOR_STATE = 9;
-
-export const semanticRules = [
-  /* S00 */ [[[2], [3]], [[DLM2, 0], [0], [10], []]],                                  // validators sequence
-  /* S01 */ [[[2], [3], [VL]], [[DLM], [DLM2], []], [[1], []]],                        // validators as params
-  /* S02 */ [VLD, VL, 5, [[ERR, VL], []]],                                             // validator
-  /* S03 */ [REF, [[REF], []], VL, 5],                                                 // reference
-  /* S04 */ [INJ, VL, 5],                                                              // injection
-  /* S05 */ [[[LRB, 6, RRB], [LRB, 7, RRB], []]],                                      // validator params
-  /* S06 */ [8],                                                                       // validator params 1
-  /* S07 */ [1],                                                                       // validator params 2
-  /* S08 */ [[[9], []], [[VL], [3], [4], [SQ, VL, SQ]], [[DLM, 8], []]],               // simple validator params
-  /* S09 */ [[
-    /* S09 */ [GT, [[EQ], []]],
-    /* S09 */ [LT, [[EQ], []]],
-    /* S09 */ [EQ],
-    /* S09 */ [MLP],
-    /* S09 */ [MNS, GT],
-    /* S09 */ [NOT, [[EQ], [MLP], [MNS, GT]]]
-  /* S09 */ ]],                                                                        // comparator
-  /* S10 */ [CNT, VL, 5, [[10], []]]                                                   // containers
+export const semanticRules: Array<Array<any>> = [
+  /* S00 */ [[2, 3, 4, 5], [[[DLM2, CND, []], 0], 9, []]],                  // validators sequence
+  /* S01 */ [[2, 3, 4, 5, VL], [DLM, DLM2, CND, []], [1, []]],              // validators as params
+  /* S02 */ [VLD, 6, [[ERR, VL], []]],                                      // validator
+  /* S03 */ [REF, [REF, []], 6],                                            // reference
+  /* S04 */ [INJ, 6],                                                       // injection
+  /* S05 */ [GRO, LRB, -1, RRB, GRC],                                       // grouper
+  /* S06 */ [VL, [[LRB, [[-1, RRB], [-7, RRB]]], []]],                      // validator params
+  /* S07 */ [8, [VL, 3, 4, [SQ, VL, SQ]], [[DLM, 7], []]],                  // simple validator params
+  /* S08 */ [[
+    /* S08 */ [GT, [EQ, []]],
+    /* S08 */ [LT, [EQ, []]],
+    /* S08 */ EQ,
+    /* S08 */ MLP,
+    /* S08 */ [MNS, GT],
+    /* S08 */ [NOT, [EQ, MLP, [MNS, GT]]],
+    /* S08 */ []
+  /* S08 */ ]],                                                             // comparator
+  /* S09 */ [CNT, 6, [9, []]]                                               // containers
 ];

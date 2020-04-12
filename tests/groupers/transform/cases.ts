@@ -4,8 +4,7 @@ import { emptyArray, emptyFunction, emptyObject } from '@test/utilities';
 export const rightParams: Array<any> = [
   [],
   [emptyFunction()],
-  [emptyFunction(), emptyFunction()],
-  [(value: any) => value + 1]
+  [emptyFunction(), emptyFunction()]
 ];
 
 export const wrongParams: Array<any> = [

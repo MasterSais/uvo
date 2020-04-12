@@ -1,32 +1,42 @@
 import { lexemeBase } from '@lib/templating-api/lexemes';
 import { Lexeme } from '@lib/templating-api/types';
 
-export const lexicalAnalyzer = (input: string): Array<Lexeme> => {
-  const lexemes = new Array<Lexeme>(input.length);
+export const lexicalAnalyzer = (input: string): Array<Array<Lexeme>> => {
+  const tokens = new Array<Array<Lexeme>>(input.length);
 
   let index = 0;
 
   for (const literal of input) {
-    const lexeme = lexemeBase.get(literal);
+    const lexemes = lexemeBase.get(literal);
 
-    if (!lexeme) {
+    if (!lexemes) {
       throw `Unexpected literal: '${literal}'`;
     }
 
-    if (!lexeme.omit) {
-      const compound = (
-        lexeme.compound && index > 0 && lexemes[index - 1].compound && lexemes[index - 1].codes.find(code => lexeme.codes.indexOf(code) >= 0)
-      );
+    let lexemeTokens: Array<Lexeme> = [];
 
-      if (compound) {
-        lexemes[index - 1].value = lexemes[index - 1].value + lexeme.value;
-      } else {
-        lexemes[index++] = { ...lexeme };
+    for (let i = 0; i < lexemes.length; i++) {
+      if (!lexemes[i].omit) {
+        const compound = (
+          lexemes[i].compound && index > 0 && tokens[index - 1].find(({ code }) => code === lexemes[i].code)
+        );
+
+        if (compound) {
+          compound.value = compound.value + lexemes[i].value;
+          tokens[index - 1] = [compound];
+          lexemeTokens = [];
+
+          break;
+        }
+
+        lexemeTokens.push({ ...lexemes[i] });
       }
     }
+
+    lexemeTokens.length > 0 && (tokens[index++] = lexemeTokens);
   }
 
-  lexemes.length = index;
+  tokens.length = index;
 
-  return lexemes;
+  return tokens;
 };

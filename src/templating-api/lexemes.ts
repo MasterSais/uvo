@@ -1,56 +1,63 @@
 import { Lexeme, LexemeScheme } from '@lib/templating-api/types';
 
-let code = 0;
+export const lexemeBase = new Map<string, Array<Lexeme>>();
 
-const makeLexeme = (literals: Array<string>, omitToken?: boolean, omit?: boolean, compound?: boolean): LexemeScheme => ({
-  literals, code: code++, omitToken, omit, compound
-});
+let code = -1;
 
-export const VLD: LexemeScheme = makeLexeme(['@']);
+const makeLexeme = (literals: string, omitToken?: boolean, omit?: boolean, compound?: boolean): LexemeScheme => {
+  const scheme: LexemeScheme = { literals, code: ++code, omitToken, omit, compound };
 
-export const ERR: LexemeScheme = makeLexeme(['!']);
+  for (const literal of literals) {
+    const lexemes: Array<Lexeme> = lexemeBase.get(literal);
 
-export const INJ: LexemeScheme = makeLexeme(['$']);
+    const lexeme: Lexeme = { code, value: literal, compound, omit, omitToken };
 
-export const REF: LexemeScheme = makeLexeme(['#']);
+    lexemes
+      ? lexemes.push(lexeme)
+      : lexemeBase.set(literal, [lexeme]);
+  }
 
-export const CNT: LexemeScheme = makeLexeme(['~']);
+  return scheme;
+};
 
-export const LRB: LexemeScheme = makeLexeme(['('], true);
+export const VLD: LexemeScheme = makeLexeme('@');
 
-export const RRB: LexemeScheme = makeLexeme([')'], true);
+export const ERR: LexemeScheme = makeLexeme('!');
 
-export const SQ: LexemeScheme = makeLexeme(['\'']);
+export const INJ: LexemeScheme = makeLexeme('$');
 
-export const DLM: LexemeScheme = makeLexeme([',']);
+export const CND: LexemeScheme = makeLexeme('?');
 
-export const DLM2: LexemeScheme = makeLexeme([':'], true);
+export const REF: LexemeScheme = makeLexeme('#');
 
-export const GT: LexemeScheme = makeLexeme(['>']);
+export const CNT: LexemeScheme = makeLexeme('~');
 
-export const LT: LexemeScheme = makeLexeme(['<']);
+export const LRB: LexemeScheme = makeLexeme('(', true);
 
-export const EQ: LexemeScheme = makeLexeme(['=']);
+export const RRB: LexemeScheme = makeLexeme(')', true);
 
-export const NOT: LexemeScheme = makeLexeme(['!']);
+export const SQ: LexemeScheme = makeLexeme('\'');
 
-export const MLP: LexemeScheme = makeLexeme(['%']);
+export const DLM: LexemeScheme = makeLexeme(',');
 
-export const MNS: LexemeScheme = makeLexeme(['-']);
+export const DLM2: LexemeScheme = makeLexeme(':', true);
 
-export const OMT: LexemeScheme = makeLexeme([' ', '\n', '\r'], false, true);
+export const GRC: LexemeScheme = makeLexeme('>');
 
-export const VL: LexemeScheme = makeLexeme('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.-+0123456789'.split(''), false, false, true);
+export const GRO: LexemeScheme = makeLexeme('<');
 
-export const lexemeBase = new Map<string, Lexeme>();
+export const GT: LexemeScheme = makeLexeme('>');
 
-[VLD, ERR, INJ, REF, CNT, LRB, RRB, SQ, DLM, DLM2, GT, LT, EQ, NOT, MLP, MNS, OMT, VL].forEach(
-  ({ code, literals, compound, omit, omitToken }) => literals.forEach(literal =>
-    lexemeBase.has(literal)
-      ? (
-        lexemeBase.get(literal).codes.push(code),
-        lexemeBase.get(literal).compound = compound
-      )
-      : lexemeBase.set(literal, { codes: [code], value: literal, compound, omit, omitToken })
-  )
-);
+export const LT: LexemeScheme = makeLexeme('<');
+
+export const EQ: LexemeScheme = makeLexeme('=');
+
+export const NOT: LexemeScheme = makeLexeme('!');
+
+export const MLP: LexemeScheme = makeLexeme('%');
+
+export const MNS: LexemeScheme = makeLexeme('-');
+
+export const OMT: LexemeScheme = makeLexeme(' \n\r', false, true);
+
+export const VL: LexemeScheme = makeLexeme('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.-+0123456789', false, false, true);

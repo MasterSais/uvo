@@ -1,12 +1,12 @@
-import { emptyFunction } from '@test/utilities';
+import { callee, emptyFunction } from '@test/utilities';
 
 export const rightParams: Array<any> = [
   [],
   ['fallback'],
-  [() => 'fallback'],
+  [callee('fallback')],
   ['fallback', emptyFunction()],
   ['fallback', emptyFunction(), emptyFunction()],
-  [() => 'fallback', emptyFunction(), emptyFunction()]
+  [callee('fallback'), emptyFunction(), emptyFunction()]
 ];
 
 export const wrongParams: Array<any> = [

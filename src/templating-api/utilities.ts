@@ -1,9 +1,11 @@
-import { MetaData } from '@lib/classic-api/types';
-import { callee } from '@lib/classic-api/utilities';
-import { CNT, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
+import { getDep } from '@lib/classic-api/spreaders/get-dep';
+import { setDep } from '@lib/classic-api/spreaders/set-dep';
+import { setVDep } from '@lib/classic-api/spreaders/set-v-dep';
+import { MetaData, Validator } from '@lib/classic-api/types';
+import { callee, isDefined } from '@lib/classic-api/utilities';
+import { CNT, GRO, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
-import { containerBase, validatorBase } from '@lib/templating-api/validators-base';
-import { referenceBuilder } from '@lib/templating-api/validators/reference';
+import { containerBase, grouperBase, validatorBase } from '@lib/templating-api/validators-base';
 
 const reservedValues: { [name: string]: any } = {
   'true': true,
@@ -12,42 +14,81 @@ const reservedValues: { [name: string]: any } = {
   'undefined': undefined
 };
 
-const extractValue = (value: string) => (
-  reservedValues.hasOwnProperty(value)
-    ? reservedValues[value]
-    : !isNaN(+value) && callee(+value)
+export const extractInjection = (meta: CompilerMeta, { code, value }: ValidatorData, wrap: Function) => (
+  code === INJ.code && (
+    wrap(() => callee(meta.injections[value])())
+  )
+);
+
+export const extractInnerReference = ({ code, value }: ValidatorData, wrap: Function) => (
+  code === REF.code && (
+    getDep(value, (refValue: any) =>
+      isDefined(refValue) && wrap(() => refValue)
+    )
+  )
+);
+
+export const extractInnerInjectionReference = (meta: CompilerMeta, { code, value, params }: ValidatorData, wrap: Function) => (
+  code === INJ.code && params && params[0].code === REF.code && (
+    getDep(params[0].value, (refValue: any) =>
+      isDefined(refValue) && wrap(() => callee(meta.injections[value])(refValue))
+    )
+  )
+);
+
+export const extractLiteral = ({ code, value }: ValidatorData, wrap: Function) => (
+  code === VL.code && (
+    wrap(callee(
+      reservedValues.hasOwnProperty(value)
+        ? reservedValues[value]
+        : !isNaN(+value) && +value
+    ))
+  )
+  ||
+  code === SQ.code && (
+    wrap(callee(value))
+  )
 );
 
 export const extractError = (cmeta: CompilerMeta, error: string | number) => (
   (meta: MetaData) => callee(cmeta.errors[error])(meta)
 );
 
-export const extractParam = (meta: CompilerMeta, { code, value, params }: ValidatorData) => (
-  (
-    code === INJ.code && params && params[0].code === REF.code && ({
-      code: REF.code,
-      value: params[0].value,
-      callee: (refValue: any) => callee(meta.injections[value])(refValue)
-    })
-  ) || (
-    code === INJ.code && (() => callee(meta.injections[value])())
-  ) || (
-    code === SQ.code && callee(value)
-  ) || (
-    code === REF.code && { code: REF.code, value: value }
-  ) || (
-    code === VL.code && callee(extractValue(value))
-  ) || (
-    code === VLD.code && validatorBase.get(value)
+export const extractReference = (meta: CompilerMeta, { code, state, value, params }: ValidatorData): Validator<any> => (
+  code === REF.code && (
+    state === 1
+      ? getDep(value, v => v)
+      : params
+        ? (
+          params[0].code === VLD.code && (
+            /* eslint-disable @typescript-eslint/no-use-before-define*/
+            setVDep(value, ...params.map(data => extractValidator(meta, data)))
+          )
+          ||
+          extractLiteral(params[0], (literal: any) => setDep(value, literal))
+        )
+        : setDep(value)
   )
 );
 
 export const extractValidator = (meta: CompilerMeta, data: ValidatorData) => {
+  data.error = extractError(meta, data.error) as any;
+
   const validator = (
-    data.code === VLD.code && validatorBase.get(data.value) ||
-    data.code === CNT.code && containerBase.get(data.value) ||
-    data.code === REF.code && referenceBuilder
-  ) || null;
+    data.code === VLD.code && (
+      validatorBase.get(data.value)
+    )
+    ||
+    data.code === CNT.code && (
+      containerBase.get(data.value)
+    )
+    ||
+    data.code === GRO.code && (
+      grouperBase.get(data.value)
+    )
+    ||
+    extractReference
+  );
 
   if (!validator) {
     throw `Unsupported validator name '${data.value}'`;
@@ -55,5 +96,3 @@ export const extractValidator = (meta: CompilerMeta, data: ValidatorData) => {
 
   return validator(meta, data);
 };
-
-export const not = (name: string) => `not:${name}`;

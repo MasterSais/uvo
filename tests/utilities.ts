@@ -13,6 +13,8 @@ export const emptyObject = () => _emptyObject;
 const _emptyArray: Array<any> = [];
 export const emptyArray = () => _emptyArray;
 
+export const callee = (value: any): any => (typeof value === 'function' ? value : (() => value));
+
 export const invertError = (name: string, invert: boolean) => invert ? `not:${name}` : name;
 
 export const baseCases = <T = any, R = T>(validator: (...args: any) => Validator<T, R>, params: Array<any>, rightCases: Array<T>, wrongCases: Array<T>, processor?: (value: T) => R) =>
@@ -54,7 +56,7 @@ export const withErrorCases = <T = any, R = T>(validator: Validator<T, R>, value
     typeof err === typeof Function
       ? (err as Function)(meta)
       : err
-  );
+  ) || null;
 
   values.forEach(([input, expected], index) => {
     test(String(index), () => {
@@ -62,7 +64,7 @@ export const withErrorCases = <T = any, R = T>(validator: Validator<T, R>, value
         .toEqual(
           (values.length === 1 || index)
             ? null
-            : (processor ? processor(input) : expected !== undefined ? expected : input)
+            : (processor ? processor(input) : (expected !== undefined ? expected : input))
         );
 
       (values.length === 1 || index) ? expect(error).not.toBe(null) : expect(error).toBe(null);
