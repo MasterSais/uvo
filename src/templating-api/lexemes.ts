@@ -64,6 +64,8 @@ export const NOT: LexemeScheme = makeLexeme('!');
 
 export const MLP: LexemeScheme = makeLexeme('%');
 
+export const RGX: LexemeScheme = makeLexeme('*');
+
 export const MNS: LexemeScheme = makeLexeme('-');
 
 export const OMT: LexemeScheme = makeLexeme(' \n\r', false, true);

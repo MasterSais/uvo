@@ -1,4 +1,4 @@
-import { CND, CNT, DLM, DLM2, EQ, ERR, GR, GRC, GT, INJ, LCB, LRB, LSB, LT, MLP, MNS, NOT, RCB, REF, RRB, RSB, SQ, VL, VLD } from '@lib/templating-api/lexemes';
+import { CND, CNT, DLM, DLM2, EQ, ERR, GR, GRC, GT, INJ, LCB, LRB, LSB, LT, MLP, MNS, NOT, RCB, REF, RGX, RRB, RSB, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 
 export const semanticRules: Array<Array<any>> = [
   /* S00 */[[2, 3, 4, 5], [[[DLM2, CND, []], 0], 9, []]],                  // validators sequence
@@ -14,8 +14,9 @@ export const semanticRules: Array<Array<any>> = [
     /* S08 */[LT, [EQ, []]],
     /* S08 */ EQ,
     /* S08 */ MLP,
+    /* S08 */ RGX,
     /* S08 */[MNS, GT],
-    /* S08 */[NOT, [EQ, MLP, [MNS, GT]]],
+    /* S08 */[NOT, [EQ, MLP, RGX, [MNS, GT]]],
     /* S08 */[]
   /* S08 */]],                                                             // comparator
   /* S09 */[CNT, 6, [9, []]]                                               // containers

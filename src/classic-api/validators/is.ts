@@ -1,6 +1,6 @@
 import { V_DEF, V_EM, V_EQ, V_GTE, V_IS, V_LTE, V_OOF, V_REG } from '@lib/classic-api/names';
 import { Error, Validator } from '@lib/classic-api/types';
-import { hasIndex, invertCondition, invertError, isDefined, isFactory, isOneType, isRegEx, makeInvertible, throwValidatorError } from '@lib/classic-api/utilities';
+import { hasIndex, invertCondition, invertError, isDefined, isFactory, isOneType, makeInvertible } from '@lib/classic-api/utilities';
 
 /**
  * {@link docs/classic-api/validators/is}
@@ -79,13 +79,9 @@ export const regex = makeInvertible<(<T>(match: RegExp | (() => RegExp), error?:
   (
     (invert: boolean) => <T>(match: RegExp | (() => RegExp), error?: Error): Validator<T> =>
       (
-        isRegEx(match)
-          ? (
-            isFactory(invertError(V_REG, invert), match)(
-              (value: T, param: RegExp) => invertCondition(param.test(value as any), invert), error
-            )
-          )
-          : throwValidatorError(invertError(V_REG, invert))
+        isFactory(invertError(V_REG, invert), match)(
+          (value: T, param: RegExp) => invertCondition(param.test(value as any), invert), error
+        )
       )
   )
 );

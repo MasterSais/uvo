@@ -2442,7 +2442,7 @@ tml`@b`();
 
 
 Checks value with provided comparator. `c` - short version.
-Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` `->` (one of) `!->`
+Comparators: `>` `>=` `<` `<=` `=` `!=` `%` (multiple to) `!%` `->` (one of) `!->` ` ` regex match `! `
 <details>
 <summary>details</summary>
 
@@ -2461,6 +2461,8 @@ tml`@c(='2')`(); // string literal
 tml`@c(>#refName)`(); // reference
 
 tml`@c(!=$param)`({ param: 10 }); // injection.
+
+tml`@c(*$0)`([/[0-9]/]); // Regex.
 
 tml`@c(%2)`(); // multiple to.
 
