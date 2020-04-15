@@ -1,8 +1,8 @@
 import { arrayBuilder } from '@lib/templating-api/validators/array';
 import { boolBuilder } from '@lib/templating-api/validators/bool';
 import { compareBuilder, lengthBuilder } from '@lib/templating-api/validators/compare';
-import { consecutiveBuilder } from '@lib/templating-api/validators/consecutive';
 import { dateBuilder } from '@lib/templating-api/validators/date';
+import { consecutiveBuilder, orBuilder, parallelBuilder } from '@lib/templating-api/validators/grouper';
 import { numberBuilder } from '@lib/templating-api/validators/number';
 import { objectBuilder } from '@lib/templating-api/validators/object';
 import { stringBuilder } from '@lib/templating-api/validators/string';
@@ -39,5 +39,7 @@ export const containerBase: Map<string, any> = new Map<string, any>([
 ]);
 
 export const grouperBase: Map<string, any> = new Map<string, any>([
-  ['c', consecutiveBuilder]
+  ['(', consecutiveBuilder],
+  ['[', orBuilder],
+  ['{', parallelBuilder]
 ]);

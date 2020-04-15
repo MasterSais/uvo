@@ -87,6 +87,7 @@ Minified library bundle with all modules takes less than 8kb. It doesn't require
     - [`containers`](#containers)
     - [`date`](#date)
     - [`errors`](#errors)
+    - [`groupers`](#groupers)
     - [`injection`](#injection)
     - [`length`](#length)
     - [`number`](#number)
@@ -136,6 +137,7 @@ simpleObj({
 array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>
 ```
 Checks value to be an array.
+{
 <details>
 <summary>details</summary>
 
@@ -195,6 +197,7 @@ anotherOne([0, 1, 2, 3]); // too long.
 bool<T>(error?: Error): Validator<T, boolean>
 ```
 Checks value to be a boolean compatible.
+{
 <details>
 <summary>details</summary>
 
@@ -239,6 +242,7 @@ v.bool.check()('abc');
 date<T>(error?: Error): Validator<T, number>
 ```
 Checks value to be a date compatible. Result in ms.
+{
 <details>
 <summary>details</summary>
 
@@ -271,6 +275,7 @@ v.date.check()('99.12.2020');
 defined<T>(error?: Error): Validator<T>
 ```
 Checks value to be defined.
+{
 <details>
 <summary>details</summary>
 
@@ -300,6 +305,7 @@ v.defined()(true);
 empty<T>(error?: Error): Validator<T>
 ```
 Checks value to be empty.
+{
 <details>
 <summary>details</summary>
 
@@ -341,6 +347,7 @@ v.empty.not()(0);
 equal<T>(match: T | (() => T), error?: Error): Validator<T>
 ```
 Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
+{
 <details>
 <summary>details</summary>
 
@@ -373,6 +380,7 @@ v.equal.not(10)(1);
 even(error?: Error): Validator<number>
 ```
 Checks number to be an even one.
+{
 <details>
 <summary>details</summary>
 
@@ -405,6 +413,7 @@ v.even.not()(2);
 fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>
 ```
 Checks for fields in the input object.
+{
 <details>
 <summary>details</summary>
 
@@ -509,6 +518,7 @@ v.gte.not(0)(-1);
 integer(error?: Error): Validator<number>
 ```
 Checks number to be an integer.
+{
 <details>
 <summary>details</summary>
 
@@ -541,6 +551,7 @@ v.integer.not()(1.1);
 is<T>(comparator: ((value: T) => boolean), error?: Error): Validator<T>
 ```
 Checks value with custom comparator.
+{
 <details>
 <summary>details</summary>
 
@@ -564,6 +575,7 @@ v.is((value) => value === 10)('10');
 length<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>
 ```
 Compares length with 'len' param. Requires to be an object like or string.
+{
 <details>
 <summary>details</summary>
 
@@ -661,6 +673,7 @@ v.lte.not(0)(1);
 maxLen<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
+{
 <details>
 <summary>details</summary>
 
@@ -690,6 +703,7 @@ v.maxLen(3)({ length: 3 });
 minLen<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>
 ```
 Checks length to be equal to 'len' param. Requires to be an object like or string.
+{
 <details>
 <summary>details</summary>
 
@@ -719,6 +733,7 @@ v.minLen(3)({ length: 3 });
 multiple(multiplier: number | (() => number), error?: Error): Validator<number>
 ```
 Checks number to be an integer.
+{
 <details>
 <summary>details</summary>
 
@@ -754,6 +769,7 @@ v.multiple.not(3)(11);
 number<T>(error?: Error): Validator<T, number>
 ```
 Checks value to be a number compatible.
+{
 <details>
 <summary>details</summary>
 
@@ -795,6 +811,7 @@ v.number.check()('true');
 object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>
 ```
 Checks value to be an object.
+{
 <details>
 <summary>details</summary>
 
@@ -849,6 +866,7 @@ fieldsKeeper({
 object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>
 ```
 Checks value to be an object. Provides strict ordering. Each key can be a Regex.
+{
 <details>
 <summary>details</summary>
 
@@ -918,6 +936,7 @@ advancedObj({
 oneOf<T>(candidates: Array<T> | string | (() => Array<T> | string), error?: Error): Validator<T>
 ```
 Checks value to be one of expected. Shallow comparison.
+{
 <details>
 <summary>details</summary>
 
@@ -956,6 +975,7 @@ v.oneOf.not('abcdefg')('f');
 regex<T>(match: RegExp | (() => RegExp), error?: Error): Validator<T>
 ```
 Checks value to match a pattern.
+{
 <details>
 <summary>details</summary>
 
@@ -985,6 +1005,7 @@ v.regex(/^[0-9]$/)(11);
 string<T>(error?: Error): Validator<T, string>
 ```
 Checks value to be a string compatible.
+{
 <details>
 <summary>details</summary>
 
@@ -1023,6 +1044,7 @@ v.string.check()([1, 2]);
 array<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>
 ```
 Checks array's elements to be unique.
+{
 <details>
 <summary>details</summary>
 
@@ -1082,6 +1104,7 @@ validator([1, 2, 1, 2]);
 clamp<T>(min: T, max: T): Validator<T, T>
 ```
 Clamps value to required boundaries.
+{
 <details>
 <summary>details</summary>
 
@@ -1117,6 +1140,7 @@ v.clamp('c', 'e')('f');
 erase<T>(): Validator<T, null>
 ```
 Erase input.
+{
 <details>
 <summary>details</summary>
 
@@ -1137,6 +1161,7 @@ v.erase()(2);
 keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>
 ```
 Maps object keys with custom mapper.
+{
 <details>
 <summary>details</summary>
 
@@ -1163,6 +1188,7 @@ v.keysMap((key: string) => key === 'f1' ? 'f2' : key)({ f1: 'abc' }); // moves/r
 lowercase(): Validator<string, string>
 ```
 Lowercase input string.
+{
 <details>
 <summary>details</summary>
 
@@ -1183,6 +1209,7 @@ v.lowercase()('ABC');
 random(min: number, max: number, precision: number): Validator<any, number>
 ```
 Returns random value according to params.
+{
 <details>
 <summary>details</summary>
 
@@ -1212,6 +1239,7 @@ v.random(0, 1, 0)(null);
 round(method?: 'floor' | 'ceil'): Validator<number, number>
 ```
 Round input number with specific method.
+{
 <details>
 <summary>details</summary>
 
@@ -1256,6 +1284,7 @@ v.round('ceil')(9.8);
 strip<T extends ObjectLike, K>(field: string | RegExp, condition: boolean | ((value: K) => boolean) = true): Validator<T, T>
 ```
 Removes field from object conditionally.
+{
 <details>
 <summary>details</summary>
 
@@ -1294,6 +1323,7 @@ v.strip(/f1|f2/)({ f1: 10, f2: 'abc' });
 trim(method?: 'left' | 'right'): Validator<string, string>
 ```
 Trim input string with specific method.
+{
 <details>
 <summary>details</summary>
 
@@ -1320,6 +1350,7 @@ v.trim('right')(' abc ');
 uppercase(): Validator<string, string>
 ```
 Uppercase input string.
+{
 <details>
 <summary>details</summary>
 
@@ -1340,6 +1371,7 @@ v.uppercase()('abc');
 valueMap<T, R>(...mappers: Array<[Primitive | ((value: T) => boolean) | RegExp, Primitive | ((value: T) => R)]>): Validator<T, R>
 ```
 Maps value with custom mappers.
+{
 <details>
 <summary>details</summary>
 
@@ -1377,6 +1409,7 @@ v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>
 ```
 Groups validators sequentially. Passes value through a sequence of validators until an error occurs. Uses by default in 'object' and 'object2' validator's scheme for fields.
+{
 <details>
 <summary>details</summary>
 
@@ -1410,6 +1443,7 @@ unchi('a');
 or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>
 ```
 Groups validators sequentially. Searches for first successful validator's result.
+{
 <details>
 <summary>details</summary>
 
@@ -1443,6 +1477,7 @@ unchi('abc');
 parallel<T>(...validators: Array<Validator<T>>): Validator<T>
 ```
 Groups validators in parallel. The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere). Beware of using processors inside.
+{
 <details>
 <summary>details</summary>
 
@@ -1482,6 +1517,7 @@ unchi(11.2);
 transform<T, R>(...processors: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Groups processors sequentially. Passes value through a sequence of processors. Takes only processors (doesn't check errors).
+{
 <details>
 <summary>details</summary>
 
@@ -1524,6 +1560,7 @@ niUnchi(8.3);
 withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>
 ```
 Provides error handling mechanism.
+{
 <details>
 <summary>details</summary>
 
@@ -1563,6 +1600,7 @@ unchi(11.2);
 withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Provides fallback value on error.
+{
 <details>
 <summary>details</summary>
 
@@ -1596,6 +1634,7 @@ simpleOne('Stringuuuuuuuuuu');
 withMeta<T, R>(validator: Validator<T, R>, onLogs?: (logs: Array<[string, any, Array<any>]>): Validator<T, R>
 ```
 Provides meta structure. Can catch scheme logs.
+{
 <details>
 <summary>details</summary>
 
@@ -1637,6 +1676,7 @@ unchi(11.2);
 withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>
 ```
 Provides custom error handler.
+{
 <details>
 <summary>details</summary>
 
@@ -1681,6 +1721,7 @@ unchi(11.2);
 withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>
 ```
 Convert result to promise. Use it for async validation.
+{
 <details>
 <summary>details</summary>
 
@@ -1729,6 +1770,7 @@ try {
 dynamic<T>(preValidator: () => Validator<T> | Array<Validator<T>>): Validator<T>
 ```
 Inserts new validators into scheme dynamically.
+{
 <details>
 <summary>details</summary>
 
@@ -1763,6 +1805,7 @@ v.consecutive(
 getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>
 ```
 Takes value from spreaded structure. Might be used for dynamic validators creation. If 'preValidator' not provided, just replaces current value. Works only with provided meta object.
+{
 <details>
 <summary>details</summary>
 
@@ -1798,6 +1841,7 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>
 ```
 Puts value into spreaded structure. If 'extValue' is provided, puts it instead of current value. i.e. reference api.
+{
 <details>
 <summary>details</summary>
 
@@ -1836,6 +1880,7 @@ v.withMeta(
 setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>
 ```
 Puts validators into spreaded structure. Might be used for recursive schemes.
+{
 <details>
 <summary>details</summary>
 
@@ -1873,6 +1918,7 @@ recursiveOne({ id: 1, node: { id: -1, node: [1] } });
 useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
 ```
 Puts default value into spreaded structure. If input value is empty, puts default value instead, otherwise validates input values with provided validators. If you need fallback value on error use 'withFallback' container instead.
+{
 <details>
 <summary>details</summary>
 
@@ -2516,6 +2562,44 @@ template(`
   ], 
   ['ERR1', () => 'ERR2', 'ERR3', () => 'ERR4']
 );
+```
+</details>
+
+---
+
+#### `groupers`
+
+
+Provides grouping for validators.
+<( ... )> - consecutive.
+<[ ... ]> - or.
+<{ ... }> - parallel.
+<details>
+<summary>details</summary>
+
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`
+  @object(
+    id : <[ 
+      <( @number : @compare(>=0) )>
+      <( @string : @length(=36) )> 
+    ]>,
+    name : @string : <{ @length(>=10) : #name }>
+  )
+`)();
+
+tml`
+  @o(
+    id <[ 
+      <( @n @c(>=0) )>
+      <( @s @l(=36) )> 
+    ]>,
+    name @s <{ @l(>=10) #name }>
+  )
+`();
 ```
 </details>
 

@@ -32,9 +32,17 @@ export const REF: LexemeScheme = makeLexeme('#');
 
 export const CNT: LexemeScheme = makeLexeme('~');
 
-export const LRB: LexemeScheme = makeLexeme('(', true);
+export const LRB: LexemeScheme = makeLexeme('(');
 
 export const RRB: LexemeScheme = makeLexeme(')', true);
+
+export const LSB: LexemeScheme = makeLexeme('[');
+
+export const RSB: LexemeScheme = makeLexeme(']', true);
+
+export const LCB: LexemeScheme = makeLexeme('{');
+
+export const RCB: LexemeScheme = makeLexeme('}', true);
 
 export const SQ: LexemeScheme = makeLexeme('\'');
 
@@ -42,9 +50,9 @@ export const DLM: LexemeScheme = makeLexeme(',');
 
 export const DLM2: LexemeScheme = makeLexeme(':', true);
 
-export const GRC: LexemeScheme = makeLexeme('>');
+export const GRC: LexemeScheme = makeLexeme('>', true);
 
-export const GRO: LexemeScheme = makeLexeme('<');
+export const GR: LexemeScheme = makeLexeme('<');
 
 export const GT: LexemeScheme = makeLexeme('>');
 

@@ -8,17 +8,13 @@
 
   - Docs. Examples to I block, then Api
 
-  - Templating optimize. Make all inj's callable on injection.
-
   - Docs 'All Features' block with all validators and features in one schema. ???
 
   - Templating api
 
-    `
-      @object(
-        $0 @number
-      )
-    `;
+    `@object( $0 : @number )`;
+
+    '%0' - template injection (3rd param)
 
     'defined'; //??? m.b use only long name. Short only via 'compare'. m.b. defined | def
 
@@ -35,10 +31,6 @@
     'keysMap'; // keysMap | km
 
     'valueMap'; // valueMap | vm
-
-    'or'; // [@number : @string]
-
-    'parallel'; // {@number : @string} ???
 
     'withFallback'; // ~f(123)
 

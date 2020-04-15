@@ -35,7 +35,7 @@ const baseComparators = {
   '!->': oneOf.not
 };
 
-const builder = (comparators: Record<string, (param: any, error: Error) => Validator<any>>) => (meta: CompilerMeta, { params, error }: ValidatorData) => {
+const comparatorBuilder = (comparators: Record<string, (param: any, error: Error) => Validator<any>>) => (meta: CompilerMeta, { params, error }: ValidatorData) => {
   const validators = [];
 
   for (let i = 0; i < params.length; i += 3) {
@@ -54,6 +54,6 @@ const builder = (comparators: Record<string, (param: any, error: Error) => Valid
   return consecutive(...validators);
 };
 
-export const compareBuilder = builder(baseComparators);
+export const compareBuilder = comparatorBuilder(baseComparators);
 
-export const lengthBuilder = builder(lengthComparators);
+export const lengthBuilder = comparatorBuilder(lengthComparators);

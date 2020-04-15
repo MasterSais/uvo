@@ -1,5 +1,5 @@
 import { isArray, isFiniteNumber, toArray } from '@lib/classic-api/utilities';
-import { CND, CNT, ERR, GRC, GRO, GT, INJ, MNS, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
+import { CND, CNT, ERR, GR, GT, INJ, LCB, LRB, LSB, MNS, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { semanticRules } from '@lib/templating-api/semantic-rules';
 import { Lexeme, ValidatorData } from '@lib/templating-api/types';
 
@@ -67,9 +67,11 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
       return;
     }
 
-    if (state.code === GRC.code) {
-      prevLexeme.value = 'c';
-      prevLexeme.code = GRO.code;
+    if (state.code === LRB.code || state.code === LSB.code || state.code === LCB.code) {
+      if (prevLexeme.code === GR.code) {
+        prevLexeme.value = lexeme.value;
+        prevLexeme.code = GR.code;
+      }
 
       return;
     }

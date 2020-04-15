@@ -29,7 +29,7 @@ const parseDoc = (files, level, collapse) => files
     const checkable = file.match(/@checkable/);
     const invertible = file.match(/@invertible/);
     const [, scheme] = file.match(/@scheme \{([^\}]+)\}/) || [];
-    const [, desc] = file.match(/@desc([^@\/\{]+)((\*\/)|(\{?@))/)
+    const [, desc] = file.match(/@desc([^@\/]+)((\*\/)|(\{?@))/)
     const example = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/)
 
     return (

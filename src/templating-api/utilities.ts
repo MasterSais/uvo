@@ -3,7 +3,7 @@ import { setDep } from '@lib/classic-api/spreaders/set-dep';
 import { setVDep } from '@lib/classic-api/spreaders/set-v-dep';
 import { MetaData, Validator } from '@lib/classic-api/types';
 import { callee, isDefined } from '@lib/classic-api/utilities';
-import { CNT, GRO, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
+import { CNT, GR, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 import { containerBase, grouperBase, validatorBase } from '@lib/templating-api/validators-base';
 
@@ -38,7 +38,7 @@ export const extractInnerInjectionReference = (meta: CompilerMeta, { code, value
 
 export const extractLiteral = ({ code, value }: ValidatorData, wrap: Function) => (
   code === VL.code && (
-    wrap(callee(
+    wrap(() => (
       reservedValues.hasOwnProperty(value)
         ? reservedValues[value]
         : !isNaN(+value) && +value
@@ -46,7 +46,7 @@ export const extractLiteral = ({ code, value }: ValidatorData, wrap: Function) =
   )
   ||
   code === SQ.code && (
-    wrap(callee(value))
+    wrap(() => value)
   )
 );
 
@@ -61,7 +61,7 @@ export const extractReference = (meta: CompilerMeta, { code, state, value, param
       : params
         ? (
           params[0].code === VLD.code && (
-            /* eslint-disable @typescript-eslint/no-use-before-define*/
+            /* eslint-disable @typescript-eslint/no-use-before-define */
             setVDep(value, ...params.map(data => extractValidator(meta, data)))
           )
           ||
@@ -83,7 +83,7 @@ export const extractValidator = (meta: CompilerMeta, data: ValidatorData) => {
       containerBase.get(data.value)
     )
     ||
-    data.code === GRO.code && (
+    data.code === GR.code && (
       grouperBase.get(data.value)
     )
     ||
