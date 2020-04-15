@@ -3,10 +3,10 @@ import { withMeta as validator } from '@lib/classic-api/containers/with-meta';
 import { consecutive } from '@lib/classic-api/groupers/consecutive';
 import { parallel } from '@lib/classic-api/groupers/parallel';
 import { C_MET as VALIDATOR_NAME } from '@lib/classic-api/names';
-import { template } from '@lib/templating-api/template';
 import { gte } from '@lib/classic-api/validators/is';
 import { integer } from '@lib/classic-api/validators/multiple';
 import { number } from '@lib/classic-api/validators/number';
+import { template } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases1, cases2, templateCases1 } from './cases';
 
@@ -43,4 +43,29 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
       { err: ({ validator }) => validator }
     ), templateCases1, [])
   );
+
+  test('base › logs', () => {
+    validator(
+      withErrors(
+        consecutive(
+          number(),
+          gte(0),
+        )
+      ), logs => expect(logs).toEqual([
+        ['number', 10, []],
+        ['gte', 10, [0]]
+      ])
+    )(10)
+  });
+
+  test('base › logs › template', () => {
+    template('@number : @compare(>=0) ~m($0)')(
+      [
+        (logs: any) => expect(logs).toEqual([
+          ['number', 10, []],
+          ['gte', 10, [0]]
+        ])
+      ]
+    )(10)
+  });
 });

@@ -52,7 +52,7 @@ const builder = (comparators: Record<string, (param: any, error: Error) => Valid
   }
 
   return consecutive(...validators);
-}
+};
 
 export const compareBuilder = builder(baseComparators);
 

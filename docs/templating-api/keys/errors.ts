@@ -20,3 +20,17 @@ tml`
     name @s!2 @l(>=10)!3
   ) ~e
 `(null, ['ERR1', () => 'ERR2', 'ERR3', () => 'ERR4']);
+
+// Common error processor with logs
+template(`
+  @object(
+    id : @number!0 : @compare(>0)!1,
+    name : @string!2 : @length(>=10)!3
+  ) ~error($0) ~meta($1)
+`)(
+  [
+    (error, { validator }) => ({ error, validator }),
+    logs => console.log(logs)
+  ], 
+  ['ERR1', () => 'ERR2', 'ERR3', () => 'ERR4']
+);

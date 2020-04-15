@@ -20,10 +20,6 @@
       )
     `;
 
-    ~m($0); // logger
-
-    ~e($0); // common error processor
-
     'defined'; //??? m.b use only long name. Short only via 'compare'. m.b. defined | def
 
     'empty'; //??? m.b. empty | emp

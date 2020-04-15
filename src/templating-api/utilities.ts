@@ -16,7 +16,7 @@ const reservedValues: { [name: string]: any } = {
 
 export const extractInjection = (meta: CompilerMeta, { code, value }: ValidatorData, wrap: Function) => (
   code === INJ.code && (
-    wrap(() => callee(meta.injections[value])())
+    wrap((...args: any) => callee(meta.injections[value])(...args))
   )
 );
 
