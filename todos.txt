@@ -8,8 +8,6 @@
 
   - Docs. Examples to I block, then Api
 
-  - Docs 'All Features' block with all validators and features in one schema. ???
-
   - Templating api
 
     `@object( $0 : @number )`;
@@ -18,9 +16,7 @@
 
     'empty'; //??? m.b. empty | emp
 
-    'fields'; // fields | f
-
-    'is'; // is | i
+    'fields'; // @fields(&.[^.id.guid].name)
 
     'unique'; // unique | u
 

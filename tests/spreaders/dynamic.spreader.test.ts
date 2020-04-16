@@ -3,6 +3,7 @@ import { S_DYN as VALIDATOR_NAME } from '@lib/classic-api/names';
 import { dynamic as validator } from '@lib/classic-api/spreaders/dynamic';
 import { equal, gte } from '@lib/classic-api/validators/is';
 import { number } from '@lib/classic-api/validators/number';
+import { template } from '@lib/templating-api/template';
 import { emptyFunction, paramsCases } from '@test/utilities';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
@@ -46,5 +47,15 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         validator(() => equal.not(10))
       )(10)
     ).toEqual(null);
+  });
+
+  test('base › template', () => {
+    expect(
+      template(`
+        @object(
+          id : @number : $0
+        )
+      `)([gte(0)])({ id: -1 })
+    ).toEqual({ id: null });
   });
 });

@@ -5,6 +5,7 @@
  */
 
 //#example
+import { gte } from 'uvo';
 import { template, tml } from 'uvo/template';
 
 template(`
@@ -48,3 +49,21 @@ template(`
 `)({ 
   cond: (id: number) => !!id
 });
+
+// Validators injection
+template(`
+  @object(
+    id : @number : $0
+  )
+`)([
+  gte(0)
+])()
+
+// Processor injection
+template(`
+  @array(
+    @number : @compare(>=0)
+  ) : $0
+`)([
+  (data: Array<number>) => data.filter(value => !!value)
+]);
