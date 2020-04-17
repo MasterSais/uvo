@@ -2,6 +2,8 @@
 
   - Promise validator
 
+  - SetDep use field key by default
+
   - 'uvo/extended' validators e.g https://www.npmjs.com/package/class-validator#manual-validation
 
   - Templating api CJS module
