@@ -14,6 +14,18 @@ template(`
   )
 `)();
 
+template(`
+  @object(
+    $0 : @number : @compare(>0),
+    $1 : @string : @length(>=10),
+    $2 : @bool
+  )
+`)([
+  'id',
+  /.*(name)/,
+  ['isValid', 'isActive']
+]);
+
 tml`
   @o(
     id @n @c(>0),

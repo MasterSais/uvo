@@ -20,6 +20,8 @@ export const postToMeta = <T>(value: T, field: string, meta: MetaData): T => (
     : value
 );
 
+export const identity = (value: any) => value;
+
 export const getFromMeta = <T>(field: string, meta: MetaData): T => (
   meta ? meta._deps[field] : null
 );

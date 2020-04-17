@@ -3,7 +3,7 @@
  * 
  * @universal
  * 
- * @scheme {object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx, ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>}
+ * @scheme {object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx | Array<string> (() => string | RegExp | Array<string>), ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>}
  * 
  * @desc Checks value to be an object. Provides strict ordering.
  * Each key can be a Regex.
@@ -59,17 +59,12 @@ fieldsKeeper({
 });
 // => { id: 3, name: 'YourAwesomeUserName' }
 
-const advancedObj = (
-  v.object2([
-    ['id', v.number(), v.gte(0)],
-    [/name|surname|thirdname/, v.string(), v.minLen(10)] // use regex for fields matching.
-  ])
-);
+v.object2([
+  ['id', v.number(), v.gte(0)],
+  [['name', 'surname', 'thirdname'], v.string(), v.minLen(10)] // Array of fields
+]);
 
-advancedObj({
-  id: 3,
-  name: 'YourAwesomeUserName',
-  surname: 'YourAwesomeUserSurname',
-  thirdname: 'YourAwesomeUserThirdname'
-});
-// => { id: 3, name: 'YourAwesomeUserName', surname: 'YourAwesomeUserSurname', thirdname: 'YourAwesomeUserThirdname' }
+v.object2([
+  ['id', v.number(), v.gte(0)],
+  [/.*(name)/, v.string(), v.minLen(10)] // RegEx for fields
+]);

@@ -1,8 +1,9 @@
 import { dynamic } from '@lib/classic-api/spreaders/dynamic';
+import { identity } from '@lib/classic-api/utilities';
 import { object2 } from '@lib/classic-api/validators/object2';
 import { DLM } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
-import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractValidator } from '@lib/templating-api/utilities';
+import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractSequence } from '@lib/templating-api/utilities';
 
 export const objectBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {
   if (!params) return object2(null, error);
@@ -14,14 +15,19 @@ export const objectBuilder = (meta: CompilerMeta, { params, error }: ValidatorDa
 
     if (i === -1 || params[i].code === DLM.code) {
       if (params[i + 1]) {
-        fields.push([params[++i].value]);
+        i++;
+
+        fields.push([
+          extractInjection(meta, params[i], identity) ||
+          params[i].value
+        ]);
       }
 
       continue;
     }
 
     if (params[i].cond) {
-      const sequence = extractValidator(meta, params[i + 1]);
+      const sequence = extractSequence(meta, params[i + 1]);
 
       param = (
         extractInnerReference(params[i], () => sequence) ||
@@ -34,8 +40,7 @@ export const objectBuilder = (meta: CompilerMeta, { params, error }: ValidatorDa
 
     fields[fields.length - 1].push(
       param ||
-      extractInjection(meta, params[i], (v: any) => v) ||
-      extractValidator(meta, params[i])
+      extractSequence(meta, params[i])
     );
   }
 

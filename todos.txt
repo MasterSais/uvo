@@ -10,8 +10,6 @@
 
   - Templating api
 
-    `@object( $0 : @number )`;
-
     'defined'; //??? m.b use only long name. Short only via 'compare'. m.b. defined | def
 
     'empty'; //??? m.b. empty | emp
