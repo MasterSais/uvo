@@ -6,8 +6,6 @@
 
   - Templating api CJS module
 
-  - Docs. Examples to I block, then Api
-
   - Templating api
 
     'defined'; //??? m.b use only long name. Short only via 'compare'. m.b. defined | def
