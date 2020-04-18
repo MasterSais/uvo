@@ -6,14 +6,9 @@ UVO wants to be a pretty small size library, so each validator represented as se
 
 UVO wants to be a flexible and comprehensive library, so `uvo/extended` will coming soon with a huge base of specific validators such as `email`, `uri`, `guid` and so on.
 
-[size:c-esm]: dist/esm/index.min.js
-[size:c-cjs]: dist/cjs/index.min.js
-[size:c-umd]: dist/umd/index.min.js
-[size:t-esm]: template/index.js
-
 UVO bundles:
-  - Classic API: `esm [size:c-esm]`, `cjs [size:c-cjs]`, `umd [size:c-umd]`
-  - Templating Api: `esm [size:t-esm]`
+  - Classic API: `esm ~7.1kb`, `cjs ~7.3kb`, `umd ~10.1kb`
+  - Templating Api: `esm ~8.5kb`
 
 UVO has own types definition file for `typescript`.
 
@@ -287,4 +282,8 @@ tml`
 
 ## `API`
 
-<% api-table %>
+| Name | Type | Description |
+| :-: | :-: | :- |
+| [array][array-url] | validator | SuperArray |
+
+[array-url]: https://github.com/webpack-contrib/url-loader
