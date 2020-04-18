@@ -1,17 +1,17 @@
-# `UVO`
+# `Uvo`
 
-UVO is a javascript universal validation library. The main goal is to provide schema creation tool for convenient and flexible form's validation with the only one call. Schema can represent either simple form with few fields or huge one with a big amount of cross form validations, recursive descents, different conditions and custom data processing.
+Uvo is a javascript universal validation library. The main goal is to provide schema creation tool for convenient and flexible form's validation with the only one call. Schema can represent either simple form with few fields or huge one with a big amount of cross form validations, recursive descents, different conditions and custom data processing.
 
-UVO wants to be a pretty small size library, so each validator represented as separated module and can be skipped during treeshaking stage in your bundler (e.g. `webpack`). Only `templating API` represented as one indivisible bundle.
+Uvo wants to be a pretty small size library, so each validator represented as separated module and can be skipped during treeshaking stage in your bundler (e.g. `webpack`). Only `templating API` represented as one indivisible bundle.
 
-UVO wants to be a flexible and comprehensive library, so `uvo/extended` will coming soon with a huge base of specific validators such as `email`, `uri`, `guid` and so on.
+Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will coming soon with a huge base of specific validators such as `email`, `uri`, `guid` and so on.
 
 |Bundles (minified)|esm|cjs|umd|
 |:-:|:-:|:-:|:-:|
 |Classic API|~7.1kb|~7.3kb|~10.1kb|
 |Templating API|~8.5kb|
 
-UVO has own types definition file for `typescript`.
+Uvo has own types definition file for `typescript`.
 
 ### `Installation`
 
@@ -380,10 +380,3 @@ tml`
 [setDep-url]: API.md#setDep
 [setVDep-url]: API.md#setVDep
 [useDefault-url]: API.md#useDefault
-
-<style>
-  table {
-    white-space: normal !important;
-    border: none !important;
-  }
-</style>
