@@ -1,6 +1,8 @@
 /**
  * @name {parallel}
  * 
+ * @template {<{ ... }>}
+ * 
  * @scheme {parallel<T>(...validators: Array<Validator<T>>): Validator<T>}
  * 
  * @desc Groups validators in parallel.

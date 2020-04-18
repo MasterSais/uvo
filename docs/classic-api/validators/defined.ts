@@ -1,9 +1,9 @@
 /**
  * @name {defined}
  * 
+ * @template {injected function via $...}
+ * 
  * @scheme {defined<T>(error?: Error): Validator<T>}
- *
- * @shortcut {is(value => value !== undefined)}
  * 
  * @desc Checks value to be defined.
  * 

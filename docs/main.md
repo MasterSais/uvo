@@ -11,9 +11,10 @@ UVO wants to be a flexible and comprehensive library, so `uvo/extended` will com
 [size:c-umd]: dist/umd/index.min.js
 [size:t-esm]: template/index.js
 
-UVO bundles:
-  - Classic API: `esm [size:c-esm]`, `cjs [size:c-cjs]`, `umd [size:c-umd]`
-  - Templating Api: `esm [size:t-esm]`
+|Bundles (minified)|esm|cjs|umd|
+|:-:|:-:|:-:|:-:|
+|Classic API|[size:c-esm]|[size:c-cjs]|[size:c-umd]|
+|Templating API|[size:t-esm]|
 
 UVO has own types definition file for `typescript`.
 
@@ -146,10 +147,10 @@ const scheme = (
   )
 );
 
-scheme(10.5);   // => { result: 10.5, errors: null }
-scheme(10);     // => { result: 10, errors: ['err3'] }
-scheme(1000);   // => { result: 10, errors: ['err2', 'err3'] }
-scheme('str');  // => { result: 10, errors: ['err1'] }
+scheme( 10.5 );   // => { result: 10.5, errors: null }
+scheme( 10 );     // => { result: 10, errors: ['err3'] }
+scheme( 1000 );   // => { result: 10, errors: ['err2', 'err3'] }
+scheme( 'str' );  // => { result: 10, errors: ['err1'] }
 ```
 
 You can provide not only literal for error, but function. Function will be called with meta data (if `withMeta` provided) which contains `path` and `validator` for occured error. Grouper `parallel` provides nonsequential validation and you can collect all errors from it. Also you can use `or` grouper, if value type can be different.

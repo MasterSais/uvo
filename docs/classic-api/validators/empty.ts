@@ -1,11 +1,9 @@
 /**
  * @name {empty}
  * 
+ * @template {injected function via $...}
+ * 
  * @scheme {empty<T>(error?: Error): Validator<T>}
- * 
- * @invertible
- * 
- * @shortcut {is(value => [null, undefined, ''].indexOf(value) >= 0)}
  * 
  * @desc Checks value to be empty.
  * 

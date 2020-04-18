@@ -1,11 +1,9 @@
 /**
  * @name {even}
  * 
+ * @template {@compare(@c)}
+ * 
  * @scheme {even(error?: Error): Validator<number>}
- * 
- * @invertible
- * 
- * @shortcut {is(value => value % 2 === 0)}
  * 
  * @desc Checks number to be an even one.
  * 

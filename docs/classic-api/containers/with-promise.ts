@@ -1,6 +1,8 @@
 /**
  * @name {withPromise}
  * 
+ * @template {~promise(~p)}
+ * 
  * @scheme {withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>}
  * 
  * @desc Convert result to promise. Use it for async validation.

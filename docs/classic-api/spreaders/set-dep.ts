@@ -1,6 +1,8 @@
 /**
  * @name {setDep}
  * 
+ * @template {#...}
+ * 
  * @scheme {setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>}
  * 
  * @desc Puts value into spreaded structure.

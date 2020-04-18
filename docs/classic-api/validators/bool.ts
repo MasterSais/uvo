@@ -1,11 +1,9 @@
 /**
  * @name {bool}
  * 
- * @universal
+ * @template {@bool(@b)}
  * 
  * @scheme {bool<T>(error?: Error): Validator<T, boolean>}
- * 
- * @checkable
  * 
  * @desc Checks value to be a boolean compatible.
  * 

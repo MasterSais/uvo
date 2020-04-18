@@ -1,6 +1,8 @@
 /**
  * @name {lowercase}
  * 
+ * @template {injected function via $...}
+ * 
  * @scheme {lowercase(): Validator<string, string>}
  * 
  * @desc Lowercase input string.

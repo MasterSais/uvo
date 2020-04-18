@@ -1,13 +1,11 @@
 /**
  * @name {gte}
  * 
+ * @template {@compare(@c)}
+ * 
  * @scheme {gte<T>(bound: T | (() => T), error?: Error): Validator<T>}
  * 
  * @desc Checks value to be greater or equal to 'bound' param. Requires the same type.
- * 
- * @invertible
- * 
- * @shortcut {is(value => value >= bound)}
  * 
  * {@link docs/classic-api/type-validator}
  * 

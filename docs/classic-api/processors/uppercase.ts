@@ -1,6 +1,8 @@
 /**
  * @name {uppercase}
  * 
+ * @template {injected function via $...}
+ * 
  * @scheme {uppercase(): Validator<string, string>}
  * 
  * @desc Uppercase input string.

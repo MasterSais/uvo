@@ -1,6 +1,8 @@
 /**
  * @name {or}
  * 
+ * @template {<[ ... ]>}
+ * 
  * @scheme {or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>}
  * 
  * @desc Groups validators sequentially.

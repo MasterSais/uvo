@@ -1,6 +1,8 @@
 /**
  * @name {clamp}
  * 
+ * @template {injected function via $...}
+ * 
  * @scheme {clamp<T>(min: T, max: T): Validator<T, T>}
  * 
  * @desc Clamps value to required boundaries.

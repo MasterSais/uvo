@@ -1,6 +1,8 @@
 /**
  * @name {withErrors}
  * 
+ * @template {~error(~e)}
+ * 
  * @scheme {withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>}
  * 
  * @desc Provides error handling mechanism.

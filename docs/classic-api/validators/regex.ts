@@ -1,11 +1,9 @@
 /**
  * @name {regex}
  * 
+ * @template {@compare(@c)}
+ * 
  * @scheme {regex<T>(match: RegExp | (() => RegExp), error?: Error): Validator<T>}
- * 
- * @invertible
- * 
- * @shortcut {is(value => match.test(value))}
  * 
  * @desc Checks value to match a pattern.
  * 

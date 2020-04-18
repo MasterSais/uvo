@@ -20,7 +20,7 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
 
   const validators: Array<[() => string | RegExp, Validator<any, any>]> = (
     isSpecValid && spec.map(([key, ...validators]) => [callee(key), consecutive(...toArray(validators))])
-  )
+  );
 
   return (data: T, onError?: ErrorCallback, meta?: MetaData): R => {
     extendMeta(meta, data, V_OBJ);

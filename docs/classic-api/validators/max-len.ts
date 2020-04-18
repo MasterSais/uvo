@@ -1,11 +1,9 @@
 /**
  * @name {maxLen}
  * 
+ * @template {@length(@l)}
+ * 
  * @scheme {maxLen<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>}
- * 
- * @invertible
- * 
- * @shortcut {is(value => value.length >= len)}
  * 
  * @desc Checks length to be equal to 'len' param. Requires to be an object like or string.
  * 

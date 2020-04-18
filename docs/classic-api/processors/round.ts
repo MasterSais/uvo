@@ -1,6 +1,8 @@
 /**
  * @name {round}
  * 
+ * @template {injected function via $...}
+ * 
  * @scheme {round(method?: 'floor' | 'ceil'): Validator<number, number>}
  * 
  * @desc Round input number with specific method.

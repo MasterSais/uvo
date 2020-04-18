@@ -1,6 +1,8 @@
 /**
  * @name {erase}
  * 
+ * @template {injected function via $...}
+ * 
  * @scheme {erase<T>(): Validator<T, null>}
  * 
  * @desc Erase input.

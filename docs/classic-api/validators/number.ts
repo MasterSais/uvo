@@ -1,11 +1,9 @@
 /**
  * @name {number}
  * 
- * @universal
+ * @template {@number(@n)}
  * 
  * @scheme {number<T>(error?: Error): Validator<T, number>}
- * 
- * @checkable
  * 
  * @desc Checks value to be a number compatible.
  * 

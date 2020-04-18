@@ -1,11 +1,9 @@
 /**
  * @name {equal}
  * 
+ * @template {@compare(@c)}
+ * 
  * @scheme {equal<T>(match: T | (() => T), error?: Error): Validator<T>}
- * 
- * @invertible
- * 
- * @shortcut {is(value => value === match)}
  * 
  * @desc Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
  * 

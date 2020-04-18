@@ -1,153 +1,113 @@
 [
   {
-    "title": "Uvo",
-    "content": [
-      "./docs/classic-api/markdown/description.txt",
-      "./docs/classic-api/markdown/doctoc-tree.txt"
-    ],
+    "title": "Classic API",
+    "content": [],
     "sub": [
       {
-        "title": "Install",
+        "title": "Validators",
         "content": [
-          "./docs/classic-api/markdown/installation.txt"
-        ]
-      },
-      {
-        "title": "Classic API",
-        "content": [],
+          "./docs/classic-api/markdown/validations-description.txt"
+        ],
         "sub": [
           {
-            "title": "Usage",
-            "content": [
-              "./docs/classic-api/markdown/usage.md"
-            ]
-          },
-          {
-            "title": "Validators",
-            "content": [
-              "./docs/classic-api/markdown/validations-description.txt"
-            ],
-            "sub": [
-              {
-                "parse": true,
-                "collapse": true,
-                "contentDir": "./docs/classic-api/validators"
-              }
-            ]
-          },
-          {
-            "title": "Processors",
-            "content": [
-              "./docs/classic-api/markdown/processors-description.txt"
-            ],
-            "sub": [
-              {
-                "parse": true,
-                "collapse": true,
-                "contentDir": "./docs/classic-api/processors"
-              }
-            ]
-          },
-          {
-            "title": "Groupers",
-            "content": [
-              "./docs/classic-api/markdown/groupers-description.txt"
-            ],
-            "sub": [
-              {
-                "parse": true,
-                "collapse": true,
-                "contentDir": "./docs/classic-api/groupers"
-              }
-            ]
-          },
-          {
-            "title": "Containers",
-            "content": [
-              "./docs/classic-api/markdown/containers-description.txt"
-            ],
-            "sub": [
-              {
-                "parse": true,
-                "collapse": true,
-                "contentDir": "./docs/classic-api/containers"
-              }
-            ]
-          },
-          {
-            "title": "Spreaders",
-            "content": [
-              "./docs/classic-api/markdown/spreaders-description.txt"
-            ],
-            "sub": [
-              {
-                "parse": true,
-                "collapse": true,
-                "contentDir": "./docs/classic-api/spreaders"
-              }
-            ]
-          },
-          {
-            "title": "Logs",
-            "content": [
-              "./docs/classic-api/markdown/logs.md"
-            ]
-          },
-          {
-            "title": "Custom validators",
-            "content": [
-              "./docs/classic-api/markdown/validator-creation.md"
-            ]
-          },
-          {
-            "title": "Examples",
-            "content": [
-              "./docs/classic-api/markdown/examples.md"
-            ]
-          },
-          {
-            "title": "Types",
-            "content": [
-              "./docs/classic-api/markdown/types-description.txt"
-            ],
-            "sub": [
-              {
-                "parse": true,
-                "collapse": true,
-                "contentDir": "./docs/classic-api/types"
-              }
-            ]
+            "parse": true,
+            "contentDir": "./docs/classic-api/validators"
           }
         ]
       },
       {
-        "title": "Templating API (beta)",
+        "title": "Processors",
         "content": [
-          "./docs/templating-api/description.txt"
+          "./docs/classic-api/markdown/processors-description.txt"
         ],
         "sub": [
           {
-            "title": "Usage",
-            "content": [
-              "./docs/templating-api/usage.md"
-            ]
-          },
+            "parse": true,
+            "contentDir": "./docs/classic-api/processors"
+          }
+        ]
+      },
+      {
+        "title": "Groupers",
+        "content": [
+          "./docs/classic-api/markdown/groupers-description.txt"
+        ],
+        "sub": [
           {
-            "title": "Keys",
-            "content": [],
-            "sub": [
-              {
-                "parse": true,
-                "collapse": true,
-                "contentDir": "./docs/templating-api/keys"
-              }
-            ]
-          },
+            "parse": true,
+            "contentDir": "./docs/classic-api/groupers"
+          }
+        ]
+      },
+      {
+        "title": "Containers",
+        "content": [
+          "./docs/classic-api/markdown/containers-description.txt"
+        ],
+        "sub": [
           {
-            "title": "Examples",
-            "content": [
-              "./docs/templating-api/examples.md"
-            ]
+            "parse": true,
+            "contentDir": "./docs/classic-api/containers"
+          }
+        ]
+      },
+      {
+        "title": "Spreaders",
+        "content": [
+          "./docs/classic-api/markdown/spreaders-description.txt"
+        ],
+        "sub": [
+          {
+            "parse": true,
+            "contentDir": "./docs/classic-api/spreaders"
+          }
+        ]
+      },
+      {
+        "title": "Logs",
+        "content": [
+          "./docs/classic-api/markdown/logs.md"
+        ]
+      },
+      {
+        "title": "Custom validators",
+        "content": [
+          "./docs/classic-api/markdown/validator-creation.md"
+        ]
+      },
+      {
+        "title": "Examples",
+        "content": [
+          "./docs/classic-api/markdown/examples.md"
+        ]
+      },
+      {
+        "title": "Types",
+        "content": [
+          "./docs/classic-api/markdown/types-description.txt"
+        ],
+        "sub": [
+          {
+            "parse": true,
+            "contentDir": "./docs/classic-api/types"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Templating API",
+    "content": [
+      "./docs/templating-api/description.txt"
+    ],
+    "sub": [
+      {
+        "title": "Keys",
+        "content": [],
+        "sub": [
+          {
+            "parse": true,
+            "contentDir": "./docs/templating-api/keys"
           }
         ]
       }

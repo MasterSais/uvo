@@ -1,0 +1,7 @@
+[
+  "./docs/classic-api/validators",
+  "./docs/classic-api/processors",
+  "./docs/classic-api/groupers",
+  "./docs/classic-api/containers",
+  "./docs/classic-api/spreaders"
+]

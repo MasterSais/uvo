@@ -1,11 +1,9 @@
 /**
  * @name {integer}
  * 
+ * @template {@compare(@c)}
+ * 
  * @scheme {integer(error?: Error): Validator<number>}
- * 
- * @invertible
- * 
- * @shortcut {is(value => value % 1 === 0)}
  * 
  * @desc Checks number to be an integer.
  * 

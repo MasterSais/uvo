@@ -1,6 +1,8 @@
 /**
  * @name {setVDep}
  * 
+ * @template {#...(@...)}
+ * 
  * @scheme {setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>}
  * 
  * @desc Puts validators into spreaded structure.

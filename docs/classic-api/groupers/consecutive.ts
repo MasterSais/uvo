@@ -1,6 +1,8 @@
 /**
  * @name {consecutive}
  * 
+ * @template {<( ... )>}
+ * 
  * @scheme {consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>}
  * 
  * @desc Groups validators sequentially.

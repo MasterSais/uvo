@@ -8,13 +8,11 @@ const config = JSON.parse(
     .toString()
 );
 
-const genTitle = (title, level, checkable, invertible) => (
+const genTitle = (title, level) => (
   String()
     .concat('#'.repeat(level))
     .concat(' `')
     .concat(title)
-    .concat(checkable ? ' <checkable>' : '')
-    .concat(invertible ? ' <invertible>' : '')
     .concat('`\n\r')
 );
 
@@ -22,18 +20,19 @@ const loadFiles = (files) => files.map(file => `${fs.readFileSync(path.resolve(f
 
 const readDir = (dirName) => fs.readdirSync(dirName).map(fileName => dirName + '/' + fileName);
 
-const parseDoc = (files, level, collapse) => files
+const parseDoc = (files, level) => files
   .map(file => fs.readFileSync(path.resolve(file)).toString())
   .map(file => {
     const [, name] = file.match(/@name \{([^\}]+)\}/);
-    const checkable = file.match(/@checkable/);
-    const invertible = file.match(/@invertible/);
+
     const [, scheme] = file.match(/@scheme \{([^\}]+)\}/) || [];
+
     const [, desc] = file.match(/@desc([^@\/]+)((\*\/)|(\{?@))/);
+      
     const example = file.match(/\/\/\#example[\r\n]*?([\s\S]+)/);
 
     return (
-      `${genTitle(name, level, !!checkable, !!invertible)}\n${
+      `${genTitle(name, level)}\n${
       (
         scheme
           ? `\`\`\`js\n${scheme ? scheme : ''}\n\`\`\``
@@ -41,25 +40,15 @@ const parseDoc = (files, level, collapse) => files
       )
       }\n${
       (
-        desc
-          .replace(/[\r\n]+/g, String())
-          .replace(/\s?\*\s?/g, '*')
-          .replace(/\*\*/g, '\r\n')
-          .replace(/\*/g, ' ')
-          .trim()
-          .replace(/\{$/, '')
+        desc.replace(/[\*\n\r]+|\{$/g, '').trim()
       )
-      }\n${
-        collapse ? '<details>\n<summary>details</summary>\n\n' : ''
-      }\n${example ? `\`\`\`js${example[1]}\n\`\`\`${
-        collapse ? '\n</details>' : ''
-      }\n\n---\n\n` : String()}`
+      }\n\n${example ? `\`\`\`js${example[1]}\n\`\`\`\n\n` : String()}`
     )
   });
 
 const build = (config, level = 1) => (
   config
-    .map(({ title, content, contentDir, sub, parse, collapse }) => [
+    .map(({ title, content, contentDir, sub, parse }) => [
       (
         title
           ? genTitle(title, level)
@@ -67,7 +56,7 @@ const build = (config, level = 1) => (
       ),
       ...(
         parse
-          ? parseDoc(content || readDir(contentDir), level, collapse)
+          ? parseDoc(content || readDir(contentDir), level)
           : loadFiles(content || readDir(contentDir))
       ),
       (

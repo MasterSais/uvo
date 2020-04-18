@@ -1,8 +1,6 @@
 /**
  * @name {unique}
  * 
- * @universal
- * 
  * @scheme {array<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>}
  * 
  * @desc Checks array's elements to be unique.

@@ -1,11 +1,9 @@
 /**
  * @name {oneOf}
  * 
+ * @template {@compare(@c)}
+ * 
  * @scheme {oneOf<T>(candidates: Array<T> | string | (() => Array<T> | string), error?: Error): Validator<T>}
- * 
- * @invertible
- * 
- * @shortcut {is(value => candidates.indexOf(value) >= 0)}
  * 
  * @desc Checks value to be one of expected. Shallow comparison.
  * 

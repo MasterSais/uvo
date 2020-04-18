@@ -1,11 +1,9 @@
 /**
  * @name {length}
  * 
+ * @template {@length(@l)}
+ * 
  * @scheme {length<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>}
- * 
- * @invertible
- * 
- * @shortcut {is(value => value.length === len)}
  * 
  * @desc Compares length with 'len' param. Requires to be an object like or string.
  * 

@@ -1,6 +1,8 @@
 /**
  * @name {dynamic}
  * 
+ * @template {conditional validation via ? or injection via $...}
+ * 
  * @scheme {dynamic<T>(preValidator: () => Validator<T> | Array<Validator<T>>): Validator<T>}
  * 
  * @desc Inserts new validators into scheme dynamically.

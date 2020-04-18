@@ -1,11 +1,9 @@
 /**
  * @name {date}
  * 
- * @universal
+ * @template {@date(@d)}
  * 
  * @scheme {date<T>(error?: Error): Validator<T, number>}
- * 
- * @checkable
  * 
  * @desc Checks value to be a date compatible. Result in ms.
  * 
