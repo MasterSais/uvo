@@ -282,8 +282,100 @@ tml`
 
 ## `API`
 
-| Name | Type | Description |
-| :-: | :-: | :- |
-| [array][array-url] | validator | SuperArray |
+|Classic API|Templating API|Description|
+|:-|:-|:-|
+|[array][array-url]|@array(@a)|Checks value to be an array.|
+|[bool][bool-url]|-|Checks value to be a boolean compatible.|
+|[date][date-url]|-|Checks value to be a date compatible. Result in ms.|
+|[defined][defined-url]|-|Checks value to be defined.|
+|[empty][empty-url]|-|Checks value to be empty.|
+|[equal][equal-url]|-|Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.|
+|[even][even-url]|-|Checks number to be an even one.|
+|[fields][fields-url]|-|Checks for fields in the input object.|
+|[gte][gte-url]|-|Checks value to be greater or equal to 'bound' param. Requires the same type.|
+|[integer][integer-url]|-|Checks number to be an integer.|
+|[is][is-url]|-|Checks value with custom comparator.|
+|[length][length-url]|-|Compares length with 'len' param. Requires to be an object like or string.|
+|[lte][lte-url]|-|Checks value to be lower or equal to 'bound' param. Requires the same type.|
+|[maxLen][maxLen-url]|-|Checks length to be equal to 'len' param. Requires to be an object like or string.|
+|[minLen][minLen-url]|-|Checks length to be equal to 'len' param. Requires to be an object like or string.|
+|[multiple][multiple-url]|-|Checks number to be an integer.|
+|[number][number-url]|-|Checks value to be a number compatible.|
+|[object][object-url]|-|Checks value to be an object.|
+|[object2][object2-url]|-|Checks value to be an object. Provides strict ordering.  Each key can be a Regex.|
+|[oneOf][oneOf-url]|-|Checks value to be one of expected. Shallow comparison.|
+|[regex][regex-url]|-|Checks value to match a pattern.|
+|[string][string-url]|-|Checks value to be a string compatible.|
+|[unique][unique-url]|-|Checks array's elements to be unique.|
+|[clamp][clamp-url]|-|Clamps value to required boundaries.|
+|[erase][erase-url]|-|Erase input.|
+|[keysMap][keysMap-url]|-|Maps object keys with custom mapper.|
+|[lowercase][lowercase-url]|-|Lowercase input string.|
+|[random][random-url]|-|Returns random value according to params.|
+|[round][round-url]|-|Round input number with specific method.|
+|[strip][strip-url]|-|Removes field from object conditionally.|
+|[trim][trim-url]|-|Trim input string with specific method.|
+|[uppercase][uppercase-url]|-|Uppercase input string.|
+|[valueMap][valueMap-url]|-|Maps value with custom mappers.|
+|[consecutive][consecutive-url]|-|Groups validators sequentially.  Passes value through a sequence of validators until an error occurs.  Uses by default in 'object' and 'object2' validator's scheme for fields.|
+|[or][or-url]|-|Groups validators sequentially.  Searches for first successful validator's result.|
+|[parallel][parallel-url]|-|Groups validators in parallel.  The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).  Beware of using processors inside.|
+|[transform][transform-url]|-|Groups processors sequentially.  Passes value through a sequence of processors.  Takes only processors (doesn't check errors).|
+|[withErrors][withErrors-url]|-|Provides error handling mechanism.|
+|[withFallback][withFallback-url]|-|Provides fallback value on error.|
+|[withMeta][withMeta-url]|-|Provides meta structure. Can catch scheme logs.|
+|[withOnError][withOnError-url]|-|Provides custom error handler.|
+|[withPromise][withPromise-url]|-|Convert result to promise. Use it for async validation.|
+|[dynamic][dynamic-url]|-|Inserts new validators into scheme dynamically.|
+|[getDep][getDep-url]|-|Takes value from spreaded structure.  Might be used for dynamic validators creation.  If 'preValidator' not provided, just replaces current value.  Works only with provided meta object.|
+|[setDep][setDep-url]|-|Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.|
+|[setVDep][setVDep-url]|-|Puts validators into spreaded structure.  Might be used for recursive schemes.|
+|[useDefault][useDefault-url]|-|Puts default value into spreaded structure.  If input value is empty, puts default value instead, otherwise validates input values with provided validators.  If you need fallback value on error use 'withFallback' container instead.|
 
-[array-url]: ./main.md
+[array-url]: ./api.md#array
+[bool-url]: ./api.md#bool
+[date-url]: ./api.md#date
+[defined-url]: ./api.md#defined
+[empty-url]: ./api.md#empty
+[equal-url]: ./api.md#equal
+[even-url]: ./api.md#even
+[fields-url]: ./api.md#fields
+[gte-url]: ./api.md#gte
+[integer-url]: ./api.md#integer
+[is-url]: ./api.md#is
+[length-url]: ./api.md#length
+[lte-url]: ./api.md#lte
+[maxLen-url]: ./api.md#maxLen
+[minLen-url]: ./api.md#minLen
+[multiple-url]: ./api.md#multiple
+[number-url]: ./api.md#number
+[object-url]: ./api.md#object
+[object2-url]: ./api.md#object2
+[oneOf-url]: ./api.md#oneOf
+[regex-url]: ./api.md#regex
+[string-url]: ./api.md#string
+[unique-url]: ./api.md#unique
+[clamp-url]: ./api.md#clamp
+[erase-url]: ./api.md#erase
+[keysMap-url]: ./api.md#keysMap
+[lowercase-url]: ./api.md#lowercase
+[random-url]: ./api.md#random
+[round-url]: ./api.md#round
+[strip-url]: ./api.md#strip
+[trim-url]: ./api.md#trim
+[uppercase-url]: ./api.md#uppercase
+[valueMap-url]: ./api.md#valueMap
+[consecutive-url]: ./api.md#consecutive
+[or-url]: ./api.md#or
+[parallel-url]: ./api.md#parallel
+[transform-url]: ./api.md#transform
+[withErrors-url]: ./api.md#withErrors
+[withFallback-url]: ./api.md#withFallback
+[withMeta-url]: ./api.md#withMeta
+[withOnError-url]: ./api.md#withOnError
+[withPromise-url]: ./api.md#withPromise
+[dynamic-url]: ./api.md#dynamic
+[getDep-url]: ./api.md#getDep
+[setDep-url]: ./api.md#setDep
+[setVDep-url]: ./api.md#setVDep
+[useDefault-url]: ./api.md#useDefault
