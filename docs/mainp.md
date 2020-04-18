@@ -286,4 +286,4 @@ tml`
 | :-: | :-: | :- |
 | [array][array-url] | validator | SuperArray |
 
-[array-url]: https://github.com/webpack-contrib/url-loader
+[array-url]: ./main.md
