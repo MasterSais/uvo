@@ -380,3 +380,10 @@ tml`
 [setDep-url]: API.md#setDep
 [setVDep-url]: API.md#setVDep
 [useDefault-url]: API.md#useDefault
+
+<style>
+  table {
+    white-space: normal !important;
+    border: none !important;
+  }
+</style>

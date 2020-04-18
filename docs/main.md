@@ -289,3 +289,10 @@ tml`
 ## `API`
 
 <% api-table %>
+
+<style>
+  table {
+    white-space: normal !important;
+    border: none !important;
+  }
+</style>
