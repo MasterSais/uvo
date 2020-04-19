@@ -1,6 +1,6 @@
 {
   "name": "uvo",
-  "version": "2.10.4",
+  "version": "2.11.0",
   "description": "JavaScript Universal Single Object Validator",
   "main": "./index.js",
   "module": "./dist/esm/index.js",
@@ -30,7 +30,7 @@
     "build:doc": "yarn build:doc:api && yarn build:doc:main",
     "build:doc:api": "node config/generate-api.js API.md",
     "build:doc:main": "node config/generate-doc.js docs/main.md README.md API.md",
-    "predeploy": "yarn lint && yarn build && yarn test:post"
+    "predeploy": "yarn lint:fix && yarn build && yarn test:post"
   },
   "sideEffects": false,
   "repository": {

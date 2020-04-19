@@ -14,7 +14,7 @@ export const extendMeta = (meta: MetaData, value: any, validator: string, params
   meta._logs.push([validator, value, params])
 ), meta);
 
-export const postToMeta = <T>(value: T, field: string, meta: MetaData): T => (
+export const postToMeta = <T>(value: T, field: string | number, meta: MetaData): T => (
   meta
     ? (meta._deps[field] = value)
     : value

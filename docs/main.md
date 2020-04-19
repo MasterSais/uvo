@@ -155,7 +155,9 @@ scheme( 'str' );  // => { result: 10, errors: ['err1'] }
 
 You can provide not only literal for error, but function. Function will be called with meta data (if `withMeta` provided) which contains `path` and `validator` for occured error. Grouper `parallel` provides nonsequential validation and you can collect all errors from it. Also you can use `or` grouper, if value type can be different.
 
-We have overviewed only basic features. For more information see `API documentation`.
+We have overviewed only basic features. For more information see [API documentation][api-url].
+
+[api-url]: <% api-url %>
 
 ### `Templates`
 
@@ -243,13 +245,17 @@ template(`
 ```
 
 Groupers in templates have own syntax (e.g. `parallel` - `<{ }>`).
+
+Literal `#...` sets current value into reference. If name is not provided, the latest path node will be used from `meta`. 
+
 Error can be provided via `!` literal after validator.
+
 Cross form validations and errors:
 
 ```js
 template(`
   @object(
-    createdAt : @date : @compare( >=$0 ) : #createdAt,
+    createdAt : @date : @compare( >=$0 ) : #,
     modifiedAt : @date : @compare( >=#createdAt ) : #modifiedAt,
     deletedAt : @date : @compare( >=$1( #modifiedAt ) )
   ) ~meta

@@ -13,7 +13,7 @@ describe('cross validation form › advanced', () => {
   baseCasesWithParams(() => (
     withMeta(
       object2([
-        ['a', date(), lte.not(1000), setDep('a')],
+        ['a', date(), lte.not(1000), setDep()],
         ['b', date(), getDep('a', a => a && gte(a + 1000)), setDep('b')],
         ['c', date(), getDep('b', b => b && gte(b))]
       ])
@@ -37,8 +37,8 @@ describe('cross validation form › template › short', () => {
   baseCasesWithParams(() => (
     tml`
       @o(
-        a @d @c(>$0) #a,
-        b @d @c(>=$1(#a)) #b,
+        a @d @c(>$0) #,
+        b @d @c(>=$1(#a)) #,
         c @d @c(>=#b)
       ) ~m
     `([1000, (a: number) => a + 1000])

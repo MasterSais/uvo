@@ -7,6 +7,8 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     paramsCases(
       validator,
       [
+        [],
+        ['', emptyFunction()],
         ['f1'],
         ['f1', emptyFunction()],
         ['f1', null],
@@ -15,10 +17,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
         ['f1', 1],
         ['f1', {}]
       ],
-      [
-        ['', emptyFunction()],
-        []
-      ],
+      [],
       VALIDATOR_NAME
     );
 

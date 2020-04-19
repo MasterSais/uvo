@@ -31,7 +31,7 @@ const parseTemplate = fileName => {
       const fileContent = fs.readFileSync(dir + '/' + file).toString();
 
       const [, name] = fileContent.match(/@name \{([^\}]+)\}/);
-      
+
       const [, template] = fileContent.match(/@template \{(.+)\}[\r\n\s]/) || [0, ''];
 
       const [, desc] = fileContent.match(/@desc([^@\/]+)((\*\/)|(\{?@))/);
@@ -46,7 +46,9 @@ const parseTemplate = fileName => {
     })
   ));
 
-  content = content.replace('<% api-table %>', `${header}\n${rows.join('\n')}\n\n${urls.join('\n')}`);
+  content = content
+    .replace('<% api-url %>', apiDoc)
+    .replace('<% api-table %>', `${header}\n${rows.join('\n')}\n\n${urls.join('\n')}`);
 
   return content;
 }

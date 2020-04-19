@@ -1397,7 +1397,7 @@ simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 ### `setDep`
 
 ```js
-setDep<T>(field: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>
+setDep<T>(field?: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>
 ```
 Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.
 
@@ -1407,6 +1407,13 @@ import * as v from 'uvo';
 v.withMeta( // meta schema required for dependencies.
   v.object({
     id: [v.number(), v.gte(0), v.setDep('id')] // if 'id' is valid, sets 'id' dependency into schema.
+  })
+);
+
+// without explicit field name
+v.withMeta(
+  v.object({
+    id: [v.number(), v.gte(0), v.setDep()]
   })
 );
 
