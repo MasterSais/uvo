@@ -1,7 +1,7 @@
 /**
  * @name {even}
  * 
- * @template {@compare(@c)}
+ * @template {`@compare(%2)` `@c(%2)` `@compare(!%2)` `@c(!%2)`}
  * 
  * @scheme {even(error?: Error): Validator<number>}
  * 

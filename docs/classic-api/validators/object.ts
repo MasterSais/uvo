@@ -1,7 +1,7 @@
 /**
  * @name {object}
  * 
- * @template {@object(@o)}
+ * @template {`@object(...)` `@o(...)`}
  * 
  * @scheme {object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>}
  * 

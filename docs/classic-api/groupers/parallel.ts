@@ -1,7 +1,7 @@
 /**
  * @name {parallel}
  * 
- * @template {<{ ... }>}
+ * @template {`<{ ... }>`}
  * 
  * @scheme {parallel<T>(...validators: Array<Validator<T>>): Validator<T>}
  * 

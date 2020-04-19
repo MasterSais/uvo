@@ -1,7 +1,7 @@
 /**
  * @name {bool}
  * 
- * @template {@bool(@b)}
+ * @template {`@bool` `@b`}
  * 
  * @scheme {bool<T>(error?: Error): Validator<T, boolean>}
  * 

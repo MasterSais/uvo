@@ -9,7 +9,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will com
 |Bundles (minified)|esm|cjs|umd|
 |:-:|:-:|:-:|:-:|
 |Classic API|~7.1kb|~7.3kb|~10.1kb|
-|Templating API|~8.5kb|
+|Templating API|~8.6kb|
 
 Uvo has own types definition file for `typescript`.
 
@@ -291,52 +291,52 @@ tml`
 
 |Classic API|Templating API|Description|
 |:-|:-|:-|
-|[array][array-url]|@array(@a)|Checks value to be an array.|
-|[bool][bool-url]|@bool(@b)|Checks value to be a boolean compatible.|
-|[date][date-url]|@date(@d)|Checks value to be a date compatible. Result in ms.|
-|[defined][defined-url]|injected function via $...|Checks value to be defined.|
-|[empty][empty-url]|injected function via $...|Checks value to be empty.|
-|[equal][equal-url]|@compare(@c)|Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.|
-|[even][even-url]|@compare(@c)|Checks number to be an even one.|
+|[array][array-url]|`@array(...)` `@a(...)`|Checks value to be an array.|
+|[bool][bool-url]|`@bool` `@b`|Checks value to be a boolean compatible.|
+|[date][date-url]|`@date` `@d`|Checks value to be a date compatible. Result in ms.|
+|[defined][defined-url]|`@compare(=def)` `@c(=def)`|Checks value to be defined.|
+|[empty][empty-url]|`@compare(=emp)` `@c(=emp)` `@compare(!=emp)` `@c(!=emp)`|Checks value to be empty.|
+|[equal][equal-url]|`@compare(=...)` `@c(=...)` `@compare(!=...)` `@c(!=...)`|Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.|
+|[even][even-url]|`@compare(%2)` `@c(%2)` `@compare(!%2)` `@c(!%2)`|Checks number to be an even one.|
 |[fields][fields-url]||Checks for fields in the input object.|
-|[gte][gte-url]|@compare(@c)|Checks value to be greater or equal to 'bound' param. Requires the same type.|
-|[integer][integer-url]|@compare(@c)|Checks number to be an integer.|
-|[is][is-url]|injected function via $...|Checks value with custom comparator.|
-|[length][length-url]|@length(@l)|Compares length with 'len' param. Requires to be an object like or string.|
-|[lte][lte-url]|@compare(@c)|Checks value to be lower or equal to 'bound' param. Requires the same type.|
-|[maxLen][maxLen-url]|@length(@l)|Checks length to be equal to 'len' param. Requires to be an object like or string.|
-|[minLen][minLen-url]|@length(@l)|Checks length to be equal to 'len' param. Requires to be an object like or string.|
-|[multiple][multiple-url]|@compare(@c)|Checks number to be an integer.|
-|[number][number-url]|@number(@n)|Checks value to be a number compatible.|
-|[object][object-url]|@object(@o)|Checks value to be an object.|
-|[object2][object2-url]|@object(@o)|Checks value to be an object. Provides strict ordering.  Each key can be a Regex.|
-|[oneOf][oneOf-url]|@compare(@c)|Checks value to be one of expected. Shallow comparison.|
-|[regex][regex-url]|@compare(@c)|Checks value to match a pattern.|
-|[string][string-url]|@string(@s)|Checks value to be a string compatible.|
+|[gte][gte-url]|`@compare(>=...)` `@c(>=...)`|Checks value to be greater or equal to 'bound' param. Requires the same type.|
+|[integer][integer-url]|`@compare(%1)` `@c(%1)` `@compare(!%1)` `@c(!%1)`|Checks number to be an integer.|
+|[is][is-url]|injected function via `$...`|Checks value with custom comparator.|
+|[length][length-url]|`@length(=...)` `@l(=...)` `@length(!=...)` `@l(!=...)`|Compares length with 'len' param. Requires to be an object like or string.|
+|[lte][lte-url]|`@compare(<=...)` `@c(<=...)`|Checks value to be lower or equal to 'bound' param. Requires the same type.|
+|[maxLen][maxLen-url]|`@length(<=...)` `@l(<=...)`|Checks length to be equal to 'len' param. Requires to be an object like or string.|
+|[minLen][minLen-url]|`@length(>=...)` `@l(>=...)`|Checks length to be equal to 'len' param. Requires to be an object like or string.|
+|[multiple][multiple-url]|`@compare(%...)` `@c(%...)` `@compare(!%...)` `@c(!%...)`|Checks number to be an integer.|
+|[number][number-url]|`@number` `@n`|Checks value to be a number compatible.|
+|[object][object-url]|`@object(...)` `@o(...)`|Checks value to be an object.|
+|[object2][object2-url]|`@object(...)` `@o(...)`|Checks value to be an object. Provides strict ordering.  Each key can be a Regex.|
+|[oneOf][oneOf-url]|`@compare(->...)` `@c(->...)` `@compare(!->...)` `@c(!->...)`|Checks value to be one of expected. Shallow comparison.|
+|[regex][regex-url]|`@compare(*...)` `@c(*...)` `@compare(!*...)` `@c(!*...)`|Checks value to match a pattern.|
+|[string][string-url]|`@string` `@s`|Checks value to be a string compatible.|
 |[unique][unique-url]||Checks array's elements to be unique.|
-|[clamp][clamp-url]|injected function via $...|Clamps value to required boundaries.|
-|[erase][erase-url]|injected function via $...|Erase input.|
+|[clamp][clamp-url]|injected function via `$...`|Clamps value to required boundaries.|
+|[erase][erase-url]|injected function via `$...`|Erase input.|
 |[keysMap][keysMap-url]||Maps object keys with custom mapper.|
-|[lowercase][lowercase-url]|injected function via $...|Lowercase input string.|
-|[random][random-url]|injected function via $...|Returns random value according to params.|
-|[round][round-url]|injected function via $...|Round input number with specific method.|
+|[lowercase][lowercase-url]|injected function via `$...`|Lowercase input string.|
+|[random][random-url]|injected function via `$...`|Returns random value according to params.|
+|[round][round-url]|injected function via `$...`|Round input number with specific method.|
 |[strip][strip-url]||Removes field from object conditionally.|
-|[trim][trim-url]|injected function via $...|Trim input string with specific method.|
-|[uppercase][uppercase-url]|injected function via $...|Uppercase input string.|
+|[trim][trim-url]|injected function via `$...`|Trim input string with specific method.|
+|[uppercase][uppercase-url]|injected function via `$...`|Uppercase input string.|
 |[valueMap][valueMap-url]||Maps value with custom mappers.|
-|[consecutive][consecutive-url]|<( ... )>|Groups validators sequentially.  Passes value through a sequence of validators until an error occurs.  Uses by default in 'object' and 'object2' validator's scheme for fields.|
-|[or][or-url]|<[ ... ]>|Groups validators sequentially.  Searches for first successful validator's result.|
-|[parallel][parallel-url]|<{ ... }>|Groups validators in parallel.  The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).  Beware of using processors inside.|
+|[consecutive][consecutive-url]|`<( ... )>`|Groups validators sequentially.  Passes value through a sequence of validators until an error occurs.  Uses by default in 'object' and 'object2' validator's scheme for fields.|
+|[or][or-url]|`<[ ... ]>`|Groups validators sequentially.  Searches for first successful validator's result.|
+|[parallel][parallel-url]|`<{ ... }>`|Groups validators in parallel.  The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).  Beware of using processors inside.|
 |[transform][transform-url]||Groups processors sequentially.  Passes value through a sequence of processors.  Takes only processors (doesn't check errors).|
-|[withErrors][withErrors-url]|\~error(\~e)|Provides error handling mechanism.|
+|[withErrors][withErrors-url]|`~error(...)` `~e(...)`|Provides error handling mechanism.|
 |[withFallback][withFallback-url]||Provides fallback value on error.|
-|[withMeta][withMeta-url]|\~meta(\~m)|Provides meta structure. Can catch scheme logs.|
+|[withMeta][withMeta-url]|`~meta(...)` `~m(...)`|Provides meta structure. Can catch scheme logs.|
 |[withOnError][withOnError-url]||Provides custom error handler.|
-|[withPromise][withPromise-url]|\~promise(\~p)|Convert result to promise. Use it for async validation.|
-|[dynamic][dynamic-url]|conditional validation via ? or injection via $...|Inserts new validators into scheme dynamically.|
-|[getDep][getDep-url]|as parameter via #... or as validators via ##...|Takes value from spreaded structure.  Might be used for dynamic validators creation.  If 'preValidator' not provided, just replaces current value.  Works only with provided meta object.|
-|[setDep][setDep-url]|#...|Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.|
-|[setVDep][setVDep-url]|#...(@...)|Puts validators into spreaded structure.  Might be used for recursive schemes.|
+|[withPromise][withPromise-url]|`~promise` `~p`|Convert result to promise. Use it for async validation.|
+|[dynamic][dynamic-url]|conditional validation via `?` or injection via `$...`|Inserts new validators into scheme dynamically.|
+|[getDep][getDep-url]|as parameter via `#...` or as validators via `##...`|Takes value from spreaded structure.  Might be used for dynamic validators creation.  If 'preValidator' not provided, just replaces current value.  Works only with provided meta object.|
+|[setDep][setDep-url]|`#...`|Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.|
+|[setVDep][setVDep-url]|`#...(...)`|Puts validators into spreaded structure.  Might be used for recursive schemes.|
 |[useDefault][useDefault-url]||Puts default value into spreaded structure.  If input value is empty, puts default value instead, otherwise validates input values with provided validators.  If you need fallback value on error use 'withFallback' container instead.|
 
 [array-url]: API.md#array

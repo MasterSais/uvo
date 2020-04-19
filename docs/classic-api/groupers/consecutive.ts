@@ -1,7 +1,7 @@
 /**
  * @name {consecutive}
  * 
- * @template {<( ... )>}
+ * @template {`<( ... )>`}
  * 
  * @scheme {consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>}
  * 

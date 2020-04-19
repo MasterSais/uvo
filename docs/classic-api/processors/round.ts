@@ -1,7 +1,7 @@
 /**
  * @name {round}
  * 
- * @template {injected function via $...}
+ * @template {injected function via `$...`}
  * 
  * @scheme {round(method?: 'floor' | 'ceil'): Validator<number, number>}
  * 

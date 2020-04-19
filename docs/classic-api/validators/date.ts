@@ -1,7 +1,7 @@
 /**
  * @name {date}
  * 
- * @template {@date(@d)}
+ * @template {`@date` `@d`}
  * 
  * @scheme {date<T>(error?: Error): Validator<T, number>}
  * 

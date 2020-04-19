@@ -1,7 +1,7 @@
 /**
  * @name {or}
  * 
- * @template {<[ ... ]>}
+ * @template {`<[ ... ]>`}
  * 
  * @scheme {or<T>(...validators: Array<Validator<any, any>>): Validator<any, any>}
  * 

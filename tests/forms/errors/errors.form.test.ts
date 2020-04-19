@@ -1,6 +1,6 @@
 import { withErrors } from '@lib/classic-api/containers/with-errors';
 import { parallel } from '@lib/classic-api/groupers/parallel';
-import { empty, gte } from '@lib/classic-api/validators/is';
+import { defined, empty, gte } from '@lib/classic-api/validators/is';
 import { minLen } from '@lib/classic-api/validators/length';
 import { integer } from '@lib/classic-api/validators/multiple';
 import { number } from '@lib/classic-api/validators/number';
@@ -16,7 +16,7 @@ describe('errors form', () =>
     withErrors(
       object({
         id: [
-          empty.not('Empty id'),
+          defined('Empty id'),
           number('Not a number'),
           gte(0, 'Must not be negative'),
           integer('Must be an integer')
@@ -36,7 +36,7 @@ describe('errors form › advanced', () =>
     withErrors(
       object2([
         ['id',
-          empty.not('Empty id'),
+          defined('Empty id'),
           number('Not a number'),
           gte(0, 'Must not be negative'),
           integer('Must be an integer')
@@ -55,8 +55,8 @@ describe('errors form › template', () =>
   baseCasesWithParams(() => (
     template(`
       @object(
-        id : @compare(!=undefined)!0 : @number!1 : @compare(>=0)!2 : @compare(%1)!3,
-        name : @compare(!=undefined)!4 : @string : @length(>=10)!5
+        id : @compare(=def)!0 : @number!1 : @compare(>=0)!2 : @compare(%1)!3,
+        name : @compare(!=emp)!4 : @string : @length(>=10)!5
       ) ~error
     `)(null, ['Empty id', 'Not a number', 'Must not be negative', 'Must be an integer', 'Empty name', 'Min length is 10'])
   ), cases1, [])
@@ -100,7 +100,7 @@ describe('errors parallel form › advanced', () =>
     withErrors(
       object2([
         ['id',
-          empty.not('Empty id'),
+          defined('Empty id'),
           number('Not a number'),
           parallel(
             gte(0, 'Must not be negative'),
@@ -121,8 +121,8 @@ describe('errors parallel form › template', () =>
   baseCasesWithParams(() => (
     template(`
       @object(
-        id : @compare(!=undefined)!0 : @number!1 : <{ @compare(>=0)!2 : @compare(%1)!3 }>,
-        name : @compare(!=undefined)!4 : @string : @length(>=10)!5
+        id : @compare(=def)!0 : @number!1 : <{ @compare(>=0)!2 : @compare(%1)!3 }>,
+        name : @compare(!=emp)!4 : @string : @length(>=10)!5
       ) ~error
     `)(null, ['Empty id', 'Not a number', 'Must not be negative', 'Must be an integer', 'Empty name', 'Min length is 10'])
   ), cases2, [])

@@ -1,7 +1,7 @@
 /**
  * @name {multiple}
  * 
- * @template {@compare(@c)}
+ * @template {`@compare(%...)` `@c(%...)` `@compare(!%...)` `@c(!%...)`}
  * 
  * @scheme {multiple(multiplier: number | (() => number), error?: Error): Validator<number>}
  * 

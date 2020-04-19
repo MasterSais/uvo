@@ -1,7 +1,7 @@
 /**
  * @name {getDep}
  * 
- * @template {as parameter via #... or as validators via ##...}
+ * @template {as parameter via `#...` or as validators via `##...`}
  * 
  * @scheme {getDep<T>(field: string, preValidator?: (dep: T) => Validator<T> | Array<Validator<T>>): Validator<T>}
  * 

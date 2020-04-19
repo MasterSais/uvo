@@ -1,7 +1,7 @@
 /**
  * @name {trim}
  * 
- * @template {injected function via $...}
+ * @template {injected function via `$...`}
  * 
  * @scheme {trim(method?: 'left' | 'right'): Validator<string, string>}
  * 

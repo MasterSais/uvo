@@ -1,7 +1,7 @@
 /**
  * @name {integer}
  * 
- * @template {@compare(@c)}
+ * @template {`@compare(%1)` `@c(%1)` `@compare(!%1)` `@c(!%1)`}
  * 
  * @scheme {integer(error?: Error): Validator<number>}
  * 

@@ -1,7 +1,7 @@
 /**
  * @name {random}
  * 
- * @template {injected function via $...}
+ * @template {injected function via `$...`}
  * 
  * @scheme {random(min: number, max: number, precision: number): Validator<any, number>}
  * 

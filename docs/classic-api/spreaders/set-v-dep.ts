@@ -1,7 +1,7 @@
 /**
  * @name {setVDep}
  * 
- * @template {#...(@...)}
+ * @template {`#...(...)`}
  * 
  * @scheme {setVDep<T>(field: string, ...validators: Array<Validator<T>>): Validator<T>}
  * 

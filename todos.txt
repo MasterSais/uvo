@@ -8,11 +8,7 @@
 
   - Templating api
 
-    'defined'; //??? m.b use only long name. Short only via 'compare'. m.b. defined | def
-
-    'empty'; //??? m.b. empty | emp
-
-    'fields'; // @fields(&.[^.id.guid].name)
+    'fields'; // @fields( &.[^.id.guid].name )
 
     'unique'; // unique | u
 

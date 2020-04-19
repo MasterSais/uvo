@@ -1,7 +1,7 @@
 /**
  * @name {oneOf}
  * 
- * @template {@compare(@c)}
+ * @template {`@compare(->...)` `@c(->...)` `@compare(!->...)` `@c(!->...)`}
  * 
  * @scheme {oneOf<T>(candidates: Array<T> | string | (() => Array<T> | string), error?: Error): Validator<T>}
  * 

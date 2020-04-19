@@ -1,7 +1,7 @@
 /**
  * @name {lte}
  * 
- * @template {@compare(@c)}
+ * @template {`@compare(<=...)` `@c(<=...)`}
  * 
  * @scheme {lte<T>(bound: T | (() => T), error?: Error): Validator<T>}
  * 

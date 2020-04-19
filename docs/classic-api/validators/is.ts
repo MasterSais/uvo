@@ -1,7 +1,7 @@
 /**
  * @name {is}
  * 
- * @template {injected function via $...}
+ * @template {injected function via `$...`}
  * 
  * @scheme {is<T>(comparator: ((value: T) => boolean), error?: Error): Validator<T>}
  * 

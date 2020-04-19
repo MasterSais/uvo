@@ -1,7 +1,7 @@
 /**
  * @name {setDep}
  * 
- * @template {#...}
+ * @template {`#...`}
  * 
  * @scheme {setDep<T>(field?: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T>}
  * 

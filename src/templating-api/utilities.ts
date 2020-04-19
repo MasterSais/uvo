@@ -10,8 +10,7 @@ import { containerBase, grouperBase, validatorBase } from '@lib/templating-api/v
 const reservedValues: { [name: string]: any } = {
   'true': true,
   'false': false,
-  'null': null,
-  'undefined': undefined
+  'null': null
 };
 
 export const extractInjection = (meta: CompilerMeta, { code, value }: ValidatorData, wrap: Function) => (
@@ -38,11 +37,9 @@ export const extractInnerInjectionReference = (meta: CompilerMeta, { code, value
 
 export const extractLiteral = ({ code, value }: ValidatorData, wrap: Function) => (
   code === VL.code && (
-    wrap(() => (
-      reservedValues.hasOwnProperty(value)
-        ? reservedValues[value]
-        : !isNaN(+value) && +value
-    ))
+    reservedValues.hasOwnProperty(value)
+      ? wrap(() => reservedValues[value])
+      : !isNaN(+value) && wrap(() => +value)
   )
   ||
   code === SQ.code && (

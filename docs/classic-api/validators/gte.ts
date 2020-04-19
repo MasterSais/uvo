@@ -1,7 +1,7 @@
 /**
  * @name {gte}
  * 
- * @template {@compare(@c)}
+ * @template {`@compare(>=...)` `@c(>=...)`}
  * 
  * @scheme {gte<T>(bound: T | (() => T), error?: Error): Validator<T>}
  * 

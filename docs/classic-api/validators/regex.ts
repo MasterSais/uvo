@@ -1,7 +1,7 @@
 /**
  * @name {regex}
  * 
- * @template {@compare(@c)}
+ * @template {`@compare(*...)` `@c(*...)` `@compare(!*...)` `@c(!*...)`}
  * 
  * @scheme {regex<T>(match: RegExp | (() => RegExp), error?: Error): Validator<T>}
  * 

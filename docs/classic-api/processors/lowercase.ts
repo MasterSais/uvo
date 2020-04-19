@@ -1,7 +1,7 @@
 /**
  * @name {lowercase}
  * 
- * @template {injected function via $...}
+ * @template {injected function via `$...`}
  * 
  * @scheme {lowercase(): Validator<string, string>}
  * 

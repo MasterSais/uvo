@@ -1,7 +1,7 @@
 /**
  * @name {string}
  * 
- * @template {@string(@s)}
+ * @template {`@string` `@s`}
  * 
  * @scheme {string<T>(error?: Error): Validator<T, string>}
  * 

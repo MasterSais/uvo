@@ -1,7 +1,7 @@
 /**
  * @name {array}
  * 
- * @template {@array(@a)}
+ * @template {`@array(...)` `@a(...)`}
  * 
  * @scheme {array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>}
  * 

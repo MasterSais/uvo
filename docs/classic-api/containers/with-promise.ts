@@ -1,7 +1,7 @@
 /**
  * @name {withPromise}
  * 
- * @template {~promise(~p)}
+ * @template {`~promise` `~p`}
  * 
  * @scheme {withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>}
  * 

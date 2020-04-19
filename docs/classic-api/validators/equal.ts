@@ -1,7 +1,7 @@
 /**
  * @name {equal}
  * 
- * @template {@compare(@c)}
+ * @template {`@compare(=...)` `@c(=...)` `@compare(!=...)` `@c(!=...)`}
  * 
  * @scheme {equal<T>(match: T | (() => T), error?: Error): Validator<T>}
  * 

@@ -1,7 +1,7 @@
 /**
  * @name {maxLen}
  * 
- * @template {@length(@l)}
+ * @template {`@length(<=...)` `@l(<=...)`}
  * 
  * @scheme {maxLen<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>}
  * 

@@ -1,7 +1,7 @@
 /**
  * @name {defined}
  * 
- * @template {injected function via $...}
+ * @template {`@compare(=def)` `@c(=def)`}
  * 
  * @scheme {defined<T>(error?: Error): Validator<T>}
  * 

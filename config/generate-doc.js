@@ -38,9 +38,7 @@ const parseTemplate = fileName => {
 
       const parsedDesc = desc.replace(/[\*\n\r]+|\{$/g, '').trim();
 
-      const parsedTemplate = template.replace(/~/g, '\\~');
-
-      rows.push(`|[${name}][${name}-url]|${parsedTemplate}|${parsedDesc}|`);
+      rows.push(`|[${name}][${name}-url]|${template}|${parsedDesc}|`);
 
       urls.push(`[${name}-url]: ${apiDoc}#${name}`);
     })
