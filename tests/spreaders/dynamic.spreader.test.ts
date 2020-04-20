@@ -6,7 +6,7 @@ import { number } from '@lib/classic-api/validators/number';
 import { template } from '@lib/templating-api/template';
 import { emptyFunction, paramsCases } from '@test/utilities';
 
-describe(`validator › ${VALIDATOR_NAME}`, () => {
+describe(`spreader › ${VALIDATOR_NAME}`, () => {
   describe('params', () => {
     paramsCases(
       validator,

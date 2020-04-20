@@ -96,3 +96,16 @@ export const paramsCases = (validator: (...args: any) => Validator<any, any>, ri
 
 export const errorMetaCase = (path: Array<string | number>, params: Array<any>, validator: string) =>
   (meta: MetaData) => (metaCase(meta, path, params, validator), notNullError());
+
+export const asyncCases = (validator: Validator<any>, rightCases: Array<[any, any]>, wrongCases: Array<[any, any]>) => (
+  rightCases.forEach(([value, expected], index) => (
+    test(`r_${index}`, () => (
+      expect(validator(value)).resolves.toEqual(expected)
+    ))
+  )),
+  wrongCases.forEach(([value, expected], index) => (
+    test(`w_${index}`, () => (
+      expect(validator(value)).rejects.toEqual(expected)
+    ))
+  ))
+);

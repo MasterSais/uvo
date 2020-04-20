@@ -3,7 +3,7 @@ import { getDep as validator } from '@lib/classic-api/spreaders/get-dep';
 import { equal } from '@lib/classic-api/validators/is';
 import { emptyFunction, emptyMeta, paramsCases } from '@test/utilities';
 
-describe(`validator › ${VALIDATOR_NAME}`, () => {
+describe(`spreader › ${VALIDATOR_NAME}`, () => {
   describe('params', () => {
     paramsCases(
       validator,

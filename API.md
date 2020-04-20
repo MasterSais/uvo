@@ -1298,7 +1298,7 @@ unchi(11.2);
 ### `withPromise`
 
 ```js
-withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Array<Error>>>
+withPromise<T, R>(validator: Validator<T, R | Result<R>>): Validator<T, Promise<R | Result<R>>>
 ```
 Convert result to promise. Use it for async validation.
 
@@ -1331,7 +1331,7 @@ await withErrorUnchi(10);
 try {
   await withErrorUnchi('abc');
 } catch (errors) {
-  // => ['ERR']
+  // => { result: null, errors: ['ERR'] }
 }
 ```
 

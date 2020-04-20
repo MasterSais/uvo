@@ -5,7 +5,7 @@ import { gte } from '@lib/classic-api/validators/is';
 import { integer } from '@lib/classic-api/validators/multiple';
 import { number } from '@lib/classic-api/validators/number';
 
-test(`validator › ${VALIDATOR_NAME}`, () => {
+test(`container › ${VALIDATOR_NAME}`, () => {
   let errors: Array<any> = [];
 
   const callback = (error: any) => errors.push(error);

@@ -1,6 +1,6 @@
 import { C_ERR } from '@lib/classic-api/names';
 import { Error, ErrorCallback, MetaData, Relevance, Result, Validator } from '@lib/classic-api/types';
-import { isFunction, throwValidatorError } from '@lib/classic-api/utilities';
+import { callee, isFunction, throwValidatorError } from '@lib/classic-api/utilities';
 
 /**
  * {@link docs/classic-api/containers/with-errors}
@@ -15,17 +15,16 @@ export const withErrors = <T, R>(validator: Validator<T, R>, commonErrorProcesso
           const addError = (error?: any, relevance?: Relevance) =>
             error && errors.push({ error, relevance: relevance || { value: true } });
 
-          const errorProcessor: ErrorCallback = (error?: Error, meta?: MetaData, relevance?: Relevance) =>
-            commonErrorProcessor
-              ? addError(commonErrorProcessor(
-                isFunction(error)
-                  ? (error as Function)(meta)
-                  : error,
-                meta
-              ), relevance)
-              : isFunction(error)
-                ? addError((error as Function)(meta), relevance)
-                : addError(error, relevance);
+          const errorProcessor: ErrorCallback = (error?: Error, meta?: MetaData, relevance?: Relevance) => (
+            error = callee(error)(meta),
+
+            addError(
+              commonErrorProcessor
+                ? commonErrorProcessor(error, meta)
+                : error,
+              relevance
+            )
+          );
 
           const result = validator(value, errorProcessor, meta);
 

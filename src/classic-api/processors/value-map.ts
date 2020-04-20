@@ -1,5 +1,5 @@
 import { Primitive, Validator } from '@lib/classic-api/types';
-import { isFunction, isRegEx } from '@lib/classic-api/utilities';
+import { callee, isFunction, isRegEx } from '@lib/classic-api/utilities';
 
 /**
  * {@link docs/classic-api/processors/value-map}
@@ -16,9 +16,7 @@ export const valueMap = <T, R>(...mappers: Array<[Primitive | ((value: T) => boo
 
     return (
       mapper
-        ? isFunction(mapper[1])
-          ? (mapper[1] as unknown as Function)(value)
-          : mapper[1]
+        ? callee(mapper[1])(value)
         : value as unknown as R
     );
   }

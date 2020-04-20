@@ -7,8 +7,9 @@ const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
   value.reduce((result, item) => result && isArray(item), true)
 );
 
-const getField = <T extends ObjectLike, R = T>(data: T, result: R, field: any) =>
-  isDefined(result[field]) ? result[field] : data[field];
+const getField = <T extends ObjectLike, R = T>(data: T, result: R, field: any) => (
+  isDefined(result[field]) ? result[field] : data[field]
+);
 
 /**
  * {@link docs/classic-api/validators/object2}
@@ -42,9 +43,11 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
 
               isString(keySpec)
                 ? setField(keySpec)
-                : isArray(keySpec)
-                  ? onKey(field => (keySpec.indexOf(field) >= 0 && setField(field)))
-                  : onKey(field => (keySpec.test(field) && setField(field)));
+                : onKey(
+                  isArray(keySpec)
+                    ? field => keySpec.indexOf(field) >= 0 && setField(field)
+                    : field => keySpec.test(field) && setField(field)
+                );
 
               return result;
             }, {})

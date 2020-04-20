@@ -10,7 +10,7 @@ import { template } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases1, cases2, templateCases1 } from './cases';
 
-describe(`validator › ${VALIDATOR_NAME}`, () => {
+describe(`container › ${VALIDATOR_NAME}`, () => {
   describe('base 1', () =>
     baseCasesWithParams(() => validator(
       withErrors(

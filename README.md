@@ -8,7 +8,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will com
 
 |Bundles (minified)|esm|cjs|umd|
 |:-:|:-:|:-:|:-:|
-|Classic API|~7.1kb|~7.3kb|~10.1kb|
+|Classic API|~7kb|~7.2kb|~10kb|
 |Templating API|~8.6kb|
 
 Uvo has own types definition file for `typescript`.

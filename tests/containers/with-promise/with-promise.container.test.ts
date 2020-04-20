@@ -7,31 +7,11 @@ import { C_PRM as VALIDATOR_NAME } from '@lib/classic-api/names';
 import { gte } from '@lib/classic-api/validators/is';
 import { integer } from '@lib/classic-api/validators/multiple';
 import { number } from '@lib/classic-api/validators/number';
+import { asyncCases } from '@test/utilities';
+import { right, wrong } from './cases';
 
-test(`validator › ${VALIDATOR_NAME}`, async () => {
-  const promiseOne = (
-    withPromise(
-      withErrors(
-        withMeta(
-          consecutive(
-            number(({ validator }) => validator),
-            gte(0, ({ validator }) => validator),
-            integer(({ validator }) => validator)
-          )
-        )
-      )
-    )
-  );
-
-  promiseOne(12).then(data => expect(data).toEqual(12));
-
-  promiseOne('abc').catch(errors => expect(errors).toEqual(['number']));
-
-  promiseOne(-1).catch(errors => expect(errors).toEqual(['gte']));
-
-  promiseOne(2.2).catch(errors => expect(errors).toEqual(['integer']));
-
-  const promiseToo = (
+describe(`container › ${VALIDATOR_NAME}`, () => {
+  asyncCases(
     withPromise(
       withErrors(
         withMeta(
@@ -44,16 +24,6 @@ test(`validator › ${VALIDATOR_NAME}`, async () => {
           )
         )
       )
-    )
-  );
-
-  promiseToo(12).then(data => expect(data).toEqual(12));
-
-  promiseToo('abc').catch(errors => expect(errors).toEqual(['number']));
-
-  promiseToo(-1).catch(errors => expect(errors).toEqual(['gte']));
-
-  promiseToo(2.2).catch(errors => expect(errors).toEqual(['integer']));
-
-  promiseToo(-2.2).catch(errors => expect(errors).toEqual(['gte', 'integer']));
+    ), right, wrong
+  )
 });

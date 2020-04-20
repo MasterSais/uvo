@@ -3,7 +3,7 @@ import { clamp } from '@lib/classic-api/processors/clamp';
 import { useDefault as validator } from '@lib/classic-api/spreaders/use-default';
 import { emptyFunction, paramsCases } from '@test/utilities';
 
-describe(`validator › ${VALIDATOR_NAME}`, () => {
+describe(`spreader › ${VALIDATOR_NAME}`, () => {
   describe('params', () => {
     paramsCases(
       validator,

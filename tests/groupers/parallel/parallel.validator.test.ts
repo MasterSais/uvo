@@ -4,7 +4,7 @@ import { number } from '@lib/classic-api/validators/number';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightParams, wrong, wrongParams } from './cases';
 
-describe(`validator › ${VALIDATOR_NAME}`, () => {
+describe(`grouper › ${VALIDATOR_NAME}`, () => {
   describe('params', () =>
     paramsCases(validator, rightParams, wrongParams, VALIDATOR_NAME)
   );
