@@ -7,6 +7,8 @@ import { C_PRM as VALIDATOR_NAME } from '@lib/classic-api/names';
 import { gte } from '@lib/classic-api/validators/is';
 import { integer } from '@lib/classic-api/validators/multiple';
 import { number } from '@lib/classic-api/validators/number';
+import { object2 } from '@lib/classic-api/validators/object2';
+import { string } from '@lib/classic-api/validators/string';
 import { asyncCases } from '@test/utilities';
 import { right, wrong } from './cases';
 
@@ -25,5 +27,26 @@ describe(`container › ${VALIDATOR_NAME}`, () => {
         )
       )
     ), right, wrong
+  )
+});
+
+describe(`container › ${VALIDATOR_NAME} › async`, () => {
+  asyncCases(
+    withMeta(
+      withPromise(
+        object2([
+          ['id', number()],
+          ['name', string()],
+        ])
+      )
+    ),
+    [
+      [{
+        id: Promise.resolve(1), name: Promise.resolve('abc')
+      }, {
+        id: 1, name: 'abc'
+      }]
+    ],
+    []
   )
 });

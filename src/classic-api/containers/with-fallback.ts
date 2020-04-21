@@ -1,6 +1,6 @@
 import { C_FLB } from '@lib/classic-api/names';
 import { ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { callee, isValidatorsSequence, reduceValidators, throwValidatorError } from '@lib/classic-api/utilities';
+import { callee, isValidatorsSequence, onAsync, reduceValidators, throwValidatorError } from '@lib/classic-api/utilities';
 
 /**
  * {@link docs/classic-api/containers/with-fallback}
@@ -12,9 +12,13 @@ export const withFallback = <T, R>(fallback: R | ((initialValue: T, meta?: MetaD
         (value: T | R, onError?: ErrorCallback, meta?: MetaData): R => {
           const result = reduceValidators(value, onError, meta, validators);
 
-          return result !== null
-            ? result
-            : callee(fallback)(value, meta);
+          return (
+            onAsync(result, data => (
+              data !== null
+                ? data
+                : callee(fallback)(value, meta)
+            ))
+          );
         }
       )
       : throwValidatorError(C_FLB)

@@ -1,7 +1,7 @@
 import { consecutive } from '@lib/classic-api/groupers/consecutive';
 import { V_OBJ } from '@lib/classic-api/names';
 import { Error, ErrorCallback, MetaData, ObjectLike, Validator } from '@lib/classic-api/types';
-import { applyError, callee, extendMeta, isArray, isDefined, isObject, isString, setMetaPath, throwValidatorError, toArray } from '@lib/classic-api/utilities';
+import { applyError, asyncActor, callee, extendMeta, isArray, isDefined, isObject, isString, setMetaPath, throwValidatorError, toArray } from '@lib/classic-api/utilities';
 
 const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
   value.reduce((result, item) => result && isArray(item), true)
@@ -24,6 +24,8 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
   );
 
   return (data: T, onError?: ErrorCallback, meta?: MetaData): R => {
+    const [actAsync, proceedAsync] = asyncActor(meta);
+
     extendMeta(meta, data, V_OBJ);
 
     if (isObject(data)) {
@@ -34,23 +36,28 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
       return (
         validators
           ? (
-            validators.reduce((result, [key, processor]) => {
-              const keySpec: any = key();
+            proceedAsync(
+              validators.reduce((result, [key, processor]) => {
+                const keySpec: any = key();
 
-              const setField = (field: string) => (
-                result[field] = processor(getField(data, result, field), onError, setMetaPath(meta, field))
-              );
-
-              isString(keySpec)
-                ? setField(keySpec)
-                : onKey(
-                  isArray(keySpec)
-                    ? field => keySpec.indexOf(field) >= 0 && setField(field)
-                    : field => keySpec.test(field) && setField(field)
+                const setField = (field: string) => (
+                  actAsync(
+                    processor(getField(data, result, field), onError, setMetaPath(meta, field)),
+                    value => (result[field] = value)
+                  )
                 );
 
-              return result;
-            }, {})
+                isString(keySpec)
+                  ? setField(keySpec)
+                  : onKey(
+                    isArray(keySpec)
+                      ? field => keySpec.indexOf(field) >= 0 && setField(field)
+                      : field => keySpec.test(field) && setField(field)
+                  );
+
+                return result;
+              }, {})
+            )
           )
           : data
       ) as R;

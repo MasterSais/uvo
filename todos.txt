@@ -1,10 +1,14 @@
   - CI/CD service (gitlab e.g.)
 
-  - Promise validator
+  - Promise validator + val: Promise(error) & spreds: Async(name, error) & Await(name)
 
   - 'uvo/extended' validators e.g https://www.npmjs.com/package/class-validator#manual-validation
 
   - Templating api CJS module
+
+  - Perf tests
+
+  - Dynamic should accept value
 
   - Templating api
 

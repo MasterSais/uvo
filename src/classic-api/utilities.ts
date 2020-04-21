@@ -26,16 +26,22 @@ export const getFromMeta = <T>(field: string, meta: MetaData): T => (
   meta ? meta._deps[field] : null
 );
 
-export const applyError = (error: Error, onError: ErrorCallback, meta: MetaData): null =>
-  (onError && onError(error, meta), null);
+export const applyError = (error: Error, onError: ErrorCallback, meta: MetaData): null => (
+  onError && onError(error, meta), null
+);
 
 export const throwValidatorError = (validator: string) => {
   throw `Invalid params provided in '${validator}'`;
 };
 
-export const reduceValidators = (value: any, onError: ErrorCallback, meta: MetaData, validators: Array<Validator<any>>): any =>
-  validators.reduce((value: any, nextValidator: Validator<any>, index: number): any =>
-    ((value !== null || index === 0) ? nextValidator(value, onError, meta) : null), value);
+export const reduceValidators = (value: any, onError: ErrorCallback, meta: MetaData, validators: Array<Validator<any>>): any => (
+  validators.reduce(
+    (value: any, nextValidator: Validator<any>, index: number): any => (
+      (value !== null || index === 0) ? nextValidator(value, onError, meta) : null
+    ),
+    value
+  )
+);
 
 export const valueOf = (value: any) => (value !== null && value !== undefined) ? value.valueOf() : value;
 
@@ -44,6 +50,8 @@ export const isEmpty = (value: any) => (value === null) || (value === undefined)
 export const isOneType = (a: any, b: any): boolean => typeof a === typeof b;
 
 export const isDefined = (value: any): boolean => value !== undefined;
+
+export const isPromise = (value: any): boolean => value && value.then && value.catch;
 
 export const isFinite = (value: any): boolean => (global || window).isFinite(value);
 
@@ -143,3 +151,29 @@ export const multipleFactory = (validator: string) => (
     )
   )
 );
+
+export const onAsync = (value: any, callee: (value: any) => void) => (
+  isPromise(value)
+    ? value.then(callee)
+    : callee(value)
+);
+
+export const asyncActor = (meta: MetaData): [(value: any, callee: (value: any) => void) => void, (value: any) => any] => {
+  const actions: Array<any> = [];
+
+  return (
+    meta && meta._async
+      ? [
+        (value: any, callee: (value: any) => void) => onAsync(value, callee),
+        (value: any) => (
+          actions.length > 0
+            ? Promise.all(actions).then(() => value)
+            : value
+        )
+      ]
+      : [
+        (value: any, callee: (value: any) => void) => callee(value),
+        identity
+      ]
+  );
+};

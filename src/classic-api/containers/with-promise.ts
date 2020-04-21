@@ -1,6 +1,6 @@
 import { C_PRM } from '@lib/classic-api/names';
 import { ErrorCallback, MetaData, Result, Validator } from '@lib/classic-api/types';
-import { isFunction, throwValidatorError } from '@lib/classic-api/utilities';
+import { isFunction, onAsync, throwValidatorError } from '@lib/classic-api/utilities';
 
 /**
  * {@link docs/classic-api/containers/with-promise}
@@ -12,11 +12,11 @@ export const withPromise = <T, R>(validator: Validator<T, R | Result<R>>): Valid
         (value: T, onError?: ErrorCallback, meta?: MetaData): Promise<R | Result<R>> =>
           new Promise(
             (resolve, reject) => {
-              const data = validator(value, onError, meta) as Result<R>;
+              const data = validator(value, onError, meta && { ...meta, _async: true });
 
-              data.errors
-                ? reject(data)
-                : resolve(data as any);
+              onAsync(data, (
+                data => data.errors ? reject(data) : resolve(data)
+              ));
             }
           )
       )

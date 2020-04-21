@@ -21,6 +21,7 @@ export declare type MetaData = {
   params: Array<any>;
   _deps: ObjectLike;
   _logs: Array<[string, any, Array<any>]>;
+  _async?: boolean;
 };
 
 /**
