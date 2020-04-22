@@ -11,12 +11,10 @@ export const withPromise = <T, R>(validator: Validator<T, R | Result<R>>): Valid
     isFunction(validator)
       ? (
         (value: T, onError?: ErrorCallback, meta?: MetaData): Promise<R | Result<R>> =>
-          new Promise((resolve, reject) =>
+          new Promise(resolve =>
             onAsync(
-              passValidators(value, onError, meta && { ...meta, _async: true }, [validator]),
-              (
-                data => (data && data.errors) ? reject(data) : resolve(data)
-              )
+              passValidators(value, onError, meta && { ...meta, _asyncStack: {} }, [validator]),
+              resolve
             )
           )
       )

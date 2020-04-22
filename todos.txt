@@ -8,6 +8,10 @@
 
   - Test coverage into Doc
 
+  - setRef, getRef
+
+  - Checkable ? rm
+
   - Classic API -> Base API
 
   - Perf tests

@@ -98,27 +98,14 @@ export const errorMetaCase = (path: Array<string | number>, params: Array<any>, 
   (meta: MetaData) => (metaCase(meta, path, params, validator), notNullError())
 );
 
-export const asyncCases = (validator: Validator<any>, rightCases: Array<[any, any]>, wrongCases: Array<[any, any]>) => (
-  rightCases.forEach(([value, expected], index) => (
+export const asyncCases = (validator: Validator<any>, cases: Array<[any, any]>) => (
+  cases.forEach(([value, expected], index) => (
     test.concurrent(`r_${index}`, () => (
       expect(validator(value)).resolves.toEqual(expected)
-    ))
-  )),
-  wrongCases.forEach(([value, expected], index) => (
-    test.concurrent(`w_${index}`, () => (
-      expect(validator(value)).rejects.toEqual(expected)
     ))
   ))
 );
 
-export const resolve = (value: any, delay: number = 0): Promise<any> => new Promise((res) => (
-  delay > 0
-    ? setTimeout(() => res(value), delay)
-    : res(value)
-));
+export const resolve = (value?: any): Promise<any> => Promise.resolve(value);
 
-export const reject = (value: any, delay?: number): Promise<any> => new Promise((_, rej) => (
-  delay > 0
-    ? setTimeout(() => rej(value), delay)
-    : rej(value)
-));
+export const reject = (value?: any): Promise<any> => Promise.reject(value);

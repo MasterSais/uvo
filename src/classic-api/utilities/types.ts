@@ -1,6 +1,6 @@
 import { Lengthy, Validator } from '@lib/classic-api/types';
 
-export const valueOf = (value: any) => (value !== null && value !== undefined) ? value.valueOf() : value;
+export const valueOf = (value: any) => value ? value.valueOf() : value;
 
 export const isEmpty = (value: any) => (value === null) || (value === undefined) || (value === '');
 
@@ -8,11 +8,11 @@ export const isOneType = (a: any, b: any): boolean => typeof a === typeof b;
 
 export const isDefined = (value: any): boolean => value !== undefined;
 
-export const isPromise = (value: any): boolean => value && value.then && value.catch;
+export const isPromise = (value: any): boolean => value && value.then;
 
-export const isFinite = (value: any): boolean => (global || window).isFinite(value);
+export const isFinite = (global || window).isFinite as ((value: any) => boolean);
 
-export const isFiniteNumber = (value: any): boolean => Number.isFinite(value);
+export const isFiniteNumber = Number.isFinite as ((value: any) => boolean);
 
 export const isNumber = (value: any): boolean => typeof value === 'number';
 

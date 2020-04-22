@@ -15,11 +15,11 @@ const mapArrayValidators = <T>(itemSpec?: Array<Validator<any, T>> | Validator<a
 /**
  * {@link docs/classic-api/validators/array}
  */
-export const array = <T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>> => {
+export const array = (itemSpec?: Array<Validator<any>> | Validator<any>, error?: Error): Validator<Array<any>, Array<any>> => {
   const validator = mapArrayValidators(itemSpec);
 
   return (
-    (data: Array<any>, onError?: ErrorCallback, meta?: MetaData): Array<T> => {
+    (data: Array<any>, onError?: ErrorCallback, meta?: MetaData): Array<any> => {
       const [actAsync, proceedAsync] = asyncActor(meta);
 
       extendMeta(meta, data, V_ARR);

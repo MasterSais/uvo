@@ -8,8 +8,8 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will com
 
 |Bundles (minified)|esm|cjs|umd|
 |:-:|:-:|:-:|:-:|
-|Classic API|~7.4kb|~7.7kb|~10.7kb|
-|Templating API|~9kb|
+|Classic API|~7.9kb|~8.2kb|~11.4kb|
+|Templating API|~9.1kb|
 
 Uvo has own types definition file for `typescript`.
 
@@ -292,6 +292,7 @@ tml`
 |Classic API|Templating API|Description|
 |:-|:-|:-|
 |[array][array-url]|`@array(...)` `@a(...)`|Checks value to be an array.|
+|[async][async-url]|`@async` `@a`|Checks value to be a promise. Settles value to async storage. Can be awaited somewhere later.|
 |[bool][bool-url]|`@bool` `@b`|Checks value to be a boolean compatible.|
 |[date][date-url]|`@date` `@d`|Checks value to be a date compatible. Result in ms.|
 |[defined][defined-url]|`@compare(=def)` `@c(=def)`|Checks value to be defined.|
@@ -311,6 +312,7 @@ tml`
 |[object][object-url]|`@object(...)` `@o(...)`|Checks value to be an object.|
 |[object2][object2-url]|`@object(...)` `@o(...)`|Checks value to be an object. Provides strict ordering.  Each key can be a Regex.|
 |[oneOf][oneOf-url]|`@compare(->...)` `@c(->...)` `@compare(!->...)` `@c(!->...)`|Checks value to be one of expected. Shallow comparison.|
+|[promise][promise-url]|`@async` `@a`|Checks value to be a promise.|
 |[regex][regex-url]|`@compare(*...)` `@c(*...)` `@compare(!*...)` `@c(!*...)`|Checks value to match a pattern.|
 |[string][string-url]|`@string` `@s`|Checks value to be a string compatible.|
 |[unique][unique-url]||Checks array's elements to be unique.|
@@ -338,8 +340,10 @@ tml`
 |[setDep][setDep-url]|`#...`|Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.|
 |[setVDep][setVDep-url]|`#...(...)`|Puts validators into spreaded structure.  Might be used for recursive schemes.|
 |[useDefault][useDefault-url]||Puts default value into spreaded structure.  If input value is empty, puts default value instead, otherwise validates input values with provided validators.  If you need fallback value on error use 'withFallback' container instead.|
+|[wait][wait-url]|`@wait` `@w`|Waits for specified promise.|
 
 [array-url]: API.md#array
+[async-url]: API.md#async
 [bool-url]: API.md#bool
 [date-url]: API.md#date
 [defined-url]: API.md#defined
@@ -359,6 +363,7 @@ tml`
 [object-url]: API.md#object
 [object2-url]: API.md#object2
 [oneOf-url]: API.md#oneOf
+[promise-url]: API.md#promise
 [regex-url]: API.md#regex
 [string-url]: API.md#string
 [unique-url]: API.md#unique
@@ -386,3 +391,4 @@ tml`
 [setDep-url]: API.md#setDep
 [setVDep-url]: API.md#setVDep
 [useDefault-url]: API.md#useDefault
+[wait-url]: API.md#wait

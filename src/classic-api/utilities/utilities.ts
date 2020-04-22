@@ -1,4 +1,4 @@
-import { Error, ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
+import { Async, Error, ErrorCallback, MetaData, Relevance, Validator } from '@lib/classic-api/types';
 import { identity, isPromise } from '@lib/classic-api/utilities/types';
 
 export const setMetaPath = (meta: MetaData, path: string | number | Array<any>): MetaData => (meta && {
@@ -22,6 +22,16 @@ export const getFromMeta = <T>(field: string, meta: MetaData): T => (
   meta ? meta._deps[field] : null
 );
 
+export const postAsyncToMeta = <T>(value: Promise<T>, field: string | number, meta: MetaData): Promise<T> => (
+  meta
+    ? (meta._asyncStack[field] = value)
+    : value
+);
+
+export const getAsyncFromMeta = <T>(field: string, meta: MetaData): Promise<T> => (
+  meta ? meta._asyncStack[field] : null
+);
+
 export const applyError = (error: Error, onError: ErrorCallback, meta: MetaData): null => (
   onError && onError(error, meta), null
 );
@@ -31,22 +41,33 @@ export const throwValidatorError = (validator: string) => {
 };
 
 export const passValidators = (value: any, onError: ErrorCallback, meta: MetaData, validators: Array<Validator<any>>): any => {
-  for (let i = 0; i < validators.length; i++) {
+  for (let i = 0; i < validators.length;) {
     if (isPromise(value)) {
-      for (; i < validators.length; i++) {
-        const validator = validators[i];
+      let hasError = false;
 
-        value = value.then((inValue: any) => (
-          inValue !== null
-            ? validator(inValue, onError, meta)
-            : null
-        ));
+      const onSeqError = (error: Error, meta?: MetaData, relevance?: Relevance) => (
+        hasError = true,
+        onError && onError(error, meta, relevance)
+      );
+
+      for (; i < validators.length; i++) {
+        const validator = validators[i] as Async<Validator<any>>;
+
+        value = (
+          validator.async
+            ? validator(value, onSeqError, meta)
+            : value.then((inValue: any) => (
+              !(hasError = hasError && inValue === null)
+                ? validator(inValue, onSeqError, meta)
+                : null
+            ))
+        );
       }
 
       break;
     }
 
-    value = validators[i](value, onError, meta);
+    value = validators[i++](value, onError, meta);
 
     if (value === null) break;
   }
@@ -64,7 +85,7 @@ export const asyncActor = (meta: MetaData): [(value: any, callee: (value: any) =
   const actions: Array<any> = [];
 
   return (
-    meta && meta._async
+    meta && meta._asyncStack
       ? [
         (value: any, callee: (value: any, error?: any) => void) => (
           isPromise(value)

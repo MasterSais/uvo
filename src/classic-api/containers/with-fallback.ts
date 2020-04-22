@@ -8,7 +8,7 @@ import { onAsync, passValidators, throwValidatorError } from '@lib/classic-api/u
  */
 export const withFallback = <T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R> =>
   (
-    (isValidatorsSequence(validators))
+    isValidatorsSequence(validators)
       ? (
         (value: T | R, onError?: ErrorCallback, meta?: MetaData): R => {
           const result = passValidators(value, onError, meta, validators);

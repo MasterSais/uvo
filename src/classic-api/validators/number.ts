@@ -7,7 +7,7 @@ import { applyError, extendMeta } from '@lib/classic-api/utilities/utilities';
 /**
  * {@link docs/classic-api/validators/number}
  */
-export const number = makeCheckable<(<T>(error?: Error) => Validator<T, number>), (<T>(error?: Error) => Validator<T, T>)>(
+export const number = makeCheckable<(<T>(error?: Error) => Validator<T, number>), (<T>(error?: Error) => Validator<T, number>)>(
   (checkOnly: boolean) => <T>(error?: Error): Validator<T, number> =>
     (
       (value: T, onError?: ErrorCallback, meta?: MetaData): number =>

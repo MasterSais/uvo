@@ -24,14 +24,16 @@ export const object = <T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: E
     return isObject(data)
       ? (
         validators
-          ? proceedAsync(
-            validators.reduce((result: R, [key, validator]) => (
-              actAsync(
-                validator(data[key], onError, setMetaPath(meta, key)),
-                (value: any) => result[key as keyof R] = value
-              ),
-              result
-            ), {} as R)
+          ? (
+            proceedAsync(
+              validators.reduce((result: R, [key, validator]) => (
+                actAsync(
+                  validator(data[key], onError, setMetaPath(meta, key)),
+                  (value: any) => result[key as keyof R] = value
+                ),
+                result
+              ), {} as R)
+            )
           )
           : data as unknown as R
       )

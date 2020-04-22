@@ -8,7 +8,7 @@ import { gte } from '@lib/classic-api/validators/is';
 import { integer } from '@lib/classic-api/validators/multiple';
 import { number } from '@lib/classic-api/validators/number';
 import { asyncCases } from '@test/utilities';
-import { right, wrong } from './cases';
+import { cases } from './cases';
 
 describe(`container › ${VALIDATOR_NAME}`, () => {
   asyncCases(
@@ -24,6 +24,6 @@ describe(`container › ${VALIDATOR_NAME}`, () => {
           )
         )
       )
-    ), right, wrong
+    ), cases
   )
 });

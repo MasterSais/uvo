@@ -1,7 +1,7 @@
 import { C_ERR } from '@lib/classic-api/names';
 import { Error, ErrorCallback, MetaData, Relevance, Result, Validator } from '@lib/classic-api/types';
 import { callee, isFunction } from '@lib/classic-api/utilities/types';
-import { throwValidatorError } from '@lib/classic-api/utilities/utilities';
+import { onAsync, throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/containers/with-errors}
@@ -29,14 +29,16 @@ export const withErrors = <T, R>(validator: Validator<T, R>, commonErrorProcesso
 
           const result = validator(value, errorProcessor, meta);
 
-          const actualErrors = errors.filter(({ relevance }) => relevance.value);
+          return onAsync(result, result => {
+            const actualErrors = errors.filter(({ relevance }) => relevance.value);
 
-          return {
-            result,
-            errors: actualErrors.length > 0
-              ? actualErrors.map(({ error }) => error)
-              : null
-          };
+            return ({
+              result,
+              errors: actualErrors.length > 0
+                ? actualErrors.map(({ error }) => error)
+                : null
+            });
+          });
         }
       )
       : throwValidatorError(C_ERR)

@@ -1,9 +1,6 @@
-export const right: Array<any> = [
+export const cases: Array<any> = [
   [12, { result: 12, errors: null }],
-  ['12', { result: 12, errors: null }]
-];
-
-export const wrong: Array<any> = [
+  ['12', { result: 12, errors: null }],
   [null, { result: null, errors: ['number'] }],
   [undefined, { result: null, errors: ['number'] }],
   [NaN, { result: null, errors: ['number'] }],

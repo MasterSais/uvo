@@ -4,7 +4,7 @@
 ### `array`
 
 ```js
-array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>
+array(itemSpec?: Array<Validator<any>> | Validator<any>, error?: Error): Validator<Array<any>, Array<any>>
 ```
 Checks value to be an array.
 
@@ -52,6 +52,35 @@ anotherOne([0, 1, 20]); // '20' will be clamped to '10'.
 
 anotherOne([0, 1, 2, 3]); // too long.
 // => null
+```
+
+### `async`
+
+```js
+promise<T>(name: string, error?: Error): Validator<Promise<T>, Promise<T>>
+```
+Checks value to be a promise. Settles value to async storage. Can be awaited somewhere later.
+
+```js
+import * as v from 'uvo';
+
+// Validate promise and object as it's result.
+v.withPromise(
+  v.consecutive(
+    v.async('objPromise'),
+    v.object2([
+      ['id', v.number()],
+      ['name', v.string()],
+    ])
+  )
+);
+
+// Validate array of promises.
+v.withMeta(
+  v.withPromise(
+    v.array([v.async(), v.number()])
+  )
+);
 ```
 
 ### `bool`
@@ -694,6 +723,35 @@ v.oneOf.not([0, 1, 2])(3);
 
 v.oneOf.not('abcdefg')('f');
 // => null
+```
+
+### `promise`
+
+```js
+promise<T>(error?: Error): Validator<Promise<T>, Promise<T>>
+```
+Checks value to be a promise.
+
+```js
+import * as v from 'uvo';
+
+// Validate promise and object as it's result.
+v.withPromise(
+  v.consecutive(
+    v.promise(),
+    v.object2([
+      ['id', v.number()],
+      ['name', v.string()],
+    ])
+  )
+);
+
+// Validate array of promises.
+v.withMeta(
+  v.withPromise(
+    v.array([v.promise(), v.number()])
+  )
+);
 ```
 
 ### `regex`
@@ -1489,6 +1547,35 @@ simpleOne('Stringu'); // too short.
 
 simpleOne('Stringuuuuuuuuuu');
 // => 'Stringuuuuuuuuuu'
+```
+
+### `wait`
+
+```js
+wait<T>(name: string): Validator<T, Promise<T>>
+```
+Waits for specified promise.
+
+```js
+import * as v from 'uvo';
+
+// Validate promise and object as it's result.
+v.withPromise(
+  v.consecutive(
+    v.async('objPromise'),
+    v.object2([
+      ['id', v.number()],
+      ['name', v.string()],
+    ])
+  )
+);
+
+// Validate array of promises.
+v.withMeta(
+  v.withPromise(
+    v.array([v.async(), v.number()])
+  )
+);
 ```
 
 ## `Logs`

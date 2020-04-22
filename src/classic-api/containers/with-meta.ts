@@ -1,7 +1,7 @@
 import { C_MET } from '@lib/classic-api/names';
 import { ErrorCallback, Validator } from '@lib/classic-api/types';
 import { isFunction } from '@lib/classic-api/utilities/types';
-import { throwValidatorError } from '@lib/classic-api/utilities/utilities';
+import { throwValidatorError, onAsync } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/containers/with-meta}
@@ -15,9 +15,11 @@ export const withMeta = <T, R>(validator: Validator<T, R>, onLogs?: (logs: Array
 
           const result = validator(value, onError, { path: [], _deps: {}, _logs: logs, params: [] });
 
-          onLogs && onLogs(logs);
+          return onAsync(result, (result: any) => {
+            onLogs && onLogs(logs);
 
-          return result;
+            return result;
+          });
         }
       )
       : throwValidatorError(C_MET)

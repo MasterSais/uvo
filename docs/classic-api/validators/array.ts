@@ -3,7 +3,7 @@
  * 
  * @template {`@array(...)` `@a(...)`}
  * 
- * @scheme {array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>}
+ * @scheme {array(itemSpec?: Array<Validator<any>> | Validator<any>, error?: Error): Validator<Array<any>, Array<any>>}
  * 
  * @desc Checks value to be an array.
  * 

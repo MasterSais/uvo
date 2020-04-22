@@ -53,6 +53,12 @@ export const V_NUM: string = 'number';
 export const V_DTE: string = 'date';
 
 /** @type {string} */
+export const V_ASYNC: string = 'async';
+
+/** @type {string} */
+export const V_AWAIT: string = 'await';
+
+/** @type {string} */
 export const V_STR: string = 'string';
 
 /** @type {string} */

@@ -21,7 +21,7 @@ export declare type MetaData = {
   params: Array<any>;
   _deps: ObjectLike;
   _logs: Array<[string, any, Array<any>]>;
-  _async?: boolean;
+  _asyncStack?: ObjectLike;
 };
 
 /**
@@ -58,6 +58,11 @@ export declare type Validator<T, R = T> = (value: T, onError?: ErrorCallback, me
  * Function with invertible supplement.
  */
 export declare type Invertible<T> = T & { not: T };
+
+/**
+ * Async validator.
+ */
+export declare type Async<T> = T & { async: boolean };
 
 /**
  * All primitive types.

@@ -1,10 +1,14 @@
-import { Checkable, Error, ErrorCallback, Invertible, Lengthy, MetaData, Validator } from '@lib/classic-api/types';
+import { Async, Checkable, Error, ErrorCallback, Invertible, Lengthy, MetaData, Validator } from '@lib/classic-api/types';
 import { callee, isDefined, isFunction, isLengthy, isNumber } from '@lib/classic-api/utilities/types';
 import { applyError, extendMeta, throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 export const invertCondition = (condition: boolean, invert: boolean) => invert ? !condition : condition;
 
 export const invertError = (name: string, invert: boolean) => invert ? `not:${name}` : name;
+
+export const makeAsync = <T>(validator: T): Async<T> => (
+  (validator as any as Async<T>).async = true, validator as any as Async<T>
+);
 
 export const makeInvertible = <T>(factory: (invert: boolean) => T): Invertible<T> => {
   const validator = factory(false) as Invertible<T>;
