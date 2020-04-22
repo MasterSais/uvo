@@ -1,6 +1,7 @@
 import { S_GDP } from '@lib/classic-api/names';
 import { ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { getFromMeta, isFunction, isString, isValidatorsSequence, reduceValidators, throwValidatorError, toArray } from '@lib/classic-api/utilities';
+import { isFunction, isString, isValidatorsSequence, toArray } from '@lib/classic-api/utilities/types';
+import { getFromMeta, passValidators, throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/spreaders/get-dep}
@@ -20,7 +21,7 @@ export const getDep = <T>(field: string, preValidator?: (dep: T) => Validator<T>
 
               return (
                 (isValidatorsSequence(validatorsList) && meta)
-                  ? reduceValidators(value, onError, meta, validatorsList)
+                  ? passValidators(value, onError, meta, validatorsList)
                   : throwValidatorError(S_GDP)
               );
             }

@@ -1,6 +1,7 @@
 import { V_UQ } from '@lib/classic-api/names';
 import { Error, ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { applyError, extendMeta, isArray, isDefined, isFunction, setMetaPath } from '@lib/classic-api/utilities';
+import { isArray, isDefined, isFunction } from '@lib/classic-api/utilities/types';
+import { applyError, extendMeta, setMetaPath } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/validators/unique}

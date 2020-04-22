@@ -1,6 +1,7 @@
 import { V_DEF, V_EM, V_EQ, V_GTE, V_IS, V_LTE, V_OOF, V_REG } from '@lib/classic-api/names';
 import { Error, Validator } from '@lib/classic-api/types';
-import { hasIndex, invertCondition, invertError, isDefined, isFactory, isOneType, makeInvertible } from '@lib/classic-api/utilities';
+import { invertCondition, invertError, isFactory, makeInvertible } from '@lib/classic-api/utilities/factories';
+import { hasIndex, isDefined, isOneType } from '@lib/classic-api/utilities/types';
 
 /**
  * {@link docs/classic-api/validators/is}

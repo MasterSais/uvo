@@ -9,7 +9,7 @@
       "file": "./src/classic-api/names.ts"
     },
     {
-      "file": "./src/classic-api/utilities.ts",
+      "dir": "./src/classic-api/utilities",
       "removeExports": true
     },
     {

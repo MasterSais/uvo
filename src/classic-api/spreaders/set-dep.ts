@@ -1,6 +1,7 @@
 import { S_SDP } from '@lib/classic-api/names';
 import { ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { callee, isDefined, postToMeta, throwValidatorError } from '@lib/classic-api/utilities';
+import { callee, isDefined } from '@lib/classic-api/utilities/types';
+import { postToMeta, throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/spreaders/set-dep}

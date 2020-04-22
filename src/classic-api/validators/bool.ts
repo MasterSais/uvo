@@ -1,6 +1,7 @@
 import { V_BLN } from '@lib/classic-api/names';
 import { Error, ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { applyError, extendMeta, makeCheckable } from '@lib/classic-api/utilities';
+import { makeCheckable } from '@lib/classic-api/utilities/factories';
+import { applyError, extendMeta } from '@lib/classic-api/utilities/utilities';
 
 const possibleValues = [false, true, 0, 1, '0', '1', 'false', 'true'];
 

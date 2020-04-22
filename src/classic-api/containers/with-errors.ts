@@ -1,6 +1,7 @@
 import { C_ERR } from '@lib/classic-api/names';
 import { Error, ErrorCallback, MetaData, Relevance, Result, Validator } from '@lib/classic-api/types';
-import { callee, isFunction, throwValidatorError } from '@lib/classic-api/utilities';
+import { callee, isFunction } from '@lib/classic-api/utilities/types';
+import { throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/containers/with-errors}

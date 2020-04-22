@@ -1,6 +1,7 @@
 import { G_PRLL } from '@lib/classic-api/names';
 import { ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { isValidatorsSequence, throwValidatorError } from '@lib/classic-api/utilities';
+import { isValidatorsSequence } from '@lib/classic-api/utilities/types';
+import { throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/groupers/parallel}

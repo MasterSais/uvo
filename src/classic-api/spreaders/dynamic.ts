@@ -1,6 +1,7 @@
 import { S_DYN } from '@lib/classic-api/names';
 import { ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { isFunction, reduceValidators, throwValidatorError, toArray } from '@lib/classic-api/utilities';
+import { isFunction, toArray } from '@lib/classic-api/utilities/types';
+import { passValidators, throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/spreaders/dynamic}
@@ -14,7 +15,7 @@ export const dynamic = <T>(preValidator: () => Validator<T> | Array<Validator<T>
 
           if (!validators) return value;
 
-          return reduceValidators(value, onError, meta, toArray(validators));
+          return passValidators(value, onError, meta, toArray(validators));
         }
       )
       : throwValidatorError(S_DYN)

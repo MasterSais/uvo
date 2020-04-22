@@ -1,5 +1,5 @@
 import { Primitive, Validator } from '@lib/classic-api/types';
-import { callee, isFunction, isRegEx } from '@lib/classic-api/utilities';
+import { callee, isFunction, isRegEx } from '@lib/classic-api/utilities/types';
 
 /**
  * {@link docs/classic-api/processors/value-map}

@@ -1,6 +1,7 @@
 import { C_OER } from '@lib/classic-api/names';
 import { ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { callee, isFunction, isValidatorsSequence, reduceValidators, throwValidatorError } from '@lib/classic-api/utilities';
+import { callee, isFunction, isValidatorsSequence } from '@lib/classic-api/utilities/types';
+import { passValidators, throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/containers/with-on-error}
@@ -10,7 +11,7 @@ export const withOnError = <T>(errorProcessor: ErrorCallback, ...validators: Arr
     isValidatorsSequence(validators) && isFunction(errorProcessor)
       ? (
         (value: any, _onError?: ErrorCallback, meta?: MetaData): T =>
-          reduceValidators(
+          passValidators(
             value,
             (error, meta, relevance) => (
               errorProcessor(callee(error)(meta), meta, relevance)

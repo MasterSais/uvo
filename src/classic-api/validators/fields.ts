@@ -1,6 +1,7 @@
 import { V_FIELDS } from '@lib/classic-api/names';
 import { Error, ErrorCallback, FieldsSpec, MetaData, ObjectLike, Validator } from '@lib/classic-api/types';
-import { applyError, extendMeta, isArray, isEmpty, isObject, isString, throwValidatorError } from '@lib/classic-api/utilities';
+import { isArray, isEmpty, isObject, isString } from '@lib/classic-api/utilities/types';
+import { applyError, extendMeta, throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 const fieldsMap = {
   op: <T extends ObjectLike>(value: T, names: Array<FieldsSpec | string>): number =>

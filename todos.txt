@@ -6,6 +6,10 @@
 
   - Templating api CJS module
 
+  - Test coverage into Doc
+
+  - Classic API -> Base API
+
   - Perf tests
 
   - Dynamic should accept value

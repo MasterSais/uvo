@@ -1,5 +1,5 @@
 import { V_LEN, V_MNLEN, V_MXLEN } from '@lib/classic-api/names';
-import { lengthFactory } from '@lib/classic-api/utilities';
+import { lengthFactory } from '@lib/classic-api/utilities/factories';
 
 /**
  * {@link docs/classic-api/validators/length}

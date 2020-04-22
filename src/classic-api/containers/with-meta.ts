@@ -1,6 +1,7 @@
 import { C_MET } from '@lib/classic-api/names';
 import { ErrorCallback, Validator } from '@lib/classic-api/types';
-import { isFunction, throwValidatorError } from '@lib/classic-api/utilities';
+import { isFunction } from '@lib/classic-api/utilities/types';
+import { throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/containers/with-meta}

@@ -1,5 +1,5 @@
 import { ObjectLike, Validator } from '@lib/classic-api/types';
-import { callee, isString } from '@lib/classic-api/utilities';
+import { callee, isString } from '@lib/classic-api/utilities/types';
 
 /**
  * {@link docs/classic-api/processors/strip}

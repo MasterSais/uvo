@@ -1,39 +1,40 @@
 import { consecutive } from '@lib/classic-api/groupers/consecutive';
 import { V_OBJ } from '@lib/classic-api/names';
 import { Error, ErrorCallback, MetaData, ObjectLike, ObjectSpec, Validator } from '@lib/classic-api/types';
-import { applyError, extendMeta, isObject, setMetaPath, throwValidatorError, toArray } from '@lib/classic-api/utilities';
+import { isObject, toArray } from '@lib/classic-api/utilities/types';
+import { applyError, asyncActor, extendMeta, setMetaPath, throwValidatorError } from '@lib/classic-api/utilities/utilities';
+
+const mapObjectValidators = (spec?: ObjectSpec): Array<[string, Validator<any, any>]> => (
+  isObject(spec)
+    ? Object.keys(spec).map((key) => [key, consecutive(...toArray(spec[key]))])
+    : spec && throwValidatorError(V_OBJ)
+);
 
 /**
  * {@link docs/classic-api/validators/object}
  */
 export const object = <T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R> => {
-  const specList: Array<[string, Array<Validator<any, any>>]> = [];
+  const validators: Array<[string, Validator<any, any>]> = mapObjectValidators(spec);
 
-  const isSpecObject = isObject(spec);
+  return (data: T, onError?: ErrorCallback, meta?: MetaData): R => {
+    const [actAsync, proceedAsync] = asyncActor(meta);
 
-  isSpecObject && (
-    Object
-      .keys(spec)
-      .forEach((key) => specList.push([key, toArray(spec[key])]))
-  );
+    extendMeta(meta, data, V_OBJ);
 
-  spec && !isSpecObject && throwValidatorError(V_OBJ);
-
-  const validators: Array<[string, Validator<any, any>]> =
-    spec && specList.map(([key, processors]) => [key, consecutive(...processors)]);
-
-  return (data: T, onError?: ErrorCallback, meta?: MetaData): R =>
-    (
-      extendMeta(meta, data, V_OBJ),
-
-      isObject(data)
-        ? (
-          validators
-            ? validators.reduce((result: R, [key, validator]) => (
-              result[key as keyof R] = validator(data[key], onError, setMetaPath(meta, key)), result), {} as R
-            )
-            : data as unknown as R
-        )
-        : applyError(error, onError, meta)
-    );
+    return isObject(data)
+      ? (
+        validators
+          ? proceedAsync(
+            validators.reduce((result: R, [key, validator]) => (
+              actAsync(
+                validator(data[key], onError, setMetaPath(meta, key)),
+                (value: any) => result[key as keyof R] = value
+              ),
+              result
+            ), {} as R)
+          )
+          : data as unknown as R
+      )
+      : applyError(error, onError, meta);
+  };
 };

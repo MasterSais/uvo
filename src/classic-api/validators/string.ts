@@ -1,6 +1,8 @@
 import { V_STR } from '@lib/classic-api/names';
 import { Error, ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { applyError, extendMeta, isDefined, isFunction, isObjectLike, makeCheckable } from '@lib/classic-api/utilities';
+import { makeCheckable } from '@lib/classic-api/utilities/factories';
+import { isDefined, isFunction, isObjectLike } from '@lib/classic-api/utilities/types';
+import { applyError, extendMeta } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/validators/string}

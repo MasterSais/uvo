@@ -1,6 +1,7 @@
 import { G_CONS } from '@lib/classic-api/names';
 import { ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { isValidatorsSequence, reduceValidators, throwValidatorError } from '@lib/classic-api/utilities';
+import { isValidatorsSequence } from '@lib/classic-api/utilities/types';
+import { passValidators, throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/groupers/consecutive}
@@ -10,7 +11,7 @@ export const consecutive = <T>(...validators: Array<Validator<any, T>>): Validat
     isValidatorsSequence(validators)
       ? (
         (value: any, onError?: ErrorCallback, meta?: MetaData): T =>
-          reduceValidators(value, onError, meta, validators)
+          passValidators(value, onError, meta, validators)
       )
       : throwValidatorError(G_CONS)
   );

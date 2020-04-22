@@ -1,6 +1,6 @@
 import { V_EVN, V_INT, V_MLP } from '@lib/classic-api/names';
 import { Error, Invertible, Validator } from '@lib/classic-api/types';
-import { multipleFactory } from '@lib/classic-api/utilities';
+import { multipleFactory } from '@lib/classic-api/utilities/factories';
 
 /**
  * {@link docs/classic-api/validators/multiple}

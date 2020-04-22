@@ -1,6 +1,7 @@
 import { G_TRM } from '@lib/classic-api/names';
 import { Validator } from '@lib/classic-api/types';
-import { isValidatorsSequence, throwValidatorError } from '@lib/classic-api/utilities';
+import { isValidatorsSequence } from '@lib/classic-api/utilities/types';
+import { throwValidatorError } from '@lib/classic-api/utilities/utilities';
 
 /**
  * {@link docs/classic-api/groupers/transform}

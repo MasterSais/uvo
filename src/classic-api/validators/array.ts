@@ -1,32 +1,49 @@
 import { consecutive } from '@lib/classic-api/groupers/consecutive';
 import { V_ARR } from '@lib/classic-api/names';
 import { Error, ErrorCallback, MetaData, Validator } from '@lib/classic-api/types';
-import { applyError, extendMeta, isArray, isValidatorsSequence, setMetaPath, throwValidatorError, toArray } from '@lib/classic-api/utilities';
+import { isArray, isValidatorsSequence, toArray } from '@lib/classic-api/utilities/types';
+import { applyError, asyncActor, extendMeta, setMetaPath, throwValidatorError } from '@lib/classic-api/utilities/utilities';
+
+const mapArrayValidators = <T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, validators?: Array<Validator<any>>) => (
+  validators = toArray(itemSpec),
+
+  isValidatorsSequence(validators)
+    ? consecutive(...validators)
+    : itemSpec && throwValidatorError(V_ARR)
+);
 
 /**
  * {@link docs/classic-api/validators/array}
  */
 export const array = <T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>> => {
-  const validators = toArray(itemSpec);
-
-  const isValidSequence = isValidatorsSequence(validators);
-
-  itemSpec && !isValidSequence && throwValidatorError(V_ARR);
-
-  const validator = isValidSequence && consecutive(...validators);
+  const validator = mapArrayValidators(itemSpec);
 
   return (
-    (data: Array<any>, onError?: ErrorCallback, meta?: MetaData): Array<T> =>
-      (
-        extendMeta(meta, data, V_ARR),
+    (data: Array<any>, onError?: ErrorCallback, meta?: MetaData): Array<T> => {
+      const [actAsync, proceedAsync] = asyncActor(meta);
 
+      extendMeta(meta, data, V_ARR);
+
+      return (
         isArray(data)
           ? (
             validator
-              ? data.map((value, index) => validator(value, onError, setMetaPath(meta, index)))
+              ? (
+                data = data.slice(0),
+
+                data.forEach((value, index) =>
+                  actAsync(
+                    validator(value, onError, setMetaPath(meta, index)),
+                    (extValue: any) => data[index] = extValue
+                  )
+                ),
+
+                proceedAsync(data)
+              )
               : data
           )
           : applyError(error, onError, meta)
-      )
+      );
+    }
   );
 };
