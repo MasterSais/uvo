@@ -1,5 +1,5 @@
-import { V_LEN as VALIDATOR_NAME } from '@lib/classic-api/names';
-import { length as validator } from '@lib/classic-api/validators/length';
+import { V_LEN as VALIDATOR_NAME } from '@lib/base-api/names';
+import { length as validator } from '@lib/base-api/validators/length';
 import { template } from '@lib/templating-api/template';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
 import { right, rightForNot, wrong, wrongForNot } from './cases';

@@ -1,4 +1,4 @@
-# `Classic API`
+# `Base API`
 ## `Validators`
 Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.
 ### `array`
@@ -1915,7 +1915,7 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 ```
 
 # `Templating API`
-Templating api provides string based validators creation. Much more compact and flexible against classic API.
+Templating api provides string based validators creation. Much more compact and flexible against base API.
 All errors and injections are placed in separated structures.
 ## `Keys`
 ### `array`

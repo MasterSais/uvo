@@ -1,4 +1,4 @@
-import { isArray, isFiniteNumber, toArray } from '@lib/classic-api/utilities/types';
+import { isArray, isFiniteNumber, toArray } from '@lib/base-api/utilities/types';
 import { CND, CNT, ERR, GR, GT, INJ, LCB, LRB, LSB, MNS, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { semanticRules } from '@lib/templating-api/semantic-rules';
 import { Lexeme, ValidatorData } from '@lib/templating-api/types';

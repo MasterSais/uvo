@@ -1,5 +1,5 @@
-import { withMeta } from '@lib/classic-api/containers/with-meta';
-import { Validator } from '@lib/classic-api/types';
+import { withMeta } from '@lib/base-api/containers/with-meta';
+import { Validator } from '@lib/base-api/types';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 import { extractInjection } from '@lib/templating-api/utilities';
 

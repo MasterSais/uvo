@@ -1,6 +1,6 @@
-import { dynamic } from '@lib/classic-api/spreaders/dynamic';
-import { identity } from '@lib/classic-api/utilities/types';
-import { object2 } from '@lib/classic-api/validators/object2';
+import { dynamic } from '@lib/base-api/spreaders/dynamic';
+import { identity } from '@lib/base-api/utilities/types';
+import { object2 } from '@lib/base-api/validators/object2';
 import { DLM } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractSequence } from '@lib/templating-api/utilities';

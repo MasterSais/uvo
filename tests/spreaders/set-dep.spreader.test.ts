@@ -1,5 +1,5 @@
-import { S_SDP as VALIDATOR_NAME } from '@lib/classic-api/names';
-import { setDep as validator } from '@lib/classic-api/spreaders/set-dep';
+import { S_SDP as VALIDATOR_NAME } from '@lib/base-api/names';
+import { setDep as validator } from '@lib/base-api/spreaders/set-dep';
 import { emptyFunction, emptyMeta, paramsCases } from '@test/utilities';
 
 describe(`spreader › ${VALIDATOR_NAME}`, () => {

@@ -1,6 +1,6 @@
-import { or as validator } from '@lib/classic-api/groupers/or';
-import { G_OR as VALIDATOR_NAME, V_NUM } from '@lib/classic-api/names';
-import { number } from '@lib/classic-api/validators/number';
+import { or as validator } from '@lib/base-api/groupers/or';
+import { G_OR as VALIDATOR_NAME, V_NUM } from '@lib/base-api/names';
+import { number } from '@lib/base-api/validators/number';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightParams, wrong, wrongParams } from './cases';
 

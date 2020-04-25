@@ -1,4 +1,4 @@
-import { Validator } from '@lib/classic-api/types';
+import { Validator } from '@lib/base-api/types';
 import { composer } from '@lib/templating-api/composer';
 import { lexicalAnalyzer } from '@lib/templating-api/lexical-analyzer';
 import { semanticAnalyzer } from '@lib/templating-api/semantic-analyzer';

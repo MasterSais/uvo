@@ -1,3 +1,3 @@
-import { withPromise } from '@lib/classic-api/containers/with-promise';
+import { withPromise } from '@lib/base-api/containers/with-promise';
 
 export const promiseBuilder = () => withPromise;

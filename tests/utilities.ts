@@ -1,4 +1,4 @@
-import { Error, MetaData, Validator } from '@lib/classic-api/types';
+import { Error, MetaData, Validator } from '@lib/base-api/types';
 
 export const notNullError = () => 'error';
 

@@ -8,7 +8,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will com
 
 |Bundles (minified)|esm|cjs|umd|
 |:-:|:-:|:-:|:-:|
-|Classic API|~7.9kb|~8.2kb|~11.4kb|
+|Base API|~7.9kb|~8.2kb|~11.4kb|
 |Templating API|~9.1kb|
 
 Uvo has own types definition file for `typescript`.
@@ -289,7 +289,7 @@ tml`
 
 ## `API`
 
-|Classic API|Templating API|Description|
+|Base API|Templating API|Description|
 |:-|:-|:-|
 |[array][array-url]|`@array(...)` `@a(...)`|Checks value to be an array.|
 |[async][async-url]|`@async` `@a`|Checks value to be a promise. Settles value to async storage. Can be awaited somewhere later.|

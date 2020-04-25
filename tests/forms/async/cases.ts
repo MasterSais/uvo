@@ -37,5 +37,7 @@ export const cases3: Array<any> = [
 ];
 
 export const cases4: Array<any> = [
+  [{ user: resolve({ id: 1, name: 'abc' }) }, { user: { id: 1, name: 'abc' }, roles: [1] }],
   [{ user: resolve({ id: 1, name: 'abc' }), roles: null }, { user: { id: 1, name: 'abc' }, roles: [1] }],
+  [{ user: reject() }, { user: null, roles: null }],
 ];

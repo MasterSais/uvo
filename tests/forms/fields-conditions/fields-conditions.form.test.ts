@@ -1,11 +1,11 @@
-import { consecutive } from '@lib/classic-api/groupers/consecutive';
-import { fields } from '@lib/classic-api/validators/fields';
-import { gte } from '@lib/classic-api/validators/is';
-import { length, minLen } from '@lib/classic-api/validators/length';
-import { number } from '@lib/classic-api/validators/number';
-import { object } from '@lib/classic-api/validators/object';
-import { object2 } from '@lib/classic-api/validators/object2';
-import { string } from '@lib/classic-api/validators/string';
+import { consecutive } from '@lib/base-api/groupers/consecutive';
+import { fields } from '@lib/base-api/validators/fields';
+import { gte } from '@lib/base-api/validators/is';
+import { length, minLen } from '@lib/base-api/validators/length';
+import { number } from '@lib/base-api/validators/number';
+import { object } from '@lib/base-api/validators/object';
+import { object2 } from '@lib/base-api/validators/object2';
+import { string } from '@lib/base-api/validators/string';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases } from './cases';
 

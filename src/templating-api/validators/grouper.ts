@@ -1,7 +1,7 @@
-import { consecutive } from '@lib/classic-api/groupers/consecutive';
-import { or } from '@lib/classic-api/groupers/or';
-import { parallel } from '@lib/classic-api/groupers/parallel';
-import { Validator } from '@lib/classic-api/types';
+import { consecutive } from '@lib/base-api/groupers/consecutive';
+import { or } from '@lib/base-api/groupers/or';
+import { parallel } from '@lib/base-api/groupers/parallel';
+import { Validator } from '@lib/base-api/types';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 import { extractSequence } from '@lib/templating-api/utilities';
 

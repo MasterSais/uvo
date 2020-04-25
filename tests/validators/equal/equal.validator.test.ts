@@ -1,6 +1,6 @@
-import { V_EQ as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { V_EQ as VALIDATOR_NAME } from '@lib/base-api/names';
 import { template } from '@lib/templating-api/template';
-import { equal as validator } from '@lib/classic-api/validators/is';
+import { equal as validator } from '@lib/base-api/validators/is';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
 

@@ -1,4 +1,4 @@
-import { clamp as processor } from '@lib/classic-api/processors/clamp';
+import { clamp as processor } from '@lib/base-api/processors/clamp';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('processor › clamp', () => {

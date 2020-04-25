@@ -1,4 +1,4 @@
-import { keysMap as processor } from '@lib/classic-api/processors/keys-map';
+import { keysMap as processor } from '@lib/base-api/processors/keys-map';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('processor › strip', () => {

@@ -1,7 +1,7 @@
 
-import { V_INT as VALIDATOR_NAME, V_MLP } from '@lib/classic-api/names';
+import { V_INT as VALIDATOR_NAME, V_MLP } from '@lib/base-api/names';
 import { template } from '@lib/templating-api/template';
-import { integer as validator } from '@lib/classic-api/validators/multiple';
+import { integer as validator } from '@lib/base-api/validators/multiple';
 import { baseCases, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
 

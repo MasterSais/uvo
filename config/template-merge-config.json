@@ -3,35 +3,35 @@
   "outFile": "index.template.ts",
   "files": [
     {
-      "file": "./src/classic-api/types.ts",
+      "file": "./src/base-api/types.ts",
       "removeExports": true
     },
     {
-      "file": "./src/classic-api/names.ts",
+      "file": "./src/base-api/names.ts",
       "removeExports": true
     },
     {
-      "dir": "./src/classic-api/utilities",
+      "dir": "./src/base-api/utilities",
       "removeExports": true
     },
     {
-      "dir": "./src/classic-api/groupers",
+      "dir": "./src/base-api/groupers",
       "removeExports": true
     },
     {
-      "dir": "./src/classic-api/spreaders",
+      "dir": "./src/base-api/spreaders",
       "removeExports": true
     },
     {
-      "dir": "./src/classic-api/validators",
+      "dir": "./src/base-api/validators",
       "removeExports": true
     },
     {
-      "dir": "./src/classic-api/processors",
+      "dir": "./src/base-api/processors",
       "removeExports": true
     },
     {
-      "dir": "./src/classic-api/containers",
+      "dir": "./src/base-api/containers",
       "removeExports": true
     },
     {

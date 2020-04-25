@@ -18,7 +18,7 @@ const parseTemplate = fileName => {
     content = content.replace(name, `~${Math.round(size / 102.4) / 10}kb`)
   }
 
-  const header = `|Classic API|Templating API|Description|\n|:-|:-|:-|`;
+  const header = `|Base API|Templating API|Description|\n|:-|:-|:-|`;
 
   const rows = [];
 

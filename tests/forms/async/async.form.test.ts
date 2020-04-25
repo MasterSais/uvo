@@ -1,17 +1,17 @@
-import { withErrors } from '@lib/classic-api/containers/with-errors';
-import { withMeta } from '@lib/classic-api/containers/with-meta';
-import { withPromise } from '@lib/classic-api/containers/with-promise';
-import { consecutive } from '@lib/classic-api/groupers/consecutive';
-import { getDep } from '@lib/classic-api/spreaders/get-dep';
-import { setDep } from '@lib/classic-api/spreaders/set-dep';
-import { wait } from '@lib/classic-api/spreaders/wait';
-import { array } from '@lib/classic-api/validators/array';
-import { async } from '@lib/classic-api/validators/async';
-import { number } from '@lib/classic-api/validators/number';
-import { object } from '@lib/classic-api/validators/object';
-import { object2 } from '@lib/classic-api/validators/object2';
-import { promise } from '@lib/classic-api/validators/promise';
-import { string } from '@lib/classic-api/validators/string';
+import { withErrors } from '@lib/base-api/containers/with-errors';
+import { withMeta } from '@lib/base-api/containers/with-meta';
+import { withPromise } from '@lib/base-api/containers/with-promise';
+import { consecutive } from '@lib/base-api/groupers/consecutive';
+import { getDep } from '@lib/base-api/spreaders/get-dep';
+import { setDep } from '@lib/base-api/spreaders/set-dep';
+import { wait } from '@lib/base-api/spreaders/wait';
+import { array } from '@lib/base-api/validators/array';
+import { async } from '@lib/base-api/validators/async';
+import { number } from '@lib/base-api/validators/number';
+import { object } from '@lib/base-api/validators/object';
+import { object2 } from '@lib/base-api/validators/object2';
+import { promise } from '@lib/base-api/validators/promise';
+import { string } from '@lib/base-api/validators/string';
 import { asyncCases, resolve } from '@test/utilities';
 import { cases1, cases2, cases3, cases4 } from './cases';
 
@@ -99,7 +99,7 @@ describe(`async form › wait`, () => {
           ['roles',
             wait('user'),
             getDep('userId'),
-            (userId: number) => resolve([userId])
+            (userId: number) => userId ? resolve([userId]) : null
           ],
         ])
       )
