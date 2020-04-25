@@ -10,12 +10,12 @@ import { async } from '@lib/base-api/validators/async';
 import { number } from '@lib/base-api/validators/number';
 import { object } from '@lib/base-api/validators/object';
 import { object2 } from '@lib/base-api/validators/object2';
-import { promise } from '@lib/base-api/validators/promise';
 import { string } from '@lib/base-api/validators/string';
+import { template } from '@lib/templating-api/template';
 import { asyncCases, resolve } from '@test/utilities';
 import { cases1, cases2, cases3, cases4 } from './cases';
 
-describe(`async form › object`, () => {
+describe(`async form › object`, () =>
   asyncCases(
     withMeta(
       withPromise(
@@ -26,9 +26,9 @@ describe(`async form › object`, () => {
       )
     ), cases1
   )
-});
+);
 
-describe(`async form › object › advanced`, () => {
+describe(`async form › object › advanced`, () =>
   asyncCases(
     withMeta(
       withPromise(
@@ -39,9 +39,20 @@ describe(`async form › object › advanced`, () => {
       )
     ), cases1
   )
-});
+);
 
-describe(`async form › object › dynamic`, () => {
+describe(`async form › object › template`, () =>
+  asyncCases(
+    template(`
+      @object(
+        id : @number,
+        name : @string
+      ) ~p ~m
+    `)(), cases1
+  )
+);
+
+describe(`async form › object › dynamic`, () =>
   asyncCases(
     withMeta(
       withPromise(
@@ -55,9 +66,22 @@ describe(`async form › object › dynamic`, () => {
       )
     ), cases1
   )
-});
+);
 
-describe(`async form › array`, () => {
+describe(`async form › object › template › dynamic`, () =>
+  asyncCases(
+    template(`
+      @object(
+        id : @number,
+        name : @string
+      ) : $0 ~p ~m
+    `)(
+      [(obj: any) => resolve(obj)]
+    ), cases1
+  )
+);
+
+describe(`async form › array`, () =>
   asyncCases(
     withMeta(
       withPromise(
@@ -65,17 +89,25 @@ describe(`async form › array`, () => {
       )
     ), cases2
   )
-});
+);
 
-describe(`async form › errors`, () => {
+describe(`async form › array › template`, () =>
+  asyncCases(
+    template(`
+      @array( @number ) ~p ~m
+    `)(), cases2
+  )
+);
+
+describe(`async form › errors`, () =>
   asyncCases(
     withMeta(
       withErrors(
         withPromise(
           consecutive(
-            promise('promiseErr'),
+            async(null, 'promiseErr'),
             object2([
-              ['id', promise(), number('numberErr')],
+              ['id', async(), number('numberErr')],
               ['name', string('stringErr')],
             ], 'objectErr')
           )
@@ -83,9 +115,22 @@ describe(`async form › errors`, () => {
       )
     ), cases3
   )
-});
+);
 
-describe(`async form › wait`, () => {
+describe(`async form › template › errors`, () =>
+  asyncCases(
+    template(`
+      @async!0 : @object(
+        id : @async : @number!2,
+        name : @string!3
+      )!1 ~p ~e ~m
+    `)(
+      null, ['promiseErr', 'objectErr', 'numberErr', 'stringErr']
+    ), cases3
+  )
+);
+
+describe(`async form › wait`, () =>
   asyncCases(
     withMeta(
       withPromise(
@@ -99,10 +144,28 @@ describe(`async form › wait`, () => {
           ['roles',
             wait('user'),
             getDep('userId'),
-            (userId: number) => userId ? resolve([userId]) : null
+            (userId: number) => userId ? resolve([userId]) : undefined
           ],
         ])
       )
     ), cases4
   )
-});
+);
+
+describe(`async form › template › wait`, () =>
+  asyncCases(
+    template(`
+      @o(
+        user @p(0) @o(
+          id @n #0,
+          name @s
+        ),
+        roles @w(0) $0(#0)
+      ) ~p ~m
+    `)(
+      [
+        (userId: number) => resolve([userId])
+      ]
+    ), cases4
+  )
+);

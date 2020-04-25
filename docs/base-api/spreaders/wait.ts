@@ -1,7 +1,7 @@
 /**
  * @name {wait}
  * 
- * @template {`@wait` `@w`}
+ * @template {`@wait(...)` `@w(...)`}
  * 
  * @scheme {wait<T>(name: string): Validator<T, Promise<T>>}
  * 
@@ -15,20 +15,20 @@
 //#example
 import * as v from 'uvo';
 
-// Validate promise and object as it's result.
-v.withPromise(
-  v.consecutive(
-    v.async('objPromise'),
-    v.object2([
-      ['id', v.number()],
-      ['name', v.string()],
-    ])
-  )
-);
-
-// Validate array of promises.
 v.withMeta(
   v.withPromise(
-    v.array([v.async(), v.number()])
+    v.object2([
+      ['user', v.async('user'), ( // Settle 'user' promise.
+        v.object({
+          id: [v.number(), v.setDep('userId')],
+          name: [v.string()]
+        })
+      )],
+      ['roles',
+        v.wait('user'), // Wait for 'user' promise.
+        v.getDep('userId'),
+        // (userId: number) => e.g. request roles
+      ],
+    ])
   )
 );

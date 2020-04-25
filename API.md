@@ -57,28 +57,28 @@ anotherOne([0, 1, 2, 3]); // too long.
 ### `async`
 
 ```js
-promise<T>(name: string, error?: Error): Validator<Promise<T>, Promise<T>>
+async<T>(name?: string, error?: Error): Validator<Promise<T>, Promise<T>>
 ```
-Checks value to be a promise. Settles value to async storage. Can be awaited somewhere later.
+Settles value to async storage. Can be awaited somewhere later.
 
 ```js
 import * as v from 'uvo';
 
-// Validate promise and object as it's result.
-v.withPromise(
-  v.consecutive(
-    v.async('objPromise'),
-    v.object2([
-      ['id', v.number()],
-      ['name', v.string()],
-    ])
-  )
-);
-
-// Validate array of promises.
 v.withMeta(
   v.withPromise(
-    v.array([v.async(), v.number()])
+    v.object2([
+      ['user', v.async('user'), ( // Settle 'user' promise.
+        v.object({
+          id: [v.number(), v.setDep('userId')],
+          name: [v.string()]
+        })
+      )],
+      ['roles',
+        v.wait('user'), // Wait for 'user' promise.
+        v.getDep('userId'),
+        // (userId: number) => e.g. request roles
+      ],
+    ])
   )
 );
 ```
@@ -723,35 +723,6 @@ v.oneOf.not([0, 1, 2])(3);
 
 v.oneOf.not('abcdefg')('f');
 // => null
-```
-
-### `promise`
-
-```js
-promise<T>(error?: Error): Validator<Promise<T>, Promise<T>>
-```
-Checks value to be a promise.
-
-```js
-import * as v from 'uvo';
-
-// Validate promise and object as it's result.
-v.withPromise(
-  v.consecutive(
-    v.promise(),
-    v.object2([
-      ['id', v.number()],
-      ['name', v.string()],
-    ])
-  )
-);
-
-// Validate array of promises.
-v.withMeta(
-  v.withPromise(
-    v.array([v.promise(), v.number()])
-  )
-);
 ```
 
 ### `regex`
@@ -1559,21 +1530,21 @@ Waits for specified promise.
 ```js
 import * as v from 'uvo';
 
-// Validate promise and object as it's result.
-v.withPromise(
-  v.consecutive(
-    v.async('objPromise'),
-    v.object2([
-      ['id', v.number()],
-      ['name', v.string()],
-    ])
-  )
-);
-
-// Validate array of promises.
 v.withMeta(
   v.withPromise(
-    v.array([v.async(), v.number()])
+    v.object2([
+      ['user', v.async('user'), ( // Settle 'user' promise.
+        v.object({
+          id: [v.number(), v.setDep('userId')],
+          name: [v.string()]
+        })
+      )],
+      ['roles',
+        v.wait('user'), // Wait for 'user' promise.
+        v.getDep('userId'),
+        // (userId: number) => e.g. request roles
+      ],
+    ])
   )
 );
 ```

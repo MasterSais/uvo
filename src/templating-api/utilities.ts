@@ -81,6 +81,7 @@ export const extractSequence = (meta: CompilerMeta, data: ValidatorData) => {
 
   return (
     extractValidator(meta, data) ||
+    extractInnerInjectionReference(meta, data, identity) ||
     extractInjection(meta, data, identity) ||
     extractReference(meta, data)
   );

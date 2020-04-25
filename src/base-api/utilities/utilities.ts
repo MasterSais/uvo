@@ -1,5 +1,5 @@
 import { Async, Error, ErrorCallback, MetaData, Relevance, Validator } from '@lib/base-api/types';
-import { identity, isPromise } from '@lib/base-api/utilities/types';
+import { identity, isDefined, isPromise } from '@lib/base-api/utilities/types';
 
 export const setMetaPath = (meta: MetaData, path: string | number | Array<any>): MetaData => (meta && {
   ...meta,
@@ -23,7 +23,7 @@ export const getFromMeta = <T>(field: string, meta: MetaData): T => (
 );
 
 export const postAsyncToMeta = <T>(value: Promise<T>, field: string | number, meta: MetaData): Promise<T> => (
-  meta
+  meta && isDefined(field)
     ? (meta._asyncStack[field] = value)
     : value
 );

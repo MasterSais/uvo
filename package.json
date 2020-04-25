@@ -1,7 +1,7 @@
 {
   "name": "uvo",
   "version": "2.12.0",
-  "description": "JavaScript Universal Single Object Validator",
+  "description": "JavaScript Universal Validation Library",
   "main": "./index.js",
   "module": "./dist/esm/index.js",
   "unpkg": "./dist/esm/index.min.js",
@@ -16,16 +16,16 @@
     "build:merge": "concurrently \"yarn build:merge:lib\" \"yarn build:merge:tml\"",
     "build:merge:lib": "node config/merge-sources.js config/merge-config.json && node config/build-doc.js ./dist/index.ts",
     "build:merge:tml": "node config/merge-sources.js config/template-merge-config.json",
-    "build:modules": "concurrently \"yarn build:umd\" \"yarn build:cjs\" \"yarn build:esm\" \"yarn build:tml:esm\" \"yarn build:types\"",
-    "build:minify": "concurrently \"yarn build:umd:min\" \"yarn build:cjs:min\" \"yarn build:esm:min\" \"yarn build:tml:esm:min\"",
-    "build:umd": "tsc -p config/tsconfig.umd.json",
-    "build:umd:min": "terser --config-file config/terser.config.json -o ./dist/umd/index.min.js -- ./dist/umd/index.js",
+    "build:modules": "concurrently \"yarn build:cjs\" \"yarn build:esm\" \"yarn build:tml:esm\" \"yarn build:tml:cjs\" \"yarn build:types\"",
+    "build:minify": "concurrently \"yarn build:cjs:min\" \"yarn build:esm:min\" \"yarn build:tml:esm:min\" \"yarn build:tml:cjs:min\"",
     "build:cjs": "tsc -p config/tsconfig.cjs.json",
     "build:cjs:min": "terser --config-file config/terser.config.json -o ./dist/cjs/index.min.js -- ./dist/cjs/index.js && node config/const-to-let.js ./dist/cjs/index.min.js",
     "build:esm": "tsc -p config/tsconfig.esm.json",
     "build:esm:min": "terser --config-file config/terser.config.json -o ./dist/esm/index.min.js -- ./dist/esm/index.js && node config/const-to-let.js ./dist/esm/index.min.js",
     "build:tml:esm": "tsc -p config/tsconfig.template.json",
     "build:tml:esm:min": "terser --config-file config/terser.config.json -o ./template/index.js -- ./template/index.template.js && node config/const-to-let.js ./template/index.js",
+    "build:tml:cjs": "tsc -p config/tsconfig.template.cjs.json",
+    "build:tml:cjs:min": "terser --config-file config/terser.config.json -o ./template/cjs/index.js -- ./template/cjs/index.template.js && node config/const-to-let.js ./template/cjs/index.js",
     "build:types": "tsc -p config/tsconfig.types.json",
     "build:doc": "yarn build:doc:api && yarn build:doc:main",
     "build:doc:api": "node config/generate-api.js API.md",
@@ -42,8 +42,8 @@
     "dist/esm",
     "dist/cjs",
     "dist/types",
-    "dist/umd",
-    "template/index.js"
+    "template/index.js",
+    "template/cjs/index.js"
   ],
   "keywords": [
     "es6",
@@ -55,7 +55,8 @@
     "nodejs",
     "validator",
     "templating",
-    "validation"
+    "validation",
+    "async"
   ],
   "author": "Yauheni Zhestiannikau (MasterSais) <evgensvvv@gmail.com>",
   "license": "MIT",
@@ -69,10 +70,10 @@
     "@typescript-eslint/eslint-plugin": "2.29.0",
     "@typescript-eslint/parser": "2.29.0",
     "babel-jest": "25.4.0",
-    "concurrently": "5.1.0",
+    "concurrently": "5.2.0",
     "eslint": "6.8.0",
     "jest": "25.4.0",
-    "terser": "4.6.11",
+    "terser": "4.6.12",
     "typescript": "3.8.3"
   },
   "typings": "./dist/types/index.d.ts"

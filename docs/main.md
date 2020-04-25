@@ -8,13 +8,13 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will com
 
 [size:c-esm]: dist/esm/index.min.js
 [size:c-cjs]: dist/cjs/index.min.js
-[size:c-umd]: dist/umd/index.min.js
 [size:t-esm]: template/index.js
+[size:t-cjs]: template/cjs/index.js
 
-|Bundles (minified)|esm|cjs|umd|
-|:-:|:-:|:-:|:-:|
-|Base API|[size:c-esm]|[size:c-cjs]|[size:c-umd]|
-|Templating API|[size:t-esm]|
+|Bundles (minified)|esm|cjs|
+|:-:|:-:|:-:|
+|Base API|[size:c-esm]|[size:c-cjs]|
+|Templating API|[size:t-esm]|[size:t-cjs]|
 
 Uvo has own types definition file for `typescript`.
 

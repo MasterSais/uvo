@@ -56,7 +56,7 @@ export const V_DTE: string = 'date';
 export const V_ASYNC: string = 'async';
 
 /** @type {string} */
-export const V_AWAIT: string = 'await';
+export const V_WAIT: string = 'wait';
 
 /** @type {string} */
 export const V_STR: string = 'string';

@@ -1,11 +1,11 @@
 /**
  * @name {async}
  * 
- * @template {`@async` `@a`}
+ * @template {`@async(...)` `@p(...)`}
  * 
- * @scheme {promise<T>(name: string, error?: Error): Validator<Promise<T>, Promise<T>>}
+ * @scheme {async<T>(name?: string, error?: Error): Validator<Promise<T>, Promise<T>>}
  * 
- * @desc Checks value to be a promise. Settles value to async storage. Can be awaited somewhere later.
+ * @desc Settles value to async storage. Can be awaited somewhere later.
  * 
  * {@link docs/base-api/type-validator}
  * 
@@ -17,20 +17,20 @@
 //#example
 import * as v from 'uvo';
 
-// Validate promise and object as it's result.
-v.withPromise(
-  v.consecutive(
-    v.async('objPromise'),
-    v.object2([
-      ['id', v.number()],
-      ['name', v.string()],
-    ])
-  )
-);
-
-// Validate array of promises.
 v.withMeta(
   v.withPromise(
-    v.array([v.async(), v.number()])
+    v.object2([
+      ['user', v.async('user'), ( // Settle 'user' promise.
+        v.object({
+          id: [v.number(), v.setDep('userId')],
+          name: [v.string()]
+        })
+      )],
+      ['roles',
+        v.wait('user'), // Wait for 'user' promise.
+        v.getDep('userId'),
+        // (userId: number) => e.g. request roles
+      ],
+    ])
   )
 );

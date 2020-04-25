@@ -3,10 +3,9 @@
   "compilerOptions": {
     "module": "CommonJS",
     "target": "es6",
-    "outDir": "../dist/cjs",
-    "removeComments": false
+    "outDir": "../template/cjs"
   },
   "include": [
-    "../dist/index.ts"
+    "../dist/index.template.ts"
   ]
 }
