@@ -48,7 +48,7 @@ export const extractLiteral = ({ code, value }: ValidatorData, wrap: Function) =
 );
 
 export const extractError = (cmeta: CompilerMeta, error: string | number) => (
-  (meta: MetaData) => callee(cmeta.errors[error])(meta)
+  isDefined(error) ? (meta: MetaData) => callee(cmeta.errors[error])(meta) : error
 );
 
 export const extractReference = (meta: CompilerMeta, { code, state, value, params }: ValidatorData): Validator<any> => (

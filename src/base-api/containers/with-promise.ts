@@ -13,7 +13,7 @@ export const withPromise = <T, R>(validator: Validator<T, R | Result<R>>): Valid
         (value: T, onError?: ErrorCallback, meta?: MetaData): Promise<R | Result<R>> =>
           new Promise(resolve =>
             onAsync(
-              passValidators(value, onError, meta && { ...meta, _asyncStack: {} }, [validator]),
+              passValidators(value, onError, meta, [validator]),
               resolve
             )
           )

@@ -4,7 +4,7 @@ Uvo is a javascript universal validation library. The main goal is to provide sc
 
 Uvo wants to be a pretty small size library, so each validator represented as separated module and can be skipped during treeshaking stage in your bundler (e.g. `webpack`). Only `templating API` represented as one indivisible bundle.
 
-Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will coming soon with a huge base of specific validators such as `email`, `uri`, `guid` and so on.
+Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will coming soon with a huge base of specific validators such as `email`, `uri`, `guid` and so on. Also uvo supports asynchronous validations.
 
 [size:c-esm]: dist/esm/index.min.js
 [size:c-cjs]: dist/cjs/index.min.js
@@ -159,6 +159,81 @@ We have overviewed only basic features. For more information see [API documentat
 
 [api-url]: <% api-url %>
 
+### `Async API`
+
+Uvo provides flexible asynchronous validations. `withPromise` container makes entire scheme async.
+
+```js
+const validator = (
+  v.withPromise(
+    v.object2([
+      ['id', v.number()],
+      ['name', v.string()],
+    ])
+  )
+);
+
+validator(Promise.resolve({
+  id: 1,
+  name: 'name'
+}));
+// => { id: 1, name: 'name' }
+
+// More promises
+validator(Promise.resolve({
+  id: Promise.resolve( 1 ),
+  name: Promise.reject( 'error' )
+}));
+// => { id: 1, name: null }
+```
+
+All promises will be awaited implicitly in the scheme. If you want to catch errors or provide custom ones for promises, make sure to use `withErrors` container and `async` validator.
+`withPromise` is a low level container, use it inside `withErrors` and `withMeta` containers.
+
+```js
+v.withErrors(
+  v.withPromise(
+    v.consecutive(
+      v.async( null, 'promiseErr' ), // Will set 'promiseErr' on catch.
+      v.object2([
+        ['id',
+          v.async(), // Will set promise error on catch.
+          v.number()
+        ],
+        ['name',
+          v.async( null, null ), // No error on catch. No sense.
+          v.string()
+        ],
+      ])
+    )
+  )
+);
+```
+
+One more important feature is cross promise validations with `async` and `wait`.
+`withMeta` is required.
+
+```js
+v.withMeta(
+  v.withPromise(
+    v.object2([
+      ['user', 
+        v.async( 'user' ), // Name the promise with 'user'.
+        v.object({
+          id: [v.number(), v.setDep( 'userId' )],
+          name: [v.string()]
+        })
+      ],
+      ['roles',
+        v.wait( 'user' ), // Wait for 'user' promise here.
+        v.getDep( 'userId' ),
+        (userId: number) => { /* do something asynchronous m.b. */ }
+      ],
+    ])
+  )
+);
+```
+
 ### `Templates`
 
 Library also has own templating API for advanced usage. Compiler for template minification in progress.
@@ -289,6 +364,38 @@ tml`
 `(
   null, 
   ['err1', 'err2', 'err3']
+);
+```
+
+Async API in deed:
+
+```js
+template( `@array( @number ) ~promise` );
+
+// Errors
+template(`
+  @async!0 : @object(
+    id : @async : @number,
+    name : @string
+  ) ~p ~e
+`)(
+  null, ['promiseErr']
+);
+
+// Cross promise validation
+template(`
+  @object(
+    user : @async('user') : @object(
+      id : @number : #userId,
+      name : @string
+    ),
+    roles : @wait('user') : $0(#userId)
+  ) 
+  ~promise ~meta
+`)(
+  [
+    (userId: number) => { /* do something asynchronous m.b. */ }
+  ]
 );
 ```
 

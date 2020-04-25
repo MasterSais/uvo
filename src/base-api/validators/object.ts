@@ -17,7 +17,7 @@ export const object = <T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: E
   const validators: Array<[string, Validator<any, any>]> = mapObjectValidators(spec);
 
   return (data: T, onError?: ErrorCallback, meta?: MetaData): R => {
-    const [actAsync, proceedAsync] = asyncActor(meta);
+    const [actAsync, proceedAsync] = asyncActor();
 
     extendMeta(meta, data, V_OBJ);
 

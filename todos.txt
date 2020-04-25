@@ -4,7 +4,9 @@
 
   - Test coverage into Doc
 
-  - setRef, getRef
+  - v3:
+    - setRef, getRef
+    - consecutive takes array instead of ...args
 
   - Checkable ? rm
 

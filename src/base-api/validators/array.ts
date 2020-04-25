@@ -20,7 +20,7 @@ export const array = (itemSpec?: Array<Validator<any>> | Validator<any>, error?:
 
   return (
     (data: Array<any>, onError?: ErrorCallback, meta?: MetaData): Array<any> => {
-      const [actAsync, proceedAsync] = asyncActor(meta);
+      const [actAsync, proceedAsync] = asyncActor();
 
       extendMeta(meta, data, V_ARR);
 

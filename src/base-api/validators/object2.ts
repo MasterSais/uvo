@@ -27,7 +27,7 @@ export const object2 = <T extends ObjectLike, R = T>(spec?: Array<[string | RegE
       return applyError(error, onError, meta);
     }
 
-    const [actAsync, proceedAsync] = asyncActor(meta);
+    const [actAsync, proceedAsync] = asyncActor();
 
     const keys = Object.keys(data);
 

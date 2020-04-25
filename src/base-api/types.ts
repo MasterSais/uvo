@@ -27,7 +27,7 @@ export declare type MetaData = {
 /**
  * {@link docs/base-api/types/error}
  */
-export declare type Error = string | boolean | number | Record<any, any> | Array<any> | ((meta: MetaData) => any);
+export declare type Error = string | boolean | number | Record<any, any> | Array<any> | ((meta: MetaData, internalError?: any) => any);
 
 /**
  * {@link docs/base-api/types/relevance}

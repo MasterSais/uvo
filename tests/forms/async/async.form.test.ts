@@ -17,26 +17,22 @@ import { cases1, cases2, cases3, cases4 } from './cases';
 
 describe(`async form › object`, () =>
   asyncCases(
-    withMeta(
-      withPromise(
-        object({
-          id: number(),
-          name: string(),
-        })
-      )
+    withPromise(
+      object({
+        id: number(),
+        name: string(),
+      })
     ), cases1
   )
 );
 
 describe(`async form › object › advanced`, () =>
   asyncCases(
-    withMeta(
-      withPromise(
-        object2([
-          ['id', number()],
-          ['name', string()],
-        ])
-      )
+    withPromise(
+      object2([
+        ['id', number()],
+        ['name', string()],
+      ])
     ), cases1
   )
 );
@@ -47,22 +43,20 @@ describe(`async form › object › template`, () =>
       @object(
         id : @number,
         name : @string
-      ) ~p ~m
+      ) ~p
     `)(), cases1
   )
 );
 
 describe(`async form › object › dynamic`, () =>
   asyncCases(
-    withMeta(
-      withPromise(
-        consecutive(
-          object2([
-            ['id', number()],
-            ['name', string()],
-          ]),
-          (obj: any) => resolve(obj)
-        )
+    withPromise(
+      consecutive(
+        object2([
+          ['id', number()],
+          ['name', string()],
+        ]),
+        (obj: any) => resolve(obj)
       )
     ), cases1
   )
@@ -74,7 +68,7 @@ describe(`async form › object › template › dynamic`, () =>
       @object(
         id : @number,
         name : @string
-      ) : $0 ~p ~m
+      ) : $0 ~p
     `)(
       [(obj: any) => resolve(obj)]
     ), cases1
@@ -83,10 +77,8 @@ describe(`async form › object › template › dynamic`, () =>
 
 describe(`async form › array`, () =>
   asyncCases(
-    withMeta(
-      withPromise(
-        array([number()])
-      )
+    withPromise(
+      array([number()])
     ), cases2
   )
 );
@@ -94,23 +86,21 @@ describe(`async form › array`, () =>
 describe(`async form › array › template`, () =>
   asyncCases(
     template(`
-      @array( @number ) ~p ~m
+      @array( @number ) ~p
     `)(), cases2
   )
 );
 
 describe(`async form › errors`, () =>
   asyncCases(
-    withMeta(
-      withErrors(
-        withPromise(
-          consecutive(
-            async(null, 'promiseErr'),
-            object2([
-              ['id', async(), number('numberErr')],
-              ['name', string('stringErr')],
-            ], 'objectErr')
-          )
+    withErrors(
+      withPromise(
+        consecutive(
+          async(null, 'promiseErr'),
+          object2([
+            ['id', async(), number('numberErr')],
+            ['name', string('stringErr')],
+          ], 'objectErr')
         )
       )
     ), cases3
@@ -123,7 +113,7 @@ describe(`async form › template › errors`, () =>
       @async!0 : @object(
         id : @async : @number!2,
         name : @string!3
-      )!1 ~p ~e ~m
+      )!1 ~p ~e
     `)(
       null, ['promiseErr', 'objectErr', 'numberErr', 'stringErr']
     ), cases3
@@ -153,6 +143,25 @@ describe(`async form › wait`, () =>
 );
 
 describe(`async form › template › wait`, () =>
+  asyncCases(
+    template(`
+      @object(
+        user : @async('user') : @object(
+          id : @number : #userId,
+          name : @string
+        ),
+        roles : @wait('user') : $0(#userId)
+      ) 
+      ~promise ~meta
+    `)(
+      [
+        (userId: number) => resolve([userId])
+      ]
+    ), cases4
+  )
+);
+
+describe(`async form › template › short › wait`, () =>
   asyncCases(
     template(`
       @o(

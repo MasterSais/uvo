@@ -1,5 +1,5 @@
 import { Async, Error, ErrorCallback, MetaData, Relevance, Validator } from '@lib/base-api/types';
-import { identity, isDefined, isPromise } from '@lib/base-api/utilities/types';
+import { isDefined, isPromise } from '@lib/base-api/utilities/types';
 
 export const setMetaPath = (meta: MetaData, path: string | number | Array<any>): MetaData => (meta && {
   ...meta,
@@ -83,26 +83,19 @@ export const onAsync = (value: any, callee: (value: any, error?: any) => void) =
     : callee(value)
 );
 
-export const asyncActor = (meta: MetaData): [(value: any, callee: (value: any) => void) => void, (value: any) => any] => {
+export const asyncActor = (): [(value: any, callee: (value: any) => void) => void, (value: any) => any] => {
   const actions: Array<any> = [];
 
-  return (
-    meta && meta._asyncStack
-      ? [
-        (value: any, callee: (value: any, error?: any) => void) => (
-          isPromise(value)
-            ? actions.push(value.then(callee).catch((error: any) => callee(null, error)))
-            : callee(value)
-        ),
-        (value: any) => (
-          actions.length > 0
-            ? Promise.all(actions).then(() => value)
-            : value
-        )
-      ]
-      : [
-        (value: any, callee: (value: any) => void) => callee(value),
-        identity
-      ]
-  );
+  return ([
+    (value: any, callee: (value: any, error?: any) => void) => (
+      isPromise(value)
+        ? actions.push(value.then(callee).catch((error: any) => callee(null, error)))
+        : callee(value)
+    ),
+    (value: any) => (
+      actions.length > 0
+        ? Promise.all(actions).then(() => value)
+        : value
+    )
+  ]);
 };
