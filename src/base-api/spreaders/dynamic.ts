@@ -6,12 +6,12 @@ import { passValidators, throwValidatorError } from '@lib/base-api/utilities/uti
 /**
  * {@link docs/base-api/spreaders/dynamic}
  */
-export const dynamic = <T>(preValidator: () => Validator<T> | Array<Validator<T>>): Validator<T> =>
+export const dynamic = <T>(preValidator: (value: T) => Validator<T> | Array<Validator<T>>): Validator<T> =>
   (
     isFunction(preValidator)
       ? (
         (value: T, onError?: ErrorCallback, meta?: MetaData): T => {
-          const validators = preValidator();
+          const validators = preValidator(value);
 
           if (!validators) return value;
 

@@ -12,8 +12,6 @@
 
   - Perf tests
 
-  - Dynamic should accept value
-
   - Templating api
 
     'fields'; // @fields( &.[^.id.guid].name )

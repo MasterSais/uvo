@@ -1398,7 +1398,7 @@ try {
 ### `dynamic`
 
 ```js
-dynamic<T>(preValidator: () => Validator<T> | Array<Validator<T>>): Validator<T>
+dynamic<T>(preValidator: (value: T) => Validator<T> | Array<Validator<T>>): Validator<T>
 ```
 Inserts new validators into scheme dynamically.
 
