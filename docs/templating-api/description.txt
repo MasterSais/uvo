@@ -1,2 +1,2 @@
-Templating api provides string based validators creation. Much more compact and flexible against classic API.
+Templating api provides string based validators creation. Much more compact and flexible against base API.
 All errors and injections are placed in separated structures.

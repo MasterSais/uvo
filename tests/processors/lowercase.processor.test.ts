@@ -1,4 +1,4 @@
-import { lowercase as processor } from '@lib/classic-api/processors/lowercase';
+import { lowercase as processor } from '@lib/base-api/processors/lowercase';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('processor › lowercase', () => {

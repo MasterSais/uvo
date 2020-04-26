@@ -1,7 +1,7 @@
-import { consecutive } from '@lib/classic-api/groupers/consecutive';
-import { array } from '@lib/classic-api/validators/array';
-import { gte } from '@lib/classic-api/validators/is';
-import { number } from '@lib/classic-api/validators/number';
+import { consecutive } from '@lib/base-api/groupers/consecutive';
+import { array } from '@lib/base-api/validators/array';
+import { gte } from '@lib/base-api/validators/is';
+import { number } from '@lib/base-api/validators/number';
 import { template } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases } from './cases';

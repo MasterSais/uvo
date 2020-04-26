@@ -1,4 +1,4 @@
-import { number } from '@lib/classic-api/validators/number';
+import { number } from '@lib/base-api/validators/number';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 
 export const numberBuilder = (_: CompilerMeta, { error }: ValidatorData) => (

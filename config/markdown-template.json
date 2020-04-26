@@ -1,95 +1,95 @@
 [
   {
-    "title": "Classic API",
+    "title": "Base API",
     "content": [],
     "sub": [
       {
         "title": "Validators",
         "content": [
-          "./docs/classic-api/markdown/validations-description.txt"
+          "./docs/base-api/markdown/validations-description.txt"
         ],
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/classic-api/validators"
+            "contentDir": "./docs/base-api/validators"
           }
         ]
       },
       {
         "title": "Processors",
         "content": [
-          "./docs/classic-api/markdown/processors-description.txt"
+          "./docs/base-api/markdown/processors-description.txt"
         ],
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/classic-api/processors"
+            "contentDir": "./docs/base-api/processors"
           }
         ]
       },
       {
         "title": "Groupers",
         "content": [
-          "./docs/classic-api/markdown/groupers-description.txt"
+          "./docs/base-api/markdown/groupers-description.txt"
         ],
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/classic-api/groupers"
+            "contentDir": "./docs/base-api/groupers"
           }
         ]
       },
       {
         "title": "Containers",
         "content": [
-          "./docs/classic-api/markdown/containers-description.txt"
+          "./docs/base-api/markdown/containers-description.txt"
         ],
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/classic-api/containers"
+            "contentDir": "./docs/base-api/containers"
           }
         ]
       },
       {
         "title": "Spreaders",
         "content": [
-          "./docs/classic-api/markdown/spreaders-description.txt"
+          "./docs/base-api/markdown/spreaders-description.txt"
         ],
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/classic-api/spreaders"
+            "contentDir": "./docs/base-api/spreaders"
           }
         ]
       },
       {
         "title": "Logs",
         "content": [
-          "./docs/classic-api/markdown/logs.md"
+          "./docs/base-api/markdown/logs.md"
         ]
       },
       {
         "title": "Custom validators",
         "content": [
-          "./docs/classic-api/markdown/validator-creation.md"
+          "./docs/base-api/markdown/validator-creation.md"
         ]
       },
       {
         "title": "Examples",
         "content": [
-          "./docs/classic-api/markdown/examples.md"
+          "./docs/base-api/markdown/examples.md"
         ]
       },
       {
         "title": "Types",
         "content": [
-          "./docs/classic-api/markdown/types-description.txt"
+          "./docs/base-api/markdown/types-description.txt"
         ],
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/classic-api/types"
+            "contentDir": "./docs/base-api/types"
           }
         ]
       }

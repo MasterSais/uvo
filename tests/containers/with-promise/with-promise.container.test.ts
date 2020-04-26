@@ -1,14 +1,14 @@
-import { withErrors } from '@lib/classic-api/containers/with-errors';
-import { withMeta } from '@lib/classic-api/containers/with-meta';
-import { withPromise } from '@lib/classic-api/containers/with-promise';
-import { consecutive } from '@lib/classic-api/groupers/consecutive';
-import { parallel } from '@lib/classic-api/groupers/parallel';
-import { C_PRM as VALIDATOR_NAME } from '@lib/classic-api/names';
-import { gte } from '@lib/classic-api/validators/is';
-import { integer } from '@lib/classic-api/validators/multiple';
-import { number } from '@lib/classic-api/validators/number';
+import { withErrors } from '@lib/base-api/containers/with-errors';
+import { withMeta } from '@lib/base-api/containers/with-meta';
+import { withPromise } from '@lib/base-api/containers/with-promise';
+import { consecutive } from '@lib/base-api/groupers/consecutive';
+import { parallel } from '@lib/base-api/groupers/parallel';
+import { C_PRM as VALIDATOR_NAME } from '@lib/base-api/names';
+import { gte } from '@lib/base-api/validators/is';
+import { integer } from '@lib/base-api/validators/multiple';
+import { number } from '@lib/base-api/validators/number';
 import { asyncCases } from '@test/utilities';
-import { right, wrong } from './cases';
+import { cases } from './cases';
 
 describe(`container › ${VALIDATOR_NAME}`, () => {
   asyncCases(
@@ -24,6 +24,6 @@ describe(`container › ${VALIDATOR_NAME}`, () => {
           )
         )
       )
-    ), right, wrong
+    ), cases
   )
 });

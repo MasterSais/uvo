@@ -1,6 +1,6 @@
-import { gte } from '@lib/classic-api/validators/is';
-import { number } from '@lib/classic-api/validators/number';
-import { object2 } from '@lib/classic-api/validators/object2';
+import { gte } from '@lib/base-api/validators/is';
+import { number } from '@lib/base-api/validators/number';
+import { object2 } from '@lib/base-api/validators/object2';
 import { template } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases } from './cases';

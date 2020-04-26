@@ -1,9 +1,9 @@
-import { consecutive } from '@lib/classic-api/groupers/consecutive';
-import { Error, Validator } from '@lib/classic-api/types';
-import { lengthFactory } from '@lib/classic-api/utilities';
-import { defined, empty, equal, gte, lte, oneOf, regex } from '@lib/classic-api/validators/is';
-import { length, maxLen, minLen } from '@lib/classic-api/validators/length';
-import { multiple } from '@lib/classic-api/validators/multiple';
+import { consecutive } from '@lib/base-api/groupers/consecutive';
+import { Error, Validator } from '@lib/base-api/types';
+import { lengthFactory } from '@lib/base-api/utilities/factories';
+import { defined, empty, equal, gte, lte, oneOf, regex } from '@lib/base-api/validators/is';
+import { length, maxLen, minLen } from '@lib/base-api/validators/length';
+import { multiple } from '@lib/base-api/validators/multiple';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractLiteral } from '@lib/templating-api/utilities';
 

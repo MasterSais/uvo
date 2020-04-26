@@ -1,10 +1,10 @@
-# `Classic API`
+# `Base API`
 ## `Validators`
 Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.
 ### `array`
 
 ```js
-array<T>(itemSpec?: Array<Validator<any, T>> | Validator<any, T>, error?: Error): Validator<Array<any>, Array<T>>
+array(itemSpec?: Array<Validator<any>> | Validator<any>, error?: Error): Validator<Array<any>, Array<any>>
 ```
 Checks value to be an array.
 
@@ -52,6 +52,35 @@ anotherOne([0, 1, 20]); // '20' will be clamped to '10'.
 
 anotherOne([0, 1, 2, 3]); // too long.
 // => null
+```
+
+### `async`
+
+```js
+async<T>(name?: string, error?: Error): Validator<Promise<T>, Promise<T>>
+```
+Settles value to async storage. Can be awaited somewhere later.
+
+```js
+import * as v from 'uvo';
+
+v.withMeta(
+  v.withPromise(
+    v.object2([
+      ['user', v.async('user'), ( // Settle 'user' promise.
+        v.object({
+          id: [v.number(), v.setDep('userId')],
+          name: [v.string()]
+        })
+      )],
+      ['roles',
+        v.wait('user'), // Wait for 'user' promise.
+        v.getDep('userId'),
+        // (userId: number) => e.g. request roles
+      ],
+    ])
+  )
+);
 ```
 
 ### `bool`
@@ -1340,7 +1369,7 @@ try {
 ### `dynamic`
 
 ```js
-dynamic<T>(preValidator: () => Validator<T> | Array<Validator<T>>): Validator<T>
+dynamic<T>(preValidator: (value: T) => Validator<T> | Array<Validator<T>>): Validator<T>
 ```
 Inserts new validators into scheme dynamically.
 
@@ -1489,6 +1518,35 @@ simpleOne('Stringu'); // too short.
 
 simpleOne('Stringuuuuuuuuuu');
 // => 'Stringuuuuuuuuuu'
+```
+
+### `wait`
+
+```js
+wait<T>(name: string): Validator<T, Promise<T>>
+```
+Waits for specified promise.
+
+```js
+import * as v from 'uvo';
+
+v.withMeta(
+  v.withPromise(
+    v.object2([
+      ['user', v.async('user'), ( // Settle 'user' promise.
+        v.object({
+          id: [v.number(), v.setDep('userId')],
+          name: [v.string()]
+        })
+      )],
+      ['roles',
+        v.wait('user'), // Wait for 'user' promise.
+        v.getDep('userId'),
+        // (userId: number) => e.g. request roles
+      ],
+    ])
+  )
+);
 ```
 
 ## `Logs`
@@ -1828,7 +1886,7 @@ type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 ```
 
 # `Templating API`
-Templating api provides string based validators creation. Much more compact and flexible against classic API.
+Templating api provides string based validators creation. Much more compact and flexible against base API.
 All errors and injections are placed in separated structures.
 ## `Keys`
 ### `array`

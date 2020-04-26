@@ -1,6 +1,6 @@
-import { V_STR as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { V_STR as VALIDATOR_NAME } from '@lib/base-api/names';
 import { template, tml } from '@lib/templating-api/template';
-import { string as validator } from '@lib/classic-api/validators/string';
+import { string as validator } from '@lib/base-api/validators/string';
 import { baseCases, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
 

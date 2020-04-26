@@ -1,6 +1,6 @@
-import { V_ARR as VALIDATOR_NAME } from '@lib/classic-api/names';
+import { V_ARR as VALIDATOR_NAME } from '@lib/base-api/names';
 import { template, tml } from '@lib/templating-api/template';
-import { array as validator } from '@lib/classic-api/validators/array';
+import { array as validator } from '@lib/base-api/validators/array';
 import { baseCases, baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightParams, rightTemplate, wrong, wrongParams, wrongTemplate } from './cases';
 

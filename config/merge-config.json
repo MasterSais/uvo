@@ -3,29 +3,29 @@
   "outFile": "index.ts",
   "files": [
     {
-      "file": "./src/classic-api/types.ts"
+      "file": "./src/base-api/types.ts"
     },
     {
-      "file": "./src/classic-api/names.ts"
+      "file": "./src/base-api/names.ts"
     },
     {
-      "file": "./src/classic-api/utilities.ts",
+      "dir": "./src/base-api/utilities",
       "removeExports": true
     },
     {
-      "dir": "./src/classic-api/groupers"
+      "dir": "./src/base-api/groupers"
     },
     {
-      "dir": "./src/classic-api/spreaders"
+      "dir": "./src/base-api/spreaders"
     },
     {
-      "dir": "./src/classic-api/validators"
+      "dir": "./src/base-api/validators"
     },
     {
-      "dir": "./src/classic-api/processors"
+      "dir": "./src/base-api/processors"
     },
     {
-      "dir": "./src/classic-api/containers"
+      "dir": "./src/base-api/containers"
     }
   ]
 }

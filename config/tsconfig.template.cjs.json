@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "es6",
+    "outDir": "../template/cjs"
+  },
+  "include": [
+    "../dist/index.template.ts"
+  ]
+}

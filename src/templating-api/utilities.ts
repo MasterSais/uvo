@@ -1,8 +1,8 @@
-import { getDep } from '@lib/classic-api/spreaders/get-dep';
-import { setDep } from '@lib/classic-api/spreaders/set-dep';
-import { setVDep } from '@lib/classic-api/spreaders/set-v-dep';
-import { MetaData, Validator } from '@lib/classic-api/types';
-import { callee, identity, isDefined } from '@lib/classic-api/utilities';
+import { getDep } from '@lib/base-api/spreaders/get-dep';
+import { setDep } from '@lib/base-api/spreaders/set-dep';
+import { setVDep } from '@lib/base-api/spreaders/set-v-dep';
+import { MetaData, Validator } from '@lib/base-api/types';
+import { callee, identity, isDefined } from '@lib/base-api/utilities/types';
 import { CNT, GR, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 import { containerBase, grouperBase, validatorBase } from '@lib/templating-api/validators-base';
@@ -48,7 +48,7 @@ export const extractLiteral = ({ code, value }: ValidatorData, wrap: Function) =
 );
 
 export const extractError = (cmeta: CompilerMeta, error: string | number) => (
-  (meta: MetaData) => callee(cmeta.errors[error])(meta)
+  isDefined(error) ? (meta: MetaData) => callee(cmeta.errors[error])(meta) : error
 );
 
 export const extractReference = (meta: CompilerMeta, { code, state, value, params }: ValidatorData): Validator<any> => (
@@ -81,6 +81,7 @@ export const extractSequence = (meta: CompilerMeta, data: ValidatorData) => {
 
   return (
     extractValidator(meta, data) ||
+    extractInnerInjectionReference(meta, data, identity) ||
     extractInjection(meta, data, identity) ||
     extractReference(meta, data)
   );

@@ -1,10 +1,10 @@
-import { withMeta } from '@lib/classic-api/containers/with-meta';
-import { getDep } from '@lib/classic-api/spreaders/get-dep';
-import { setDep } from '@lib/classic-api/spreaders/set-dep';
-import { date } from '@lib/classic-api/validators/date';
-import { gte, lte } from '@lib/classic-api/validators/is';
-import { number } from '@lib/classic-api/validators/number';
-import { object2 } from '@lib/classic-api/validators/object2';
+import { withMeta } from '@lib/base-api/containers/with-meta';
+import { getDep } from '@lib/base-api/spreaders/get-dep';
+import { setDep } from '@lib/base-api/spreaders/set-dep';
+import { date } from '@lib/base-api/validators/date';
+import { gte, lte } from '@lib/base-api/validators/is';
+import { number } from '@lib/base-api/validators/number';
+import { object2 } from '@lib/base-api/validators/object2';
 import { template, tml } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases, cases2 } from './cases';

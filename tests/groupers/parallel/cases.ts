@@ -1,6 +1,6 @@
-import { gte, lte } from '@lib/classic-api/validators/is';
-import { integer } from '@lib/classic-api/validators/multiple';
-import { number } from '@lib/classic-api/validators/number';
+import { gte, lte } from '@lib/base-api/validators/is';
+import { integer } from '@lib/base-api/validators/multiple';
+import { number } from '@lib/base-api/validators/number';
 import { emptyArray, emptyFunction, emptyObject } from '@test/utilities';
 
 export const rightParams: Array<any> = [

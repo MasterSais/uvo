@@ -4,12 +4,12 @@ Uvo is a javascript universal validation library. The main goal is to provide sc
 
 Uvo wants to be a pretty small size library, so each validator represented as separated module and can be skipped during treeshaking stage in your bundler (e.g. `webpack`). Only `templating API` represented as one indivisible bundle.
 
-Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will coming soon with a huge base of specific validators such as `email`, `uri`, `guid` and so on.
+Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will coming soon with a huge base of specific validators such as `email`, `uri`, `guid` and so on. Also uvo supports asynchronous validations.
 
-|Bundles (minified)|esm|cjs|umd|
-|:-:|:-:|:-:|:-:|
-|Classic API|~7kb|~7.2kb|~10kb|
-|Templating API|~8.6kb|
+|Bundles (minified)|esm|cjs|
+|:-:|:-:|:-:|
+|Base API|~7.7kb|~8kb|
+|Templating API|~9.5kb|~9.6kb|
 
 Uvo has own types definition file for `typescript`.
 
@@ -154,6 +154,81 @@ We have overviewed only basic features. For more information see [API documentat
 
 [api-url]: API.md
 
+### `Async API`
+
+Uvo provides flexible asynchronous validations. `withPromise` container makes entire scheme async.
+
+```js
+const validator = (
+  v.withPromise(
+    v.object2([
+      ['id', v.number()],
+      ['name', v.string()],
+    ])
+  )
+);
+
+validator(Promise.resolve({
+  id: 1,
+  name: 'name'
+}));
+// => { id: 1, name: 'name' }
+
+// More promises
+validator(Promise.resolve({
+  id: Promise.resolve( 1 ),
+  name: Promise.reject( 'error' )
+}));
+// => { id: 1, name: null }
+```
+
+All promises will be awaited implicitly in the scheme. If you want to catch errors or provide custom ones for promises, make sure to use `withErrors` container and `async` validator.
+`withPromise` is a low level container, use it inside `withErrors` and `withMeta` containers.
+
+```js
+v.withErrors(
+  v.withPromise(
+    v.consecutive(
+      v.async( null, 'promiseErr' ), // Will set 'promiseErr' on catch.
+      v.object2([
+        ['id',
+          v.async(), // Will set promise error on catch.
+          v.number()
+        ],
+        ['name',
+          v.async( null, null ), // No error on catch. No sense.
+          v.string()
+        ],
+      ])
+    )
+  )
+);
+```
+
+One more important feature is cross promise validations with `async` and `wait`.
+`withMeta` is required.
+
+```js
+v.withMeta(
+  v.withPromise(
+    v.object2([
+      ['user', 
+        v.async( 'user' ), // Name the promise with 'user'.
+        v.object({
+          id: [v.number(), v.setDep( 'userId' )],
+          name: [v.string()]
+        })
+      ],
+      ['roles',
+        v.wait( 'user' ), // Wait for 'user' promise here.
+        v.getDep( 'userId' ),
+        (userId: number) => { /* do something asynchronous m.b. */ }
+      ],
+    ])
+  )
+);
+```
+
 ### `Templates`
 
 Library also has own templating API for advanced usage. Compiler for template minification in progress.
@@ -287,11 +362,44 @@ tml`
 );
 ```
 
+Async API in deed:
+
+```js
+template( `@array( @number ) ~promise` );
+
+// Errors
+template(`
+  @async!0 : @object(
+    id : @async : @number,
+    name : @string
+  ) ~p ~e
+`)(
+  null, ['promiseErr']
+);
+
+// Cross promise validation
+template(`
+  @object(
+    user : @async('user') : @object(
+      id : @number : #userId,
+      name : @string
+    ),
+    roles : @wait('user') : $0(#userId)
+  ) 
+  ~promise ~meta
+`)(
+  [
+    (userId: number) => { /* do something asynchronous m.b. */ }
+  ]
+);
+```
+
 ## `API`
 
-|Classic API|Templating API|Description|
+|Base API|Templating API|Description|
 |:-|:-|:-|
 |[array][array-url]|`@array(...)` `@a(...)`|Checks value to be an array.|
+|[async][async-url]|`@async(...)` `@p(...)`|Settles value to async storage. Can be awaited somewhere later.|
 |[bool][bool-url]|`@bool` `@b`|Checks value to be a boolean compatible.|
 |[date][date-url]|`@date` `@d`|Checks value to be a date compatible. Result in ms.|
 |[defined][defined-url]|`@compare(=def)` `@c(=def)`|Checks value to be defined.|
@@ -338,8 +446,10 @@ tml`
 |[setDep][setDep-url]|`#...`|Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.|
 |[setVDep][setVDep-url]|`#...(...)`|Puts validators into spreaded structure.  Might be used for recursive schemes.|
 |[useDefault][useDefault-url]||Puts default value into spreaded structure.  If input value is empty, puts default value instead, otherwise validates input values with provided validators.  If you need fallback value on error use 'withFallback' container instead.|
+|[wait][wait-url]|`@wait(...)` `@w(...)`|Waits for specified promise.|
 
 [array-url]: API.md#array
+[async-url]: API.md#async
 [bool-url]: API.md#bool
 [date-url]: API.md#date
 [defined-url]: API.md#defined
@@ -386,3 +496,4 @@ tml`
 [setDep-url]: API.md#setDep
 [setVDep-url]: API.md#setVDep
 [useDefault-url]: API.md#useDefault
+[wait-url]: API.md#wait

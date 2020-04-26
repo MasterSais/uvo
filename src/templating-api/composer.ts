@@ -1,5 +1,5 @@
-import { consecutive } from '@lib/classic-api/groupers/consecutive';
-import { Validator } from '@lib/classic-api/types';
+import { consecutive } from '@lib/base-api/groupers/consecutive';
+import { Validator } from '@lib/base-api/types';
 import { CNT } from '@lib/templating-api/lexemes';
 import { CompilerMeta, Errors, Injections, ValidatorData } from '@lib/templating-api/types';
 import { extractSequence, extractValidator } from '@lib/templating-api/utilities';

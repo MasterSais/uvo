@@ -1,4 +1,4 @@
-import { uppercase as processor } from '@lib/classic-api/processors/uppercase';
+import { uppercase as processor } from '@lib/base-api/processors/uppercase';
 import { baseCasesWithParams } from '@test/utilities';
 
 describe('processor › uppercase', () => {

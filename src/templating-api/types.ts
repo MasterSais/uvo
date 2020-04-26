@@ -1,4 +1,4 @@
-import { Error } from '@lib/classic-api/types';
+import { Error } from '@lib/base-api/types';
 
 export type LexemeScheme = {
   literals: string;
