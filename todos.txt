@@ -7,8 +7,7 @@
   - v3:
     - setRef, getRef
     - consecutive takes array instead of ...args
-
-  - Checkable ? rm
+    - rm checkable, move to uvo/ext
 
   - Perf tests
 
