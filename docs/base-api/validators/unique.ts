@@ -1,7 +1,9 @@
 /**
  * @name {unique}
  * 
- * @scheme {array<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>}
+ * @template {`@unique(...)`}
+ * 
+ * @scheme {unique<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>}
  * 
  * @desc Checks array's elements to be unique.
  * 

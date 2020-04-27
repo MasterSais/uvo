@@ -7,6 +7,7 @@ import { consecutiveBuilder, orBuilder, parallelBuilder } from '@lib/templating-
 import { numberBuilder } from '@lib/templating-api/validators/number';
 import { objectBuilder } from '@lib/templating-api/validators/object';
 import { stringBuilder } from '@lib/templating-api/validators/string';
+import { uniqueBuilder } from '@lib/templating-api/validators/unique';
 import { waitBuilder } from '@lib/templating-api/validators/wait';
 import { errorsBuilder } from '@lib/templating-api/validators/with-errors';
 import { metaBuilder } from '@lib/templating-api/validators/with-meta';
@@ -32,7 +33,8 @@ export const validatorBase: Map<string, any> = new Map<string, any>([
   ['async', asyncBuilder],
   ['p', asyncBuilder],
   ['wait', waitBuilder],
-  ['w', waitBuilder]
+  ['w', waitBuilder],
+  ['unique', uniqueBuilder]
 ]);
 
 export const containerBase: Map<string, any> = new Map<string, any>([

@@ -783,7 +783,7 @@ v.string.check()([1, 2]);
 ### `unique`
 
 ```js
-array<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>
+unique<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>
 ```
 Checks array's elements to be unique.
 

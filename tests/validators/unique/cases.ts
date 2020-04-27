@@ -11,8 +11,8 @@ export const wrong: Array<any> = [
 ];
 
 export const objCases: Array<any> = [
-  [[], [{ id: 1 }, { id: 2 }, { id: 3 }], [{ id: 1 }, { id: 2 }, { id: 3 }]],
-  [[], [{ id: 1 }, { id: 2 }, { id: 1 }], [{ id: 1 }, { id: 2 }, null]],
-  [[], [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 1 }], [{ id: 1 }, { id: 2 }, null, null]],
-  [[], [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 2 }], [{ id: 1 }, { id: 2 }, null, null]],
+  [['id'], [{ id: 1 }, { id: 2 }, { id: 3 }], [{ id: 1 }, { id: 2 }, { id: 3 }]],
+  [['id'], [{ id: 1 }, { id: 2 }, { id: 1 }], [{ id: 1 }, { id: 2 }, null]],
+  [['id'], [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 1 }], [{ id: 1 }, { id: 2 }, null, null]],
+  [['id'], [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 2 }], [{ id: 1 }, { id: 2 }, null, null]],
 ];

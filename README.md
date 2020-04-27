@@ -9,7 +9,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will com
 |Bundles (minified)|esm|cjs|
 |:-:|:-:|:-:|
 |Base API|~7.7kb|~8kb|
-|Templating API|~9.5kb|~9.6kb|
+|Templating API|~9.8kb|~9.8kb|
 
 Uvo has own types definition file for `typescript`.
 
@@ -421,7 +421,7 @@ template(`
 |[oneOf][oneOf-url]|`@compare(->...)` `@c(->...)` `@compare(!->...)` `@c(!->...)`|Checks value to be one of expected. Shallow comparison.|
 |[regex][regex-url]|`@compare(*...)` `@c(*...)` `@compare(!*...)` `@c(!*...)`|Checks value to match a pattern.|
 |[string][string-url]|`@string` `@s`|Checks value to be a string compatible.|
-|[unique][unique-url]||Checks array's elements to be unique.|
+|[unique][unique-url]|`@unique(...)`|Checks array's elements to be unique.|
 |[clamp][clamp-url]|injected function via `$...`|Clamps value to required boundaries.|
 |[erase][erase-url]|injected function via `$...`|Erase input.|
 |[keysMap][keysMap-url]||Maps object keys with custom mapper.|

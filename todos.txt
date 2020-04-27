@@ -2,20 +2,14 @@
 
   - 'uvo/extended' validators e.g https://www.npmjs.com/package/class-validator#manual-validation
 
-  - Test coverage into Doc
-
   - v3:
     - setRef, getRef
     - consecutive takes array instead of ...args
     - rm checkable, move to uvo/ext
 
-  - Perf tests
-
   - Templating api
 
     'fields'; // @fields( &.[^.id.guid].name )
-
-    'unique'; // unique | u
 
     'keysMap'; // keysMap | km
 
