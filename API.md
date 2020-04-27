@@ -2025,6 +2025,21 @@ template(`
 );
 ```
 
+### `fallback`
+
+
+Provides fallback into sequence. `f` - short version.
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@fallback(10, @number)`)();
+
+template(`@fallback($0, @number)`)([() => 10]);
+
+tml`@f(10, @n)`();
+```
+
 ### `groupers`
 
 
@@ -2253,5 +2268,22 @@ import { template, tml } from 'uvo/template';
 template(`@string`)();
 
 tml`@s`();
+```
+
+### `unique`
+
+
+Checks list to be unique..
+
+```js
+import { template, tml } from 'uvo/template';
+
+template(`@array : @unique`)();
+
+template(`@array : @unique('id')`)(); // by 'id'
+
+template(`@array : @unique($0)`)([item => item.id]); // by 'id' 
+
+tml`@a @unique`();
 ```
 

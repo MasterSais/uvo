@@ -1,6 +1,8 @@
 /**
  * @name {withFallback}
  * 
+ * @template {`@fallback(...)` `@f(...)`}
+ * 
  * @scheme {withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>}
  * 
  * @desc Provides fallback value on error.

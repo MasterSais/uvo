@@ -3,6 +3,7 @@ import { asyncBuilder } from '@lib/templating-api/validators/async';
 import { boolBuilder } from '@lib/templating-api/validators/bool';
 import { compareBuilder, lengthBuilder } from '@lib/templating-api/validators/compare';
 import { dateBuilder } from '@lib/templating-api/validators/date';
+import { fallbackBuilder } from '@lib/templating-api/validators/fallback';
 import { consecutiveBuilder, orBuilder, parallelBuilder } from '@lib/templating-api/validators/grouper';
 import { numberBuilder } from '@lib/templating-api/validators/number';
 import { objectBuilder } from '@lib/templating-api/validators/object';
@@ -34,7 +35,9 @@ export const validatorBase: Map<string, any> = new Map<string, any>([
   ['p', asyncBuilder],
   ['wait', waitBuilder],
   ['w', waitBuilder],
-  ['unique', uniqueBuilder]
+  ['unique', uniqueBuilder],
+  ['fallback', fallbackBuilder],
+  ['f', fallbackBuilder]
 ]);
 
 export const containerBase: Map<string, any> = new Map<string, any>([

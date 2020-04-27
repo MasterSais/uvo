@@ -9,7 +9,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will com
 |Bundles (minified)|esm|cjs|
 |:-:|:-:|:-:|
 |Base API|~7.7kb|~8kb|
-|Templating API|~9.8kb|~9.8kb|
+|Templating API|~10kb|~10.1kb|
 
 Uvo has own types definition file for `typescript`.
 
@@ -437,7 +437,7 @@ template(`
 |[parallel][parallel-url]|`<{ ... }>`|Groups validators in parallel.  The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).  Beware of using processors inside.|
 |[transform][transform-url]||Groups processors sequentially.  Passes value through a sequence of processors.  Takes only processors (doesn't check errors).|
 |[withErrors][withErrors-url]|`~error(...)` `~e(...)`|Provides error handling mechanism.|
-|[withFallback][withFallback-url]||Provides fallback value on error.|
+|[withFallback][withFallback-url]|`@fallback(...)` `@f(...)`|Provides fallback value on error.|
 |[withMeta][withMeta-url]|`~meta(...)` `~m(...)`|Provides meta structure. Can catch scheme logs.|
 |[withOnError][withOnError-url]||Provides custom error handler.|
 |[withPromise][withPromise-url]|`~promise` `~p`|Convert result to promise. Use it for async validation.|
