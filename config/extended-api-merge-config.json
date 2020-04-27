@@ -1,0 +1,20 @@
+{
+  "outDir": "dist",
+  "outFile": "index.extended.ts",
+  "files": [
+    {
+      "file": "./src/base-api/types.ts",
+      "removeExports": true
+    },
+    {
+      "dir": "./src/base-api/utilities",
+      "removeExports": true
+    },
+    {
+      "file": "./src/extended-api/names.ts"
+    },
+    {
+      "dir": "./src/extended-api/validators"
+    }
+  ]
+}

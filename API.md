@@ -2300,3 +2300,26 @@ template(`@array : @unique($0)`)([item => item.id]); // by 'id'
 tml`@a @unique`();
 ```
 
+# `Extended API`
+## `Validators`
+### `email`
+
+```js
+email(error?: Error): Validator<string>
+```
+Email validation.
+
+### `fastEmail`
+
+```js
+email(error?: Error): Validator<string>
+```
+Fast email validation.
+
+### `url`
+
+```js
+url(error?: Error): Validator<string>
+```
+Url validation.
+

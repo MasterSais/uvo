@@ -4,12 +4,13 @@ Uvo is a javascript universal validation library. The main goal is to provide sc
 
 Uvo wants to be a pretty small size library, so each validator represented as separated module and can be skipped during treeshaking stage in your bundler (e.g. `webpack`). Only `templating API` represented as one indivisible bundle.
 
-Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will coming soon with a huge base of specific validators such as `email`, `uri`, `guid` and so on. Also uvo supports asynchronous validations.
+Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will extend base api with a huge base of specific validators such as `email`, `url`, `guid` and so on. Also uvo supports asynchronous validations.
 
 |Bundles (minified)|esm|cjs|
 |:-:|:-:|:-:|
 |Base API|~7.7kb|~8kb|
 |Templating API|~10.1kb|~10.2kb|
+|Extended API|~0.7kb|~0.8kb|
 
 Uvo has own types definition file for `typescript`.
 
@@ -497,3 +498,15 @@ template(`
 [setVDep-url]: API.md#setVDep
 [useDefault-url]: API.md#useDefault
 [wait-url]: API.md#wait
+
+## `Extended API`
+
+|Base API|Templating API|Description|
+|:-|:-|:-|
+|[email][email-url]|`@email`|Email validation.|
+|[fastEmail][fastEmail-url]|`@fastEmail`|Fast email validation.|
+|[url][url-url]|`@url`|Url validation.|
+
+[email-url]: API.md#email
+[fastEmail-url]: API.md#fastEmail
+[url-url]: API.md#url

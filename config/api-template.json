@@ -1,7 +1,18 @@
 [
-  "./docs/base-api/validators",
-  "./docs/base-api/processors",
-  "./docs/base-api/groupers",
-  "./docs/base-api/containers",
-  "./docs/base-api/spreaders"
+  {
+    "name": "api-table",
+    "files": [
+      "./docs/base-api/validators",
+      "./docs/base-api/processors",
+      "./docs/base-api/groupers",
+      "./docs/base-api/containers",
+      "./docs/base-api/spreaders"
+    ]
+  },
+  {
+    "name": "extended-api-table",
+    "files": [
+      "./src/extended-api/validators"
+    ]
+  }
 ]

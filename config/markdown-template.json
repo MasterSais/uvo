@@ -112,5 +112,21 @@
         ]
       }
     ]
+  },
+  {
+    "title": "Extended API",
+    "content": [],
+    "sub": [
+      {
+        "title": "Validators",
+        "content": [],
+        "sub": [
+          {
+            "parse": true,
+            "contentDir": "./src/extended-api/validators"
+          }
+        ]
+      }
+    ]
   }
 ]

@@ -20,35 +20,37 @@ const parseTemplate = fileName => {
 
   const header = `|Base API|Templating API|Description|\n|:-|:-|:-|`;
 
-  const rows = [];
-
-  const urls = [];
-
   const apiConfig = JSON.parse(fs.readFileSync(path.resolve('config/api-template.json')));
 
-  apiConfig.forEach(dir => (
-    fs.readdirSync(dir).forEach(file => {
-      const fileContent = fs.readFileSync(dir + '/' + file).toString();
+  apiConfig.forEach(({ name, files }) => {
+    const rows = [];
 
-      const [, name] = fileContent.match(/@name \{([^\}]+)\}/);
+    const urls = [];
 
-      const [, template] = fileContent.match(/@template \{(.+)\}[\r\n\s]/) || [0, ''];
+    files.forEach(dir => (
+      (
+        fs.readdirSync(dir).forEach(file => {
+          const fileContent = fs.readFileSync(dir + '/' + file).toString();
 
-      const [, desc] = fileContent.match(/@desc([^@\/]+)((\*\/)|(\{?@))/);
+          const [, name] = fileContent.match(/@name \{([^\}]+)\}/);
 
-      const parsedDesc = desc.replace(/[\*\n\r]+|\{$/g, '').trim();
+          const [, template] = fileContent.match(/@template \{(.+)\}[\r\n\s]/) || [0, ''];
 
-      rows.push(`|[${name}][${name}-url]|${template}|${parsedDesc}|`);
+          const [, desc] = fileContent.match(/@desc([^@\/]+)((\*\/)|(\{?@))/);
 
-      urls.push(`[${name}-url]: ${apiDoc}#${name}`);
-    })
-  ));
+          const parsedDesc = desc.replace(/[\*\n\r]+|\{$/g, '').trim();
 
-  content = content
-    .replace('<% api-url %>', apiDoc)
-    .replace('<% api-table %>', `${header}\n${rows.join('\n')}\n\n${urls.join('\n')}`);
+          rows.push(`|[${name}][${name}-url]|${template}|${parsedDesc}|`);
 
-  return content;
+          urls.push(`[${name}-url]: ${apiDoc}#${name}`);
+        })
+      )
+    ));
+
+    content = content.replace(`<% ${name} %>`, `${header}\n${rows.join('\n')}\n\n${urls.join('\n')}`);
+  });
+
+  return content.replace('<% api-url %>', apiDoc);
 }
 
 fs.writeFileSync(outputFile, parseTemplate(inputFile));
