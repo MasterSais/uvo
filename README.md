@@ -9,7 +9,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will com
 |Bundles (minified)|esm|cjs|
 |:-:|:-:|:-:|
 |Base API|~7.7kb|~8kb|
-|Templating API|~10kb|~10.1kb|
+|Templating API|~10.1kb|~10.2kb|
 
 Uvo has own types definition file for `typescript`.
 
@@ -445,7 +445,7 @@ template(`
 |[getDep][getDep-url]|as parameter via `#...` or as validators via `##...`|Takes value from spreaded structure.  Might be used for dynamic validators creation.  If 'preValidator' not provided, just replaces current value.  Works only with provided meta object.|
 |[setDep][setDep-url]|`#...`|Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.|
 |[setVDep][setVDep-url]|`#...(...)`|Puts validators into spreaded structure.  Might be used for recursive schemes.|
-|[useDefault][useDefault-url]||Puts default value into spreaded structure.  If input value is empty, puts default value instead, otherwise validates input values with provided validators.  If you need fallback value on error use 'withFallback' container instead.|
+|[useDefault][useDefault-url]|`@default(...)`|Puts default value into spreaded structure.  If input value is empty, puts default value instead, otherwise validates input values with provided validators.  If you need fallback value on error use 'withFallback' container instead.|
 |[wait][wait-url]|`@wait(...)` `@w(...)`|Waits for specified promise.|
 
 [array-url]: API.md#array

@@ -1988,6 +1988,19 @@ template(`@date`)();
 tml`@d`();
 ```
 
+### `default`
+
+
+Provides default value into sequence.
+
+```js
+import { template } from 'uvo/template';
+
+template(`@default(10, @number)`)();
+
+template(`@default($0, @number)`)([() => 10]);
+```
+
 ### `errors`
 
 

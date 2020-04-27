@@ -6,17 +6,9 @@
     - setRef, getRef
     - consecutive takes array instead of ...args
     - rm checkable, move to uvo/ext
-
-  - Templating api
-
-    'fields'; // @fields( &.[^.id.guid].name )
-
-    'keysMap'; // keysMap | km
-
-    'valueMap'; // valueMap | vm
-
-    'withFallback'; // ~f(123)
-
-    'useDefault'; // @default(123)
-
-    'strip'; // strip | stp ???
+    - Templating api
+    
+      'fields';     // @fields( &.[^.id.guid].name )
+      'keysMap';    // keysMap | km
+      'valueMap';   // valueMap | vm
+      'strip';      // strip | stp ???

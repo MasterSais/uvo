@@ -1,6 +1,8 @@
 /**
  * @name {useDefault}
  * 
+ * @template {`@default(...)`}
+ * 
  * @scheme {useDefault<T, R>(defaultValue: R | ((meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>}
  * 
  * @desc Puts default value into spreaded structure.
