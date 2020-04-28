@@ -12,7 +12,7 @@
   {
     "name": "extended-api-table",
     "files": [
-      "./src/extended-api/validators"
+      "./src/base-api/extensions/validators"
     ]
   }
 ]

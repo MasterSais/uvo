@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../extended-template"
+  },
+  "include": [
+    "../dist/index.extended-template.ts"
+  ]
+}

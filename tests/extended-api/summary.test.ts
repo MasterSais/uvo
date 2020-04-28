@@ -1,21 +1,30 @@
-import { email } from '@lib/extended-api/validators/email';
-import { url } from '@lib/extended-api/validators/url';
+import { email } from '@lib/base-api/extensions/validators/email';
+import { url } from '@lib/base-api/extensions/validators/url';
+import { emailBuilder } from '@lib/templating-api/extensions/email';
+import { urlBuilder } from '@lib/templating-api/extensions/url';
+import { provide, template } from '@lib/templating-api/template';
 import { baseCases } from '@test/utilities';
+import { rightEmails, wrongEmails, rightUrls, wrongUrls } from './cases';
+
+provide([
+  [emailBuilder, ['email']],
+  [urlBuilder, ['url']]
+]);
 
 describe(`extended api`, () => {
   describe(`email`, () =>
-    baseCases(email, [], [
-      'mkyong@yahoo.com', 'mkyong-100@yahoo.com', 'mkyong.100@yahoo.com', 'mkyong111@mkyong.com', 'mkyong-100@mkyong.net', 'mkyong.100@mkyong.com.au', 'mkyong@1.com', 'mkyong@gmail.com.com', 'mkyong+100@gmail.com', 'mkyong-100@yahoo-test.com'
-    ], [
-      'mkyong', 'mkyong@.com.my', 'mkyong123@gmail.a', 'mkyong123@.com', 'mkyong123@.com.com', '.mkyong@mkyong.com', 'mkyong()*@gmail.com', 'mkyong@%*.com', 'mkyong..2002@gmail.com', 'mkyong.@gmail.com', 'mkyong@mkyong@gmail.com', 'mkyong@gmail.com.1a'
-    ])
+    baseCases(email, [], rightEmails, wrongEmails)
+  );
+
+  describe(`email › template`, () =>
+    baseCases(() => template(`@email`)(), [], rightEmails, wrongEmails)
   );
 
   describe(`url`, () =>
-    baseCases(url, [], [
-      'http://foo.com/blah_blah', 'http://foo.com/blah_blah_(wikipedia)_(again)', 'http://www.example.com/wpstyle/?p=364', 'https://www.example.com/foo/?bar=baz&inga=42&quux', 'http://userid@example.com:8080/', 'http://userid:password@example.com', 'http://142.42.1.1:8080/', 'http://223.255.255.254', 'http://foo.bar/?q=Test%20URL-encoded%20stuff'
-    ], [
-      'http://', 'http://??/', 'http:// shouldfail.com'
-    ])
+    baseCases(url, [], rightUrls, wrongUrls)
+  );
+
+   describe(`url › template`, () =>
+    baseCases(() => template(`@url`)(), [], rightUrls, wrongUrls)
   );
 });

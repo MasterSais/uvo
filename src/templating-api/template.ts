@@ -5,7 +5,7 @@ import { semanticAnalyzer } from '@lib/templating-api/semantic-analyzer';
 import { CompilerMeta, Errors, Injections, ValidatorData } from '@lib/templating-api/types';
 import { validatorBase } from '@lib/templating-api/validators-base';
 
-export const provide = (validators: Array<[(meta: CompilerMeta, data: ValidatorData) => any, [string]]>) => (
+export const provide = (validators: Array<[(meta: CompilerMeta, data: ValidatorData) => Validator<any>, Array<string>]>) => (
   validators
     .forEach(([builder, names]) => names
       .forEach(name => validatorBase.set(name, builder))

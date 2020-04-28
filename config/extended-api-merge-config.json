@@ -11,10 +11,10 @@
       "removeExports": true
     },
     {
-      "file": "./src/extended-api/names.ts"
+      "file": "./src/base-api/extensions/names.ts"
     },
     {
-      "dir": "./src/extended-api/validators"
+      "dir": "./src/base-api/extensions/validators"
     }
   ]
 }

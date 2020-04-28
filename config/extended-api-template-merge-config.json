@@ -1,0 +1,29 @@
+{
+  "outDir": "dist",
+  "outFile": "index.extended-template.ts",
+  "files": [
+    {
+      "file": "./src/base-api/types.ts",
+      "removeExports": true
+    },
+    {
+      "dir": "./src/base-api/utilities",
+      "removeExports": true
+    },
+    {
+      "file": "./src/base-api/extensions/names.ts",
+      "removeExports": true
+    },
+    {
+      "dir": "./src/base-api/extensions/validators",
+      "removeExports": true
+    },
+    {
+      "file": "./src/templating-api/types.ts",
+      "removeExports": true
+    },
+    {
+      "dir": "./src/templating-api/extensions"
+    }
+  ]
+}

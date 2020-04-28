@@ -1,8 +1,8 @@
+import { V_MAIL } from '@lib/base-api/extensions/names';
 import { Error } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
-import { V_MAIL } from '@lib/extended-api/names';
 
-const fastEmailRegEx = new RegExp(/^\S+@\S+\.\S+$/);
+const fastEmailRegEx = /^\S+@\S+\.\S+$/;
 
 /**
  * @name {fastEmail}

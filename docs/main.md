@@ -6,18 +6,21 @@ Uvo wants to be a pretty small size library, so each validator represented as se
 
 Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will extend base api with a huge base of specific validators such as `email`, `url`, `guid` and so on. Also uvo supports asynchronous validations.
 
-[size:c-esm]: dist/esm/index.min.js
-[size:c-cjs]: dist/cjs/index.min.js
+[size:b-esm]: dist/esm/index.min.js
+[size:b-cjs]: dist/cjs/index.min.js
 [size:t-esm]: template/index.js
 [size:t-cjs]: template/cjs/index.js
 [size:e-esm]: extended/index.js
 [size:e-cjs]: extended/cjs/index.js
+[size:et-esm]: extended-template/index.js
+[size:et-cjs]: extended-template/cjs/index.js
 
-|Bundles (minified)|esm|cjs|
+|Bundles (minified)|ESM|CJS|
 |:-:|:-:|:-:|
-|Base API|[size:c-esm]|[size:c-cjs]|
+|Base API|[size:b-esm]|[size:b-cjs]|
 |Templating API|[size:t-esm]|[size:t-cjs]|
 |Extended API|[size:e-esm]|[size:e-cjs]|
+|Extended Template API|[size:et-esm]|[size:et-cjs]|
 
 Uvo has own types definition file for `typescript`.
 
@@ -39,12 +42,14 @@ First of all let's import it:
 
 ```js
 import * as v from 'uvo';
+import * as e from 'uvo/extended';
 ```
 
 or
 
 ```js
 const v = require( 'uvo' );
+const e = require( 'uvo/extended' );
 ```
 
 Each validator returns initial or converted value on success, otherwise `null`.
@@ -262,6 +267,22 @@ template( `@number` )()( 10 ); // => 10
 
 // short number
 tml`@n`()( 'str' ); // => null
+```
+
+To provide validators from `uvo/extended` use `provide` function and builders from `uvo/extended-template`.
+
+```js
+import { provide, template } from 'uvo/template';
+import { emailBuilder, urlBuilder } from 'uvo/extended-template';
+
+provide([
+  [emailBuilder, ['email']],
+  [urlBuilder, ['url']]
+]);
+
+template(`@email`);
+
+template(`@url`);
 ```
 
 Templates has own universal comparator `@compare`. It replaces such validators as `gte`, `oneOf`, `regex` and so on.

@@ -68,13 +68,25 @@ export const extractReference = (meta: CompilerMeta, { code, state, value, param
   )
 );
 
-export const extractValidator = (meta: CompilerMeta, data: ValidatorData) => (
-  data.code === CNT.code && containerBase.get(data.value)(meta, data)
-  ||
-  data.code === VLD.code && validatorBase.get(data.value)(meta, data)
-  ||
-  data.code === GR.code && grouperBase.get(data.value)(meta, data)
-);
+export const extractValidator = (meta: CompilerMeta, data: ValidatorData) => {
+  const base = (
+    data.code === CNT.code && containerBase
+    ||
+    data.code === VLD.code && validatorBase
+    ||
+    data.code === GR.code && grouperBase
+  );
+
+  if (base) {
+    const builder = base.get(data.value);
+
+    if (!builder) {
+      throw `Unsupported validator name: '${data.value}'`;
+    }
+
+    return builder(meta, data);
+  }
+};
 
 export const extractSequence = (meta: CompilerMeta, data: ValidatorData) => {
   data.error = extractError(meta, data.error) as any;

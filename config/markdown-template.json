@@ -123,7 +123,7 @@
         "sub": [
           {
             "parse": true,
-            "contentDir": "./src/extended-api/validators"
+            "contentDir": "./src/base-api/extensions/validators"
           }
         ]
       }

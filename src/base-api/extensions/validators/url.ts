@@ -1,8 +1,8 @@
+import { V_URL } from '@lib/base-api/extensions/names';
 import { Error } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
-import { V_URL } from '@lib/extended-api/names';
 
-const urlRegEx = new RegExp(/^https?:\/\/[^\s$.?#].[^\s]*$/i);
+const urlRegEx = /^https?:\/\/[^\s$.?#].[^\s]*$/i;
 
 /**
  * @name {url}
