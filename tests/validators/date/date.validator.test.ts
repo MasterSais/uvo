@@ -11,10 +11,6 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     baseCases(validator, [], right, wrong, toDate)
   );
 
-  describe('base › check', () =>
-    baseCases(validator.check, [], right, wrong)
-  );
-
   describe('base › template', () =>
     baseCases(template('@date'), [], right, wrong, toDate)
   );
@@ -29,14 +25,6 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('with meta', () =>
     withErrorCases(validator(errorMetaCase([], [], VALIDATOR_NAME)), [[wrong[0]]], emptyMeta(), toDate)
-  );
-
-  describe('with error › check', () =>
-    withErrorCases(validator.check(notNullError()), [[right[0]], [wrong[0]]])
-  );
-
-  describe('with meta › check', () =>
-    withErrorCases(validator.check(errorMetaCase([], [], VALIDATOR_NAME)), [[wrong[0]]], emptyMeta())
   );
 
   describe('with error › template', () =>

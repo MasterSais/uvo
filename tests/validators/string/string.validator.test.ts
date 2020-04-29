@@ -9,10 +9,6 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     baseCases(validator, [], right, wrong, String)
   );
 
-  describe('base › check', () =>
-    baseCases(validator.check, [], right, wrong)
-  );
-
   describe('base › template', () =>
     baseCases(template('@string'), [], right, wrong, String)
   );
@@ -27,14 +23,6 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
 
   describe('with meta', () =>
     withErrorCases(validator(errorMetaCase([], [], VALIDATOR_NAME)), [[wrong[0]]], emptyMeta(), String)
-  );
-
-  describe('with error › check', () =>
-    withErrorCases(validator.check(notNullError()), [[right[0]], [wrong[0]]])
-  );
-
-  describe('with meta › check', () =>
-    withErrorCases(validator.check(errorMetaCase([], [], VALIDATOR_NAME)), [[wrong[0]]], emptyMeta())
   );
 
   describe('with error › template', () =>

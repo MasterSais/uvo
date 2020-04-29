@@ -5,7 +5,7 @@
  * 
  * @scheme {number<T>(error?: Error): Validator<T, number>}
  * 
- * @desc Checks value to be a number compatible.
+ * @desc Checks value to be a number compatible. Converts on success. Use `number` from `Extended API` for check only.
  * 
  * {@link docs/base-api/type-validator-processor}
  * 

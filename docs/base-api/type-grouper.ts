@@ -1,3 +1,3 @@
 /**
- * Type: grouper. Groups processors into one.
+ * Type: grouper. Groups validators into one.
  */

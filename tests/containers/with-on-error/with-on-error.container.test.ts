@@ -1,8 +1,8 @@
 import { withOnError } from '@lib/base-api/containers/with-on-error';
+import { integer } from '@lib/base-api/extensions/validators/integer';
 import { parallel } from '@lib/base-api/groupers/parallel';
 import { C_OER as VALIDATOR_NAME } from '@lib/base-api/names';
 import { gte } from '@lib/base-api/validators/is';
-import { integer } from '@lib/base-api/validators/multiple';
 import { number } from '@lib/base-api/validators/number';
 
 test(`container › ${VALIDATOR_NAME}`, () => {

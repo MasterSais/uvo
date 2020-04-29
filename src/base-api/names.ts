@@ -5,12 +5,6 @@ export const V_MLP: string = 'multiple';
 export const V_IS: string = 'is';
 
 /** @type {string} */
-export const V_INT: string = 'integer';
-
-/** @type {string} */
-export const V_EVN: string = 'even';
-
-/** @type {string} */
 export const V_EQ: string = 'equal';
 
 /** @type {string} */
@@ -18,9 +12,6 @@ export const V_DEF: string = 'defined';
 
 /** @type {string} */
 export const V_EM: string = 'empty';
-
-/** @type {string} */
-export const V_UQ: string = 'unique';
 
 /** @type {string} */
 export const V_GTE: string = 'gte';
@@ -83,16 +74,16 @@ export const G_OR: string = 'or';
 export const G_TRM: string = 'transform';
 
 /** @type {string} */
-export const S_GDP: string = 'getDep';
+export const S_GDP: string = 'getRef';
 
 /** @type {string} */
 export const S_DYN: string = 'dynamic';
 
 /** @type {string} */
-export const S_SDP: string = 'setDep';
+export const S_SDP: string = 'setRef';
 
 /** @type {string} */
-export const S_SVDP: string = 'setVDep';
+export const S_SVDP: string = 'setVRef';
 
 /** @type {string} */
 export const S_DFT: string = 'useDefault';

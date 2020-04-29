@@ -1,6 +1,6 @@
-import { consecutive } from '@lib/base-api/groupers/consecutive';
 import { V_OBJ } from '@lib/base-api/names';
 import { Error, ErrorCallback, MetaData, ObjectLike, Validator } from '@lib/base-api/types';
+import { makeSequence } from '@lib/base-api/utilities/factories';
 import { callee, isArray, isDefined, isObject, isString, toArray } from '@lib/base-api/utilities/types';
 import { applyError, asyncActor, extendMeta, setMetaPath, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -10,7 +10,7 @@ const isNestedArrays = (value: Array<Array<any>>) => isArray(value) && (
 
 const mapObject2Validators = (spec?: Array<[string | RegExp | Array<string> | (() => string | RegExp | Array<string>), ...Array<Validator<any, any>>]>): Array<[() => string | RegExp, Validator<any, any>]> => (
   isNestedArrays(spec)
-    ? spec.map(([key, ...validators]) => [callee(key), consecutive(...toArray(validators))])
+    ? spec.map(([key, ...validators]) => [callee(key), makeSequence(toArray(validators))])
     : spec && throwValidatorError(V_OBJ)
 );
 

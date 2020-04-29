@@ -5,7 +5,7 @@
  * 
  * @scheme {date<T>(error?: Error): Validator<T, number>}
  * 
- * @desc Checks value to be a date compatible. Result in ms.
+ * @desc Checks value to be a date compatible. Result in ms. Converts on success. Use `date` from `Extended API` for check only.
  * 
  * {@link docs/base-api/type-validator-processor}
  * 

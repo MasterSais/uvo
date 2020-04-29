@@ -1,7 +1,7 @@
 /**
  * @name {unique}
  * 
- * @template {`@unique(...)`}
+ * @template {via `provide`}
  * 
  * @scheme {unique<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>}
  * 

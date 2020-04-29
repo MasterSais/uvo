@@ -1,7 +1,7 @@
 /**
  * @name {clamp}
  * 
- * @template {injected function via `$...`}
+ * @template {via `provide`}
  * 
  * @scheme {clamp<T>(min: T, max: T): Validator<T, T>}
  * 

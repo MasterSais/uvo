@@ -1,12 +1,12 @@
-import { consecutive } from '@lib/base-api/groupers/consecutive';
 import { V_OBJ } from '@lib/base-api/names';
 import { Error, ErrorCallback, MetaData, ObjectLike, ObjectSpec, Validator } from '@lib/base-api/types';
+import { makeSequence } from '@lib/base-api/utilities/factories';
 import { isObject, toArray } from '@lib/base-api/utilities/types';
 import { applyError, asyncActor, extendMeta, setMetaPath, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
 const mapObjectValidators = (spec?: ObjectSpec): Array<[string, Validator<any, any>]> => (
   isObject(spec)
-    ? Object.keys(spec).map((key) => [key, consecutive(...toArray(spec[key]))])
+    ? Object.keys(spec).map((key) => [key, makeSequence(toArray(spec[key]))])
     : spec && throwValidatorError(V_OBJ)
 );
 

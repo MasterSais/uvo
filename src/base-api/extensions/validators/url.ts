@@ -7,11 +7,11 @@ const urlRegEx = /^https?:\/\/[^\s$.?#].[^\s]*$/i;
 /**
  * @name {url}
  * 
- * @template {`@url`}
+ * @template {via `provide`}
  * 
  * @scheme {url(error?: Error): Validator<string>}
  * 
- * @desc Url validation.
+ * @desc URL validation.
  * 
  * {@link docs/base-api/type-validator}
  * 
@@ -21,6 +21,6 @@ const urlRegEx = /^https?:\/\/[^\s$.?#].[^\s]*$/i;
  */
 export const url = (
   (error?: Error) => isFactory(V_URL)(
-    (value: string) => urlRegEx.test(value), error
+    (value: string) => value && urlRegEx.test(value), error
   )
 );

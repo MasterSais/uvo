@@ -32,3 +32,10 @@ export type ValidatorData = {
   error?: number | string;
   state?: number;
 };
+
+export type CompilerProps = {
+  in: string;
+  out: string;
+  err: boolean;
+  name: () => string;
+};

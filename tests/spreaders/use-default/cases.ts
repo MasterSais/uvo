@@ -1,4 +1,4 @@
-import { clamp } from '@lib/base-api/processors/clamp';
+import { clamp } from '@lib/base-api/extensions/processors/clamp';
 import { emptyFunction } from '@test/utilities';
 
 export const rightParams: Array<any> = [

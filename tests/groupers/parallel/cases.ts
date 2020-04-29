@@ -1,5 +1,5 @@
+import { integer } from '@lib/base-api/extensions/validators/integer';
 import { gte, lte } from '@lib/base-api/validators/is';
-import { integer } from '@lib/base-api/validators/multiple';
 import { number } from '@lib/base-api/validators/number';
 import { emptyArray, emptyFunction, emptyObject } from '@test/utilities';
 

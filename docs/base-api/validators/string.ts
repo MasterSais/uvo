@@ -5,7 +5,7 @@
  * 
  * @scheme {string<T>(error?: Error): Validator<T, string>}
  * 
- * @desc Checks value to be a string compatible.
+ * @desc Checks value to be a string compatible. Converts on success. Use `string` from `Extended API` for check only.
  * 
  * {@link docs/base-api/type-validator-processor}
  * 

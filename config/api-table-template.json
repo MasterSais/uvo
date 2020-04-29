@@ -1,0 +1,19 @@
+[
+  {
+    "name": "api-table",
+    "files": [
+      "./src/base-api/validators",
+      "./src/base-api/processors",
+      "./src/base-api/groupers",
+      "./src/base-api/containers",
+      "./src/base-api/spreaders"
+    ]
+  },
+  {
+    "name": "extended-api-table",
+    "files": [
+      "./src/base-api/extensions/validators",
+      "./src/base-api/extensions/processors"
+    ]
+  }
+]

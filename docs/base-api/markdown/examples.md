@@ -75,8 +75,8 @@ v.object2([
 ```js
 v.withMeta( // for deps api.
   v.object2([
-    ['id', v.number(), v.gte(0), v.setDep('isIdValid', true)],
-    ['name', getDep(
+    ['id', v.number(), v.gte(0), v.setRef('isIdValid', true)],
+    ['name', getRef(
       'isIdValid',
       (isIdValid: boolean) => isIdValid && [v.string(), v.minLen(10)]
     )]
@@ -149,13 +149,13 @@ Multiple validations
 v.withMeta( // for deps api.
   v.object2([
     [/createdAt|updatedAt|deletedAt/, v.date()],
-    ['createdAt', v.setDep('createdAt')],
+    ['createdAt', v.setRef('createdAt')],
     ['updatedAt', 
-      v.getDep('createdAt', createdAt => createdAt && v.gte(createdAt)), // updatedAt >= createdAt.
-      v.setDep('updatedAt')
+      v.getRef('createdAt', createdAt => createdAt && v.gte(createdAt)), // updatedAt >= createdAt.
+      v.setRef('updatedAt')
     ],
     ['deletedAt', 
-      v.getDep('updatedAt', updatedAt => updatedAt && v.gte(updatedAt)), // deletedAt >= updatedAt.
+      v.getRef('updatedAt', updatedAt => updatedAt && v.gte(updatedAt)), // deletedAt >= updatedAt.
     ],
     [/createdAt|updatedAt|deletedAt/, date => date && new Date(date).toLocaleDateString()], // finally format all dates.
   ])

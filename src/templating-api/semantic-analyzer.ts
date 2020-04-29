@@ -78,7 +78,7 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
   }
 
   if (state.code === REF.code) {
-    lexeme.value = '';
+    lexeme.value = null;
   }
 
   stack.push(lexeme);

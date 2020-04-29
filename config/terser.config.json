@@ -1,7 +1,0 @@
-{
-  "module": true,
-  "compress": {
-    "unsafe": true
-  },
-  "mangle": true
-}

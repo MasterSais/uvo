@@ -1,10 +1,10 @@
 import { withErrors } from '@lib/base-api/containers/with-errors';
 import { withMeta as validator } from '@lib/base-api/containers/with-meta';
+import { integer } from '@lib/base-api/extensions/validators/integer';
 import { consecutive } from '@lib/base-api/groupers/consecutive';
 import { parallel } from '@lib/base-api/groupers/parallel';
 import { C_MET as VALIDATOR_NAME } from '@lib/base-api/names';
 import { gte } from '@lib/base-api/validators/is';
-import { integer } from '@lib/base-api/validators/multiple';
 import { number } from '@lib/base-api/validators/number';
 import { template } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';

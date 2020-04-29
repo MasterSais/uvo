@@ -1,9 +1,9 @@
 import { dynamic } from '@lib/base-api/spreaders/dynamic';
 import { identity } from '@lib/base-api/utilities/types';
 import { object2 } from '@lib/base-api/validators/object2';
+import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractSequence } from '@lib/templating-api/extractors';
 import { DLM } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
-import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractSequence } from '@lib/templating-api/utilities';
 
 export const objectBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {
   if (!params) return object2(null, error);

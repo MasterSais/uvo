@@ -5,7 +5,7 @@
  * 
  * @scheme {bool<T>(error?: Error): Validator<T, boolean>}
  * 
- * @desc Checks value to be a boolean compatible.
+ * @desc Checks value to be a boolean compatible. Converts on success. Use `bool` from `Extended API` for check only.
  * 
  * {@link docs/base-api/type-validator-processor}
  * 

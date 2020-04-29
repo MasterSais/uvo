@@ -1,9 +1,0 @@
-{
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../template"
-  },
-  "include": [
-    "../dist/index.template.ts"
-  ]
-}

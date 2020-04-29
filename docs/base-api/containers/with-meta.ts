@@ -3,7 +3,7 @@
  * 
  * @template {`~meta(...)` `~m(...)`}
  * 
- * @scheme {withMeta<T, R>(validator: Validator<T, R>, onLogs?: (logs: Array<[string, any, Array<any>]>): Validator<T, R>}
+ * @scheme {withMeta<T, R>(validator: Validator<T, R>, onLogs?: (logs: Array<[string, any, Array<any>]>, meta: MetaData): Validator<T, R>}
  * 
  * @desc Provides meta structure. Can catch scheme logs.
  * 

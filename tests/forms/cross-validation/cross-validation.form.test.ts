@@ -1,6 +1,6 @@
 import { withMeta } from '@lib/base-api/containers/with-meta';
-import { getDep } from '@lib/base-api/spreaders/get-dep';
-import { setDep } from '@lib/base-api/spreaders/set-dep';
+import { getRef } from '@lib/base-api/spreaders/get-ref';
+import { setRef } from '@lib/base-api/spreaders/set-ref';
 import { date } from '@lib/base-api/validators/date';
 import { gte, lte } from '@lib/base-api/validators/is';
 import { number } from '@lib/base-api/validators/number';
@@ -13,9 +13,9 @@ describe('cross validation form › advanced', () => {
   baseCasesWithParams(() => (
     withMeta(
       object2([
-        ['a', date(), lte.not(1000), setDep()],
-        ['b', date(), getDep('a', a => a && gte(a + 1000)), setDep('b')],
-        ['c', date(), getDep('b', b => b && gte(b))]
+        ['a', date(), lte.not(1000), setRef()],
+        ['b', date(), getRef('a', a => a && gte(a + 1000)), setRef('b')],
+        ['c', date(), getRef('b', b => b && gte(b))]
       ])
     )
   ), cases, []);
@@ -49,8 +49,8 @@ describe('cross validation form 2 › advanced', () => {
   baseCasesWithParams(() => (
     withMeta(
       object2([
-        ['a', number(), setDep('is', 10)],
-        ['b', number(), getDep('is', is => is && gte(10))]
+        ['a', number(), setRef('is', 10)],
+        ['b', number(), getRef('is', is => is && gte(10))]
       ])
     )
   ), cases2, []);

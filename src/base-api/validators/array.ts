@@ -1,6 +1,6 @@
-import { consecutive } from '@lib/base-api/groupers/consecutive';
 import { V_ARR } from '@lib/base-api/names';
 import { Error, ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { makeSequence } from '@lib/base-api/utilities/factories';
 import { isArray, isValidatorsSequence, toArray } from '@lib/base-api/utilities/types';
 import { applyError, asyncActor, extendMeta, setMetaPath, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -8,7 +8,7 @@ const mapArrayValidators = <T>(itemSpec?: Array<Validator<any, T>> | Validator<a
   validators = toArray(itemSpec),
 
   isValidatorsSequence(validators)
-    ? consecutive(...validators)
+    ? makeSequence(validators)
     : itemSpec && throwValidatorError(V_ARR)
 );
 

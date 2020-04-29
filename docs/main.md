@@ -6,21 +6,25 @@ Uvo wants to be a pretty small size library, so each validator represented as se
 
 Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will extend base api with a huge base of specific validators such as `email`, `url`, `guid` and so on. Also uvo supports asynchronous validations.
 
-[size:b-esm]: dist/esm/index.min.js
+[size:b-esm]: dist/index.min.js
 [size:b-cjs]: dist/cjs/index.min.js
-[size:t-esm]: template/index.js
-[size:t-cjs]: template/cjs/index.js
-[size:e-esm]: extended/index.js
-[size:e-cjs]: extended/cjs/index.js
-[size:et-esm]: extended-template/index.js
-[size:et-cjs]: extended-template/cjs/index.js
+[size:b-umd]: dist/umd/index.min.js
+[size:t-esm]: template/index.min.js
+[size:t-cjs]: template/cjs/index.min.js
+[size:t-umd]: template/umd/index.min.js
+[size:e-esm]: extended/index.min.js
+[size:e-cjs]: extended/cjs/index.min.js
+[size:e-umd]: extended/umd/index.min.js
+[size:et-esm]: extended-template/index.min.js
+[size:et-cjs]: extended-template/cjs/index.min.js
+[size:et-umd]: extended-template/umd/index.min.js
 
-|Bundles (minified)|ESM|CJS|
-|:-:|:-:|:-:|
-|Base API|[size:b-esm]|[size:b-cjs]|
-|Templating API|[size:t-esm]|[size:t-cjs]|
-|Extended API|[size:e-esm]|[size:e-cjs]|
-|Extended Template API|[size:et-esm]|[size:et-cjs]|
+|Bundles (minified)|ESM|CJS|UMD|
+|:-:|:-:|:-:|:-:|
+|Base API|[size:b-esm]|[size:b-cjs]|[size:b-umd]|
+|Templating API|[size:t-esm]|[size:t-cjs]|[size:t-umd]|
+|Extended API|[size:e-esm]|[size:e-cjs]|[size:e-umd]|
+|Extended Template API|[size:et-esm]|[size:et-cjs]|[size:et-umd]|
 
 Uvo has own types definition file for `typescript`.
 
@@ -122,22 +126,22 @@ v.withMeta(
     ['createdAt', 
       v.date(), 
       v.gte( () => Date.now() ), 
-      v.setDep( 'createdAt' )
+      v.setRef( 'createdAt' )
     ],
     ['modifiedAt', 
       v.date(), 
-      v.getDep( 'createdAt', createdAt => createdAt && v.gte( createdAt ) ),
-      v.setDep( 'modifiedAt' )
+      v.getRef( 'createdAt', createdAt => createdAt && v.gte( createdAt ) ),
+      v.setRef() // Imlicitly sets into 'modifiedAt' via field's path concatenation.
     ],
     ['deletedAt',
       v.date(), 
-      v.getDep( 'modifiedAt', modifiedAt => modifiedAt && v.gte( modifiedAt + 60 * 1000 ) )
+      v.getRef( 'modifiedAt', modifiedAt => modifiedAt && v.gte( modifiedAt + 60 * 1000 ) )
     ]
   ])
 );
 ```
 
-In the above schema we use `setDep` and `getDep` (i.e. referencing) to compare fields to each other.
+In the above schema we use `setRef` and `getRef` (i.e. referencing) to compare fields to each other.
 In that case we must use `withMeta` container. It provides global data storage for scheme, allows us to use references and stores meta data for errors.
 
 What about errors? Each validator takes an additional parameter for error. Me must use `withErrors` container for errors accumulation from scheme.
@@ -228,13 +232,13 @@ v.withMeta(
       ['user', 
         v.async( 'user' ), // Name the promise with 'user'.
         v.object({
-          id: [v.number(), v.setDep( 'userId' )],
+          id: [v.number(), v.setRef( 'userId' )],
           name: [v.string()]
         })
       ],
       ['roles',
         v.wait( 'user' ), // Wait for 'user' promise here.
-        v.getDep( 'userId' ),
+        v.getRef( 'userId' ),
         (userId: number) => { /* do something asynchronous m.b. */ }
       ],
     ])
@@ -430,3 +434,43 @@ template(`
 ## `Extended API`
 
 <% extended-api-table %>
+
+## `Performance`
+
+Uvo is a pretty fast library for web apps. `uvo/template` will be dramatically optimized for BE usage in the future.
+Tested with [this benchmark][benchmark].
+
+[benchmark]: https://github.com/icebob/validator-benchmark
+
+```
+Platform info:
+==============
+   Windows_NT 10.0.18362 x64
+   Node.JS: 12.16.1
+   V8: 7.8.279.23-node.31
+   Intel(R) Core(TM) i5-3317U CPU @ 1.70GHz × 4
+
+Suite: Simple object
+√ validator.js                253,025 rps
+√ validate.js                 101,932 rps
+√ validatorjs                  53,471 rps
+√ joi                          25,926 rps
+√ ajv                       2,100,936 rps
+√ mschema                     198,256 rps
+√ parambulator                  4,452 rps
+√ fastest-validator         2,096,706 rps
+√ yup                           5,903 rps
+√ uvo                         300,253 rps
+
+   validator.js            -87.96%        (253,025 rps)   (avg: 3μs)
+   validate.js             -95.15%        (101,932 rps)   (avg: 9μs)
+   validatorjs             -97.45%         (53,471 rps)   (avg: 18μs)
+   joi                     -98.77%         (25,926 rps)   (avg: 38μs)
+   ajv                          0%      (2,100,936 rps)   (avg: 475ns)
+   mschema                 -90.56%        (198,256 rps)   (avg: 5μs)
+   parambulator            -99.79%          (4,452 rps)   (avg: 224μs)
+   fastest-validator         -0.2%      (2,096,706 rps)   (avg: 476ns)
+   yup                     -99.72%          (5,903 rps)   (avg: 169μs)
+   uvo                     -85.71%        (300,253 rps)   (avg: 3μs)
+-----------------------------------------------------------------------
+```

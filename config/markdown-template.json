@@ -11,7 +11,7 @@
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/base-api/validators"
+            "contentDir": "./src/base-api/validators"
           }
         ]
       },
@@ -23,7 +23,7 @@
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/base-api/processors"
+            "contentDir": "./src/base-api/processors"
           }
         ]
       },
@@ -35,7 +35,7 @@
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/base-api/groupers"
+            "contentDir": "./src/base-api/groupers"
           }
         ]
       },
@@ -47,7 +47,7 @@
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/base-api/containers"
+            "contentDir": "./src/base-api/containers"
           }
         ]
       },
@@ -59,7 +59,7 @@
         "sub": [
           {
             "parse": true,
-            "contentDir": "./docs/base-api/spreaders"
+            "contentDir": "./src/base-api/spreaders"
           }
         ]
       },
@@ -124,6 +124,16 @@
           {
             "parse": true,
             "contentDir": "./src/base-api/extensions/validators"
+          }
+        ]
+      },
+      {
+        "title": "Processors",
+        "content": [],
+        "sub": [
+          {
+            "parse": true,
+            "contentDir": "./src/base-api/extensions/processors"
           }
         ]
       }

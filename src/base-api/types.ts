@@ -70,11 +70,6 @@ export declare type Async<T> = T & { async: boolean };
 export declare type Primitive = string | number | boolean;
 
 /**
- * Function with checkable supplement.
- */
-export declare type Checkable<T, R> = T & { check: R };
-
-/**
  * {@link docs/base-api/types/fields-spec}
  */
 export declare type FieldsSpec = string | [('&' | '|' | '^'), FieldsSpec | string, FieldsSpec | string, ...Array<FieldsSpec | string>];

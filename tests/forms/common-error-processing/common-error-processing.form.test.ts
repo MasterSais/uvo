@@ -1,7 +1,7 @@
 import { withErrors } from '@lib/base-api/containers/with-errors';
 import { withMeta } from '@lib/base-api/containers/with-meta';
-import { getDep } from '@lib/base-api/spreaders/get-dep';
-import { setVDep } from '@lib/base-api/spreaders/set-v-dep';
+import { getRef } from '@lib/base-api/spreaders/get-ref';
+import { setVRef } from '@lib/base-api/spreaders/set-v-ref';
 import { Error, MetaData } from '@lib/base-api/types';
 import { array } from '@lib/base-api/validators/array';
 import { gte } from '@lib/base-api/validators/is';
@@ -17,13 +17,13 @@ describe('common error processing', () => {
   baseCasesWithParams(() => (
     withMeta(
       withErrors(
-        setVDep(
+        setVRef(
           'user',
           object2([
             ['id', number('numberErr'), gte(0, 'gteErr')],
             ['name', string('stringErr'), minLen(3, 'minLenErr')],
             ['roles', array(number('numberErr'), 'arrayErr')],
-            ['subs', array(getDep('user', v => v), 'arrayErr')]
+            ['subs', array(getRef('user', v => v), 'arrayErr')]
           ], 'objectErr')
         ), (error, { validator, path }) => `${validator}:${path.join('.')}:${error}`
       )

@@ -1,8 +1,8 @@
 import { withFallback } from '@lib/base-api/containers/with-fallback';
 import { useDefault } from '@lib/base-api/spreaders/use-default';
 import { Validator } from '@lib/base-api/types';
+import { extractInjection, extractLiteral, extractSequence } from '@lib/templating-api/extractors';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
-import { extractInjection, extractLiteral, extractSequence } from '@lib/templating-api/utilities';
 
 const spreaderBuilder = (validator: (...args: any) => Validator<any>) => (meta: CompilerMeta, { params: [fallback, , ...nodes] }: ValidatorData) => {
   const validators: Array<Validator<any, any>> = [];

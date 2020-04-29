@@ -1,8 +1,8 @@
 import { withErrors } from '@lib/base-api/containers/with-errors';
+import { integer } from '@lib/base-api/extensions/validators/integer';
 import { parallel } from '@lib/base-api/groupers/parallel';
 import { defined, empty, gte } from '@lib/base-api/validators/is';
 import { minLen } from '@lib/base-api/validators/length';
-import { integer } from '@lib/base-api/validators/multiple';
 import { number } from '@lib/base-api/validators/number';
 import { object } from '@lib/base-api/validators/object';
 import { object2 } from '@lib/base-api/validators/object2';

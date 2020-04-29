@@ -1,6 +1,6 @@
-import { Async, Checkable, Error, ErrorCallback, Invertible, Lengthy, MetaData, Validator } from '@lib/base-api/types';
+import { Async, Error, ErrorCallback, Invertible, Lengthy, MetaData, Validator } from '@lib/base-api/types';
 import { callee, isDefined, isFunction, isLengthy, isNumber } from '@lib/base-api/utilities/types';
-import { applyError, extendMeta, throwValidatorError } from '@lib/base-api/utilities/utilities';
+import { applyError, extendMeta, passValidators, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
 export const invertCondition = (condition: boolean, invert: boolean) => invert ? !condition : condition;
 
@@ -10,18 +10,18 @@ export const makeAsync = <T>(validator: T): Async<T> => (
   (validator as any as Async<T>).async = true, validator as any as Async<T>
 );
 
+export const makeSequence = <T>(validators: Array<Validator<any>>) => (
+  // Presume sequnce to be async.
+  makeAsync(
+    (value: any, onError?: ErrorCallback, meta?: MetaData): T =>
+      passValidators(value, onError, meta, validators)
+  )
+);
+
 export const makeInvertible = <T>(factory: (invert: boolean) => T): Invertible<T> => {
   const validator = factory(false) as Invertible<T>;
 
   validator.not = factory(true);
-
-  return validator;
-};
-
-export const makeCheckable = <T, R>(factory: (checkOnly: boolean) => T | R): Checkable<T, R> => {
-  const validator = factory(false) as Checkable<T, R>;
-
-  validator.check = factory(true) as R;
 
   return validator;
 };

@@ -6,12 +6,12 @@ Uvo wants to be a pretty small size library, so each validator represented as se
 
 Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will extend base api with a huge base of specific validators such as `email`, `url`, `guid` and so on. Also uvo supports asynchronous validations.
 
-|Bundles (minified)|ESM|CJS|
-|:-:|:-:|:-:|
-|Base API|~7.7kb|~8kb|
-|Templating API|~10.2kb|~10.2kb|
-|Extended API|~0.7kb|~0.8kb|
-|Extended Template API|~0.8kb|~0.8kb|
+|Bundles (minified)|ESM|CJS|UMD|
+|:-:|:-:|:-:|:-:|
+|Base API|~6.8kb|~6.8kb|~6.5kb|
+|Templating API|~11kb|~11kb|~11.2kb|
+|Extended API|~2.9kb|~3kb|~2.9kb|
+|Extended Template API|~4.4kb|~4.4kb|~4.4kb|
 
 Uvo has own types definition file for `typescript`.
 
@@ -113,22 +113,22 @@ v.withMeta(
     ['createdAt', 
       v.date(), 
       v.gte( () => Date.now() ), 
-      v.setDep( 'createdAt' )
+      v.setRef( 'createdAt' )
     ],
     ['modifiedAt', 
       v.date(), 
-      v.getDep( 'createdAt', createdAt => createdAt && v.gte( createdAt ) ),
-      v.setDep( 'modifiedAt' )
+      v.getRef( 'createdAt', createdAt => createdAt && v.gte( createdAt ) ),
+      v.setRef() // Imlicitly sets into 'modifiedAt' via field's path concatenation.
     ],
     ['deletedAt',
       v.date(), 
-      v.getDep( 'modifiedAt', modifiedAt => modifiedAt && v.gte( modifiedAt + 60 * 1000 ) )
+      v.getRef( 'modifiedAt', modifiedAt => modifiedAt && v.gte( modifiedAt + 60 * 1000 ) )
     ]
   ])
 );
 ```
 
-In the above schema we use `setDep` and `getDep` (i.e. referencing) to compare fields to each other.
+In the above schema we use `setRef` and `getRef` (i.e. referencing) to compare fields to each other.
 In that case we must use `withMeta` container. It provides global data storage for scheme, allows us to use references and stores meta data for errors.
 
 What about errors? Each validator takes an additional parameter for error. Me must use `withErrors` container for errors accumulation from scheme.
@@ -219,13 +219,13 @@ v.withMeta(
       ['user', 
         v.async( 'user' ), // Name the promise with 'user'.
         v.object({
-          id: [v.number(), v.setDep( 'userId' )],
+          id: [v.number(), v.setRef( 'userId' )],
           name: [v.string()]
         })
       ],
       ['roles',
         v.wait( 'user' ), // Wait for 'user' promise here.
-        v.getDep( 'userId' ),
+        v.getRef( 'userId' ),
         (userId: number) => { /* do something asynchronous m.b. */ }
       ],
     ])
@@ -418,89 +418,51 @@ template(`
 
 |Base API|Templating API|Description|
 |:-|:-|:-|
-|[array][array-url]|`@array(...)` `@a(...)`|Checks value to be an array.|
-|[async][async-url]|`@async(...)` `@p(...)`|Settles value to async storage. Can be awaited somewhere later.|
-|[bool][bool-url]|`@bool` `@b`|Checks value to be a boolean compatible.|
-|[date][date-url]|`@date` `@d`|Checks value to be a date compatible. Result in ms.|
-|[defined][defined-url]|`@compare(=def)` `@c(=def)`|Checks value to be defined.|
-|[empty][empty-url]|`@compare(=emp)` `@c(=emp)` `@compare(!=emp)` `@c(!=emp)`|Checks value to be empty.|
-|[equal][equal-url]|`@compare(=...)` `@c(=...)` `@compare(!=...)` `@c(!=...)`|Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.|
-|[even][even-url]|`@compare(%2)` `@c(%2)` `@compare(!%2)` `@c(!%2)`|Checks number to be an even one.|
-|[fields][fields-url]||Checks for fields in the input object.|
-|[gte][gte-url]|`@compare(>=...)` `@c(>=...)`|Checks value to be greater or equal to 'bound' param. Requires the same type.|
-|[integer][integer-url]|`@compare(%1)` `@c(%1)` `@compare(!%1)` `@c(!%1)`|Checks number to be an integer.|
-|[is][is-url]|injected function via `$...`|Checks value with custom comparator.|
-|[length][length-url]|`@length(=...)` `@l(=...)` `@length(!=...)` `@l(!=...)`|Compares length with 'len' param. Requires to be an object like or string.|
-|[lte][lte-url]|`@compare(<=...)` `@c(<=...)`|Checks value to be lower or equal to 'bound' param. Requires the same type.|
-|[maxLen][maxLen-url]|`@length(<=...)` `@l(<=...)`|Checks length to be equal to 'len' param. Requires to be an object like or string.|
-|[minLen][minLen-url]|`@length(>=...)` `@l(>=...)`|Checks length to be equal to 'len' param. Requires to be an object like or string.|
-|[multiple][multiple-url]|`@compare(%...)` `@c(%...)` `@compare(!%...)` `@c(!%...)`|Checks number to be an integer.|
-|[number][number-url]|`@number` `@n`|Checks value to be a number compatible.|
-|[object][object-url]|`@object(...)` `@o(...)`|Checks value to be an object.|
-|[object2][object2-url]|`@object(...)` `@o(...)`|Checks value to be an object. Provides strict ordering.  Each key can be a Regex.|
-|[oneOf][oneOf-url]|`@compare(->...)` `@c(->...)` `@compare(!->...)` `@c(!->...)`|Checks value to be one of expected. Shallow comparison.|
-|[regex][regex-url]|`@compare(*...)` `@c(*...)` `@compare(!*...)` `@c(!*...)`|Checks value to match a pattern.|
-|[string][string-url]|`@string` `@s`|Checks value to be a string compatible.|
-|[unique][unique-url]|`@unique(...)`|Checks array's elements to be unique.|
-|[clamp][clamp-url]|injected function via `$...`|Clamps value to required boundaries.|
-|[erase][erase-url]|injected function via `$...`|Erase input.|
-|[keysMap][keysMap-url]||Maps object keys with custom mapper.|
-|[lowercase][lowercase-url]|injected function via `$...`|Lowercase input string.|
-|[random][random-url]|injected function via `$...`|Returns random value according to params.|
-|[round][round-url]|injected function via `$...`|Round input number with specific method.|
-|[strip][strip-url]||Removes field from object conditionally.|
-|[trim][trim-url]|injected function via `$...`|Trim input string with specific method.|
-|[uppercase][uppercase-url]|injected function via `$...`|Uppercase input string.|
-|[valueMap][valueMap-url]||Maps value with custom mappers.|
-|[consecutive][consecutive-url]|`<( ... )>`|Groups validators sequentially.  Passes value through a sequence of validators until an error occurs.  Uses by default in 'object' and 'object2' validator's scheme for fields.|
-|[or][or-url]|`<[ ... ]>`|Groups validators sequentially.  Searches for first successful validator's result.|
-|[parallel][parallel-url]|`<{ ... }>`|Groups validators in parallel.  The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).  Beware of using processors inside.|
-|[transform][transform-url]||Groups processors sequentially.  Passes value through a sequence of processors.  Takes only processors (doesn't check errors).|
-|[withErrors][withErrors-url]|`~error(...)` `~e(...)`|Provides error handling mechanism.|
-|[withFallback][withFallback-url]|`@fallback(...)` `@f(...)`|Provides fallback value on error.|
-|[withMeta][withMeta-url]|`~meta(...)` `~m(...)`|Provides meta structure. Can catch scheme logs.|
-|[withOnError][withOnError-url]||Provides custom error handler.|
-|[withPromise][withPromise-url]|`~promise` `~p`|Convert result to promise. Use it for async validation.|
-|[dynamic][dynamic-url]|conditional validation via `?` or injection via `$...`|Inserts new validators into scheme dynamically.|
-|[getDep][getDep-url]|as parameter via `#...` or as validators via `##...`|Takes value from spreaded structure.  Might be used for dynamic validators creation.  If 'preValidator' not provided, just replaces current value.  Works only with provided meta object.|
-|[setDep][setDep-url]|`#...`|Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.|
-|[setVDep][setVDep-url]|`#...(...)`|Puts validators into spreaded structure.  Might be used for recursive schemes.|
-|[useDefault][useDefault-url]|`@default(...)`|Puts default value into spreaded structure.  If input value is empty, puts default value instead, otherwise validates input values with provided validators.  If you need fallback value on error use 'withFallback' container instead.|
-|[wait][wait-url]|`@wait(...)` `@w(...)`|Waits for specified promise.|
+|[array][array-url]|`@array(...)` `@a(...)`|Checks value to be an array.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.|
+|[async][async-url]|`@async(...)` `@p(...)`|Settles value to async storage. Can be awaited somewhere later.    Type: validator. Returns input value on success.|
+|[bool][bool-url]|`@bool` `@b`|Checks value to be a boolean compatible. Converts on success. Use `bool` from `Extended API` for check only.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.|
+|[date][date-url]|`@date` `@d`|Checks value to be a date compatible. Result in ms. Converts on success. Use `date` from `Extended API` for check only.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.|
+|[fields][fields-url]||Checks for fields in the input object.    Type: validator. Returns input value on success.|
+|[is][is-url]|injected function via `$...`|Checks value with custom comparator.    Type: validator. Returns input value on success.|
+|[length][length-url]|`@length(=...)` `@l(=...)` `@length(!=...)` `@l(!=...)`|Compares length with 'len' param. Requires to be an object like or string.    Type: validator. Returns input value on success.|
+|[multiple][multiple-url]|`@compare(%...)` `@c(%...)` `@compare(!%...)` `@c(!%...)`|Checks number to be an integer.    Type: validator. Returns input value on success.|
+|[number][number-url]|`@number` `@n`|Checks value to be a number compatible. Converts on success. Use `number` from `Extended API` for check only.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.|
+|[object][object-url]|`@object(...)` `@o(...)`|Checks value to be an object.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.|
+|[object2][object2-url]|`@object(...)` `@o(...)`|Checks value to be an object. Provides strict ordering.  Each key can be a Regex.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.|
+|[string][string-url]|`@string` `@s`|Checks value to be a string compatible. Converts on success. Use `string` from `Extended API` for check only.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.|
+|[keysMap][keysMap-url]||Maps object keys with custom mapper.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
+|[strip][strip-url]||Removes field from object conditionally.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
+|[valueMap][valueMap-url]||Maps value with custom mappers.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
+|[consecutive][consecutive-url]|`<( ... )>`|Groups validators sequentially.  Passes value through a sequence of validators until an error occurs.  Uses by default in 'object' and 'object2' validator's scheme for fields.    Type: grouper. Groups validators into one.|
+|[or][or-url]|`<[ ... ]>`|Groups validators sequentially.  Searches for first successful validator's result.    Type: grouper. Groups validators into one.|
+|[parallel][parallel-url]|`<{ ... }>`|Groups validators in parallel.  The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).  Beware of using processors inside.    Type: grouper. Groups validators into one.|
+|[transform][transform-url]||Groups processors sequentially.  Passes value through a sequence of processors.  Takes only processors (doesn't check errors).    Type: grouper. Groups validators into one.|
+|[withErrors][withErrors-url]|`~error(...)` `~e(...)`|Provides error handling mechanism.    Type: container. Embraces validators. Provides additional input processing.|
+|[withFallback][withFallback-url]|`@fallback(...)` `@f(...)`|Provides fallback value on error.    Type: container. Embraces validators. Provides additional input processing.|
+|[withMeta][withMeta-url]|`~meta(...)` `~m(...)`|Provides meta structure. Can catch scheme logs.    Type: container. Embraces validators. Provides additional input processing.|
+|[withOnError][withOnError-url]||Provides custom error handler.    Type: container. Embraces validators. Provides additional input processing.|
+|[withPromise][withPromise-url]|`~promise` `~p`|Convert result to promise. Use it for async validation.    Type: container. Embraces validators. Provides additional input processing.|
+|[dynamic][dynamic-url]|conditional validation via `?` or injection via `$...`|Inserts new validators into scheme dynamically.    Type: spreader. Spreads data through a validators scheme.|
+|[getRef][getRef-url]|as parameter via `#...` or as validators via `##...`|Takes value from spreaded structure.  Might be used for dynamic validators creation.  If 'preValidator' not provided, just replaces current value.  Works only with provided meta object.    Type: spreader. Spreads data through a validators scheme.|
+|[setRef][setRef-url]|`#...`|Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.    Type: spreader. Spreads data through a validators scheme.|
+|[setVRef][setVRef-url]|`#...(...)`|Puts validators into spreaded structure.  Might be used for recursive schemes.    Type: spreader. Spreads data through a validators scheme.|
+|[useDefault][useDefault-url]|`@default(...)`|Puts default value into spreaded structure.  If input value is empty, puts default value instead, otherwise validates input values with provided validators.  If you need fallback value on error use 'withFallback' container instead.    Type: spreader. Spreads data through a validators scheme.|
+|[wait][wait-url]|`@wait(...)` `@w(...)`|Waits for specified promise.    Type: spreader. Spreads data through a validators scheme.|
 
 [array-url]: API.md#array
 [async-url]: API.md#async
 [bool-url]: API.md#bool
 [date-url]: API.md#date
-[defined-url]: API.md#defined
-[empty-url]: API.md#empty
-[equal-url]: API.md#equal
-[even-url]: API.md#even
 [fields-url]: API.md#fields
-[gte-url]: API.md#gte
-[integer-url]: API.md#integer
 [is-url]: API.md#is
 [length-url]: API.md#length
-[lte-url]: API.md#lte
-[maxLen-url]: API.md#maxLen
-[minLen-url]: API.md#minLen
 [multiple-url]: API.md#multiple
 [number-url]: API.md#number
 [object-url]: API.md#object
 [object2-url]: API.md#object2
-[oneOf-url]: API.md#oneOf
-[regex-url]: API.md#regex
 [string-url]: API.md#string
-[unique-url]: API.md#unique
-[clamp-url]: API.md#clamp
-[erase-url]: API.md#erase
 [keysMap-url]: API.md#keysMap
-[lowercase-url]: API.md#lowercase
-[random-url]: API.md#random
-[round-url]: API.md#round
 [strip-url]: API.md#strip
-[trim-url]: API.md#trim
-[uppercase-url]: API.md#uppercase
 [valueMap-url]: API.md#valueMap
 [consecutive-url]: API.md#consecutive
 [or-url]: API.md#or
@@ -512,9 +474,9 @@ template(`
 [withOnError-url]: API.md#withOnError
 [withPromise-url]: API.md#withPromise
 [dynamic-url]: API.md#dynamic
-[getDep-url]: API.md#getDep
-[setDep-url]: API.md#setDep
-[setVDep-url]: API.md#setVDep
+[getRef-url]: API.md#getRef
+[setRef-url]: API.md#setRef
+[setVRef-url]: API.md#setVRef
 [useDefault-url]: API.md#useDefault
 [wait-url]: API.md#wait
 
@@ -522,10 +484,104 @@ template(`
 
 |Base API|Templating API|Description|
 |:-|:-|:-|
-|[email][email-url]|`@email`|Email validation.|
-|[fastEmail][fastEmail-url]|`@fastEmail`|Fast email validation.|
-|[url][url-url]|`@url`|Url validation.|
+|[alpha][alpha-url]|via `provide`|Checks if the string contains only letters (a-zA-Z).    Type: validator. Returns input value on success.|
+|[alphanum][alphanum-url]|via `provide`|Checks if the string contains only letters (a-zA-Z) and numbers.    Type: validator. Returns input value on success.|
+|[bin][bin-url]|via `provide`|Checks if the string is a binary number.    Type: validator. Returns input value on success.|
+|[bool][bool-url]|via `provide`|Checks for boolean type.    Type: validator. Returns input value on success.|
+|[contains][contains-url]|via `provide`|Checks if the string or array contains the seed.    Type: validator. Returns input value on success.|
+|[date][date-url]|via `provide`|Checks for right date.    Type: validator. Returns input value on success.|
+|[emailFast][emailFast-url]|via `provide`|Fast email validation.    Type: validator. Returns input value on success.|
+|[email][email-url]|via `provide`|Email validation.    Type: validator. Returns input value on success.|
+|[even][even-url]|via `provide`|Checks number to be an even one.    Type: validator. Returns input value on success.|
+|[float][float-url]|via `provide`|Checks number to be float.    Type: validator. Returns input value on success.|
+|[hex][hex-url]|via `provide`|Checks if the string is a hexadecimal number.    Type: validator. Returns input value on success.|
+|[integer][integer-url]|via `provide`|Checks number to be an integer.    Type: validator. Returns input value on success.|
+|[lowercase][lowercase-url]|via `provide`|Checks string to be in a lower case.    Type: validator. Returns input value on success.|
+|[negative][negative-url]|via `provide`|Checks number to be negative.    Type: validator. Returns input value on success.|
+|[notContains][notContains-url]|via `provide`|Checks if the string or array does not contain the seed.    Type: validator. Returns input value on success.|
+|[number][number-url]|via `provide`|Checks for number type.    Type: validator. Returns input value on success.|
+|[oct][oct-url]|via `provide`|Checks if the string is a octal number.    Type: validator. Returns input value on success.|
+|[positive][positive-url]|via `provide`|Checks number to be positive.    Type: validator. Returns input value on success.|
+|[string][string-url]|via `provide`|Checks for string type.    Type: validator. Returns input value on success.|
+|[unique][unique-url]|via `provide`|Checks array's elements to be unique.    Type: validator. Returns input value on success.|
+|[uppercase][uppercase-url]|via `provide`|Checks string to be in an upper case.    Type: validator. Returns input value on success.|
+|[url][url-url]|via `provide`|URL validation.    Type: validator. Returns input value on success.|
+|[uuid][uuid-url]|via `provide`|UUID validation.    Type: validator. Returns input value on success.|
+|[clamp][clamp-url]|via `provide`|Clamps value to required boundaries.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
+|[erase][erase-url]|via `provide`|Erase input.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
+|[repeat][repeat-url]|via `provide`|Repeats the string.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
+|[round][round-url]|via `provide`|Round input number with specific method.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
+|[toLower][toLower-url]|via `provide`|Lowercase input string.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
+|[toUpper][toUpper-url]|via `provide`|Uppercase input string.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
+|[trim][trim-url]|via `provide`|Trim input string with specific method.    Type: processor. Processor does not check params' and values' types. Escape usage without validators.|
 
+[alpha-url]: API.md#alpha
+[alphanum-url]: API.md#alphanum
+[bin-url]: API.md#bin
+[bool-url]: API.md#bool
+[contains-url]: API.md#contains
+[date-url]: API.md#date
+[emailFast-url]: API.md#emailFast
 [email-url]: API.md#email
-[fastEmail-url]: API.md#fastEmail
+[even-url]: API.md#even
+[float-url]: API.md#float
+[hex-url]: API.md#hex
+[integer-url]: API.md#integer
+[lowercase-url]: API.md#lowercase
+[negative-url]: API.md#negative
+[notContains-url]: API.md#notContains
+[number-url]: API.md#number
+[oct-url]: API.md#oct
+[positive-url]: API.md#positive
+[string-url]: API.md#string
+[unique-url]: API.md#unique
+[uppercase-url]: API.md#uppercase
 [url-url]: API.md#url
+[uuid-url]: API.md#uuid
+[clamp-url]: API.md#clamp
+[erase-url]: API.md#erase
+[repeat-url]: API.md#repeat
+[round-url]: API.md#round
+[toLower-url]: API.md#toLower
+[toUpper-url]: API.md#toUpper
+[trim-url]: API.md#trim
+
+## `Performance`
+
+Uvo is a pretty fast library for web apps. `uvo/template` will be dramatically optimized for BE usage in the future.
+Tested with [this benchmark][benchmark].
+
+[benchmark]: https://github.com/icebob/validator-benchmark
+
+```
+Platform info:
+==============
+   Windows_NT 10.0.18362 x64
+   Node.JS: 12.16.1
+   V8: 7.8.279.23-node.31
+   Intel(R) Core(TM) i5-3317U CPU @ 1.70GHz × 4
+
+Suite: Simple object
+√ validator.js                253,025 rps
+√ validate.js                 101,932 rps
+√ validatorjs                  53,471 rps
+√ joi                          25,926 rps
+√ ajv                       2,100,936 rps
+√ mschema                     198,256 rps
+√ parambulator                  4,452 rps
+√ fastest-validator         2,096,706 rps
+√ yup                           5,903 rps
+√ uvo                         300,253 rps
+
+   validator.js            -87.96%        (253,025 rps)   (avg: 3μs)
+   validate.js             -95.15%        (101,932 rps)   (avg: 9μs)
+   validatorjs             -97.45%         (53,471 rps)   (avg: 18μs)
+   joi                     -98.77%         (25,926 rps)   (avg: 38μs)
+   ajv                          0%      (2,100,936 rps)   (avg: 475ns)
+   mschema                 -90.56%        (198,256 rps)   (avg: 5μs)
+   parambulator            -99.79%          (4,452 rps)   (avg: 224μs)
+   fastest-validator         -0.2%      (2,096,706 rps)   (avg: 476ns)
+   yup                     -99.72%          (5,903 rps)   (avg: 169μs)
+   uvo                     -85.71%        (300,253 rps)   (avg: 3μs)
+-----------------------------------------------------------------------
+```

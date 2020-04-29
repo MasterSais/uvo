@@ -1,9 +1,9 @@
 {
   "moduleNameMapper": {
-    "^@lib/templating-api/extensions/(.*)$": "<rootDir>/extended-template/index.js",
-    "^@lib/templating-api/template$": "<rootDir>/template/index.js",
-    "^@lib/base-api/extensions/(.*)$": "<rootDir>/extended/index.js",
-    "^@lib/(.*)$": "<rootDir>/dist/esm/index.min.js",
+    "^@lib/templating-api/extensions(.*)$": "<rootDir>/extended-template/index.min.js",
+    "^@lib/templating-api/template$": "<rootDir>/template/index.min.js",
+    "^@lib/base-api/extensions(.*)$": "<rootDir>/extended/index.min.js",
+    "^@lib/(.*)$": "<rootDir>/dist/index.min.js",
     "^@test/(.*)$": "<rootDir>/tests/$1"
   },
   "transform": {

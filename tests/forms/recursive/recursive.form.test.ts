@@ -1,6 +1,6 @@
 import { withMeta } from '@lib/base-api/containers/with-meta';
-import { getDep } from '@lib/base-api/spreaders/get-dep';
-import { setVDep } from '@lib/base-api/spreaders/set-v-dep';
+import { getRef } from '@lib/base-api/spreaders/get-ref';
+import { setVRef } from '@lib/base-api/spreaders/set-v-ref';
 import { gte } from '@lib/base-api/validators/is';
 import { number } from '@lib/base-api/validators/number';
 import { object } from '@lib/base-api/validators/object';
@@ -14,10 +14,10 @@ describe('recursive form', () => {
     withMeta(
       object({
         id: [number(), gte(0)],
-        node: setVDep('node',
+        node: setVRef('node',
           object({
             id: [number(), gte(0)],
-            node: getDep('node', validators => validators)
+            node: getRef('node', validators => validators)
           })
         )
       })
@@ -30,10 +30,10 @@ describe('recursive form › advanced', () => {
     withMeta(
       object2([
         ['id', number(), gte(0)],
-        ['node', setVDep('node',
+        ['node', setVRef('node',
           object2([
             ['id', number(), gte(0)],
-            ['node', getDep('node', validators => validators)]
+            ['node', getRef('node', validators => validators)]
           ])
         )]
       ])

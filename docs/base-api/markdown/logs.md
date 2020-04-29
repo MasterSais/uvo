@@ -7,7 +7,7 @@ v.withMeta(
   v.object2([
     ['id', v.empty.not(), v.number(), v.gte.not(0)],
     ['name', v.string(), v.maxLen(25)]
-  ]), console.log
+  ]), (logs, meta) => console.log(logs)
 )({
   id: 10,
   name: 'MasterSais'

@@ -20,13 +20,13 @@ v.withMeta(
     v.object2([
       ['user', v.async('user'), ( // Settle 'user' promise.
         v.object({
-          id: [v.number(), v.setDep('userId')],
+          id: [v.number(), v.setRef('userId')],
           name: [v.string()]
         })
       )],
       ['roles',
         v.wait('user'), // Wait for 'user' promise.
-        v.getDep('userId'),
+        v.getRef('userId'),
         // (userId: number) => e.g. request roles
       ],
     ])

@@ -7,7 +7,7 @@ const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@
 /**
  * @name {email}
  * 
- * @template {`@email`}
+ * @template {via `provide`}
  * 
  * @scheme {email(error?: Error): Validator<string>}
  * 
@@ -21,6 +21,6 @@ const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@
  */
 export const email = (
   (error?: Error) => isFactory(V_MAIL)(
-    (value: string) => emailRegEx.test(value), error
+    (value: string) => value && emailRegEx.test(value), error
   )
 );

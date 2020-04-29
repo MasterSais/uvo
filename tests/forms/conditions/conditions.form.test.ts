@@ -1,6 +1,6 @@
 import { withMeta } from '@lib/base-api/containers/with-meta';
-import { getDep } from '@lib/base-api/spreaders/get-dep';
-import { setDep } from '@lib/base-api/spreaders/set-dep';
+import { getRef } from '@lib/base-api/spreaders/get-ref';
+import { setRef } from '@lib/base-api/spreaders/set-ref';
 import { gte } from '@lib/base-api/validators/is';
 import { minLen } from '@lib/base-api/validators/length';
 import { number } from '@lib/base-api/validators/number';
@@ -15,8 +15,8 @@ describe('conditions form', () => {
   baseCasesWithParams(() => (
     withMeta(
       object({
-        id: [number(), gte(0), setDep('isIdValid', true)],
-        name: [getDep(
+        id: [number(), gte(0), setRef('isIdValid', true)],
+        name: [getRef(
           'isIdValid',
           (isIdValue: boolean) => isIdValue && [string(), minLen(10)]
         )]
@@ -29,8 +29,8 @@ describe('conditions form › advanced', () => {
   baseCasesWithParams(() => (
     withMeta(
       object2([
-        ['id', number(), gte(0), setDep('isIdValid', true)],
-        ['name', getDep(
+        ['id', number(), gte(0), setRef('isIdValid', true)],
+        ['name', getRef(
           'isIdValid',
           (isIdValue: boolean) => isIdValue && [string(), minLen(10)]
         )]

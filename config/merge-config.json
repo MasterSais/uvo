@@ -1,31 +1,194 @@
-{
-  "outDir": "dist",
-  "outFile": "index.ts",
-  "files": [
-    {
-      "file": "./src/base-api/types.ts"
-    },
-    {
-      "file": "./src/base-api/names.ts"
-    },
-    {
-      "dir": "./src/base-api/utilities",
-      "removeExports": true
-    },
-    {
-      "dir": "./src/base-api/groupers"
-    },
-    {
-      "dir": "./src/base-api/spreaders"
-    },
-    {
-      "dir": "./src/base-api/validators"
-    },
-    {
-      "dir": "./src/base-api/processors"
-    },
-    {
-      "dir": "./src/base-api/containers"
-    }
-  ]
-}
+[
+  {
+    "outDir": "dist",
+    "outFile": "index.ts",
+    "files": [
+      {
+        "file": "./src/base-api/types.ts"
+      },
+      {
+        "file": "./src/base-api/names.ts"
+      },
+      {
+        "dir": "./src/base-api/utilities",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/groupers"
+      },
+      {
+        "dir": "./src/base-api/spreaders"
+      },
+      {
+        "dir": "./src/base-api/validators"
+      },
+      {
+        "dir": "./src/base-api/processors"
+      },
+      {
+        "dir": "./src/base-api/containers"
+      }
+    ]
+  },
+  {
+    "outDir": "template",
+    "outFile": "index.ts",
+    "files": [
+      {
+        "file": "./src/base-api/types.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/base-api/names.ts",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/utilities",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/groupers",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/spreaders",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/validators",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/processors",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/containers",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/types.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/lexemes.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/lexical-analyzer.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/semantic-rules.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/semantic-analyzer.ts",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/templating-api/validators",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/extractors.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/validators-base.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/composer.ts",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/templating-api/compiler",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/provider.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/template.ts"
+      }
+    ]
+  },
+  {
+    "outDir": "extended",
+    "outFile": "index.ts",
+    "files": [
+      {
+        "file": "./src/base-api/types.ts",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/utilities",
+        "removeExports": true
+      },
+      {
+        "file": "./src/base-api/extensions/names.ts"
+      },
+      {
+        "dir": "./src/base-api/extensions/validators"
+      },
+      {
+        "dir": "./src/base-api/extensions/processors"
+      }
+    ]
+  },
+  {
+    "outDir": "extended-template",
+    "outFile": "index.ts",
+    "files": [
+      {
+        "file": "./src/base-api/types.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/base-api/names.ts",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/utilities",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/spreaders",
+        "removeExports": true
+      },
+      {
+        "file": "./src/base-api/extensions/names.ts",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/extensions/validators",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/base-api/extensions/processors",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/types.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/lexemes.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/extractors.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/validators-base.ts",
+        "removeExports": true
+      },
+      {
+        "dir": "./src/templating-api/extensions/validators"
+      }
+    ]
+  }
+]

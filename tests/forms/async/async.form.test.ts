@@ -2,8 +2,8 @@ import { withErrors } from '@lib/base-api/containers/with-errors';
 import { withMeta } from '@lib/base-api/containers/with-meta';
 import { withPromise } from '@lib/base-api/containers/with-promise';
 import { consecutive } from '@lib/base-api/groupers/consecutive';
-import { getDep } from '@lib/base-api/spreaders/get-dep';
-import { setDep } from '@lib/base-api/spreaders/set-dep';
+import { getRef } from '@lib/base-api/spreaders/get-ref';
+import { setRef } from '@lib/base-api/spreaders/set-ref';
 import { wait } from '@lib/base-api/spreaders/wait';
 import { array } from '@lib/base-api/validators/array';
 import { async } from '@lib/base-api/validators/async';
@@ -127,13 +127,13 @@ describe(`async form › wait`, () =>
         object2([
           ['user', async('user'), (
             object({
-              id: [number(), setDep('userId')],
+              id: [number(), setRef('userId')],
               name: [string()]
             })
           )],
           ['roles',
             wait('user'),
-            getDep('userId'),
+            getRef('userId'),
             (userId: number) => userId ? resolve([userId]) : undefined
           ],
         ])
