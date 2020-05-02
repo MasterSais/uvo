@@ -5,7 +5,7 @@ const { compile } = require('./template/cjs/index.min.js');
 const v = (
   compile(`
     @object(
-      id : @number,
+      id : @number : @compare(>=0),
       name : @string
     )
   `)()

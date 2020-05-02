@@ -103,7 +103,15 @@
         "removeExports": true
       },
       {
-        "dir": "./src/templating-api/compiler",
+        "dir": "./src/templating-api/compiler/validators",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/compiler/units.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/compiler/compiler.ts",
         "removeExports": true
       },
       {

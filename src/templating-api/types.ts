@@ -38,4 +38,5 @@ export type CompilerProps = {
   out: string;
   err: boolean;
   name: () => string;
+  cmps: Map<number, any>;
 };

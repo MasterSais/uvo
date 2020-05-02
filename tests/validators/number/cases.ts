@@ -8,7 +8,7 @@ export const right: Array<any> = [
 
 export const wrong: Array<any> = [
   NaN, Infinity,
-  '', '-', 'abc',
+  '', ' ', '-', 'abc',
   null, undefined,
   emptyObject(),
   emptyFunction(),
