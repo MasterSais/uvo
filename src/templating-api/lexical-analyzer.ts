@@ -6,11 +6,17 @@ export const lexicalAnalyzer = (input: string): Array<Array<Lexeme>> => {
 
   let index = 0;
 
-  for (const literal of input) {
+  for (let i = 0; i < input.length; i++) {
+    const literal = input[i];
+
+    if (literal.charCodeAt(0) < 32) {
+      continue;
+    }
+
     const lexemes = lexemeBase.get(literal);
 
     if (!lexemes) {
-      throw `Unexpected literal: '${literal}'`;
+      throw `Unexpected literal: '${literal}' on position: ${i}`;
     }
 
     let lexemeTokens: Array<Lexeme> = [];
