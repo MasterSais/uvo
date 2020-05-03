@@ -26,7 +26,7 @@ const lengthTemplates = {
   '=': (value: Lengthy, param: string) => `${value}.length===${param}`,
   '!=': (value: Lengthy, param: string) => `${value}.length!==${param}`,
   '%': (value: Lengthy, param: string) => `${value}.length%${param}===0`,
-  '!%': (value: Lengthy, param: string) => `${value}.length%${param}!==0`,
+  '!%': (value: Lengthy, param: string) => `${value}.length%${param}!==0`
 };
 
 const comparatorTemplate = (comparators: Record<string, (value: string, param: string) => string>) => (props: CompilerProps, data: ValidatorData): Array<string> => {
