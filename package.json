@@ -1,10 +1,10 @@
 {
   "name": "uvo",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "JavaScript Universal Validation Library",
-  "main": "./index.js",
-  "module": "./dist/index.js",
-  "unpkg": "./dist/index.min.js",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "unpkg": "./dist/esm/index.min.js",
   "scripts": {
     "lint": "eslint src/**/*.ts",
     "lint:fix": "yarn lint --fix",
@@ -25,7 +25,6 @@
     "url": "https://github.com/MasterSais/uvo.git"
   },
   "files": [
-    "index.js",
     "dist",
     "template",
     "extended",
