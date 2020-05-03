@@ -1,37 +1,32 @@
-import { l_and, l_assign, l_condition, l_conditionBody, l_conditionElse, l_define, l_emptyString, l_group, l_isBoolean, l_isDefined, l_isFinite, l_isNumber, l_isString, l_notEqual, l_onError, l_or, l_toNumber, l_trim } from '@lib/templating-api/compiler/units';
+import { check, NO_PARAMS } from '@lib/templating-api/compiler/errors';
+import { l_and, l_assign, l_condition, l_conditionBody, l_conditionElse, l_content, l_emptyString, l_group, l_isBoolean, l_isFinite, l_isNumber, l_isString, l_notEqual, l_onError, l_or, l_toNumber, l_trim } from '@lib/templating-api/compiler/units';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
-export const numberTemplate = (props: CompilerProps, { error }: ValidatorData): Array<string> => {
-  const code = props.name();
+export const numberTemplate = (props: CompilerProps, data: ValidatorData): Array<string> => {
+  check(props, data, NO_PARAMS);
 
-  return [
+  return ([
     l_condition(
-      l_isFinite(props.in),
-      l_and(),
-      l_group(
-        l_isNumber(props.in),
-        l_or(),
-        l_isString(props.in),
-        l_and(),
-        l_notEqual(l_trim(props.in), l_emptyString()),
-        l_or(),
-        l_isBoolean(props.in),
+      l_and(
+        l_isFinite(props.in),
+        l_group(
+          l_or(
+            l_isNumber(props.in),
+            l_and(
+              l_isString(props.in),
+              l_notEqual(l_trim(props.in), l_emptyString())
+            ),
+            l_isBoolean(props.in)
+          )
+        )
       )
     ),
     l_conditionBody(
-      l_define(code, l_toNumber(props.in)),
-      l_condition(
-        l_isDefined(code)
-      ),
-      l_conditionBody(
-        l_assign(props.out, code)
-      ),
-      l_conditionElse(
-        l_assign(props.out, l_onError(props, error))
-      )
+      l_assign(props.out, l_toNumber(props.in)),
+      ...l_content({ ...props, in: props.out })
     ),
     l_conditionElse(
-      l_assign(props.out, l_onError(props, error))
+      l_assign(props.out, l_onError(props, data.error))
     )
-  ];
+  ]);
 };

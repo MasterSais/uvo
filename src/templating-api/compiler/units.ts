@@ -7,9 +7,9 @@ export const l_injections = () => 'i';
 
 export const l_errors = () => 'e';
 
-export const l_or = () => '||';
+export const l_or = (...body: Array<string>) => `${body.join('||')}`;
 
-export const l_and = () => '&&';
+export const l_and = (...body: Array<string>) => `${body.join('&&')}`;
 
 export const l_object = () => '{}';
 
@@ -18,6 +18,8 @@ export const l_emptyString = () => '\'\'';
 export const l_condition = (...conditions: Array<string>) => `if(${conditions.join('')})`;
 
 export const l_conditionBody = (...body: Array<string>) => `{${body.join('')}}`;
+
+export const l_content = (props: CompilerProps) => props.content ? props.content(props) : [];
 
 export const l_conditionElse = (body: string) => `else{${body}}`;
 

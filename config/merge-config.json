@@ -111,6 +111,14 @@
         "removeExports": true
       },
       {
+        "file": "./src/templating-api/compiler/errors.ts",
+        "removeExports": true
+      },
+      {
+        "file": "./src/templating-api/compiler/utilities.ts",
+        "removeExports": true
+      },
+      {
         "file": "./src/templating-api/compiler/compiler.ts",
         "removeExports": true
       },

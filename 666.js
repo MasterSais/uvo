@@ -1,30 +1,39 @@
 const { performance } = require('perf_hooks');
 
-const { compile } = require('./template/cjs/index.min.js');
+const { compile } = require('./template/cjs');
 
 const v = (
   compile(`
     @object(
-      id : @number : @compare(>=0),
-      name : @string
+      name : @string : @length( >=4, <=25 ),
+      email : @string,
+      firstName : @string,
+      phone : @string,
+      age : @number : @compare( %1, >=18 )
     )
   `)()
 );
 
 console.log(
-  v({ id: 1, name: 'name' }),
-  v({ id: 'abc', name: 'name' }),
-  v({ id: 1, name: null }),
-  v(null),
+  v({ name: 'name', email: 'mail', firstName: 'firstname', phone: 'phone', age: 18 }),
+  v({ name: 'n', age: 18 }),
+  v({ name: 'n', age: 18.5 }),
+  v({ name: 'n', age: 17 }),
+  v({ age: 'abc' }),
+  v({}),
+  v(),
 );
 
 const tests = [
-  { id: 1, name: 'name' },
-  { id: 'abc', name: 'name' },
-  { id: 1, name: null }
+  { name: 'name', email: 'mail', firstName: 'firstname', phone: 'phone', age: 18 },
+  { name: 'n', age: 18 },
+  { name: 'n', age: 18.5 },
+  { name: 'n', age: 17 },
+  { age: 'abc' },
+  {},
 ];
 
-const count = 10000000;
+const count = 1000000;
 
 const ts = performance.now();
 

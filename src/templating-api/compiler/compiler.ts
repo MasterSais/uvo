@@ -1,5 +1,6 @@
 import { Validator } from '@lib/base-api/types';
 import { l_errors, l_injections, l_return, l_value } from '@lib/templating-api/compiler/units';
+import { compareTemplate, lengthTemplate } from '@lib/templating-api/compiler/validators/compare';
 import { numberTemplate } from '@lib/templating-api/compiler/validators/number';
 import { objectTemplate } from '@lib/templating-api/compiler/validators/object';
 import { stringTemplate } from '@lib/templating-api/compiler/validators/string';
@@ -10,7 +11,9 @@ const components = new Map([
   [VLD.code, {
     'object': objectTemplate,
     'number': numberTemplate,
-    'string': stringTemplate
+    'string': stringTemplate,
+    'compare': compareTemplate,
+    'length': lengthTemplate
   }]
 ]);
 
