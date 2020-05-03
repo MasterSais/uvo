@@ -1,4 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
+import { writeFileSync } from 'fs';
+import { resolve } from 'path';
 import del from 'rollup-plugin-delete';
 import { terser } from 'rollup-plugin-terser';
 import typescript2 from 'rollup-plugin-typescript2';
@@ -16,14 +18,40 @@ const constToLet = () => ({
   renderChunk: content => content.replace(/const /g, 'let ')
 });
 
+const module = outDir => ({
+  name: 'module',
+  buildEnd: () => {
+    writeFileSync(resolve(outDir + '/package.json'), JSON.stringify(
+      {
+        main: './index.js',
+        module: './esm/index.js',
+        unpkg: './esm/index.min.js',
+        typings: './index.d.ts'
+      }
+    ));
+
+    writeFileSync(resolve(outDir + '/index.js'), (
+      `
+      module.exports = (
+        process.env.NODE_ENV === 'production'
+          ? require('./cjs/index.min.js')
+          : require('./cjs/index.js')
+      )
+      `.replace(/[ \n\r]+/g, '')
+    ));
+  }
+});
+
+
 const types = (input, outDir) => ({
   input,
   plugins: [
     del({
       targets: [
         outDir + '/index.js',
-        outDir + '/index.min.js',
+        outDir + '/package.json',
         outDir + '/index.d.ts',
+        outDir + '/esm/*',
         outDir + '/cjs/*',
         outDir + '/umd/*'
       ]
@@ -47,12 +75,12 @@ const types = (input, outDir) => ({
   }
 });
 
-const bundle = (input, outDir) => ({
+const bundle = (input, outDir, createModule) => ({
   input,
-  plugins: [typescript()],
+  plugins: [typescript(), createModule ? module(outDir) : null],
   output: [
     {
-      file: outDir + '/index.js',
+      file: outDir + '/esm/index.js',
       format: 'esm'
     },
     {
@@ -65,7 +93,8 @@ const bundle = (input, outDir) => ({
       format: 'umd'
     },
     {
-      file: outDir + '/index.min.js',
+      file: outDir + '/esm/index.min.js',
+      format: 'esm',
       plugins: [terser(tersetOptions), constToLet()],
     },
     {
@@ -88,7 +117,7 @@ export default [
   types('extended/index.ts', 'extended'),
   types('extended-template/index.ts', 'extended-template'),
   bundle('src/base-api/index.ts', 'dist'),
-  bundle('src/templating-api/template.ts', 'template'),
-  bundle('src/base-api/extensions/index.ts', 'extended'),
-  bundle('src/templating-api/extensions/index.ts', 'extended-template')
+  bundle('src/templating-api/template.ts', 'template', true),
+  bundle('src/base-api/extensions/index.ts', 'extended', true),
+  bundle('src/templating-api/extensions/index.ts', 'extended-template', true)
 ];

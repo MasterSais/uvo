@@ -6,16 +6,16 @@ Uvo wants to be a pretty small size library, so each validator represented as se
 
 Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will extend base api with a huge base of specific validators such as `email`, `url`, `guid` and so on. Also uvo supports asynchronous validations.
 
-[size:b-esm]: dist/index.min.js
+[size:b-esm]: dist/esm/index.min.js
 [size:b-cjs]: dist/cjs/index.min.js
 [size:b-umd]: dist/umd/index.min.js
-[size:t-esm]: template/index.min.js
+[size:t-esm]: template/esm/index.min.js
 [size:t-cjs]: template/cjs/index.min.js
 [size:t-umd]: template/umd/index.min.js
-[size:e-esm]: extended/index.min.js
+[size:e-esm]: extended/esm/index.min.js
 [size:e-cjs]: extended/cjs/index.min.js
 [size:e-umd]: extended/umd/index.min.js
-[size:et-esm]: extended-template/index.min.js
+[size:et-esm]: extended-template/esm/index.min.js
 [size:et-cjs]: extended-template/cjs/index.min.js
 [size:et-umd]: extended-template/umd/index.min.js
 

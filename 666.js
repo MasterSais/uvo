@@ -1,6 +1,6 @@
 const { performance } = require('perf_hooks');
 
-const { compile } = require('./template/cjs/index.min.js');
+const { compile } = require('./template');
 
 const v = (
   compile(`
