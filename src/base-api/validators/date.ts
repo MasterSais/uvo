@@ -1,6 +1,7 @@
 import { V_DTE } from '@lib/base-api/names';
 import { Error, ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { applyError, extendMeta } from '@lib/base-api/utilities/utilities';
+import { isDefined } from '../utilities/types';
 
 /**
  * {@link docs/base-api/validators/date}
@@ -12,6 +13,7 @@ export const date = <T>(error?: Error): Validator<T, number> =>
         extendMeta(meta, value, V_DTE),
         (
           value !== null
+          && isDefined(value)
           && !isNaN(new Date(value as any) as any)
         )
           ? new Date(value as any).getTime()

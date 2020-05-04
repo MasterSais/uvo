@@ -9,7 +9,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will ext
 |Bundles (minified)|ESM|CJS|UMD|
 |:-:|:-:|:-:|:-:|
 |Base API|~6.9kb|~6.8kb|~6.6kb|
-|Templating API|~12.3kb|~12.3kb|~12.5kb|
+|Templating API|~12.9kb|~13kb|~13.1kb|
 |Extended API|~2.9kb|~3kb|~2.9kb|
 |Extended Template API|~4.4kb|~4.4kb|~4.4kb|
 

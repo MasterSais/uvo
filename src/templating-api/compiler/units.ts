@@ -15,25 +15,35 @@ export const l_object = () => '{}';
 
 export const l_emptyString = () => '\'\'';
 
-export const l_condition = (...conditions: Array<string>) => `if(${conditions.join('')})`;
+export const l_if = (...conditions: Array<string>) => `if(${conditions.join('')})`;
 
-export const l_conditionBody = (...body: Array<string>) => `{${body.join('')}}`;
+export const l_ifBody = (...body: Array<string>) => `{${body.join('')}}`;
 
 export const l_content = (props: CompilerProps) => props.content ? props.content(props) : [];
 
-export const l_conditionElse = (body: string) => `else{${body}}`;
+export const l_else = () => `else `;
 
 export const l_return = (value: string) => `return ${value};`;
 
 export const l_assign = (dest: string, src: string) => `${dest}=${src};`;
 
+export const l_valueOf = (input: string) => `${input}.valueOf()`;
+
 export const l_define = (code: string, value: string) => `let ${code}=${value};`;
+
+export const l_equal = (code: string, value: string) => `${code}===${value}`;
+
+export const l_not = (input: string) => `!${input}`;
 
 export const l_notEqual = (code: string, value: string) => `${code}!==${value}`;
 
 export const l_trim = (value: string) => `${value}.trim()`;
 
 export const l_isString = (input: string) => `typeof ${input}==='string'`;
+
+export const l_isNaN = (input: string) => `isNaN(${input})`;
+
+export const l_toDate = (input: string) => `new Date(${input})`;
 
 export const l_toString = (input: string) => `${input}+''`;
 

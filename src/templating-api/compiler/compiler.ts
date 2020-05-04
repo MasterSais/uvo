@@ -1,6 +1,9 @@
 import { Validator } from '@lib/base-api/types';
 import { l_errors, l_injections, l_return, l_value } from '@lib/templating-api/compiler/units';
+import { extract } from '@lib/templating-api/compiler/utilities';
+import { boolTemplate } from '@lib/templating-api/compiler/validators/bool';
 import { compareTemplate, lengthTemplate } from '@lib/templating-api/compiler/validators/compare';
+import { dateTemplate } from '@lib/templating-api/compiler/validators/date';
 import { numberTemplate } from '@lib/templating-api/compiler/validators/number';
 import { objectTemplate } from '@lib/templating-api/compiler/validators/object';
 import { stringTemplate } from '@lib/templating-api/compiler/validators/string';
@@ -12,6 +15,8 @@ const components = new Map([
     'object': objectTemplate,
     'number': numberTemplate,
     'string': stringTemplate,
+    'date': dateTemplate,
+    'bool': boolTemplate,
     'compare': compareTemplate,
     'length': lengthTemplate
   }]
@@ -24,7 +29,7 @@ const root = (semanticTree: Array<ValidatorData>) => {
 
   semanticTree.forEach(node => (
     parts.push(
-      ...components.get(node.code)[node.value](
+      ...extract(components, node)(
         {
           in: l_value(),
           out: l_value(),
@@ -44,7 +49,7 @@ const root = (semanticTree: Array<ValidatorData>) => {
 };
 
 export const compiler = <T, R>(semanticTree: Array<ValidatorData>): ((injections?: Injections, errors?: Errors) => Validator<T, R>) => {
-  console.warn(root(semanticTree));
+  // console.log(root(semanticTree));
 
   const validator = new Function(l_value(), l_injections(), l_errors(), root(semanticTree));
 

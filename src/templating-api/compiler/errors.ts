@@ -6,6 +6,6 @@ export const SEQUENCE_PARAMS: number = 2;
 
 export const COMMA_SEPARATED_PARAMS: number = 4;
 
-export const check = (_props: CompilerProps, _data: ValidatorData, errorCodes: number) => {
-  console.log(errorCodes);
+export const check = (_props: CompilerProps, _data: ValidatorData, _errorCodes: number) => {
+  return 0;
 };

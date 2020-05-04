@@ -1,32 +1,36 @@
-import { Lengthy } from '@lib/base-api/types';
 import { check, COMMA_SEPARATED_PARAMS } from '@lib/templating-api/compiler/errors';
-import { l_and, l_assign, l_condition, l_conditionBody, l_conditionElse, l_content, l_onError } from '@lib/templating-api/compiler/units';
+import { l_and, l_assign, l_content, l_else, l_if, l_ifBody, l_onError } from '@lib/templating-api/compiler/units';
+import { extract } from '@lib/templating-api/compiler/utilities';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
+const condition = (template: string) => (value: string, param: string) => (
+  template.replace('$0', value).replace('$1', param)
+);
+
 const compareTemplates = {
-  '>=': (value: string, param: string) => `${value}>=${param}`,
-  '<': (value: string, param: string) => `${value}<${param}`,
-  '<=': (value: string, param: string) => `${value}<=${param}`,
-  '>': (value: string, param: string) => `${value}>${param}`,
-  '=': (value: string, param: string) => `${value}===${param}`,
-  '!=': (value: string, param: string) => `${value}!==${param}`,
-  '%': (value: string, param: string) => `${value}%${param}===0`,
-  '!%': (value: string, param: string) => `${value}%${param}!==0`,
-  '->': (value: string, param: string) => `${param}.indexOf(${value})>=0`,
-  '!->': (value: string, param: string) => `${param}.indexOf(${value})<0`,
-  '*': (value: string, param: string) => `${param}.test(${value})`,
-  '!*': (value: string, param: string) => `!${param}.test(${value})`
+  '>=': condition('$0>=$1'),
+  '<': condition('$0<$1'),
+  '<=': condition('$0<=$1'),
+  '>': condition('$0>$1'),
+  '=': condition('$0===$1'),
+  '!=': condition('$0!==$1'),
+  '%': condition('$0%$1===0'),
+  '!%': condition('$0%$1!==0'),
+  '->': condition('$1.indexOf($0)>=0'),
+  '!->': condition('$1.indexOf($0)<0'),
+  '*': condition('$1.test($0)'),
+  '!*': condition('!$1.test($0)')
 };
 
 const lengthTemplates = {
-  '>=': (value: Lengthy, param: string) => `${value}.length>=${param}`,
-  '<': (value: Lengthy, param: string) => `${value}.length<${param}`,
-  '<=': (value: Lengthy, param: string) => `${value}.length<=${param}`,
-  '>': (value: Lengthy, param: string) => `${value}.length>${param}`,
-  '=': (value: Lengthy, param: string) => `${value}.length===${param}`,
-  '!=': (value: Lengthy, param: string) => `${value}.length!==${param}`,
-  '%': (value: Lengthy, param: string) => `${value}.length%${param}===0`,
-  '!%': (value: Lengthy, param: string) => `${value}.length%${param}!==0`
+  '>=': condition('$0.length>=$1'),
+  '<': condition('$0.length<$1'),
+  '<=': condition('$0.length<=$1'),
+  '>': condition('$0.length>$1'),
+  '=': condition('$0.length===$1'),
+  '!=': condition('$0.length!==$1'),
+  '%': condition('$0.length%$1===0'),
+  '!%': condition('$0.length%$1!==0')
 };
 
 const comparatorTemplate = (comparators: Record<string, (value: string, param: string) => string>) => (props: CompilerProps, data: ValidatorData): Array<string> => {
@@ -38,19 +42,20 @@ const comparatorTemplate = (comparators: Record<string, (value: string, param: s
     conditions.push(
       comparators[data.params[i].value](
         props.in,
-        data.params[i + 1].value
+        extract(props.cmps, data.params[i + 1])()
       )
     );
   }
 
   return ([
-    l_condition(
+    l_if(
       l_and(...conditions)
     ),
-    l_conditionBody(
+    l_ifBody(
       ...l_content(props)
     ),
-    l_conditionElse(
+    l_else(),
+    l_ifBody(
       l_assign(props.out, l_onError(props, data.error))
     )
   ]);

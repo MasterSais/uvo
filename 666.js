@@ -6,30 +6,29 @@ const v = (
   compile(`
     @object(
       name : @string : @length( >=4, <=25 ),
-      email : @string,
-      firstName : @string,
-      phone : @string,
-      age : @number : @compare( %1, >=18 )
+      age : @number : @compare( %1, >=18 ),
+      date : @date,
+      check : @bool
     )
   `)()
 );
 
 console.log(
-  v({ name: 'name', email: 'mail', firstName: 'firstname', phone: 'phone', age: 18 }),
-  v({ name: 'n', age: 18 }),
-  v({ name: 'n', age: 18.5 }),
-  v({ name: 'n', age: 17 }),
-  v({ age: 'abc' }),
+  v({ name: 'name', age: 18, date: 1432423432, check: 1 }),
+  v({ name: 'n', age: 18, date: 'Thu Jan 01 1970 03:00:05 GMT+0300 (Москва, стандартное время)', check: true }),
+  v({ name: 'n', age: 18.5, date: '432fsdfsd', check: 'true' }),
+  v({ name: 'n', age: 17, check: 'false' }),
+  v({ age: 'abc', check: '0' }),
   v({}),
   v(),
 );
 
 const tests = [
-  { name: 'name', email: 'mail', firstName: 'firstname', phone: 'phone', age: 18 },
-  { name: 'n', age: 18 },
-  { name: 'n', age: 18.5 },
-  { name: 'n', age: 17 },
-  { age: 'abc' },
+  { name: 'name', age: 18, date: 1432423432, check: 1 },
+  { name: 'n', age: 18, date: 'Thu Jan 01 1970 03:00:05 GMT+0300 (Москва, стандартное время)', check: true },
+  { name: 'n', age: 18.5, date: '432fsdfsd', check: 'true' },
+  { name: 'n', age: 17, check: 'false' },
+  { age: 'abc', check: '0' },
   {},
 ];
 
