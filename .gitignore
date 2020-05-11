@@ -2,6 +2,7 @@
 /.vscode
 /dist
 /template
+/es5
 /extended
 /extended-template
 *.tsbuildinfo

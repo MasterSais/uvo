@@ -4,6 +4,7 @@ import { resolve } from 'path';
 import del from 'rollup-plugin-delete';
 import { terser } from 'rollup-plugin-terser';
 import typescript2 from 'rollup-plugin-typescript2';
+import copy from 'rollup-plugin-copy'
 
 const tersetOptions = {
   module: true,
@@ -119,5 +120,31 @@ export default [
   bundle('src/base-api/index.ts', 'dist'),
   bundle('src/templating-api/template.ts', 'template', true),
   bundle('src/base-api/extensions/index.ts', 'extended', true),
-  bundle('src/templating-api/extensions/index.ts', 'extended-template', true)
+  bundle('src/templating-api/extensions/index.ts', 'extended-template', true),
+  {
+    input: 'src/base-api/index.ts',
+    plugins: [
+      typescript2({
+        tsconfigOverride: {
+          compilerOptions: {
+            target: 'es5'
+          }
+        }
+      }),
+      copy({
+        targets: [
+          { src: 'dist/index.d.ts', dest: 'es5' },
+        ]
+      })
+    ],
+    output: [
+      {
+        file: 'es5/index.js'
+      },
+      {
+        file: 'es5/index.min.js',
+        plugins: [terser(tersetOptions)],
+      },
+    ]
+  }
 ];
