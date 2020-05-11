@@ -21,7 +21,7 @@ export const l_ifBody = (...body: Array<string>) => `{${body.join('')}}`;
 
 export const l_content = (props: CompilerProps) => props.content ? props.content(props) : [];
 
-export const l_else = () => `else `;
+export const l_else = () => 'else ';
 
 export const l_return = (value: string) => `return ${value};`;
 
