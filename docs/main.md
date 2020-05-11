@@ -54,6 +54,10 @@ or
 ```js
 const v = require( 'uvo' );
 const e = require( 'uvo/extended' );
+
+// es5
+const v = require( 'uvo/es5' );
+const e = require( 'uvo/extended/es5' );
 ```
 
 Each validator returns initial or converted value on success, otherwise `null`.

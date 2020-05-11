@@ -1,6 +1,6 @@
 {
   "name": "uvo",
-  "version": "3.0.2",
+  "version": "3.0.4",
   "description": "JavaScript Universal Validation Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -28,6 +28,7 @@
     "dist",
     "template",
     "extended",
+    "es5",
     "extended-template"
   ],
   "keywords": [
