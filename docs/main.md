@@ -281,12 +281,14 @@ To provide validators from `uvo/extended` use `provide` function and builders fr
 
 ```js
 import { provide, template } from 'uvo/template';
-import { emailBuilder, urlBuilder } from 'uvo/extended-template';
+import { emailBuilder, urlBuilder, all } from 'uvo/extended-template';
 
 provide([
   [emailBuilder, ['email']],
   [urlBuilder, ['url']]
 ]);
+
+provide(all); // or provide all. Provides with the same name as in the 'uvo/extended'.
 
 template(`@email`);
 

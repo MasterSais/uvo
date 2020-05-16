@@ -1,3 +1,4 @@
+export * from '@lib/templating-api/extensions/all';
 export * from '@lib/templating-api/extensions/processors/clamp';
 export * from '@lib/templating-api/extensions/processors/erase';
 export * from '@lib/templating-api/extensions/processors/repeat';

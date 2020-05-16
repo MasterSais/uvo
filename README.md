@@ -11,7 +11,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will ext
 |Base API|~6.8kb|~6.8kb|~6.5kb|
 |Templating API|~11.1kb|~11.1kb|~11.3kb|
 |Extended API|~2.9kb|~3kb|~2.9kb|
-|Extended Template API|~4.4kb|~4.4kb|~4.4kb|
+|Extended Template API|~4.8kb|~5kb|~5kb|
 
 Uvo has own types definition file for `typescript`.
 
@@ -268,12 +268,14 @@ To provide validators from `uvo/extended` use `provide` function and builders fr
 
 ```js
 import { provide, template } from 'uvo/template';
-import { emailBuilder, urlBuilder } from 'uvo/extended-template';
+import { emailBuilder, urlBuilder, all } from 'uvo/extended-template';
 
 provide([
   [emailBuilder, ['email']],
   [urlBuilder, ['url']]
 ]);
+
+provide(all); // or provide all. Provides with the same name as in the 'uvo/extended'.
 
 template(`@email`);
 
