@@ -35,11 +35,11 @@ export const extract = (components: Map<number, any>, data: ValidatorData) => {
   }
 };
 
-export const chain = (props: CompilerProps, field: string, [first, ...nodes]: Array<ValidatorData>) => (
+export const chain = (props: CompilerProps, [first, ...rest]: Array<ValidatorData>) => (
   extract(props.cmps, first)(
     {
       ...props,
-      content: nodes.length > 0 ? (props: CompilerProps) => chain(props, field, nodes) : null
+      content: rest.length > 0 ? (props: CompilerProps) => chain(props, rest) : null
     },
     first
   )

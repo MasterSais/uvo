@@ -27,7 +27,6 @@ const passObjectParams = (props: CompilerProps, params: Array<ValidatorData>): A
           in: `${props.in}.${field}`,
           out: `${props.out}.${field}`
         },
-        field as string,
         nameParams as Array<ValidatorData>
       )
     );

@@ -1,6 +1,6 @@
 const { performance } = require('perf_hooks');
 
-const { compile } = require('./template');
+const { compile, interpret } = require('./template');
 
 const v = (
   compile(`
@@ -14,13 +14,13 @@ const v = (
 );
 
 console.log(
-  v({ name: 'name', age: 18, date: 1432423432, check: 1 }),
-  v({ name: 'n', age: 18, date: 'Thu Jan 01 1970 03:00:05 GMT+0300 (Москва, стандартное время)', check: true }),
-  v({ name: 'n', age: 18.5, date: '432fsdfsd', check: 'true' }),
-  v({ name: 'n', age: 17, check: 'false' }),
-  v({ age: 'abc', check: '0' }),
-  v({}),
-  v(),
+  interpret(`
+    @object(
+      id : @number,
+      name : @string,
+      roles : @array(@string : @length(>5))
+    )
+  `)
 );
 
 const tests = [

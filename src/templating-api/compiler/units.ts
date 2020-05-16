@@ -27,6 +27,10 @@ export const l_return = (value: string) => `return ${value};`;
 
 export const l_assign = (dest: string, src: string) => `${dest}=${src};`;
 
+export const l_for = (input: string, callee: (elem: string) => Array<string>) => `for (let i = ${input}.length - 1; i >= 0; i--) {${callee(input + '[i]').join('')}}`;
+
+export const l_slice = (input: string) => `${input}.slice(0)`;
+
 export const l_valueOf = (input: string) => `${input}.valueOf()`;
 
 export const l_define = (code: string, value: string) => `let ${code}=${value};`;
@@ -50,6 +54,8 @@ export const l_toString = (input: string) => `${input}+''`;
 export const l_isNumber = (input: string) => `typeof ${input}==='number'`;
 
 export const l_isDefined = (input: string) => `!isNaN(${input})`;
+
+export const l_isArray = (input: string) => `Array.isArray(${input})`;
 
 export const l_toNumber = (input: string) => `+${input}`;
 
