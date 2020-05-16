@@ -11,7 +11,9 @@ const passObjectParams = (props: CompilerProps, params: Array<ValidatorData>): A
 
   for (let i = 1; i < params.length; i++) {
     if (params[i].code === DLM.code) {
-      perNameParams.push([params[++i].value]);
+      if (++i !== params.length) {
+        perNameParams.push([params[i].value]);
+      }
 
       continue;
     }

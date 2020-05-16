@@ -18,7 +18,7 @@ console.log(
     @object(
       id : @number,
       name : @string,
-      roles : @array(@string : @length(>5))
+      roles : @array(@string : @length(>5)),
     )
   `)
 );
