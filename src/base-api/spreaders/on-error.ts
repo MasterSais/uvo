@@ -4,9 +4,9 @@ import { callee, isFunction, isValidatorsSequence } from '@lib/base-api/utilitie
 import { passValidators, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
 /**
- * {@link docs/base-api/containers/with-on-error}
+ * {@link docs/base-api/spreaders/on-error}
  */
-export const withOnError = <T>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<any, T> =>
+export const onError = <T>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<any, T> =>
   (
     isValidatorsSequence(validators) && isFunction(errorProcessor)
       ? (

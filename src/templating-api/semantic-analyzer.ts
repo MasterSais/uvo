@@ -1,23 +1,17 @@
 import { isArray, isFiniteNumber, toArray } from '@lib/base-api/utilities/types';
 import { CND, CNT, ERR, GR, GT, INJ, LCB, LRB, LSB, MNS, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { semanticRules } from '@lib/templating-api/semantic-rules';
-import { Lexeme, ValidatorData } from '@lib/templating-api/types';
+import { Lexeme, LexemeScheme, ValidatorData } from '@lib/templating-api/types';
 
-const onBeforeNestedState = (state: any, stack: Array<any>): Array<any> => (
+const onBeforeNestedState = (state: number, stack: Array<ValidatorData>): Array<ValidatorData> => (
   state < 0
-    ? (stack.push([]), stack[stack.length - 1])
+    ? (stack[stack.length - 1].params = [])
     : stack
 );
 
-const onAfterNestedState = (state: any, stack: Array<any>) => {
-  if (state < 0) {
-    stack[stack.length - 2].params = stack.pop();
-  }
-};
-
 const withValueCodes = [VLD.code, REF.code, INJ.code, CNT.code, SQ.code];
 
-const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
+const onLexeme = (lexeme: Lexeme, state: LexemeScheme, stack: Array<ValidatorData>) => {
   if (lexeme.omitToken) {
     return;
   }
@@ -26,7 +20,7 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
 
   if (prevLexeme) {
     if (state.code === VL.code) {
-      if (prevLexeme.error === true && VLD.code === prevLexeme.code) {
+      if (VLD.code === prevLexeme.code && prevLexeme.code2 === ERR.code) {
         prevLexeme.error = lexeme.value;
 
         return;
@@ -40,13 +34,13 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
     }
 
     if (state.code === CND.code) {
-      prevLexeme.cond = 1;
+      prevLexeme.code2 = CND.code;
 
       return;
     }
 
     if (state.code === REF.code && prevLexeme.code === REF.code) {
-      prevLexeme.state = 1;
+      prevLexeme.code2 = REF.code;
 
       return;
     }
@@ -56,7 +50,7 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
     }
 
     if (state.code === ERR.code) {
-      prevLexeme.error = true;
+      prevLexeme.code2 = ERR.code;
 
       return;
     }
@@ -84,7 +78,7 @@ const onLexeme = (lexeme: Lexeme, state: any, stack: Array<any>) => {
   stack.push(lexeme);
 };
 
-const processState = (states: Array<any>, tokens: Array<Array<Lexeme>>, offset: number, stack: Array<any>) => {
+const processState = (states: Array<any>, tokens: Array<Array<Lexeme>>, offset: number, stack: Array<ValidatorData>) => {
   for (let i = 0; i < states.length; i++) {
     const state = states[i];
 
@@ -92,8 +86,6 @@ const processState = (states: Array<any>, tokens: Array<Array<Lexeme>>, offset: 
       const nestedStack = onBeforeNestedState(state, stack);
 
       offset = processState(semanticRules[Math.abs(state)], tokens, offset, nestedStack);
-
-      onAfterNestedState(state, stack);
 
       if (offset === null) {
         return null;

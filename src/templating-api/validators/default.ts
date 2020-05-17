@@ -1,5 +1,5 @@
-import { withFallback } from '@lib/base-api/containers/with-fallback';
 import { useDefault } from '@lib/base-api/spreaders/use-default';
+import { fallback } from '@lib/base-api/spreaders/fallback';
 import { Validator } from '@lib/base-api/types';
 import { extractInjection, extractLiteral, extractSequence } from '@lib/templating-api/extractors';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
@@ -21,4 +21,4 @@ const spreaderBuilder = (validator: (...args: any) => Validator<any>) => (meta: 
 
 export const defaultBuilder = spreaderBuilder(useDefault);
 
-export const fallbackBuilder = spreaderBuilder(withFallback);
+export const fallbackBuilder = spreaderBuilder(fallback);

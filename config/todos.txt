@@ -1,6 +1,8 @@
   - CI/CD service (gitlab e.g.)
 
   - Templating api
+
+    validator strict mode (e.g. GTE with types check)
   
     'fields';     // @fields( &.[^.id.guid].name )
     'keysMap';    // keysMap | km

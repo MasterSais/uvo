@@ -690,33 +690,6 @@ unchi(11.2);
 // => { result: null, errors: ['ERR1', 'ERR3'] }
 ```
 
-### `withFallback`
-
-```js
-withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
-```
-Provides fallback value on error.    Type: container. Embraces validators. Provides additional input processing.
-
-```js
-import * as v from 'uvo';
-
-const simpleOne = (
-  v.withFallback('fallback', v.string(), v.minLen(10))
-);
-
-simpleOne(null);
-// => 'fallback'
-
-simpleOne('');
-// => 'fallback'
-
-simpleOne('Stringu'); // too short.
-// => 'fallback'
-
-simpleOne('Stringuuuuuuuuuu');
-// => 'Stringuuuuuuuuuu'
-```
-
 ### `withMeta`
 
 ```js
@@ -750,44 +723,6 @@ unchi(11);
 
 unchi(11.2);
 // => { result: null, errors: ['lte', 'integer'] }
-```
-
-### `withOnError`
-
-```js
-withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>
-```
-Provides custom error handler.    Type: container. Embraces validators. Provides additional input processing.
-
-```js
-import * as v from 'uvo';
-
-const unchi = (
-  v.withOnError(
-    (error) => { console.error(error); },
-    v.parallel(
-      v.lte(10, 'ERR1'),
-      v.gte(0, 'ERR2'),
-      v.integer('ERR3')
-    )
-  )
-);
-
-unchi(10);
-// => 10
-
-unchi(-1);
-// => null
-// console.error => 'ERR2'
-
-unchi(11);
-// => null
-// console.error => 'ERR1'
-
-unchi(11.2);
-// => null
-// console.error => 'ERR1'
-// console.error => 'ERR3'
 ```
 
 ### `withPromise`
@@ -860,6 +795,33 @@ v.consecutive(
 );
 ```
 
+### `fallback`
+
+```js
+fallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>
+```
+Provides fallback value on error.    Type: container. Embraces validators. Provides additional input processing.
+
+```js
+import * as v from 'uvo';
+
+const simpleOne = (
+  v.fallback('fallback', v.string(), v.minLen(10))
+);
+
+simpleOne(null);
+// => 'fallback'
+
+simpleOne('');
+// => 'fallback'
+
+simpleOne('Stringu'); // too short.
+// => 'fallback'
+
+simpleOne('Stringuuuuuuuuuu');
+// => 'Stringuuuuuuuuuu'
+```
+
 ### `getRef`
 
 ```js
@@ -887,6 +849,44 @@ simpleOne({ pass: 'YourAwesomePassword', pass2: 'YourAwesomePass..' });
 
 simpleOne({ pass: 'Your...', pass2: 'YourAwesomePassword' });
 // => { pass: null, pass2: null }
+```
+
+### `onError`
+
+```js
+onError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>
+```
+Provides custom error handler.    Type: container. Embraces validators. Provides additional input processing.
+
+```js
+import * as v from 'uvo';
+
+const unchi = (
+  v.onError(
+    (error) => { console.error(error); },
+    v.parallel(
+      v.lte(10, 'ERR1'),
+      v.gte(0, 'ERR2'),
+      v.integer('ERR3')
+    )
+  )
+);
+
+unchi(10);
+// => 10
+
+unchi(-1);
+// => null
+// console.error => 'ERR2'
+
+unchi(11);
+// => null
+// console.error => 'ERR1'
+
+unchi(11.2);
+// => null
+// console.error => 'ERR1'
+// console.error => 'ERR3'
 ```
 
 ### `setRef`

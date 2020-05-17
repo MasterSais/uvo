@@ -1,11 +1,10 @@
-import { Error } from '@lib/base-api/types';
 import { CompilerProps } from '@lib/templating-api/types';
 
 export const l_value = () => 'v';
 
 export const l_injections = () => 'i';
 
-export const l_errors = () => 'e';
+export const l_errors = (error?: string | number) => error ? `e['${error}']` : 'e';
 
 export const l_or = (...body: Array<string>) => `${body.join('||')}`;
 
@@ -22,8 +21,6 @@ export const l_ifBody = (...body: Array<string>) => `{${body.join('')}}`;
 export const l_content = (props: CompilerProps) => props.content ? props.content(props) : [];
 
 export const l_else = () => 'else ';
-
-export const l_return = (value: string) => `return ${value};`;
 
 export const l_assign = (dest: string, src: string) => `${dest}=${src};`;
 
@@ -61,12 +58,42 @@ export const l_toNumber = (input: string) => `+${input}`;
 
 export const l_isBoolean = (input: string) => `typeof ${input}==='boolean'`;
 
+export const l_isFunction = (input: string) => `typeof ${input}==='function'`;
+
 export const l_isObject = (input: string) => `${input}.constructor===Object`;
 
 export const l_isFinite = (input: string) => `isFinite(${input})`;
 
 export const l_group = (...body: Array<string>) => `(${body.join('')})`;
 
-export const l_onError = (props: CompilerProps, error: Error) => (
-  props.err ? `(onError(${l_errors()}[${error}],meta),null)` : 'null'
-);
+export const l_push = (input: string, value: string) => `${input}.push(${value})`;
+
+export const l_return = (props: CompilerProps): Array<string> => ([
+  'return ',
+  (
+    props.err
+      ? `{result:${props.out};errors:${props.err}}`
+      : props.out
+  )
+]);
+
+export const l_error = (props: CompilerProps, error: string | number): Array<string> => ([
+  ...(
+    (props.err && error)
+      ?
+      [
+        l_if(
+          l_isFunction(l_errors(error))
+        ),
+        l_ifBody(
+          l_push(props.err, l_errors(error) + '()')
+        ),
+        l_else(),
+        l_ifBody(
+          l_push(props.err, l_errors(error))
+        )
+      ]
+      : []
+  ),
+  l_assign(props.out, 'null')
+]);

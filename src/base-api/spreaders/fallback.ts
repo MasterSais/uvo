@@ -4,9 +4,9 @@ import { callee, isValidatorsSequence } from '@lib/base-api/utilities/types';
 import { onAsync, passValidators, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
 /**
- * {@link docs/base-api/containers/with-fallback}
+ * {@link docs/base-api/spreaders/fallback}
  */
-export const withFallback = <T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R> =>
+export const fallback = <T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R> =>
   (
     isValidatorsSequence(validators)
       ? (

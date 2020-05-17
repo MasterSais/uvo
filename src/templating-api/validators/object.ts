@@ -2,7 +2,7 @@ import { dynamic } from '@lib/base-api/spreaders/dynamic';
 import { identity } from '@lib/base-api/utilities/types';
 import { object2 } from '@lib/base-api/validators/object2';
 import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractSequence } from '@lib/templating-api/extractors';
-import { DLM } from '@lib/templating-api/lexemes';
+import { CND, DLM } from '@lib/templating-api/lexemes';
 import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
 
 export const objectBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {
@@ -26,7 +26,7 @@ export const objectBuilder = (meta: CompilerMeta, { params, error }: ValidatorDa
       continue;
     }
 
-    if (params[i].cond) {
+    if (params[i].code2 === CND.code) {
       const sequence = extractSequence(meta, params[i + 1]);
 
       param = (

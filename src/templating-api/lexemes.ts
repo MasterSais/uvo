@@ -2,7 +2,7 @@ import { Lexeme, LexemeScheme } from '@lib/templating-api/types';
 
 export const lexemeBase = new Map<string, Array<Lexeme>>();
 
-let code = -1;
+let code = 0;
 
 const makeLexeme = (literals: string, omitToken?: boolean, omit?: boolean, compound?: boolean): LexemeScheme => {
   const scheme: LexemeScheme = { literals, code: ++code, omitToken, omit, compound };

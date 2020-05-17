@@ -27,17 +27,17 @@ export type CompilerMeta = {
 
 export type ValidatorData = {
   code: number;
+  code2?: number;
   value: string;
-  params: Array<any>;
+  params?: Array<ValidatorData>;
   error?: number | string;
-  state?: number;
 };
 
 export type CompilerProps = {
   in: string;
   out: string;
-  err: boolean;
-  name: () => string;
+  err?: string;
   cmps: Map<number, any>;
+  name: () => string;
   content?: (props: CompilerProps) => Array<string>;
 };

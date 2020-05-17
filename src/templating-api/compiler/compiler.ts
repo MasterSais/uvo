@@ -1,15 +1,18 @@
 import { Validator } from '@lib/base-api/types';
 import { l_errors, l_injections, l_return, l_value } from '@lib/templating-api/compiler/units';
-import { extract } from '@lib/templating-api/compiler/utilities';
+import { chain, extract } from '@lib/templating-api/compiler/utilities';
 import { arrayTemplate } from '@lib/templating-api/compiler/validators/array';
 import { boolTemplate } from '@lib/templating-api/compiler/validators/bool';
 import { compareTemplate, lengthTemplate } from '@lib/templating-api/compiler/validators/compare';
 import { dateTemplate } from '@lib/templating-api/compiler/validators/date';
+import { defaultTemplate } from '@lib/templating-api/compiler/validators/default';
+import { fallbackTemplate } from '@lib/templating-api/compiler/validators/fallback';
 import { numberTemplate } from '@lib/templating-api/compiler/validators/number';
 import { objectTemplate } from '@lib/templating-api/compiler/validators/object';
 import { stringTemplate } from '@lib/templating-api/compiler/validators/string';
+import { withErrorTemplate } from '@lib/templating-api/compiler/validators/with-error';
 import { CNT, GR, VLD } from '@lib/templating-api/lexemes';
-import { Errors, Injections, ValidatorData } from '@lib/templating-api/types';
+import { CompilerProps, Errors, Injections, ValidatorData } from '@lib/templating-api/types';
 
 const components = new Map([
   [VLD.code, {
@@ -23,11 +26,11 @@ const components = new Map([
     'array': arrayTemplate,
     'async': null,
     'wait': null,
-    'fallback': null,
-    'default': null
+    'fallback': fallbackTemplate,
+    'default': defaultTemplate
   }],
   [CNT.code, {
-    'error': null,
+    'error': withErrorTemplate,
     'meta': null,
     'promise': null
   }],
@@ -41,25 +44,28 @@ const components = new Map([
 export const interpreter = (semanticTree: Array<ValidatorData>) => {
   let code = 0;
 
-  const parts: Array<any> = [];
+  const props: CompilerProps = {
+    in: l_value(),
+    out: l_value(),
+    cmps: components,
+    name: () => `_${(code++).toString(26)}`
+  };
 
-  semanticTree.forEach(node => (
-    parts.push(
-      ...extract(components, node)(
-        {
-          in: l_value(),
-          out: l_value(),
-          cmps: components,
-          name: () => `$${(code++).toString(26)}`
-        },
-        node
-      )
-    )
-  ));
+  const validators: Array<ValidatorData> = [];
 
-  parts.push(
-    l_return(l_value())
-  );
+  const containers: Array<ValidatorData> = [];
+
+  for (const node of semanticTree) {
+    node.code === CNT.code
+      ? containers.push(node)
+      : validators.push(node);
+  }
+
+  const parts: Array<any> = [
+    ...containers.map(container => extract(components, container)(props).join('')),
+    ...chain(props, validators),
+    ...l_return(props)
+  ];
 
   return parts.join('');
 };

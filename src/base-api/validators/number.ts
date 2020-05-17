@@ -15,7 +15,7 @@ export const number = <T extends any>(error?: Error): Validator<T, number> =>
           isFinite(value) &&
           (
             isNumber(value)
-            || isString(value) && (value.trim() !== '')
+            || isString(value) && ((value as string).trim() !== '')
             || isBoolean(value)
           )
         )

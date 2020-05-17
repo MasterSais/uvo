@@ -51,9 +51,9 @@ export const extractError = (cmeta: CompilerMeta, error: string | number) => (
   isDefined(error) ? (meta: MetaData) => callee(cmeta.errors[error])(meta) : error
 );
 
-export const extractReference = (meta: CompilerMeta, { code, state, value, params }: ValidatorData): Validator<any> => (
+export const extractReference = (meta: CompilerMeta, { code, code2, value, params }: ValidatorData): Validator<any> => (
   code === REF.code && (
-    state === 1
+    code2 === REF.code
       ? getRef(value, identity)
       : params
         ? (

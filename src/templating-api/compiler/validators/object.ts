@@ -1,5 +1,5 @@
 import { check, COMMA_SEPARATED_PARAMS, SEQUENCE_PARAMS } from '@lib/templating-api/compiler/errors';
-import { l_and, l_assign, l_content, l_define, l_else, l_if, l_ifBody, l_isObject, l_notEqual, l_object, l_onError } from '@lib/templating-api/compiler/units';
+import { l_and, l_assign, l_content, l_define, l_else, l_error, l_if, l_ifBody, l_isObject, l_notEqual, l_object } from '@lib/templating-api/compiler/units';
 import { chain } from '@lib/templating-api/compiler/utilities';
 import { DLM } from '@lib/templating-api/lexemes';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
@@ -68,7 +68,7 @@ export const objectTemplate = (props: CompilerProps, data: ValidatorData): Array
     ),
     l_else(),
     l_ifBody(
-      l_assign(props.out, l_onError(props, data.error))
+      ...l_error(props, data.error)
     )
   ]);
 };

@@ -1,7 +1,7 @@
 /**
- * @name {withOnError}
+ * @name {onError}
  * 
- * @scheme {withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>}
+ * @scheme {onError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>}
  * 
  * @desc Provides custom error handler.
  * 
@@ -20,7 +20,7 @@
 import * as v from 'uvo';
 
 const unchi = (
-  v.withOnError(
+  v.onError(
     (error) => { console.error(error); },
     v.parallel(
       v.lte(10, 'ERR1'),

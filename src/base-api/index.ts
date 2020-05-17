@@ -1,7 +1,5 @@
 export * from '@lib/base-api/containers/with-errors';
-export * from '@lib/base-api/containers/with-fallback';
 export * from '@lib/base-api/containers/with-meta';
-export * from '@lib/base-api/containers/with-on-error';
 export * from '@lib/base-api/containers/with-promise';
 export * from '@lib/base-api/groupers/consecutive';
 export * from '@lib/base-api/groupers/or';
@@ -17,6 +15,8 @@ export * from '@lib/base-api/spreaders/set-ref';
 export * from '@lib/base-api/spreaders/set-v-ref';
 export * from '@lib/base-api/spreaders/use-default';
 export * from '@lib/base-api/spreaders/wait';
+export * from '@lib/base-api/spreaders/fallback';
+export * from '@lib/base-api/spreaders/on-error';
 export * from '@lib/base-api/validators/array';
 export * from '@lib/base-api/validators/async';
 export * from '@lib/base-api/validators/bool';

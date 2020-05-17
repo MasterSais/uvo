@@ -1,4 +1,4 @@
-import { withOnError } from '@lib/base-api/containers/with-on-error';
+import { onError } from '@lib/base-api/spreaders/on-error';
 import { integer } from '@lib/base-api/extensions/validators/integer';
 import { parallel } from '@lib/base-api/groupers/parallel';
 import { C_OER as VALIDATOR_NAME } from '@lib/base-api/names';
@@ -11,7 +11,7 @@ test(`container › ${VALIDATOR_NAME}`, () => {
   const callback = (error: any) => errors.push(error);
 
   const simpleOne = (
-    withOnError(
+    onError(
       callback,
       number('E1'),
       parallel(

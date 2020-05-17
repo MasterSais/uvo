@@ -16,10 +16,8 @@ const v = (
 console.log(
   interpret(`
     @object(
-      id : @number,
-      name : @string,
-      roles : @array(@string : @length(>5)),
-    )
+      id: @compare(>0)!urrr
+    ) ~error
   `)
 );
 

@@ -1,5 +1,5 @@
 import { check, COMMA_SEPARATED_PARAMS } from '@lib/templating-api/compiler/errors';
-import { l_and, l_assign, l_content, l_else, l_if, l_ifBody, l_onError } from '@lib/templating-api/compiler/units';
+import { l_and, l_content, l_else, l_error, l_if, l_ifBody } from '@lib/templating-api/compiler/units';
 import { extract } from '@lib/templating-api/compiler/utilities';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
@@ -42,7 +42,7 @@ const comparatorTemplate = (comparators: Record<string, (value: string, param: s
     conditions.push(
       comparators[data.params[i].value](
         props.in,
-        extract(props.cmps, data.params[i + 1])()
+        extract(props.cmps, data.params[i + 1])().join('')
       )
     );
   }
@@ -56,7 +56,7 @@ const comparatorTemplate = (comparators: Record<string, (value: string, param: s
     ),
     l_else(),
     l_ifBody(
-      l_assign(props.out, l_onError(props, data.error))
+      ...l_error(props, data.error)
     )
   ]);
 };

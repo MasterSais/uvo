@@ -1,9 +1,9 @@
 /**
- * @name {withFallback}
+ * @name {fallback}
  * 
  * @template {`@fallback(...)` `@f(...)`}
  * 
- * @scheme {withFallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>}
+ * @scheme {fallback<T, R>(fallback: R | ((initialValue: T, meta?: MetaData) => R), ...validators: Array<Validator<T | R, R>>): Validator<T | R, R>}
  * 
  * @desc Provides fallback value on error.
  * 
@@ -22,7 +22,7 @@
 import * as v from 'uvo';
 
 const simpleOne = (
-  v.withFallback('fallback', v.string(), v.minLen(10))
+  v.fallback('fallback', v.string(), v.minLen(10))
 );
 
 simpleOne(null);

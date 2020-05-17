@@ -9,7 +9,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will ext
 |Bundles (minified)|ESM|CJS|UMD|
 |:-:|:-:|:-:|:-:|
 |Base API|~6.9kb|~6.8kb|~6.6kb|
-|Templating API|~13.5kb|~13.5kb|~13.7kb|
+|Templating API|~14.1kb|~14.1kb|~14.3kb|
 |Extended API|~2.9kb|~3kb|~2.9kb|
 |Extended Template API|~4.8kb|~5kb|~5kb|
 
@@ -444,12 +444,12 @@ template(`
 |[parallel][parallel-url]|`<{ ... }>`|Groups validators in parallel.  The main goal is to catch all errors (pass value through a sequence of validators, even if an error occurred somewhere).  Beware of using processors inside.    Type: grouper. Groups validators into one.|
 |[transform][transform-url]||Groups processors sequentially.  Passes value through a sequence of processors.  Takes only processors (doesn't check errors).    Type: grouper. Groups validators into one.|
 |[withErrors][withErrors-url]|`~error(...)` `~e(...)`|Provides error handling mechanism.    Type: container. Embraces validators. Provides additional input processing.|
-|[withFallback][withFallback-url]|`@fallback(...)` `@f(...)`|Provides fallback value on error.    Type: container. Embraces validators. Provides additional input processing.|
 |[withMeta][withMeta-url]|`~meta(...)` `~m(...)`|Provides meta structure. Can catch scheme logs.    Type: container. Embraces validators. Provides additional input processing.|
-|[withOnError][withOnError-url]||Provides custom error handler.    Type: container. Embraces validators. Provides additional input processing.|
 |[withPromise][withPromise-url]|`~promise` `~p`|Convert result to promise. Use it for async validation.    Type: container. Embraces validators. Provides additional input processing.|
 |[dynamic][dynamic-url]|conditional validation via `?` or injection via `$...`|Inserts new validators into scheme dynamically.    Type: spreader. Spreads data through a validators scheme.|
+|[fallback][fallback-url]|`@fallback(...)` `@f(...)`|Provides fallback value on error.    Type: container. Embraces validators. Provides additional input processing.|
 |[getRef][getRef-url]|as parameter via `#...` or as validators via `##...`|Takes value from spreaded structure.  Might be used for dynamic validators creation.  If 'preValidator' not provided, just replaces current value.  Works only with provided meta object.    Type: spreader. Spreads data through a validators scheme.|
+|[onError][onError-url]||Provides custom error handler.    Type: container. Embraces validators. Provides additional input processing.|
 |[setRef][setRef-url]|`#...`|Puts value into spreaded structure.  If 'extValue' is provided, puts it instead of current value. i.e. reference api.    Type: spreader. Spreads data through a validators scheme.|
 |[setVRef][setVRef-url]|`#...(...)`|Puts validators into spreaded structure.  Might be used for recursive schemes.    Type: spreader. Spreads data through a validators scheme.|
 |[useDefault][useDefault-url]|`@default(...)`|Puts default value into spreaded structure.  If input value is empty, puts default value instead, otherwise validates input values with provided validators.  If you need fallback value on error use 'withFallback' container instead.    Type: spreader. Spreads data through a validators scheme.|
@@ -475,12 +475,12 @@ template(`
 [parallel-url]: API.md#parallel
 [transform-url]: API.md#transform
 [withErrors-url]: API.md#withErrors
-[withFallback-url]: API.md#withFallback
 [withMeta-url]: API.md#withMeta
-[withOnError-url]: API.md#withOnError
 [withPromise-url]: API.md#withPromise
 [dynamic-url]: API.md#dynamic
+[fallback-url]: API.md#fallback
 [getRef-url]: API.md#getRef
+[onError-url]: API.md#onError
 [setRef-url]: API.md#setRef
 [setVRef-url]: API.md#setVRef
 [useDefault-url]: API.md#useDefault

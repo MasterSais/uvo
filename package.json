@@ -1,6 +1,6 @@
 {
   "name": "uvo",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "JavaScript Universal Validation Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -53,20 +53,20 @@
     "@babel/preset-env": "7.9.6",
     "@babel/preset-typescript": "7.9.0",
     "@rollup/plugin-typescript": "4.1.1",
-    "@types/jest": "25.2.1",
-    "@types/node": "13.13.5",
-    "@typescript-eslint/eslint-plugin": "2.31.0",
-    "@typescript-eslint/parser": "2.31.0",
+    "@types/jest": "25.2.2",
+    "@types/node": "14.0.1",
+    "@typescript-eslint/eslint-plugin": "2.33.0",
+    "@typescript-eslint/parser": "2.33.0",
     "babel-jest": "26.0.1",
     "eslint": "7.0.0",
     "jest": "26.0.1",
-    "rollup": "2.8.2",
+    "rollup": "2.10.2",
     "rollup-plugin-delete": "1.2.0",
     "rollup-plugin-terser": "5.3.0",
-    "rollup-plugin-typescript2": "0.27.0",
+    "rollup-plugin-typescript2": "0.27.1",
     "terser": "4.6.13",
-    "tslib": "1.11.2",
-    "typescript": "3.8.3"
+    "tslib": "2.0.0",
+    "typescript": "3.9.2"
   },
   "typings": "./dist/index.d.ts"
 }
