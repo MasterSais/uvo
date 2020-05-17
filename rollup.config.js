@@ -136,11 +136,11 @@ const es5Bundle = (input, outDir = '.') => ({
   output: [
     {
       file: outDir + '/es5/index.js',
-      format: 'cjs'
+      format: 'esm'
     },
     {
       file: outDir + '/es5/index.min.js',
-      format: 'cjs',
+      format: 'esm',
       plugins: [terser(tersetOptions)],
     },
   ]
