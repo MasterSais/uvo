@@ -7,7 +7,7 @@ import { C_ERR as VALIDATOR_NAME } from '@lib/base-api/names';
 import { MetaData } from '@lib/base-api/types';
 import { gte } from '@lib/base-api/validators/is';
 import { number } from '@lib/base-api/validators/number';
-import { template } from '@lib/templating-api/template';
+import { template, compile } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases1, cases2 } from './cases';
 
@@ -34,8 +34,8 @@ describe(`container › ${VALIDATOR_NAME}`, () => {
     ), cases2, [])
   );
 
-  describe('base 1 › template', () =>
-    baseCasesWithParams(() => template('@number!e1 : @compare(>=0)!e2 : @compare(%1)!e3 ~e')(
+  describe('base 1 › compile', () =>
+    baseCasesWithParams(() => compile('@number!e1 : @compare(>=0)!e2 : @compare(%1)!e3 ~e')(
       null,
       { e1: 'E1', e2: () => 'E2', e3: () => 'E3' }
     ), cases1, [])

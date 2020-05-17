@@ -2,11 +2,11 @@ import { l_injections } from '@lib/templating-api/compiler/units';
 import { CNT, GR, INJ, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
-// const reservedValues: { [name: string]: any } = {
-//   'true': true,
-//   'false': false,
-//   'null': null
-// };
+const constValues: Record<string, any> = {
+  'true': true,
+  'false': false,
+  'null': null
+};
 
 export const extract = (components: Map<number, any>, data: ValidatorData): ((...args: any) => Array<string>) => {
   if (data.code === VLD.code || data.code === CNT.code || data.code === GR.code) {
@@ -22,7 +22,9 @@ export const extract = (components: Map<number, any>, data: ValidatorData): ((..
   if (data.code === INJ.code) {
     const injection = `${l_injections()}['${data.value}']`;
 
-    return () => [`(typeof ${injection} === 'function' ? ${injection}() : ${injection})`];
+    return () => [
+      `(typeof ${injection} === 'function' ? ${injection}() : ${injection})`
+    ];
   }
 
   if (data.code === VL.code) {

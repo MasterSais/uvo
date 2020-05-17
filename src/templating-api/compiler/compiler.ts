@@ -17,22 +17,36 @@ import { CompilerProps, Errors, Injections, ValidatorData } from '@lib/templatin
 const components = new Map([
   [VLD.code, {
     'object': objectTemplate,
+    'o': objectTemplate,
     'number': numberTemplate,
+    'n': numberTemplate,
     'string': stringTemplate,
+    's': stringTemplate,
     'date': dateTemplate,
+    'd': dateTemplate,
     'bool': boolTemplate,
+    'b': boolTemplate,
     'compare': compareTemplate,
+    'c': compareTemplate,
     'length': lengthTemplate,
+    'l': lengthTemplate,
     'array': arrayTemplate,
+    'a': arrayTemplate,
     'async': null,
+    'p': null,
     'wait': null,
+    'w': null,
     'fallback': fallbackTemplate,
+    'f': fallbackTemplate,
     'default': defaultTemplate
   }],
   [CNT.code, {
     'error': withErrorTemplate,
+    'e': withErrorTemplate,
     'meta': null,
-    'promise': null
+    'm': null,
+    'promise': null,
+    'p': null
   }],
   [GR.code, {
     '(': null,
@@ -62,7 +76,9 @@ export const interpreter = (semanticTree: Array<ValidatorData>) => {
   }
 
   const parts: Array<any> = [
-    ...containers.map(container => extract(components, container)(props).join('')),
+    ...containers.map(
+      container => extract(components, container)(props).join('')
+    ),
     ...chain(props, validators),
     ...l_return(props)
   ];

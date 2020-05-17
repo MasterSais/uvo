@@ -6,6 +6,8 @@ export const l_injections = () => 'i';
 
 export const l_errors = (error?: string | number) => error ? `e['${error}']` : 'e';
 
+export const l_errorsCounter = () => 'ei';
+
 export const l_or = (...body: Array<string>) => `${body.join('||')}`;
 
 export const l_and = (...body: Array<string>) => `${body.join('&&')}`;
@@ -24,13 +26,13 @@ export const l_else = () => 'else ';
 
 export const l_assign = (dest: string, src: string) => `${dest}=${src};`;
 
-export const l_for = (input: string, callee: (elem: string) => Array<string>) => `for (let i = ${input}.length - 1; i >= 0; i--) {${callee(input + '[i]').join('')}}`;
+export const l_for = (input: string, callee: (elem: string) => Array<string>) => `for (var i = ${input}.length - 1; i >= 0; i--) {${callee(input + '[i]').join('')}}`;
 
 export const l_slice = (input: string) => `${input}.slice(0)`;
 
 export const l_valueOf = (input: string) => `${input}.valueOf()`;
 
-export const l_define = (code: string, value: string) => `let ${code}=${value};`;
+export const l_define = (code: string, value: string) => `var ${code}=${value};`;
 
 export const l_equal = (code: string, value: string) => `${code}===${value}`;
 
@@ -66,15 +68,26 @@ export const l_isFinite = (input: string) => `isFinite(${input})`;
 
 export const l_group = (...body: Array<string>) => `(${body.join('')})`;
 
-export const l_push = (input: string, value: string) => `${input}.push(${value})`;
-
 export const l_return = (props: CompilerProps): Array<string> => ([
-  'return ',
-  (
-    props.err
-      ? `{result:${props.out};errors:${props.err}}`
-      : props.out
-  )
+  ...props.err
+    ?
+    [
+      l_if(
+        l_errorsCounter() + '>0'
+      ),
+      l_ifBody(
+        l_assign(props.err + '.length', l_errorsCounter()),
+        `return {result:${props.out},errors:${props.err}}`
+      ),
+      l_else(),
+      l_ifBody(
+        `return {result:${props.out},errors:null}`
+      )
+    ]
+    :
+    [
+      `return ${props.out}`
+    ]
 ]);
 
 export const l_error = (props: CompilerProps, error: string | number): Array<string> => ([
@@ -86,11 +99,11 @@ export const l_error = (props: CompilerProps, error: string | number): Array<str
           l_isFunction(l_errors(error))
         ),
         l_ifBody(
-          l_push(props.err, l_errors(error) + '()')
+          l_assign(`${props.err}[${l_errorsCounter()}++]`, l_errors(error) + '()')
         ),
         l_else(),
         l_ifBody(
-          l_push(props.err, l_errors(error))
+          l_assign(`${props.err}[${l_errorsCounter()}++]`, l_errors(error))
         )
       ]
       : []
