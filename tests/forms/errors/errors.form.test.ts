@@ -7,7 +7,7 @@ import { number } from '@lib/base-api/validators/number';
 import { object } from '@lib/base-api/validators/object';
 import { object2 } from '@lib/base-api/validators/object2';
 import { string } from '@lib/base-api/validators/string';
-import { template } from '@lib/templating-api/template';
+import { template, compile } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases1, cases2 } from './cases';
 
@@ -51,9 +51,9 @@ describe('errors form › advanced', () =>
   ), cases1, [])
 );
 
-describe('errors form › template', () =>
+describe('errors form › compile', () =>
   baseCasesWithParams(() => (
-    template(`
+    compile(`
       @object(
         id : @compare(=def)!0 : @number!1 : @compare(>=0)!2 : @compare(%1)!3,
         name : @compare(!=emp)!4 : @string : @length(>=10)!5

@@ -1,4 +1,4 @@
-import { Error, MetaData, Validator } from '@lib/base-api/types';
+import { CompiledValidator, Error, MetaData, Validator } from '@lib/base-api/types';
 
 export const notNullError = () => 'error';
 
@@ -72,6 +72,15 @@ export const withErrorCases = <T = any, R = T>(validator: Validator<T, R>, value
       error = null;
     });
   });
+};
+
+export const compileWithErrorCases = (validator: CompiledValidator<any>, values: [any, any]) => {
+  test('0', () =>
+    expect(validator(values[0]).errors).toEqual(null)
+  );
+  test('1', () =>
+    expect(validator(values[1]).errors).toEqual([notNullError()])
+  );
 };
 
 export const metaCase = (meta: MetaData, path: Array<string | number>, params: Array<any>, validator: string) => {

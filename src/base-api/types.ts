@@ -54,6 +54,8 @@ export declare type Result<T> = {
  */
 export declare type Validator<T, R = T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => R;
 
+export declare type CompiledValidator<T, R = T> = (value: T) => R;
+
 /**
  * Function with invertible supplement.
  */

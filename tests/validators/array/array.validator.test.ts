@@ -1,7 +1,7 @@
 import { V_ARR as VALIDATOR_NAME } from '@lib/base-api/names';
-import { template, tml } from '@lib/templating-api/template';
 import { array as validator } from '@lib/base-api/validators/array';
-import { baseCases, baseCasesWithParams, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
+import { compile, template } from '@lib/templating-api/template';
+import { baseCases, baseCasesWithParams, compileWithErrorCases, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightParams, rightTemplate, wrong, wrongParams, wrongTemplate } from './cases';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
@@ -13,12 +13,12 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     baseCasesWithParams(validator, right, wrong)
   );
 
-  describe('base › template', () =>
-    baseCases(template('@array'), [], rightTemplate, wrongTemplate)
+  describe('base › compile', () =>
+    baseCases(compile('@array'), [], rightTemplate, wrongTemplate)
   );
 
-  describe('base › template › short', () =>
-    baseCases(tml`@a`, [], [rightTemplate[0]], [wrongTemplate[0]])
+  describe('base › compile › short', () =>
+    baseCases(compile(`@a`), [], [rightTemplate[0]], [wrongTemplate[0]])
   );
 
   describe('with error', () =>
@@ -29,8 +29,8 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     withErrorCases(validator(null, errorMetaCase([], [], VALIDATOR_NAME)), [[wrong[0][1]]], emptyMeta())
   );
 
-  describe('with error › template', () =>
-    withErrorCases(template('@array!0')([], [notNullError()]), [[right[0][1]], [wrong[0][1]]])
+  describe('with error › compile', () =>
+    compileWithErrorCases(compile('@array!0 ~e')([], [notNullError()]), [right[0][1], wrong[0][1]])
   );
 
   describe('with meta › template', () =>

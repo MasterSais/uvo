@@ -1,4 +1,4 @@
-import { Validator } from '@lib/base-api/types';
+import { Validator, CompiledValidator } from '@lib/base-api/types';
 import { compiler, interpreter } from '@lib/templating-api/compiler/compiler';
 import { composer } from '@lib/templating-api/composer';
 import { lexicalAnalyzer } from '@lib/templating-api/lexical-analyzer';
@@ -17,7 +17,7 @@ export const interpret = <T, R>(input: string): string => (
   )
 );
 
-export const compile = <T, R>(input: string): ((injections?: Injections, errors?: Errors) => Validator<T, R>) => (
+export const compile = <T, R>(input: string): ((injections?: Injections, errors?: Errors) => CompiledValidator<T, R>) => (
   compiler(
     semanticAnalyzer(
       lexicalAnalyzer(input)

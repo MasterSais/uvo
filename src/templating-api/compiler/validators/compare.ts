@@ -4,7 +4,7 @@ import { extract } from '@lib/templating-api/compiler/utilities';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
 const condition = (template: string) => (value: string, param: string) => (
-  template.replace('$0', value).replace('$1', param)
+  template.replace(/\$0/g, value).replace(/\$1/g, param)
 );
 
 const compareTemplates = {
@@ -33,6 +33,12 @@ const lengthTemplates = {
   '!%': condition('$0.length%$1!==0')
 };
 
+const constTemplates = {
+  '=def': condition('$0!==undefined'),
+  '=emp': condition('($0===undefined||$0===null||$0===\'\')'),
+  '!=emp': condition('$0!==undefined&&$0!==null&&$0!==\'\'')
+};
+
 const comparatorTemplate = (comparators: Record<string, (value: string, param: string) => string>) => (props: CompilerProps, data: ValidatorData): Array<string> => {
   check(props, data, COMMA_SEPARATED_PARAMS);
 
@@ -40,7 +46,10 @@ const comparatorTemplate = (comparators: Record<string, (value: string, param: s
 
   for (let i = 0; i < data.params.length; i += 3) {
     conditions.push(
-      comparators[data.params[i].value](
+      (
+        constTemplates[data.params[i].value + data.params[i + 1].value] ||
+        comparators[data.params[i].value]
+      )(
         props.in,
         extract(props.cmps, data.params[i + 1])().join('')
       )

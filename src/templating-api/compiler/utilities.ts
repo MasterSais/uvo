@@ -2,12 +2,6 @@ import { l_injections } from '@lib/templating-api/compiler/units';
 import { CNT, GR, INJ, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
-const constValues: Record<string, any> = {
-  'true': true,
-  'false': false,
-  'null': null
-};
-
 export const extract = (components: Map<number, any>, data: ValidatorData): ((...args: any) => Array<string>) => {
   if (data.code === VLD.code || data.code === CNT.code || data.code === GR.code) {
     const component = components.get(data.code)[data.value];
