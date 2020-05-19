@@ -15,9 +15,7 @@ const v = (
 
 console.log(
   interpret(`
-    @object(
-      id: @compare(>0)!urrr
-    ) ~error
+    @compare(>0)!0 ~error
   `)
 );
 

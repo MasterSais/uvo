@@ -61,7 +61,7 @@ export const interpreter = (semanticTree: Array<ValidatorData>) => {
   const props: CompilerProps = {
     in: l_value(),
     out: l_value(),
-    cmps: components,
+    components,
     name: () => `_${(code++).toString(26)}`
   };
 

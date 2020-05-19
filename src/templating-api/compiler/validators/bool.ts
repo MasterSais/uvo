@@ -1,5 +1,5 @@
 import { check, NO_PARAMS } from '@lib/templating-api/compiler/errors';
-import { l_assign, l_content, l_else, l_equal, l_error, l_if, l_ifBody, l_or } from '@lib/templating-api/compiler/units';
+import { l_assign, l_content, l_else, l_equal, l_error, l_if, l_ifBody, l_or, l_quoted } from '@lib/templating-api/compiler/units';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
 export const boolTemplate = (props: CompilerProps, data: ValidatorData): Array<string> => {
@@ -8,7 +8,7 @@ export const boolTemplate = (props: CompilerProps, data: ValidatorData): Array<s
   return ([
     l_if(
       l_or(
-        ...['true', '1', '"true"', '"1"'].map(value => l_equal(props.in, value))
+        ...['true', '1', l_quoted('true'), l_quoted('1')].map(value => l_equal(props.in, value))
       )
     ),
     l_ifBody(
@@ -18,7 +18,7 @@ export const boolTemplate = (props: CompilerProps, data: ValidatorData): Array<s
     l_else(),
     l_if(
       l_or(
-        ...['false', '0', '"false"', '"0"'].map(value => l_equal(props.in, value))
+        ...['false', '0', l_quoted('false'), l_quoted('0')].map(value => l_equal(props.in, value))
       )
     ),
     l_ifBody(

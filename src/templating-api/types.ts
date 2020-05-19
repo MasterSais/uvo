@@ -1,4 +1,4 @@
-import { Error } from '@lib/base-api/types';
+import { Error, MetaData } from '@lib/base-api/types';
 
 export type LexemeScheme = {
   literals: string;
@@ -36,8 +36,9 @@ export type ValidatorData = {
 export type CompilerProps = {
   in: string;
   out: string;
-  err?: string;
-  cmps: Map<number, any>;
+  errors?: string;
+  meta?: MetaData;
+  components: Map<number, any>;
   name: () => string;
   content?: (props: CompilerProps) => Array<string>;
 };

@@ -1,5 +1,5 @@
 import { check, NO_PARAMS } from '@lib/templating-api/compiler/errors';
-import { l_and, l_assign, l_content, l_else, l_emptyString, l_error, l_group, l_if, l_ifBody, l_isBoolean, l_isFinite, l_isNumber, l_isString, l_notEqual, l_or, l_toNumber, l_trim } from '@lib/templating-api/compiler/units';
+import { l_and, l_assign, l_content, l_else, l_emptyString, l_error, l_embrace, l_if, l_ifBody, l_isBoolean, l_isFinite, l_isNumber, l_isString, l_notEqual, l_or, l_toNumber, l_trim } from '@lib/templating-api/compiler/units';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
 export const numberTemplate = (props: CompilerProps, data: ValidatorData): Array<string> => {
@@ -9,7 +9,7 @@ export const numberTemplate = (props: CompilerProps, data: ValidatorData): Array
     l_if(
       l_and(
         l_isFinite(props.in),
-        l_group(
+        l_embrace(
           l_or(
             l_isNumber(props.in),
             l_and(

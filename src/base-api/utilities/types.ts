@@ -32,7 +32,7 @@ export const hasIndex = (value: any): boolean => value && value.indexOf;
 
 export const isArray = (value: any): boolean => Array.isArray(value);
 
-export const isLengthy = <T extends Lengthy>(value: T) => value !== null && (isObjectLike(value) || isString(value)) && isFiniteNumber(value.length);
+export const isLengthy = <T extends Lengthy>(value: T) => value !== null && value !== undefined && isNumber(value.length);
 
 export const callee = (value: any): any => (isFunction(value) ? value : (() => value));
 

@@ -1,5 +1,5 @@
 import { check, FIRST_COMMA_PARAMS } from '@lib/templating-api/compiler/errors';
-import { l_assign, l_content, l_equal, l_if, l_ifBody } from '@lib/templating-api/compiler/units';
+import { l_assign, l_content, l_equal, l_if, l_ifBody, l_null } from '@lib/templating-api/compiler/units';
 import { chain, extract } from '@lib/templating-api/compiler/utilities';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
@@ -8,12 +8,12 @@ export const fallbackTemplate = (props: CompilerProps, data: ValidatorData): Arr
 
   const [fallback, , ...nodes] = data.params;
 
-  const fallbackTemplate = extract(props.cmps, fallback)().join('');
+  const fallbackTemplate = extract(props.components, fallback)().join('');
 
   return ([
     ...chain(props, nodes),
     l_if(
-      l_equal(props.out, 'null')
+      l_equal(props.out, l_null())
     ),
     l_ifBody(
       l_assign(props.out, fallbackTemplate)
