@@ -15,9 +15,9 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will ext
 [size:e-esm]: extended/esm/index.min.js
 [size:e-cjs]: extended/cjs/index.min.js
 [size:e-umd]: extended/umd/index.min.js
-[size:et-esm]: extended-template/esm/index.min.js
-[size:et-cjs]: extended-template/cjs/index.min.js
-[size:et-umd]: extended-template/umd/index.min.js
+size:et-esm]: extended-template/esm/index.min.js
+size:et-cjs]: extended-template/cjs/index.min.js
+size:et-umd]: extended-template/umd/index.min.js
 
 |Bundles (minified)|ESM|CJS|UMD|
 |:-:|:-:|:-:|:-:|

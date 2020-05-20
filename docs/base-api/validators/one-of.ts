@@ -3,7 +3,7 @@
  * 
  * @template {`@compare(->...)` `@c(->...)` `@compare(!->...)` `@c(!->...)`}
  * 
- * @scheme {oneOf<T>(candidates: Array<T> | string | (() => Array<T> | string), error?: Error): Validator<T>}
+ * @scheme {oneOf<T>(candidates: Array<T> | string | (() => Array<T> | string), error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks value to be one of expected. Shallow comparison.
  * 

@@ -3,7 +3,7 @@
  * 
  * @template {`@async(...)` `@p(...)`}
  * 
- * @scheme {async<T>(name?: string, error?: Error): Validator<Promise<T>, Promise<T>>}
+ * @scheme {async<T>(name?: string, error?: ValidatorError): Validator<Promise<T>, Promise<T>>}
  * 
  * @desc Settles value to async storage. Can be awaited somewhere later.
  * 

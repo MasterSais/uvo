@@ -2,7 +2,7 @@ You can create your own validator or processor.
 
 Base validator template:
 ```js
-yourValidatorName(...yourProbableParams: Array<any>, error?: Error): Validator<any> =>
+yourValidatorName(...yourProbableParams: Array<any>, error?: ValidatorError): Validator<any> =>
   (
     (value: any, onError?: ErrorCallback, meta?: MetaData): any =>
       (
@@ -14,7 +14,7 @@ yourValidatorName(...yourProbableParams: Array<any>, error?: Error): Validator<a
 
 Simple example:
 ```js
-const gte = (bound: number, error?: Error): Validator<number> =>
+const gte = (bound: number, error?: ValidatorError): Validator<number> =>
   (
     (value: number, onError?: ErrorCallback, meta?: MetaData): number =>
       (

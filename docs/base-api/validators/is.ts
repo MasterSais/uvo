@@ -3,7 +3,7 @@
  * 
  * @template {injected function via `$...`}
  * 
- * @scheme {is<T>(comparator: ((value: T) => boolean), error?: Error): Validator<T>}
+ * @scheme {is<T>(comparator: ((value: T) => boolean), error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks value with custom comparator.
  * 

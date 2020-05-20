@@ -1,5 +1,5 @@
 import { V_EQ as VALIDATOR_NAME } from '@lib/base-api/names';
-import { template, compile } from '@lib/templating-api/template';
+import { compile } from '@lib/templating-api/template';
 import { equal as validator } from '@lib/base-api/validators/is';
 import { baseCasesWithParams, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases, compileWithErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
@@ -49,15 +49,15 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     compileWithErrorCases(compile('@compare(=$0)!0 ~e')([right[0][1]], [notNullError()]), [right[0][1], wrong[0][1]])
   );
 
-  describe('with meta › template', () =>
-    withErrorCases(template('@compare(=$0)!0')([right[0][1]], [errorMetaCase([], [right[0][1]], VALIDATOR_NAME)]), [[wrong[0][1]]], emptyMeta())
-  );
+  // describe('with meta › template', () =>
+  //   withErrorCases(template('@compare(=$0)!0')([right[0][1]], [errorMetaCase([], [right[0][1]], VALIDATOR_NAME)]), [[wrong[0][1]]], emptyMeta())
+  // );
 
   describe('with error › compile › not', () =>
     compileWithErrorCases(compile('@compare(!=$0)!0 ~e')([right[0][1]], [notNullError()]), [wrong[0][1], right[0][1]])
   );
 
-  describe('with meta › template › not', () =>
-    withErrorCases(template('@compare(!=$0)!0')([right[0][1]], [errorMetaCase([], [right[0][1]], invertError(VALIDATOR_NAME, true))]), [[right[0][1]]], emptyMeta())
-  );
+  // describe('with meta › template › not', () =>
+  //   withErrorCases(template('@compare(!=$0)!0')([right[0][1]], [errorMetaCase([], [right[0][1]], invertError(VALIDATOR_NAME, true))]), [[right[0][1]]], emptyMeta())
+  // );
 });

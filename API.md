@@ -4,7 +4,7 @@
 ### `array`
 
 ```js
-array(itemSpec?: Array<Validator<any>> | Validator<any>, error?: Error): Validator<Array<any>, Array<any>>
+array(itemSpec?: Array<Validator<any>> | Validator<any>, error?: ValidatorError): Validator<Array<any>, Array<any>>
 ```
 Checks value to be an array.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
 
@@ -57,7 +57,7 @@ anotherOne([0, 1, 2, 3]); // too long.
 ### `async`
 
 ```js
-async<T>(name?: string, error?: Error): Validator<Promise<T>, Promise<T>>
+async<T>(name?: string, error?: ValidatorError): Validator<Promise<T>, Promise<T>>
 ```
 Settles value to async storage. Can be awaited somewhere later.    Type: validator. Returns input value on success.
 
@@ -86,7 +86,7 @@ v.withMeta(
 ### `bool`
 
 ```js
-bool<T>(error?: Error): Validator<T, boolean>
+bool<T>(error?: ValidatorError): Validator<T, boolean>
 ```
 Checks value to be a boolean compatible. Converts on success. Use `bool` from `Extended API` for check only.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
 
@@ -124,7 +124,7 @@ v.bool.check()('abc');
 ### `date`
 
 ```js
-date<T>(error?: Error): Validator<T, number>
+date<T>(error?: ValidatorError): Validator<T, number>
 ```
 Checks value to be a date compatible. Result in ms. Converts on success. Use `date` from `Extended API` for check only.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
 
@@ -150,7 +150,7 @@ v.date.check()('99.12.2020');
 ### `fields`
 
 ```js
-fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>
+fields<T extends ObjectLike>(spec: FieldsSpec, error?: ValidatorError): Validator<T>
 ```
 Checks for fields in the input object.    Type: validator. Returns input value on success.
 
@@ -195,7 +195,7 @@ v.fields(['&', ['^', 'id', 'guid'], 'role', ['|', 'fullname', 'nickname']]);
 ### `is`
 
 ```js
-is<T>(comparator: ((value: T) => boolean), error?: Error): Validator<T>
+is<T>(comparator: ((value: T) => boolean), error?: ValidatorError): Validator<T>
 ```
 Checks value with custom comparator.    Type: validator. Returns input value on success.
 
@@ -212,7 +212,7 @@ v.is((value) => value === 10)('10');
 ### `length`
 
 ```js
-length<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>
+length<T extends Lengthy>(len: number | (() => number), error?: ValidatorError): Validator<T>
 ```
 Compares length with 'len' param. Requires to be an object like or string.    Type: validator. Returns input value on success.
 
@@ -250,7 +250,7 @@ v.length.not(3)('abcd');
 ### `multiple`
 
 ```js
-multiple(multiplier: number | (() => number), error?: Error): Validator<number>
+multiple(multiplier: number | (() => number), error?: ValidatorError): Validator<number>
 ```
 Checks number to be an integer.    Type: validator. Returns input value on success.
 
@@ -279,7 +279,7 @@ v.multiple.not(3)(11);
 ### `number`
 
 ```js
-number<T>(error?: Error): Validator<T, number>
+number<T>(error?: ValidatorError): Validator<T, number>
 ```
 Checks value to be a number compatible. Converts on success. Use `number` from `Extended API` for check only.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
 
@@ -314,7 +314,7 @@ v.number.check()('true');
 ### `object`
 
 ```js
-object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>
+object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: ValidatorError): Validator<T, R>
 ```
 Checks value to be an object.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
 
@@ -362,7 +362,7 @@ fieldsKeeper({
 ### `object2`
 
 ```js
-object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx | Array<string> (() => string | RegExp | Array<string>), ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>
+object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx | Array<string> (() => string | RegExp | Array<string>), ...Array<Validator<any, any>>]>, error?: ValidatorError): Validator<T, R>
 ```
 Checks value to be an object. Provides strict ordering.  Each key can be a Regex.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
 
@@ -420,7 +420,7 @@ v.object2([
 ### `string`
 
 ```js
-string<T>(error?: Error): Validator<T, string>
+string<T>(error?: ValidatorError): Validator<T, string>
 ```
 Checks value to be a string compatible. Converts on success. Use `string` from `Extended API` for check only.    Type: semi validator, semi processor. If validation is successful, then converts value to proper type.
 
@@ -660,7 +660,7 @@ niUnchi(8.3);
 ### `withErrors`
 
 ```js
-withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>
+withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: ValidatorError, meta?: MetaData) => ValidatorError)): Validator<T, Result<R>>
 ```
 Provides error handling mechanism.    Type: container. Embraces validators. Provides additional input processing.
 
@@ -1052,7 +1052,7 @@ v.withMeta(
 
 Base validator template:
 ```js
-yourValidatorName(...yourProbableParams: Array<any>, error?: Error): Validator<any> =>
+yourValidatorName(...yourProbableParams: Array<any>, error?: ValidatorError): Validator<any> =>
   (
     (value: any, onError?: ErrorCallback, meta?: MetaData): any =>
       (
@@ -1064,7 +1064,7 @@ yourValidatorName(...yourProbableParams: Array<any>, error?: Error): Validator<a
 
 Simple example:
 ```js
-const gte = (bound: number, error?: Error): Validator<number> =>
+const gte = (bound: number, error?: ValidatorError): Validator<number> =>
   (
     (value: number, onError?: ErrorCallback, meta?: MetaData): number =>
       (
@@ -1265,7 +1265,7 @@ v.withMeta( // for deps api.
 Calls on validation error.
 
 ```js
-type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => void;
+type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
 ```
 
 ### `Error`
@@ -1274,7 +1274,7 @@ type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => v
 Any type's error.   Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
 
 ```js
-type Error = (
+type ValidatorError = (
   string
   | boolean
   | number
@@ -1777,140 +1777,140 @@ tml`@a @unique`();
 ### `alpha`
 
 ```js
-alpha(error?: Error): Validator<string>
+alpha(error?: ValidatorError): Validator<string>
 ```
 Checks if the string contains only letters (a-zA-Z).    Type: validator. Returns input value on success.
 
 ### `alphanum`
 
 ```js
-alphanum(error?: Error): Validator<string>
+alphanum(error?: ValidatorError): Validator<string>
 ```
 Checks if the string contains only letters (a-zA-Z) and numbers.    Type: validator. Returns input value on success.
 
 ### `bin`
 
 ```js
-bin(error?: Error): Validator<string>
+bin(error?: ValidatorError): Validator<string>
 ```
 Checks if the string is a binary number.    Type: validator. Returns input value on success.
 
 ### `bool`
 
 ```js
-bool(error?: Error): Validator<boolean>
+bool(error?: ValidatorError): Validator<boolean>
 ```
 Checks for boolean type.    Type: validator. Returns input value on success.
 
 ### `contains`
 
 ```js
-contains(seed: any, error?: Error): Validator<string | Array<any>>
+contains(seed: any, error?: ValidatorError): Validator<string | Array<any>>
 ```
 Checks if the string or array contains the seed.    Type: validator. Returns input value on success.
 
 ### `date`
 
 ```js
-date<T>(error?: Error): Validator<T>
+date<T>(error?: ValidatorError): Validator<T>
 ```
 Checks for right date.    Type: validator. Returns input value on success.
 
 ### `emailFast`
 
 ```js
-emailFast(error?: Error): Validator<string>
+emailFast(error?: ValidatorError): Validator<string>
 ```
 Fast email validation.    Type: validator. Returns input value on success.
 
 ### `email`
 
 ```js
-email(error?: Error): Validator<string>
+email(error?: ValidatorError): Validator<string>
 ```
 Email validation.    Type: validator. Returns input value on success.
 
 ### `even`
 
 ```js
-even(error?: Error): Validator<number>
+even(error?: ValidatorError): Validator<number>
 ```
 Checks number to be an even one.    Type: validator. Returns input value on success.
 
 ### `float`
 
 ```js
-float(error?: Error): Validator<number>
+float(error?: ValidatorError): Validator<number>
 ```
 Checks number to be float.    Type: validator. Returns input value on success.
 
 ### `hex`
 
 ```js
-hex(error?: Error): Validator<string>
+hex(error?: ValidatorError): Validator<string>
 ```
 Checks if the string is a hexadecimal number.    Type: validator. Returns input value on success.
 
 ### `integer`
 
 ```js
-integer(error?: Error): Validator<number>
+integer(error?: ValidatorError): Validator<number>
 ```
 Checks number to be an integer.    Type: validator. Returns input value on success.
 
 ### `lowercase`
 
 ```js
-lowercase(error?: Error): Validator<string>
+lowercase(error?: ValidatorError): Validator<string>
 ```
 Checks string to be in a lower case.    Type: validator. Returns input value on success.
 
 ### `negative`
 
 ```js
-negative(error?: Error): Validator<number>
+negative(error?: ValidatorError): Validator<number>
 ```
 Checks number to be negative.    Type: validator. Returns input value on success.
 
 ### `notContains`
 
 ```js
-notContains(seed: any, error?: Error): Validator<string | Array<any>>
+notContains(seed: any, error?: ValidatorError): Validator<string | Array<any>>
 ```
 Checks if the string or array does not contain the seed.    Type: validator. Returns input value on success.
 
 ### `number`
 
 ```js
-number(error?: Error): Validator<string>
+number(error?: ValidatorError): Validator<string>
 ```
 Checks for number type.    Type: validator. Returns input value on success.
 
 ### `oct`
 
 ```js
-oct(error?: Error): Validator<string>
+oct(error?: ValidatorError): Validator<string>
 ```
 Checks if the string is a octal number.    Type: validator. Returns input value on success.
 
 ### `positive`
 
 ```js
-positive(error?: Error): Validator<number>
+positive(error?: ValidatorError): Validator<number>
 ```
 Checks number to be positive.    Type: validator. Returns input value on success.
 
 ### `string`
 
 ```js
-string(error?: Error): Validator<string>
+string(error?: ValidatorError): Validator<string>
 ```
 Checks for string type.    Type: validator. Returns input value on success.
 
 ### `unique`
 
 ```js
-unique<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>
+unique<T>(field?: string | number | ((value: T) => any), error?: ValidatorError): Validator<Array<T>>
 ```
 Checks array's elements to be unique.    Type: validator. Returns input value on success.
 
@@ -1961,21 +1961,21 @@ validator([1, 2, 1, 2]);
 ### `uppercase`
 
 ```js
-uppercase(error?: Error): Validator<string>
+uppercase(error?: ValidatorError): Validator<string>
 ```
 Checks string to be in an upper case.    Type: validator. Returns input value on success.
 
 ### `url`
 
 ```js
-url(error?: Error): Validator<string>
+url(error?: ValidatorError): Validator<string>
 ```
 URL validation.    Type: validator. Returns input value on success.
 
 ### `uuid`
 
 ```js
-uuid(error?: Error): Validator<string>
+uuid(error?: ValidatorError): Validator<string>
 ```
 UUID validation.    Type: validator. Returns input value on success.
 

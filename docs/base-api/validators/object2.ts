@@ -3,7 +3,7 @@
  * 
  * @template {`@object(...)` `@o(...)`}
  * 
- * @scheme {object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx | Array<string> (() => string | RegExp | Array<string>), ...Array<Validator<any, any>>]>, error?: Error): Validator<T, R>}
+ * @scheme {object2<T extends ObjectLike, R = T>(spec?: Array<[string | RegEx | Array<string> (() => string | RegExp | Array<string>), ...Array<Validator<any, any>>]>, error?: ValidatorError): Validator<T, R>}
  * 
  * @desc Checks value to be an object. Provides strict ordering.
  * Each key can be a Regex.

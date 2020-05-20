@@ -7,7 +7,7 @@ import { number } from '@lib/base-api/validators/number';
 import { object } from '@lib/base-api/validators/object';
 import { object2 } from '@lib/base-api/validators/object2';
 import { string } from '@lib/base-api/validators/string';
-import { template, compile } from '@lib/templating-api/template';
+import { compile } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases1, cases2 } from './cases';
 
@@ -62,16 +62,16 @@ describe('errors form › compile', () =>
   ), cases1, [])
 );
 
-describe('errors form › template › short', () =>
-  baseCasesWithParams(() => (
-    template(`
-      @o(
-        id @c(!=null)!0 @n!1 @c(>=0)!2 @c(%1)!3,
-        name @c(!=$0)!4 @s @l(>=10)!5
-      ) ~e
-    `)([null], ['Empty id', 'Not a number', 'Must not be negative', 'Must be an integer', 'Empty name', 'Min length is 10'])
-  ), [cases1[0]], [])
-);
+// describe('errors form › template › short', () =>
+//   baseCasesWithParams(() => (
+//     template(`
+//       @o(
+//         id @c(!=null)!0 @n!1 @c(>=0)!2 @c(%1)!3,
+//         name @c(!=$0)!4 @s @l(>=10)!5
+//       ) ~e
+//     `)([null], ['Empty id', 'Not a number', 'Must not be negative', 'Must be an integer', 'Empty name', 'Min length is 10'])
+//   ), [cases1[0]], [])
+// );
 
 describe('errors parallel form', () =>
   baseCasesWithParams(() => (
@@ -117,13 +117,13 @@ describe('errors parallel form › advanced', () =>
   ), cases2, [])
 );
 
-describe('errors parallel form › template', () =>
-  baseCasesWithParams(() => (
-    template(`
-      @object(
-        id : @compare(=def)!0 : @number!1 : <{ @compare(>=0)!2 : @compare(%1)!3 }>,
-        name : @compare(!=emp)!4 : @string : @length(>=10)!5
-      ) ~error
-    `)(null, ['Empty id', 'Not a number', 'Must not be negative', 'Must be an integer', 'Empty name', 'Min length is 10'])
-  ), cases2, [])
-);
+// describe('errors parallel form › template', () =>
+//   baseCasesWithParams(() => (
+//     template(`
+//       @object(
+//         id : @compare(=def)!0 : @number!1 : <{ @compare(>=0)!2 : @compare(%1)!3 }>,
+//         name : @compare(!=emp)!4 : @string : @length(>=10)!5
+//       ) ~error
+//     `)(null, ['Empty id', 'Not a number', 'Must not be negative', 'Must be an integer', 'Empty name', 'Min length is 10'])
+//   ), cases2, [])
+// );

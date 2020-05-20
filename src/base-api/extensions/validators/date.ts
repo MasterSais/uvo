@@ -1,5 +1,5 @@
 import { V_ISDATE } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 /**
@@ -7,7 +7,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * 
  * @template {via `provide`}
  * 
- * @scheme {date<T>(error?: Error): Validator<T>}
+ * @scheme {date<T>(error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks for right date.
  * 
@@ -18,7 +18,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * {@link docs/base-api/validator-result}
  */
 export const date = (
-  (error?: Error) => isFactory(V_ISDATE)(
+  (error?: ValidatorError) => isFactory(V_ISDATE)(
     <T>(value: T) => value !== null && !isNaN(new Date(value as any) as any), error
   )
 );

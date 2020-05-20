@@ -1,48 +1,77 @@
-import { dynamic } from '@lib/base-api/spreaders/dynamic';
-import { identity } from '@lib/base-api/utilities/types';
-import { object2 } from '@lib/base-api/validators/object2';
-import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractSequence } from '@lib/templating-api/extractors';
-import { CND, DLM } from '@lib/templating-api/lexemes';
-import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
+import { V_OBJ } from '@lib/base-api';
+import { check, COMMA_SEPARATED_PARAMS, SEQUENCE_PARAMS } from '@lib/templating-api/errors';
+import { DLM } from '@lib/templating-api/lexemes';
+import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
+import { l_and, l_assign, l_content, l_define, l_else, l_error, l_if, l_ifBody, l_isObject, l_notEqual, l_null, l_object, l_quoted, l_undefined } from '@lib/templating-api/units';
+import { chain, setMeta } from '@lib/templating-api/utilities';
 
-export const objectBuilder = (meta: CompilerMeta, { params, error }: ValidatorData) => {
-  if (!params) return object2(null, error);
+const passObjectParams = (props: CompilerProps, params: Array<ValidatorData>): Array<string> => {
+  const parts: Array<string> = [];
 
-  const fields: Array<Array<any>> = [];
+  const perNameParams: Array<Array<ValidatorData | string>> = [[params[0].value]];
 
-  for (let i = -1; i < params.length; i++) {
-    let param = null;
-
-    if (i === -1 || params[i].code === DLM.code) {
-      if (params[i + 1]) {
-        i++;
-
-        fields.push([
-          extractInjection(meta, params[i], identity) ||
-          params[i].value
-        ]);
+  for (let i = 1; i < params.length; i++) {
+    if (params[i].code === DLM.code) {
+      if (++i !== params.length) {
+        perNameParams.push([params[i].value]);
       }
 
       continue;
     }
 
-    if (params[i].code2 === CND.code) {
-      const sequence = extractSequence(meta, params[i + 1]);
+    perNameParams[perNameParams.length - 1].push(params[i]);
+  }
 
-      param = (
-        extractInnerReference(params[i], () => sequence) ||
-        extractInnerInjectionReference(meta, params[i], (condition: () => boolean) => condition() && sequence) ||
-        extractInjection(meta, params[i], (value: () => any) => dynamic(() => value() && sequence))
-      );
-
-      i++;
-    }
-
-    fields[fields.length - 1].push(
-      param ||
-      extractSequence(meta, params[i])
+  for (const [field, ...nameParams] of perNameParams) {
+    parts.push(
+      ...chain(
+        {
+          ...setMeta(props, { path: l_quoted(field as string) }),
+          in: `${props.in}.${field}`,
+          out: `${props.out}.${field}`
+        },
+        nameParams as Array<ValidatorData>
+      )
     );
   }
 
-  return object2(fields as any, error);
+  return parts;
+};
+
+export const objectTemplate = (props: CompilerProps, data: ValidatorData): Array<string> => {
+  check(props, data, SEQUENCE_PARAMS | COMMA_SEPARATED_PARAMS);
+
+  props = setMeta(props, { validator: V_OBJ });
+
+  const result = props.name();
+
+  return ([
+    l_if(
+      l_and(
+        l_notEqual(props.in, l_null()),
+        l_notEqual(props.in, l_undefined()),
+        l_isObject(props.in)
+      )
+    ),
+    l_ifBody(
+      ...(
+        data.params
+          ?
+          [
+            l_define(result, l_object()),
+            ...passObjectParams({ ...props, out: result }, data.params),
+            l_assign(props.out, result),
+            ...l_content({ ...props, in: props.out })
+          ]
+          :
+          [
+            l_assign(props.out, props.in)
+          ]
+      )
+    ),
+    l_else(),
+    l_ifBody(
+      ...l_error(props, data.error)
+    )
+  ]);
 };

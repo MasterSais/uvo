@@ -7,7 +7,7 @@ import { C_ERR as VALIDATOR_NAME } from '@lib/base-api/names';
 import { MetaData } from '@lib/base-api/types';
 import { gte } from '@lib/base-api/validators/is';
 import { number } from '@lib/base-api/validators/number';
-import { template, compile } from '@lib/templating-api/template';
+import { compile } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
 import { cases1, cases2 } from './cases';
 
@@ -55,14 +55,14 @@ describe(`container › ${VALIDATOR_NAME}`, () => {
     })
   );
 
-  test('base › common processor › template', () =>
-    expect(
-      template('@number ~e($0) ~m')([
-        (_: any, { validator: vld }: MetaData) => vld
-      ])('abc')
-    ).toEqual({
-      result: null,
-      errors: ['number']
-    })
-  );
+  // test('base › common processor › template', () =>
+  //   expect(
+  //     template('@number ~e($0) ~m')([
+  //       (_: any, { validator: vld }: MetaData) => vld
+  //     ])('abc')
+  //   ).toEqual({
+  //     result: null,
+  //     errors: ['number']
+  //   })
+  // );
 });

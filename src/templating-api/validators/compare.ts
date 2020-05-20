@@ -1,71 +1,116 @@
-import { Error, Validator } from '@lib/base-api/types';
-import { lengthFactory, makeSequence } from '@lib/base-api/utilities/factories';
-import { defined, empty, equal, gte, lte, oneOf, regex } from '@lib/base-api/validators/is';
-import { length, maxLen, minLen } from '@lib/base-api/validators/length';
-import { multiple } from '@lib/base-api/validators/multiple';
-import { extractInjection, extractInnerInjectionReference, extractInnerReference, extractLiteral } from '@lib/templating-api/extractors';
-import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
+import { check, COMMA_SEPARATED_PARAMS } from '@lib/templating-api/errors';
+import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
+import { l_and, l_compare, l_content, l_else, l_embrace, l_emptyString, l_equal, l_error, l_if, l_ifBody, l_indexOf, l_isNumber, l_length, l_not, l_notEqual, l_null, l_or, l_test, l_typeof, l_undefined } from '@lib/templating-api/units';
+import { extract } from '@lib/templating-api/utilities';
 
-const LEN_MLP = 'len-mlp';
-
-const lenMultiple = lengthFactory(LEN_MLP, (value: number, len: number) => value % len === 0);
-
-const lengthComparators = {
-  '>': maxLen.not,
-  '>=': minLen,
-  '<': minLen.not,
-  '<=': maxLen,
-  '=': length,
-  '!=': length.not,
-  '%': lenMultiple,
-  '!%': lenMultiple.not
-};
-
-const baseComparators = {
-  '>=': gte,
-  '<': gte.not,
-  '<=': lte,
-  '>': lte.not,
-  '=': equal,
-  '!=': equal.not,
-  '%': multiple,
-  '!%': multiple.not,
-  '->': oneOf,
-  '!->': oneOf.not,
-  '*': regex,
-  '!*': regex.not
-};
-
-const constComparators = {
-  '=def': defined,
-  '=emp': empty,
-  '!=emp': empty.not
-};
-
-const extractConstantComparator = (p1: ValidatorData, p2: ValidatorData, error: Error) => (
-  constComparators[p1.value + p2.value] && constComparators[p1.value + p2.value](error)
+const condition = (template: string) => (value: string, param: string) => (
+  template.replace(/\$0/g, value).replace(/\$1/g, param)
 );
 
-const comparatorBuilder = (comparators: Record<string, (param: any, error: Error) => Validator<any>>) => (meta: CompilerMeta, { params, error }: ValidatorData) => {
-  const validators = [];
+const oneTypeTemplate = (comparator: string) => condition(
+  l_and(
+    l_equal(
+      l_typeof('$0'), l_typeof('$1')
+    ),
+    l_compare('$0', '$1', comparator)
+  )
+);
 
-  for (let i = 0; i < params.length; i += 3) {
-    const comparator = (value: any) => comparators[params[i].value](value, error);
+const multipleTemplate = (comparator: (...args: any) => string) => condition(
+  l_and(
+    l_isNumber('$0'),
+    comparator(l_compare('$0', '$1', '%'), '0')
+  )
+);
 
-    const param = params[i + 1];
+const compareTemplates = {
+  '>=': oneTypeTemplate('>='),
+  '<': oneTypeTemplate('<'),
+  '<=': oneTypeTemplate('<='),
+  '>': oneTypeTemplate('>'),
+  '=': condition(l_equal('$0', '$1')),
+  '!=': condition(l_notEqual('$0', '$1')),
+  '%': multipleTemplate(l_equal),
+  '!%': multipleTemplate(l_notEqual),
+  '->': condition(l_compare(l_indexOf('$1', '$0'), '0', '>=')),
+  '!->': condition(l_compare(l_indexOf('$1', '$0'), '0', '<')),
+  '*': condition(l_test('$1', '$0')),
+  '!*': condition(l_not(l_test('$1', '$0')))
+};
 
-    validators.push(
-      extractConstantComparator(params[i], param, error) ||
-      extractInnerInjectionReference(meta, param, comparator) ||
-      extractInjection(meta, param, comparator) ||
-      extractLiteral(param, comparator) ||
-      extractInnerReference(param, comparator)
+const lengthyTemplate = (comparator: (...args: any) => string) => condition(
+  l_and(
+    l_notEqual('$0', l_null()),
+    l_notEqual('$0', l_undefined()),
+    l_isNumber(l_length('$0')),
+    comparator(l_length('$0'))
+  )
+);
+
+const lengthTemplates = {
+  '>=': lengthyTemplate(v => l_compare(v, '$1', '>=')),
+  '<': lengthyTemplate(v => l_compare(v, '$1', '<')),
+  '<=': lengthyTemplate(v => l_compare(v, '$1', '<=')),
+  '>': lengthyTemplate(v => l_compare(v, '$1', '>')),
+  '=': lengthyTemplate(v => l_compare(v, '$1', '===')),
+  '!=': lengthyTemplate(v => l_compare(v, '$1', '!==')),
+  '%': lengthyTemplate(v => l_compare(l_compare(v, '$1', '%'), '0', '===')),
+  '!%': lengthyTemplate(v => l_compare(l_compare(v, '$1', '%'), '0', '!=='))
+};
+
+const constTemplates = {
+  '=def': condition(
+    l_notEqual('$0', l_undefined())
+  ),
+  '=emp': condition(
+    l_embrace(
+      l_or(
+        l_equal('$0', l_undefined()),
+        l_equal('$0', l_null()),
+        l_equal('$0', l_emptyString())
+      )
+    )
+  ),
+  '!=emp': condition(
+    l_and(
+      l_notEqual('$0', l_undefined()),
+      l_notEqual('$0', l_null()),
+      l_notEqual('$0', l_emptyString())
+    )
+  )
+};
+
+const comparatorTemplate = (comparators: Record<string, (value: string, param: string) => string>) => (props: CompilerProps, data: ValidatorData): Array<string> => {
+  check(props, data, COMMA_SEPARATED_PARAMS);
+
+  const conditions: Array<string> = [];
+
+  for (let i = 0; i < data.params.length; i += 3) {
+    conditions.push(
+      (
+        constTemplates[data.params[i].value + data.params[i + 1].value] ||
+        comparators[data.params[i].value]
+      )(
+        props.in,
+        extract(props.components, data.params[i + 1])().join(l_emptyString())
+      )
     );
   }
 
-  return makeSequence(validators);
+  return ([
+    l_if(
+      l_and(...conditions)
+    ),
+    l_ifBody(
+      ...l_content(props)
+    ),
+    l_else(),
+    l_ifBody(
+      ...l_error(props, data.error)
+    )
+  ]);
 };
 
-export const compareBuilder = comparatorBuilder(baseComparators);
+export const compareTemplate = comparatorTemplate(compareTemplates);
 
-export const lengthBuilder = comparatorBuilder(lengthComparators);
+export const lengthTemplate = comparatorTemplate(lengthTemplates);

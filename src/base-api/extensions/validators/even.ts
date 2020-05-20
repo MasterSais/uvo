@@ -1,5 +1,5 @@
 import { V_EVN } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 /**
@@ -7,7 +7,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * 
  * @template {via `provide`}
  * 
- * @scheme {even(error?: Error): Validator<number>}
+ * @scheme {even(error?: ValidatorError): Validator<number>}
  * 
  * @desc Checks number to be an even one.
  * 
@@ -18,7 +18,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * {@link docs/base-api/validator-result}
  */
 export const even = (
-  (error?: Error) => isFactory(V_EVN)(
+  (error?: ValidatorError) => isFactory(V_EVN)(
     (value: number) => typeof value === 'number' && value % 2 === 0, error
   )
 );

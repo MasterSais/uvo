@@ -1,5 +1,5 @@
 import { V_LOW } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 /**
@@ -7,7 +7,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * 
  * @template {via `provide`}
  * 
- * @scheme {lowercase(error?: Error): Validator<string>}
+ * @scheme {lowercase(error?: ValidatorError): Validator<string>}
  * 
  * @desc Checks string to be in a lower case.
  * 
@@ -18,7 +18,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * {@link docs/base-api/validator-result}
  */
 export const lowercase = (
-  (error?: Error) => isFactory(V_LOW)(
+  (error?: ValidatorError) => isFactory(V_LOW)(
     (value: string) => value.toLowerCase() === value, error
   )
 );

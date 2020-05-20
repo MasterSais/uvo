@@ -3,7 +3,7 @@
  * 
  * @template {`@compare(*...)` `@c(*...)` `@compare(!*...)` `@c(!*...)`}
  * 
- * @scheme {regex<T>(match: RegExp | (() => RegExp), error?: Error): Validator<T>}
+ * @scheme {regex<T>(match: RegExp | (() => RegExp), error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks value to match a pattern.
  * 

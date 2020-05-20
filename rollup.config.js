@@ -158,20 +158,20 @@ export default [
   types('dist/index.ts', 'dist'),
   types('template/index.ts', 'template'),
   types('extended/index.ts', 'extended'),
-  types('extended-template/index.ts', 'extended-template'),
+  // types('extended-template/index.ts', 'extended-template'),
 
   bundle('src/base-api/index.ts', 'dist'),
   bundle('src/templating-api/template.ts', 'template', true),
   bundle('src/base-api/extensions/index.ts', 'extended', true),
-  bundle('src/templating-api/extensions/index.ts', 'extended-template', true),
+  // bundle('src/templating-api/extensions/index.ts', 'extended-template', true),
 
   es5Bundle('src/base-api/index.ts'),
   es5Bundle('src/templating-api/template.ts', 'template'),
   es5Bundle('src/base-api/extensions/index.ts', 'extended'),
-  es5Bundle('src/templating-api/extensions/index.ts', 'extended-template'),
+  // es5Bundle('src/templating-api/extensions/index.ts', 'extended-template'),
 
   copyTypes('es5/index.js', '../dist'),
   copyTypes('template/es5/index.js', '..', 'template'),
   copyTypes('extended/es5/index.js', '..', 'extended'),
-  copyTypes('extended-template/es5/index.js', '..', 'extended-template'),
+  // copyTypes('extended-template/es5/index.js', '..', 'extended-template'),
 ];

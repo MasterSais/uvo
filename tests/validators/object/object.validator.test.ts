@@ -1,6 +1,6 @@
 import { V_OBJ as VALIDATOR_NAME } from '@lib/base-api/names';
 import { object as validator } from '@lib/base-api/validators/object';
-import { compile, template } from '@lib/templating-api/template';
+import { compile } from '@lib/templating-api/template';
 import { baseCases, baseCasesWithParams, compileWithErrorCases, emptyMeta, errorMetaCase, notNullError, paramsCases, withErrorCases } from '@test/utilities';
 import { right, rightParams, rightTemplate, wrong, wrongParams, wrongTemplate } from './cases';
 
@@ -33,7 +33,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     compileWithErrorCases(compile('@object!0 ~e')([], [notNullError()]), [right[0][1], wrong[0][1]])
   );
 
-  describe('with meta › template', () =>
-    withErrorCases(template('@object!0')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [[wrong[0][1]]], emptyMeta())
+  describe('with meta › compile', () =>
+    compileWithErrorCases(compile('@object!0 ~e ~m')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [right[0][1], wrong[0][1]])
   );
 });

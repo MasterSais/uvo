@@ -1,5 +1,5 @@
 import { V_OCT } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 const octRegEx = /^(0o)?[0-7]+$/i;
@@ -9,7 +9,7 @@ const octRegEx = /^(0o)?[0-7]+$/i;
  * 
  * @template {via `provide`}
  * 
- * @scheme {oct(error?: Error): Validator<string>}
+ * @scheme {oct(error?: ValidatorError): Validator<string>}
  * 
  * @desc Checks if the string is a octal number.
  * 
@@ -20,7 +20,7 @@ const octRegEx = /^(0o)?[0-7]+$/i;
  * {@link docs/base-api/validator-result}
  */
 export const oct = (
-  (error?: Error) => isFactory(V_OCT)(
+  (error?: ValidatorError) => isFactory(V_OCT)(
     (value: string) => value && octRegEx.test(value), error
   )
 );

@@ -3,7 +3,7 @@
  * 
  * @template {`@string` `@s`}
  * 
- * @scheme {string<T>(error?: Error): Validator<T, string>}
+ * @scheme {string<T>(error?: ValidatorError): Validator<T, string>}
  * 
  * @desc Checks value to be a string compatible. Converts on success. Use `string` from `Extended API` for check only.
  * 

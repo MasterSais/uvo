@@ -3,7 +3,7 @@
  * 
  * @template {`@compare(=emp)` `@c(=emp)` `@compare(!=emp)` `@c(!=emp)`}
  * 
- * @scheme {empty<T>(error?: Error): Validator<T>}
+ * @scheme {empty<T>(error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks value to be empty.
  * 

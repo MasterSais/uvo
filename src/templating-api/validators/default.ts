@@ -1,24 +1,30 @@
-import { useDefault } from '@lib/base-api/spreaders/use-default';
-import { fallback } from '@lib/base-api/spreaders/fallback';
-import { Validator } from '@lib/base-api/types';
-import { extractInjection, extractLiteral, extractSequence } from '@lib/templating-api/extractors';
-import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
+import { check, FIRST_COMMA_PARAMS } from '@lib/templating-api/errors';
+import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
+import { l_assign, l_content, l_else, l_emptyString, l_equal, l_if, l_ifBody, l_null, l_or, l_undefined } from '@lib/templating-api/units';
+import { chain, extract } from '@lib/templating-api/utilities';
 
-const spreaderBuilder = (validator: (...args: any) => Validator<any>) => (meta: CompilerMeta, { params: [fallback, , ...nodes] }: ValidatorData) => {
-  const validators: Array<Validator<any, any>> = [];
+export const defaultTemplate = (props: CompilerProps, data: ValidatorData): Array<string> => {
+  check(props, data, FIRST_COMMA_PARAMS);
 
-  for (const validator of nodes) {
-    validators.push(
-      extractSequence(meta, validator)
-    );
-  }
+  const [fallback, , ...nodes] = data.params;
 
-  return (
-    extractLiteral(fallback, (value: any) => validator(value(), ...validators)) ||
-    extractInjection(meta, fallback, (value: any) => validator(value, ...validators))
-  );
+  const fallbackTemplate = extract(props.components, fallback)().join(l_emptyString());
+
+  return ([
+    l_if(
+      l_or(
+        l_equal(props.in, l_undefined()),
+        l_equal(props.in, l_null()),
+        l_equal(props.in, l_emptyString())
+      )
+    ),
+    l_ifBody(
+      l_assign(props.out, fallbackTemplate)
+    ),
+    l_else(),
+    l_ifBody(
+      ...chain(props, nodes)
+    ),
+    ...l_content({ ...props, in: props.out })
+  ]);
 };
-
-export const defaultBuilder = spreaderBuilder(useDefault);
-
-export const fallbackBuilder = spreaderBuilder(fallback);

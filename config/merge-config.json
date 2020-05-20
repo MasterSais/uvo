@@ -47,26 +47,6 @@
         "removeExports": true
       },
       {
-        "dir": "./src/base-api/groupers",
-        "removeExports": true
-      },
-      {
-        "dir": "./src/base-api/spreaders",
-        "removeExports": true
-      },
-      {
-        "dir": "./src/base-api/validators",
-        "removeExports": true
-      },
-      {
-        "dir": "./src/base-api/processors",
-        "removeExports": true
-      },
-      {
-        "dir": "./src/base-api/containers",
-        "removeExports": true
-      },
-      {
         "file": "./src/templating-api/types.ts",
         "removeExports": true
       },
@@ -87,43 +67,23 @@
         "removeExports": true
       },
       {
+        "file": "./src/templating-api/units.ts",
+        "removeExports": true
+      },
+      {
         "dir": "./src/templating-api/validators",
         "removeExports": true
       },
       {
-        "file": "./src/templating-api/extractors.ts",
+        "file": "./src/templating-api/errors.ts",
         "removeExports": true
       },
       {
-        "file": "./src/templating-api/validators-base.ts",
+        "file": "./src/templating-api/utilities.ts",
         "removeExports": true
       },
       {
-        "file": "./src/templating-api/composer.ts",
-        "removeExports": true
-      },
-      {
-        "file": "./src/templating-api/compiler/units.ts",
-        "removeExports": true
-      },
-      {
-        "dir": "./src/templating-api/compiler/validators",
-        "removeExports": true
-      },
-      {
-        "file": "./src/templating-api/compiler/errors.ts",
-        "removeExports": true
-      },
-      {
-        "file": "./src/templating-api/compiler/utilities.ts",
-        "removeExports": true
-      },
-      {
-        "file": "./src/templating-api/compiler/compiler.ts",
-        "removeExports": true
-      },
-      {
-        "file": "./src/templating-api/provider.ts",
+        "file": "./src/templating-api/compiler.ts",
         "removeExports": true
       },
       {
@@ -167,43 +127,12 @@
         "removeExports": true
       },
       {
-        "dir": "./src/base-api/utilities",
-        "removeExports": true
-      },
-      {
-        "dir": "./src/base-api/spreaders",
-        "removeExports": true
-      },
-      {
         "file": "./src/base-api/extensions/names.ts",
-        "removeExports": true
-      },
-      {
-        "dir": "./src/base-api/extensions/validators",
-        "removeExports": true
-      },
-      {
-        "dir": "./src/base-api/extensions/processors",
         "removeExports": true
       },
       {
         "file": "./src/templating-api/types.ts",
         "removeExports": true
-      },
-      {
-        "file": "./src/templating-api/lexemes.ts",
-        "removeExports": true
-      },
-      {
-        "file": "./src/templating-api/extractors.ts",
-        "removeExports": true
-      },
-      {
-        "file": "./src/templating-api/validators-base.ts",
-        "removeExports": true
-      },
-      {
-        "dir": "./src/templating-api/extensions/validators"
       }
     ]
   }

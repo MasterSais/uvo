@@ -1,7 +1,7 @@
 import { V_DTE as VALIDATOR_NAME } from '@lib/base-api/names';
-import { template, tml, compile } from '@lib/templating-api/template';
 import { date as validator } from '@lib/base-api/validators/date';
-import { baseCases, emptyMeta, errorMetaCase, notNullError, withErrorCases, compileWithErrorCases } from '@test/utilities';
+import { compile } from '@lib/templating-api/template';
+import { baseCases, compileWithErrorCases, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
 
 const toDate = (value: any) => new Date(value).getTime();
@@ -31,7 +31,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     compileWithErrorCases(compile('@date!0 ~e')([], [notNullError()]), [right[0], wrong[0]])
   );
 
-  describe('with meta › template', () =>
-    withErrorCases(template('@date!0')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [[wrong[0]]], emptyMeta(), toDate)
+  describe('with meta › compile', () =>
+    compileWithErrorCases(compile('@date!0 ~e ~m')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [right[0], wrong[0]])
   );
 });

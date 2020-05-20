@@ -1,4 +1,4 @@
-import { Error, MetaData } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 
 export type LexemeScheme = {
   literals: string;
@@ -18,11 +18,15 @@ export type Lexeme = {
 
 export type Injections = Array<any> | Record<string, any>;
 
-export type Errors = Array<Error> | Record<string, Error>;
+export type Errors = Array<ValidatorError> | Record<string, ValidatorError>;
 
 export type CompilerMeta = {
-  injections: Injections;
-  errors: Injections;
+  path: Array<string | number>;
+  validator?: string;
+  params: Array<any>;
+  deps?: string;
+  logs?: string;
+  asyncStack?: string;
 };
 
 export type ValidatorData = {
@@ -37,7 +41,7 @@ export type CompilerProps = {
   in: string;
   out: string;
   errors?: string;
-  meta?: MetaData;
+  meta?: CompilerMeta;
   components: Map<number, any>;
   name: () => string;
   content?: (props: CompilerProps) => Array<string>;

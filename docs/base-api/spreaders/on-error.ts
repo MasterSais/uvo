@@ -7,7 +7,7 @@
  * 
  * {@link docs/base-api/type-container}
  * 
- * @param {Function} errorProcessor Error processor.
+ * @param {Function} errorProcessor ValidatorError processor.
  * 
  * @param {...Processor} validators Validators list.
  * 

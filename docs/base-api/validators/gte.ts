@@ -3,7 +3,7 @@
  * 
  * @template {`@compare(>=...)` `@c(>=...)`}
  * 
- * @scheme {gte<T>(bound: T | (() => T), error?: Error): Validator<T>}
+ * @scheme {gte<T>(bound: T | (() => T), error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks value to be greater or equal to 'bound' param. Requires the same type.
  * 

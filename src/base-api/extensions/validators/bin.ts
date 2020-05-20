@@ -1,5 +1,5 @@
 import { V_BIN } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 const binRegEx = /^(0b)?[0-1]+$/i;
@@ -9,7 +9,7 @@ const binRegEx = /^(0b)?[0-1]+$/i;
  * 
  * @template {via `provide`}
  * 
- * @scheme {bin(error?: Error): Validator<string>}
+ * @scheme {bin(error?: ValidatorError): Validator<string>}
  * 
  * @desc Checks if the string is a binary number.
  * 
@@ -20,7 +20,7 @@ const binRegEx = /^(0b)?[0-1]+$/i;
  * {@link docs/base-api/validator-result}
  */
 export const bin = (
-  (error?: Error) => isFactory(V_BIN)(
+  (error?: ValidatorError) => isFactory(V_BIN)(
     (value: string) => value && binRegEx.test(value), error
   )
 );

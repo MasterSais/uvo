@@ -3,7 +3,7 @@
  * 
  * @template {`~error(...)` `~e(...)`}
  * 
- * @scheme {withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: Error, meta?: MetaData) => Error)): Validator<T, Result<R>>}
+ * @scheme {withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: ValidatorError, meta?: MetaData) => ValidatorError)): Validator<T, Result<R>>}
  * 
  * @desc Provides error handling mechanism.
  * 

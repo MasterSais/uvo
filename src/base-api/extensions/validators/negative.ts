@@ -1,5 +1,5 @@
 import { V_NEG } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 /**
@@ -7,7 +7,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * 
  * @template {via `provide`}
  * 
- * @scheme {negative(error?: Error): Validator<number>}
+ * @scheme {negative(error?: ValidatorError): Validator<number>}
  * 
  * @desc Checks number to be negative.
  * 
@@ -18,7 +18,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * {@link docs/base-api/validator-result}
  */
 export const negative = (
-  (error?: Error) => isFactory(V_NEG)(
+  (error?: ValidatorError) => isFactory(V_NEG)(
     (value: number) => Number.isFinite(value) && value < 0, error
   )
 );

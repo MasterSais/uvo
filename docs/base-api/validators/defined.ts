@@ -3,7 +3,7 @@
  * 
  * @template {`@compare(=def)` `@c(=def)`}
  * 
- * @scheme {defined<T>(error?: Error): Validator<T>}
+ * @scheme {defined<T>(error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks value to be defined.
  * 

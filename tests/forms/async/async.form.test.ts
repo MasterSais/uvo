@@ -11,7 +11,6 @@ import { number } from '@lib/base-api/validators/number';
 import { object } from '@lib/base-api/validators/object';
 import { object2 } from '@lib/base-api/validators/object2';
 import { string } from '@lib/base-api/validators/string';
-import { template } from '@lib/templating-api/template';
 import { asyncCases, resolve } from '@test/utilities';
 import { cases1, cases2, cases3, cases4 } from './cases';
 
@@ -37,16 +36,16 @@ describe(`async form › object › advanced`, () =>
   )
 );
 
-describe(`async form › object › template`, () =>
-  asyncCases(
-    template(`
-      @object(
-        id : @number,
-        name : @string
-      ) ~p
-    `)(), cases1
-  )
-);
+// describe(`async form › object › template`, () =>
+//   asyncCases(
+//     template(`
+//       @object(
+//         id : @number,
+//         name : @string
+//       ) ~p
+//     `)(), cases1
+//   )
+// );
 
 describe(`async form › object › dynamic`, () =>
   asyncCases(
@@ -62,18 +61,18 @@ describe(`async form › object › dynamic`, () =>
   )
 );
 
-describe(`async form › object › template › dynamic`, () =>
-  asyncCases(
-    template(`
-      @object(
-        id : @number,
-        name : @string
-      ) : $0 ~p
-    `)(
-      [(obj: any) => resolve(obj)]
-    ), cases1
-  )
-);
+// describe(`async form › object › template › dynamic`, () =>
+//   asyncCases(
+//     template(`
+//       @object(
+//         id : @number,
+//         name : @string
+//       ) : $0 ~p
+//     `)(
+//       [(obj: any) => resolve(obj)]
+//     ), cases1
+//   )
+// );
 
 describe(`async form › array`, () =>
   asyncCases(
@@ -83,13 +82,13 @@ describe(`async form › array`, () =>
   )
 );
 
-describe(`async form › array › template`, () =>
-  asyncCases(
-    template(`
-      @array( @number ) ~p
-    `)(), cases2
-  )
-);
+// describe(`async form › array › template`, () =>
+//   asyncCases(
+//     template(`
+//       @array( @number ) ~p
+//     `)(), cases2
+//   )
+// );
 
 describe(`async form › errors`, () =>
   asyncCases(
@@ -107,18 +106,18 @@ describe(`async form › errors`, () =>
   )
 );
 
-describe(`async form › template › errors`, () =>
-  asyncCases(
-    template(`
-      @async!0 : @object(
-        id : @async : @number!2,
-        name : @string!3
-      )!1 ~p ~e
-    `)(
-      null, ['promiseErr', 'objectErr', 'numberErr', 'stringErr']
-    ), cases3
-  )
-);
+// describe(`async form › template › errors`, () =>
+//   asyncCases(
+//     template(`
+//       @async!0 : @object(
+//         id : @async : @number!2,
+//         name : @string!3
+//       )!1 ~p ~e
+//     `)(
+//       null, ['promiseErr', 'objectErr', 'numberErr', 'stringErr']
+//     ), cases3
+//   )
+// );
 
 describe(`async form › wait`, () =>
   asyncCases(
@@ -142,39 +141,39 @@ describe(`async form › wait`, () =>
   )
 );
 
-describe(`async form › template › wait`, () =>
-  asyncCases(
-    template(`
-      @object(
-        user : @async('user') : @object(
-          id : @number : #userId,
-          name : @string
-        ),
-        roles : @wait('user') : $0(#userId)
-      ) 
-      ~promise ~meta
-    `)(
-      [
-        (userId: number) => resolve([userId])
-      ]
-    ), cases4
-  )
-);
+// describe(`async form › template › wait`, () =>
+//   asyncCases(
+//     template(`
+//       @object(
+//         user : @async('user') : @object(
+//           id : @number : #userId,
+//           name : @string
+//         ),
+//         roles : @wait('user') : $0(#userId)
+//       ) 
+//       ~promise ~meta
+//     `)(
+//       [
+//         (userId: number) => resolve([userId])
+//       ]
+//     ), cases4
+//   )
+// );
 
-describe(`async form › template › short › wait`, () =>
-  asyncCases(
-    template(`
-      @o(
-        user @p(0) @o(
-          id @n #0,
-          name @s
-        ),
-        roles @w(0) $0(#0)
-      ) ~p ~m
-    `)(
-      [
-        (userId: number) => resolve([userId])
-      ]
-    ), cases4
-  )
-);
+// describe(`async form › template › short › wait`, () =>
+//   asyncCases(
+//     template(`
+//       @o(
+//         user @p(0) @o(
+//           id @n #0,
+//           name @s
+//         ),
+//         roles @w(0) $0(#0)
+//       ) ~p ~m
+//     `)(
+//       [
+//         (userId: number) => resolve([userId])
+//       ]
+//     ), cases4
+//   )
+// );

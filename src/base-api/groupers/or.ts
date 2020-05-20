@@ -1,5 +1,5 @@
 import { G_OR } from '@lib/base-api/names';
-import { Error, ErrorCallback, MetaData, Relevance, Validator } from '@lib/base-api/types';
+import { ValidatorError, ErrorCallback, MetaData, Relevance, Validator } from '@lib/base-api/types';
 import { isValidatorsSequence } from '@lib/base-api/utilities/types';
 import { throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -17,7 +17,7 @@ export const or = (...validators: Array<Validator<any, any>>): Validator<any, an
 
           validators.find((nextValidator: Validator<unknown, unknown>) =>
             (
-              processed = nextValidator(value, onError ? (error: Error, meta?: MetaData) => onError(error, meta, relevance) : null, meta),
+              processed = nextValidator(value, onError ? (error: ValidatorError, meta?: MetaData) => onError(error, meta, relevance) : null, meta),
               processed !== null
             )
           );

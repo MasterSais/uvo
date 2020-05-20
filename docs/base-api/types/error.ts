@@ -8,7 +8,7 @@
  */
 
 //#example
-type Error = (
+type ValidatorError = (
   string
   | boolean
   | number

@@ -1,5 +1,5 @@
 import { V_HEX } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 const hexRegEx = /^(0x|0h)?[0-9A-F]+$/i;
@@ -9,7 +9,7 @@ const hexRegEx = /^(0x|0h)?[0-9A-F]+$/i;
  * 
  * @template {via `provide`}
  * 
- * @scheme {hex(error?: Error): Validator<string>}
+ * @scheme {hex(error?: ValidatorError): Validator<string>}
  * 
  * @desc Checks if the string is a hexadecimal number.
  * 
@@ -20,7 +20,7 @@ const hexRegEx = /^(0x|0h)?[0-9A-F]+$/i;
  * {@link docs/base-api/validator-result}
  */
 export const hex = (
-  (error?: Error) => isFactory(V_HEX)(
+  (error?: ValidatorError) => isFactory(V_HEX)(
     (value: string) => value && hexRegEx.test(value), error
   )
 );

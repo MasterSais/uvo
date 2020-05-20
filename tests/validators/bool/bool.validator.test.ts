@@ -1,7 +1,7 @@
 import { V_BLN as VALIDATOR_NAME } from '@lib/base-api/names';
-import { template, tml, compile } from '@lib/templating-api/template';
 import { bool as validator } from '@lib/base-api/validators/bool';
-import { baseCases, emptyMeta, errorMetaCase, notNullError, withErrorCases, compileWithErrorCases } from '@test/utilities';
+import { compile } from '@lib/templating-api/template';
+import { baseCases, compileWithErrorCases, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
 
 const possibleValues = [false, true, 0, 1, '0', '1', 'false', 'true'];
@@ -33,7 +33,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     compileWithErrorCases(compile('@bool!0 ~e')([], [notNullError()]), [right[0], wrong[0]])
   );
 
-  describe('with meta › template', () =>
-    withErrorCases(template('@bool!0')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [[wrong[0]]], emptyMeta())
+  describe('with meta › compile', () =>
+    compileWithErrorCases(compile('@bool!0 ~e ~m')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [right[0], wrong[0]])
   );
 });

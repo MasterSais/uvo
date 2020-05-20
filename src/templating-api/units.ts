@@ -40,7 +40,9 @@ export const l_else = () => 'else ';
 
 export const l_assign = (dest: string, src: string) => `${dest}=${src};`;
 
-export const l_for = (input: string, callee: (elem: string) => Array<string>) => `for (var i = ${l_length(input)} - 1; i >= 0; i--) {${callee(input + '[i]').join('')}}`;
+export const l_for = (input: string, index: string, callee: (elem: string) => Array<string>) => (
+  `for (var ${index} = ${l_length(input)} - 1; ${index} >= 0; ${index}--) {${callee(`${input}[${index}]`).join('')}}`
+);
 
 export const l_slice = (input: string) => `${input}.slice(0)`;
 
@@ -136,7 +138,7 @@ export const l_error = (props: CompilerProps, error: string | number): Array<str
           l_assign(`${props.errors}[${l_errorsCounter()}++]`, l_errors(error) + l_embrace(
             props.meta && (
               l_object(
-                ['validator', props.meta.validator],
+                ['validator', l_quoted(props.meta.validator)],
                 ['path', l_square(props.meta.path.toString())],
                 ['params', l_square(props.meta.params.toString())],
               )

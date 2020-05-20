@@ -1,5 +1,5 @@
-import { l_assign, l_define, l_errorsCounter, l_length } from '@lib/templating-api/compiler/units';
 import { CompilerProps } from '@lib/templating-api/types';
+import { l_assign, l_define, l_errorsCounter, l_length } from '@lib/templating-api/units';
 
 export const withErrorTemplate = (props: CompilerProps): Array<string> => {
   props.errors = props.name();

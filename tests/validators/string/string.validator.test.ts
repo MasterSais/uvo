@@ -1,7 +1,7 @@
 import { V_STR as VALIDATOR_NAME } from '@lib/base-api/names';
 import { string as validator } from '@lib/base-api/validators/string';
-import { compile, template } from '@lib/templating-api/template';
-import { baseCases, emptyMeta, errorMetaCase, notNullError, withErrorCases, compileWithErrorCases } from '@test/utilities';
+import { compile } from '@lib/templating-api/template';
+import { baseCases, compileWithErrorCases, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
 import { right, wrong } from './cases';
 
 describe(`validator › ${VALIDATOR_NAME}`, () => {
@@ -29,7 +29,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     compileWithErrorCases(compile('@string!0 ~e')([], [notNullError()]), [right[0], wrong[0]])
   );
 
-  describe('with meta › template', () =>
-    withErrorCases(template('@string!0')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [[wrong[0]]], emptyMeta(), String)
+  describe('with meta › compile', () =>
+    compileWithErrorCases(compile('@string!0 ~e ~m')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [right[0], wrong[0]])
   );
 });

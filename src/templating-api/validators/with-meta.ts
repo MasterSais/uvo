@@ -1,14 +1,14 @@
-import { withMeta } from '@lib/base-api/containers/with-meta';
-import { Validator } from '@lib/base-api/types';
-import { extractInjection } from '@lib/templating-api/extractors';
-import { CompilerMeta, ValidatorData } from '@lib/templating-api/types';
+import { check, NO_PARAMS, ONE_PARAM } from '@lib/templating-api/errors';
+import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 
-export const metaBuilder = (meta: CompilerMeta, { params }: ValidatorData) => (
-  (validator: Validator<any>) => (
-    params
-      ? extractInjection(meta, params[0], (value: any) => (
-        withMeta(validator, value)
-      ))
-      : withMeta(validator)
-  )
-);
+export const withMetaTemplate = (props: CompilerProps, data: ValidatorData): Array<string> => {
+  check(props, data, NO_PARAMS | ONE_PARAM);
+
+  props.meta = {
+    path: [],
+    params: [],
+    validator: null
+  };
+
+  return ([]);
+};

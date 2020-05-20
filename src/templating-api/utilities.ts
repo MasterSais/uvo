@@ -1,6 +1,7 @@
-import { l_injections } from '@lib/templating-api/compiler/units';
+import { isEmpty } from '@lib/base-api/utilities/types';
 import { CNT, GR, INJ, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
+import { l_injections, l_isFunction, l_quoted } from '@lib/templating-api/units';
 
 export const extract = (components: Map<number, any>, data: ValidatorData): ((...args: any) => Array<string>) => {
   if (data.code === VLD.code || data.code === CNT.code || data.code === GR.code) {
@@ -17,7 +18,7 @@ export const extract = (components: Map<number, any>, data: ValidatorData): ((..
     const injection = `${l_injections()}['${data.value}']`;
 
     return () => [
-      `(typeof ${injection} === 'function' ? ${injection}() : ${injection})`
+      `(${l_isFunction(injection)} ? ${injection}() : ${injection})`
     ];
   }
 
@@ -27,7 +28,7 @@ export const extract = (components: Map<number, any>, data: ValidatorData): ((..
   }
 
   if (data.code === SQ.code) {
-    return () => [`'${data.value}'`];
+    return () => [l_quoted(data.value)];
   }
 
   throw `Unsupported code: '${data.code}'`;
@@ -44,3 +45,12 @@ export const chain = (props: CompilerProps, nodes: Array<ValidatorData>): Array<
     )
     : []
 );
+
+export const setMeta = (props: CompilerProps, data: { validator?: string; path?: string | number; params?: Array<any> }): CompilerProps => ({
+  ...props,
+  meta: props.meta && ({
+    validator: data.validator,
+    params: data.params || [],
+    path: !isEmpty(data.path) ? props.meta.path.concat(data.path) : props.meta.path
+  })
+});

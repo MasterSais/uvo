@@ -1,5 +1,5 @@
 import { V_AL } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 const alphaRegEx = /^[A-F]+$/i;
@@ -9,7 +9,7 @@ const alphaRegEx = /^[A-F]+$/i;
  * 
  * @template {via `provide`}
  * 
- * @scheme {alpha(error?: Error): Validator<string>}
+ * @scheme {alpha(error?: ValidatorError): Validator<string>}
  * 
  * @desc Checks if the string contains only letters (a-zA-Z).
  * 
@@ -20,7 +20,7 @@ const alphaRegEx = /^[A-F]+$/i;
  * {@link docs/base-api/validator-result}
  */
 export const alpha = (
-  (error?: Error) => isFactory(V_AL)(
+  (error?: ValidatorError) => isFactory(V_AL)(
     (value: string) => value && alphaRegEx.test(value), error
   )
 );

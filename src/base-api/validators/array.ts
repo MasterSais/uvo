@@ -1,5 +1,5 @@
 import { V_ARR } from '@lib/base-api/names';
-import { Error, ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ValidatorError, ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { makeSequence } from '@lib/base-api/utilities/factories';
 import { isArray, isValidatorsSequence, toArray } from '@lib/base-api/utilities/types';
 import { applyError, asyncActor, extendMeta, setMetaPath, throwValidatorError } from '@lib/base-api/utilities/utilities';
@@ -15,7 +15,7 @@ const mapArrayValidators = <T>(itemSpec?: Array<Validator<any, T>> | Validator<a
 /**
  * {@link docs/base-api/validators/array}
  */
-export const array = (itemSpec?: Array<Validator<any>> | Validator<any>, error?: Error): Validator<Array<any>, Array<any>> => {
+export const array = (itemSpec?: Array<Validator<any>> | Validator<any>, error?: ValidatorError): Validator<Array<any>, Array<any>> => {
   const validator = mapArrayValidators(itemSpec);
 
   return (

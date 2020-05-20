@@ -1,18 +1,19 @@
 import { Validator } from '@lib/base-api/types';
-import { l_errors, l_injections, l_return, l_value } from '@lib/templating-api/compiler/units';
-import { chain, extract } from '@lib/templating-api/compiler/utilities';
-import { arrayTemplate } from '@lib/templating-api/compiler/validators/array';
-import { boolTemplate } from '@lib/templating-api/compiler/validators/bool';
-import { compareTemplate, lengthTemplate } from '@lib/templating-api/compiler/validators/compare';
-import { dateTemplate } from '@lib/templating-api/compiler/validators/date';
-import { defaultTemplate } from '@lib/templating-api/compiler/validators/default';
-import { fallbackTemplate } from '@lib/templating-api/compiler/validators/fallback';
-import { numberTemplate } from '@lib/templating-api/compiler/validators/number';
-import { objectTemplate } from '@lib/templating-api/compiler/validators/object';
-import { stringTemplate } from '@lib/templating-api/compiler/validators/string';
-import { withErrorTemplate } from '@lib/templating-api/compiler/validators/with-error';
 import { CNT, GR, VLD } from '@lib/templating-api/lexemes';
 import { CompilerProps, Errors, Injections, ValidatorData } from '@lib/templating-api/types';
+import { l_errors, l_injections, l_return, l_value } from '@lib/templating-api/units';
+import { chain, extract } from '@lib/templating-api/utilities';
+import { arrayTemplate } from '@lib/templating-api/validators/array';
+import { boolTemplate } from '@lib/templating-api/validators/bool';
+import { compareTemplate, lengthTemplate } from '@lib/templating-api/validators/compare';
+import { dateTemplate } from '@lib/templating-api/validators/date';
+import { defaultTemplate } from '@lib/templating-api/validators/default';
+import { fallbackTemplate } from '@lib/templating-api/validators/fallback';
+import { numberTemplate } from '@lib/templating-api/validators/number';
+import { objectTemplate } from '@lib/templating-api/validators/object';
+import { stringTemplate } from '@lib/templating-api/validators/string';
+import { withErrorTemplate } from '@lib/templating-api/validators/with-error';
+import { withMetaTemplate } from '@lib/templating-api/validators/with-meta';
 
 const components = new Map([
   [VLD.code, {
@@ -43,8 +44,8 @@ const components = new Map([
   [CNT.code, {
     'error': withErrorTemplate,
     'e': withErrorTemplate,
-    'meta': null,
-    'm': null,
+    'meta': withMetaTemplate,
+    'm': withMetaTemplate,
     'promise': null,
     'p': null
   }],

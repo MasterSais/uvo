@@ -3,7 +3,7 @@
  * 
  * @template {via `provide`}
  * 
- * @scheme {unique<T>(field?: string | number | ((value: T) => any), error?: Error): Validator<Array<T>>}
+ * @scheme {unique<T>(field?: string | number | ((value: T) => any), error?: ValidatorError): Validator<Array<T>>}
  * 
  * @desc Checks array's elements to be unique.
  * 

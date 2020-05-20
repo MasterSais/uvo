@@ -3,7 +3,7 @@
  * 
  * @template {`@object(...)` `@o(...)`}
  * 
- * @scheme {object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: Error): Validator<T, R>}
+ * @scheme {object<T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: ValidatorError): Validator<T, R>}
  * 
  * @desc Checks value to be an object.
  * 

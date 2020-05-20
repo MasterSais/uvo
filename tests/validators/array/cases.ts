@@ -35,6 +35,7 @@ export const right: Array<any> = [
   [[], []],
   [[[]], []],
   [[], [1, 2]],
+  [[], [null]],
   [[], [null, '2']],
   [[[integer()]], []],
   [[[integer()]], [1, 1]],

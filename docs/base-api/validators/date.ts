@@ -3,7 +3,7 @@
  * 
  * @template {`@date` `@d`}
  * 
- * @scheme {date<T>(error?: Error): Validator<T, number>}
+ * @scheme {date<T>(error?: ValidatorError): Validator<T, number>}
  * 
  * @desc Checks value to be a date compatible. Result in ms. Converts on success. Use `date` from `Extended API` for check only.
  * 
