@@ -13,7 +13,7 @@ size:et-umd]: extended-template/umd/index.min.js
 |Bundles (minified)|ESM|CJS|UMD|
 |:-:|:-:|:-:|:-:|
 |Base API|~6.8kb|~6.8kb|~6.5kb|
-|Templating API|~9.1kb|~9.2kb|~9.3kb|
+|Templating API|~9.5kb|~9.5kb|~9.7kb|
 |Extended API|~2.9kb|~3kb|~2.9kb|
 |Extended Template API|[size:et-esm]|[size:et-cjs]|[size:et-umd]|
 

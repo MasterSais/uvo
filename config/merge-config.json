@@ -71,15 +71,15 @@
         "removeExports": true
       },
       {
+        "file": "./src/templating-api/utilities.ts",
+        "removeExports": true
+      },
+      {
         "dir": "./src/templating-api/validators",
         "removeExports": true
       },
       {
         "file": "./src/templating-api/errors.ts",
-        "removeExports": true
-      },
-      {
-        "file": "./src/templating-api/utilities.ts",
         "removeExports": true
       },
       {

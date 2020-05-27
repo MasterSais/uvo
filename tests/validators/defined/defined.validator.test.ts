@@ -1,4 +1,4 @@
-import { V_DEF as VALIDATOR_NAME } from '@lib/base-api/names';
+import { V_DEF as VALIDATOR_NAME, V_CMP } from '@lib/base-api/names';
 import { defined as validator } from '@lib/base-api/validators/is';
 import { compile } from '@lib/templating-api/template';
 import { baseCases, compileWithErrorCases, emptyMeta, errorMetaCase, notNullError, withErrorCases } from '@test/utilities';
@@ -29,7 +29,7 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     compileWithErrorCases(compile('@compare(=def)!0 ~e')([], [notNullError()]), [right[0], wrong[0]])
   );
 
-  // describe('with meta › template', () =>
-  //   withErrorCases(template('@compare(=def)!0')([], [errorMetaCase([], [], VALIDATOR_NAME)]), [[wrong[0]]], emptyMeta())
-  // );
+  describe('with meta › compile', () =>
+    compileWithErrorCases(compile('@compare(=def)!0 ~e ~m')([], [errorMetaCase([], ['=', 'def'], V_CMP)]), [right[0], wrong[0]])
+  );
 });

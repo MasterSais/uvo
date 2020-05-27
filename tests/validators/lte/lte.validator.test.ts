@@ -1,4 +1,4 @@
-import { V_LTE as VALIDATOR_NAME } from '@lib/base-api/names';
+import { V_LTE as VALIDATOR_NAME, V_CMP } from '@lib/base-api/names';
 import { lte as validator } from '@lib/base-api/validators/is';
 import { compile } from '@lib/templating-api/template';
 import { baseCasesWithParams, compileWithErrorCases, emptyMeta, errorMetaCase, invertError, notNullError, withErrorCases } from '@test/utilities';
@@ -49,15 +49,15 @@ describe(`validator › ${VALIDATOR_NAME}`, () => {
     compileWithErrorCases(compile('@compare(<=$0)!0 ~e')([0], [notNullError()]), [right[0][1], wrong[0][1]])
   );
 
-  // describe('with meta › template', () =>
-  //   withErrorCases(template('@compare(<=$0)!0')([0], [errorMetaCase([], [0], VALIDATOR_NAME)]), [[wrong[0][1]]], emptyMeta())
-  // );
+  describe('with meta › compile', () =>
+    compileWithErrorCases(compile('@compare(<=$0)!0 ~e ~m')([0], [errorMetaCase([], ['<=', 0], V_CMP)]), [right[0][1], wrong[0][1]])
+  );
 
   describe('with error › compile › not', () =>
     compileWithErrorCases(compile('@compare(>$0)!0 ~e')([0], [notNullError()]), [rightForNot[0][1], wrongForNot[0][1]])
   );
 
-  // describe('with meta › template › not', () =>
-  //   withErrorCases(template('@compare(>$0)!0')([0], [errorMetaCase([], [0], invertError(VALIDATOR_NAME, true))]), [[wrongForNot[0][1]]], emptyMeta())
-  // );
+  describe('with meta › compile › not', () =>
+    compileWithErrorCases(compile('@compare(>$0)!0 ~e ~m')([0], [errorMetaCase([], ['>', 0], V_CMP)]), [rightForNot[0][1], wrongForNot[0][1]])
+  );
 });

@@ -8,7 +8,7 @@ import { chain, setMeta } from '@lib/templating-api/utilities';
 const passObjectParams = (props: CompilerProps, params: Array<ValidatorData>): Array<string> => {
   const parts: Array<string> = [];
 
-  const perNameParams: Array<Array<ValidatorData | string>> = [[params[0].value]];
+  const perNameParams: Array<[string, ...Array<ValidatorData>]> = [[params[0].value]];
 
   for (let i = 1; i < params.length; i++) {
     if (params[i].code === DLM.code) {
@@ -26,11 +26,11 @@ const passObjectParams = (props: CompilerProps, params: Array<ValidatorData>): A
     parts.push(
       ...chain(
         {
-          ...setMeta(props, { path: l_quoted(field as string) }),
+          ...setMeta(props, { path: l_quoted(field) }),
           in: `${props.in}.${field}`,
           out: `${props.out}.${field}`
         },
-        nameParams as Array<ValidatorData>
+        nameParams
       )
     );
   }

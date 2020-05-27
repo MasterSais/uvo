@@ -35,6 +35,9 @@ export const V_OOF: string = 'oneOf';
 export const V_LEN: string = 'length';
 
 /** @type {string} */
+export const V_CMP: string = 'compare';
+
+/** @type {string} */
 export const V_FIELDS: string = 'fields';
 
 /** @type {string} */
