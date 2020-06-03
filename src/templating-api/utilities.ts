@@ -1,7 +1,8 @@
 import { isEmpty } from '@lib/base-api/utilities/types';
-import { CNT, GR, INJ, SQ, VL, VLD } from '@lib/templating-api/lexemes';
+import { CNT, GR, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
 import { l_injections, l_isFunction, l_quoted } from '@lib/templating-api/units';
+import { referenceTemplate } from '@lib/templating-api/validators/reference';
 
 export const extract = (components: Map<number, any>, data: ValidatorData): ((...args: any) => Array<string>) => {
   if (data.code === VLD.code || data.code === CNT.code || data.code === GR.code) {
@@ -15,7 +16,7 @@ export const extract = (components: Map<number, any>, data: ValidatorData): ((..
   }
 
   if (data.code === INJ.code) {
-    const injection = `${l_injections()}['${data.value}']`;
+    const injection = l_injections() + '[' + data.value + ']';
 
     return () => [
       `(${l_isFunction(injection)} ? ${injection}() : ${injection})`
@@ -23,12 +24,15 @@ export const extract = (components: Map<number, any>, data: ValidatorData): ((..
   }
 
   if (data.code === VL.code) {
-    // type check
     return () => [data.value];
   }
 
   if (data.code === SQ.code) {
     return () => [l_quoted(data.value)];
+  }
+
+  if (data.code === REF.code) {
+    return referenceTemplate;
   }
 
   throw `Unsupported code: '${data.code}'`;

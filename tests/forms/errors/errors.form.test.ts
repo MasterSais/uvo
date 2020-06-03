@@ -62,16 +62,16 @@ describe('errors form › compile', () =>
   ), cases1, [])
 );
 
-// describe('errors form › template › short', () =>
-//   baseCasesWithParams(() => (
-//     template(`
-//       @o(
-//         id @c(!=null)!0 @n!1 @c(>=0)!2 @c(%1)!3,
-//         name @c(!=$0)!4 @s @l(>=10)!5
-//       ) ~e
-//     `)([null], ['Empty id', 'Not a number', 'Must not be negative', 'Must be an integer', 'Empty name', 'Min length is 10'])
-//   ), [cases1[0]], [])
-// );
+describe('errors form › compile › short', () =>
+  baseCasesWithParams(() => (
+    compile(`
+      @o(
+        id @c(!=null)!0 @n!1 @c(>=0)!2 @c(%1)!3,
+        name @c(!=$0)!4 @s @l(>=10)!5
+      ) ~e
+    `)([null], ['Empty id', 'Not a number', 'Must not be negative', 'Must be an integer', 'Empty name', 'Min length is 10'])
+  ), [cases1[0]], [])
+);
 
 describe('errors parallel form', () =>
   baseCasesWithParams(() => (
