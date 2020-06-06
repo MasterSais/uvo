@@ -15,9 +15,7 @@ const v = (
 
 console.log(
   interpret(`
-    @object(
-      id: @array(@number!0)
-    ) ~e ~m
+    @compare(>=0, <=100, =#0) ~meta
   `)
 );
 

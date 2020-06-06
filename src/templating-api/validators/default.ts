@@ -8,7 +8,7 @@ export const defaultTemplate = (props: CompilerProps, data: ValidatorData): Arra
 
   const [fallback, , ...nodes] = data.params;
 
-  const fallbackTemplate = extract(props.components, fallback)().join(l_emptyString());
+  const fallbackTemplate = extract(props.components, fallback)({ ...props, internal: true }, fallback).join('');
 
   return ([
     l_if(

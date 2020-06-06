@@ -1,7 +1,8 @@
 import { isEmpty } from '@lib/base-api/utilities/types';
 import { CNT, GR, INJ, REF, SQ, VL, VLD } from '@lib/templating-api/lexemes';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
-import { l_injections, l_isFunction, l_quoted } from '@lib/templating-api/units';
+import { l_quoted } from '@lib/templating-api/units';
+import { injectionTemplate } from '@lib/templating-api/validators/injection';
 import { referenceTemplate } from '@lib/templating-api/validators/reference';
 
 export const extract = (components: Map<number, any>, data: ValidatorData): ((...args: any) => Array<string>) => {
@@ -16,15 +17,13 @@ export const extract = (components: Map<number, any>, data: ValidatorData): ((..
   }
 
   if (data.code === INJ.code) {
-    const injection = l_injections() + '[' + data.value + ']';
-
-    return () => [
-      `(${l_isFunction(injection)} ? ${injection}() : ${injection})`
-    ];
+    return injectionTemplate;
   }
 
   if (data.code === VL.code) {
-    return () => [data.value];
+    return ['def', 'emp'].includes(data.value)
+      ? () => [l_quoted(data.value)]
+      : () => [data.value];
   }
 
   if (data.code === SQ.code) {
@@ -53,8 +52,27 @@ export const chain = (props: CompilerProps, nodes: Array<ValidatorData>): Array<
 export const setMeta = (props: CompilerProps, data: { validator?: string; path?: string | number; params?: Array<any> }): CompilerProps => ({
   ...props,
   meta: props.meta && ({
+    ...props.meta,
     validator: data.validator,
     params: data.params || [],
     path: !isEmpty(data.path) ? props.meta.path.concat(data.path) : props.meta.path
   })
 });
+
+export const getRefs = (props: CompilerProps, data: ValidatorData): Array<string> => {
+  const refs: Array<string> = [];
+
+  if (data.code === REF.code) {
+    refs.push(referenceTemplate({ ...props, internal: true }, data).join(''));
+  }
+
+  if (data.params) {
+    for (const param of data.params) {
+      if (param.code === REF.code) {
+        refs.push(referenceTemplate({ ...props, internal: true }, param).join(''));
+      }
+    }
+  }
+
+  return refs;
+};

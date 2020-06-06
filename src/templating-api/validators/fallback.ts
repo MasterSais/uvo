@@ -1,6 +1,6 @@
 import { check, FIRST_COMMA_PARAMS } from '@lib/templating-api/errors';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
-import { l_assign, l_content, l_emptyString, l_equal, l_if, l_ifBody, l_null } from '@lib/templating-api/units';
+import { l_assign, l_content, l_equal, l_if, l_ifBody, l_null } from '@lib/templating-api/units';
 import { chain, extract } from '@lib/templating-api/utilities';
 
 export const fallbackTemplate = (props: CompilerProps, data: ValidatorData): Array<string> => {
@@ -8,7 +8,7 @@ export const fallbackTemplate = (props: CompilerProps, data: ValidatorData): Arr
 
   const [fallback, , ...nodes] = data.params;
 
-  const fallbackTemplate = extract(props.components, fallback)().join(l_emptyString());
+  const fallbackTemplate = extract(props.components, fallback)({ ...props, internal: true }, fallback).join('');
 
   return ([
     ...chain(props, nodes),

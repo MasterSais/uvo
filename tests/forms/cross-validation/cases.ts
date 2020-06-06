@@ -11,6 +11,9 @@ export const cases: Array<any> = [
 
 export const cases2: Array<any> = [
   [[], { a: 10, b: 10 }],
+  [[], { a: 5, b: 5 }, { a: 5, b: null }],
+  [[], { a: 15, b: 5 }, { a: 15, b: null }],
+  [[], { a: 15, b: 15 }, { a: 15, b: 15 }],
   [[], { a: 'abc', b: 'abc' }, { a: null, b: null }],
   [[], { a: 'abc', b: 5 }, { a: null, b: 5 }],
   [[], { a: '10', b: 5 }, { a: 10, b: null }]

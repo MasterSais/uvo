@@ -1,8 +1,8 @@
 import { V_CMP, V_LEN } from '@lib/base-api';
 import { check, COMMA_SEPARATED_PARAMS } from '@lib/templating-api/errors';
 import { CompilerProps, ValidatorData } from '@lib/templating-api/types';
-import { l_and, l_compare, l_content, l_else, l_embrace, l_emptyString, l_equal, l_error, l_if, l_ifBody, l_indexOf, l_isNumber, l_length, l_not, l_notEqual, l_null, l_or, l_test, l_typeof, l_undefined, l_quoted } from '@lib/templating-api/units';
-import { extract, setMeta } from '@lib/templating-api/utilities';
+import { l_and, l_compare, l_content, l_else, l_embrace, l_emptyString, l_equal, l_error, l_if, l_ifBody, l_indexOf, l_isNumber, l_length, l_not, l_notEqual, l_null, l_or, l_quoted, l_test, l_typeof, l_undefined } from '@lib/templating-api/units';
+import { extract, getRefs, setMeta } from '@lib/templating-api/utilities';
 
 const condition = (template: string) => (value: string, param: string) => (
   template.replace(/\$0/g, value).replace(/\$1/g, param)
@@ -70,8 +70,7 @@ const constTemplates = {
     condition(
       l_notEqual('$0', l_undefined())
     ),
-    pushMeta(V_CMP, ['=', 'def']),
-    true
+    pushMeta(V_CMP, ['='])
   ],
   '=emp': [
     condition(
@@ -83,8 +82,7 @@ const constTemplates = {
         )
       )
     ),
-    pushMeta(V_CMP, ['=', 'emp']),
-    true
+    pushMeta(V_CMP, ['='])
   ],
   '!=emp': [
     condition(
@@ -94,54 +92,57 @@ const constTemplates = {
         l_notEqual('$0', l_emptyString())
       )
     ),
-    pushMeta(V_CMP, ['!=', 'emp']),
-    true
+    pushMeta(V_CMP, ['!='])
   ]
 };
 
 const comparatorTemplate = (comparators: Record<string, ComparatorTemplate>) => (props: CompilerProps, data: ValidatorData): Array<string> => {
   check(props, data, COMMA_SEPARATED_PARAMS);
 
-  const conditions: Array<string> = [];
-
-  const meta: { validator?: string; params?: Array<any> } = {
-    params: []
-  };
-
-  for (let i = 0; i < data.params.length; i += 3) {
-    const [comparator, info, constant] = (
-      constTemplates[data.params[i].value + data.params[i + 1].value] ||
-      comparators[data.params[i].value]
-    );
-
-    const param = extract(props.components, data.params[i + 1])().join(l_emptyString());
-
-    meta.validator = info.validator;
-    meta.params = meta.params.concat(info.params);
-
-    if (!constant) {
-      meta.params = meta.params.concat(param);
+  const comparatorDescention = ([param, paramValue, , ...restParams]: Array<ValidatorData>): Array<string> => {
+    if (!param) {
+      return l_content(props);
     }
 
-    conditions.push(
-      comparator(props.in, param)
+    const [comparator, info] = (
+      constTemplates[param.value + paramValue.value] ||
+      comparators[param.value]
     );
-  }
 
-  props = setMeta(props, meta);
+    const value = extract(props.components, paramValue)({ ...props, internal: true }, paramValue).join(l_emptyString());
 
-  return ([
-    l_if(
-      l_and(...conditions)
-    ),
-    l_ifBody(
-      ...l_content(props)
-    ),
-    l_else(),
-    l_ifBody(
-      ...l_error(props, data.error)
-    )
-  ]);
+    props = setMeta(props, { ...info, params: info.params.concat(value) });
+
+    const refs = getRefs(props, paramValue);
+
+    const template = [
+      l_if(
+        comparator(props.in, value)
+      ),
+      l_ifBody(
+        ...comparatorDescention(restParams)
+      ),
+      l_else(),
+      l_ifBody(
+        ...l_error(props, data.error)
+      )
+    ];
+
+    return (
+      refs.length > 0
+        ? ([
+          l_if(
+            l_notEqual(refs.join(''), l_undefined())
+          ),
+          l_ifBody(
+            ...template
+          )
+        ])
+        : template
+    );
+  };
+
+  return comparatorDescention(data.params);
 };
 
 export const compareTemplate = comparatorTemplate(compareTemplates);

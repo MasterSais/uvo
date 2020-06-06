@@ -43,6 +43,7 @@ export type CompilerProps = {
   errors?: string;
   meta?: CompilerMeta;
   components: Map<number, any>;
+  internal?: boolean;
   name: () => string;
   content?: (props: CompilerProps) => Array<string>;
 };
