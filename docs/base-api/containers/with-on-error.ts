@@ -1,13 +1,13 @@
 /**
  * @name {withOnError}
  * 
- * @scheme {withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>}
+ * @scheme {withOnError<T, R>(errorProcessor: ValidatorErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>}
  * 
  * @desc Provides custom error handler.
  * 
  * {@link docs/base-api/type-container}
  * 
- * @param {Function} errorProcessor Error processor.
+ * @param {Function} errorProcessor ValidatorError processor.
  * 
  * @param {...Processor} validators Validators list.
  * 

@@ -3,7 +3,7 @@
  * 
  * @template {`@bool` `@b`}
  * 
- * @scheme {bool<T>(error?: Error): Validator<T, boolean>}
+ * @scheme {bool<T>(error?: ValidatorError): Validator<T, boolean>}
  * 
  * @desc Checks value to be a boolean compatible. Converts on success. Use `bool` from `Extended API` for check only.
  * 

@@ -3,7 +3,7 @@
  * 
  * @template {`@compare(=...)` `@c(=...)` `@compare(!=...)` `@c(!=...)`}
  * 
- * @scheme {equal<T>(match: T | (() => T), error?: Error): Validator<T>}
+ * @scheme {equal<T>(match: T | (() => T), error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks value to be equal to 'match' param. Requires the same type. Shallow comparison.
  * 

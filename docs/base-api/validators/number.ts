@@ -3,7 +3,7 @@
  * 
  * @template {`@number` `@n`}
  * 
- * @scheme {number<T>(error?: Error): Validator<T, number>}
+ * @scheme {number<T>(error?: ValidatorError): Validator<T, number>}
  * 
  * @desc Checks value to be a number compatible. Converts on success. Use `number` from `Extended API` for check only.
  * 

@@ -4,11 +4,11 @@
  * @desc Any type's error. 
  * Can be a function that accepts error metadata (available if 'meta' is provided in the validator) and returns an error.
  * 
- * @typedef {string | number | Object | Array | Function} Error
+ * @typedef {string | number | Object | Array | Function} ValidatorError
  */
 
 //#example
-type Error = (
+type ValidatorError = (
   string
   | boolean
   | number

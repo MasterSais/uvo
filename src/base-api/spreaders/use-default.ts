@@ -1,5 +1,5 @@
 import { S_DFT } from '@lib/base-api/names';
-import { ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { callee, isEmpty, isValidatorsSequence } from '@lib/base-api/utilities/types';
 import { passValidators, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -10,7 +10,7 @@ export const useDefault = <T, R>(defaultValue: R | ((meta?: MetaData) => R), ...
   (
     (isValidatorsSequence(validators))
       ? (
-        (value: T | R, onError?: ErrorCallback, meta?: MetaData): R =>
+        (value: T | R, onError?: ValidatorErrorCallback, meta?: MetaData): R =>
           !isEmpty(value)
             ? passValidators(value, onError, meta, validators)
             : callee(defaultValue)(meta)

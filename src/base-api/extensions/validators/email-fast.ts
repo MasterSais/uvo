@@ -1,5 +1,5 @@
 import { V_MAIL } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 const fastEmailRegEx = /^\S+@\S+\.\S+$/;
@@ -9,7 +9,7 @@ const fastEmailRegEx = /^\S+@\S+\.\S+$/;
  * 
  * @template {via `provide`}
  * 
- * @scheme {emailFast(error?: Error): Validator<string>}
+ * @scheme {emailFast(error?: ValidatorError): Validator<string>}
  * 
  * @desc Fast email validation.
  * 
@@ -20,7 +20,7 @@ const fastEmailRegEx = /^\S+@\S+\.\S+$/;
  * {@link docs/base-api/validator-result}
  */
 export const emailFast = (
-  (error?: Error) => isFactory(V_MAIL)(
+  (error?: ValidatorError) => isFactory(V_MAIL)(
     (value: string) => value && fastEmailRegEx.test(value), error
   )
 );

@@ -1,5 +1,5 @@
 import { S_GDP } from '@lib/base-api/names';
-import { ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { isFunction, isString, isValidatorsSequence, toArray } from '@lib/base-api/utilities/types';
 import { getFromMeta, passValidators, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -12,7 +12,7 @@ export const getRef = <T>(field: string, preValidator?: (ref: T) => Validator<T>
       ? (
         isFunction(preValidator)
           ? (
-            (value: T, onError?: ErrorCallback, meta?: MetaData): T => {
+            (value: T, onError?: ValidatorErrorCallback, meta?: MetaData): T => {
               const validators = preValidator(getFromMeta(field, meta));
 
               if (!validators) return value;
@@ -27,7 +27,7 @@ export const getRef = <T>(field: string, preValidator?: (ref: T) => Validator<T>
             }
           )
           : (
-            (_value: T, _onError?: ErrorCallback, meta?: MetaData): T => (
+            (_value: T, _onError?: ValidatorErrorCallback, meta?: MetaData): T => (
               meta
                 ? getFromMeta(field, meta)
                 : throwValidatorError(S_GDP)

@@ -3,7 +3,7 @@
  * 
  * @template {`@compare(%...)` `@c(%...)` `@compare(!%...)` `@c(!%...)`}
  * 
- * @scheme {multiple(multiplier: number | (() => number), error?: Error): Validator<number>}
+ * @scheme {multiple(multiplier: number | (() => number), error?: ValidatorError): Validator<number>}
  * 
  * @desc Checks number to be an integer.
  * 

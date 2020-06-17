@@ -103,10 +103,6 @@
         "removeExports": true
       },
       {
-        "dir": "./src/templating-api/compiler",
-        "removeExports": true
-      },
-      {
         "file": "./src/templating-api/provider.ts",
         "removeExports": true
       },

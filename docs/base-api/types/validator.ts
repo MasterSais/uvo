@@ -5,7 +5,7 @@
  *
  * @param {any} value Input value.
  * 
- * @param {ErrorCallback=} onError ErrorCallback.
+ * @param {ErrorCallback=} onError ValidatorErrorCallback.
  * 
  * @param {MetaData=} meta Internal data for errors and dependencies.
  * 
@@ -13,4 +13,4 @@
  */
 
 //#example
-type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
+type Validator<T> = (value: T, onError?: ValidatorErrorCallback, meta?: MetaData) => T;

@@ -1,4 +1,4 @@
-import { Async, Error, ErrorCallback, MetaData, Relevance, Validator } from '@lib/base-api/types';
+import { Async, ValidatorError, ValidatorErrorCallback, MetaData, Relevance, Validator } from '@lib/base-api/types';
 import { isDefined, isPromise } from '@lib/base-api/utilities/types';
 
 export const setMetaPath = (meta: MetaData, path: string | number | Array<any>): MetaData => (meta && {
@@ -32,7 +32,7 @@ export const getAsyncFromMeta = <T>(field: string, meta: MetaData): Promise<T> =
   meta ? meta._asyncStack[field] : null
 );
 
-export const applyError = (error: Error, onError: ErrorCallback, meta: MetaData): null => (
+export const applyError = (error: ValidatorError, onError: ValidatorErrorCallback, meta: MetaData): null => (
   onError && onError(error, meta), null
 );
 
@@ -40,12 +40,12 @@ export const throwValidatorError = (validator: string) => {
   throw `Invalid params provided in '${validator}'`;
 };
 
-export const passValidators = (value: any, onError: ErrorCallback, meta: MetaData, validators: Array<Validator<any>>): any => {
+export const passValidators = (value: any, onError: ValidatorErrorCallback, meta: MetaData, validators: Array<Validator<any>>): any => {
   for (let i = 0; i < validators.length;) {
     if (isPromise(value)) {
       let hasError = false;
 
-      const onSeqError = (error: Error, meta?: MetaData, relevance?: Relevance) => (
+      const onSeqError = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => (
         hasError = true,
         onError && onError(error, meta, relevance)
       );

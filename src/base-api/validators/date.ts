@@ -1,13 +1,13 @@
 import { V_DTE } from '@lib/base-api/names';
-import { Error, ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ValidatorError, ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { applyError, extendMeta } from '@lib/base-api/utilities/utilities';
 
 /**
  * {@link docs/base-api/validators/date}
  */
-export const date = <T>(error?: Error): Validator<T, number> =>
+export const date = <T>(error?: ValidatorError): Validator<T, number> =>
   (
-    (value: T, onError?: ErrorCallback, meta?: MetaData): number =>
+    (value: T, onError?: ValidatorErrorCallback, meta?: MetaData): number =>
       (
         extendMeta(meta, value, V_DTE),
         (

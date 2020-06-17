@@ -1,5 +1,5 @@
 import { V_FIELDS } from '@lib/base-api/names';
-import { Error, ErrorCallback, FieldsSpec, MetaData, ObjectLike, Validator } from '@lib/base-api/types';
+import { ValidatorError, ValidatorErrorCallback, FieldsSpec, MetaData, ObjectLike, Validator } from '@lib/base-api/types';
 import { isArray, isEmpty, isObject, isString } from '@lib/base-api/utilities/types';
 import { applyError, extendMeta, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -33,11 +33,11 @@ const validateFieldsSpec = (spec: FieldsSpec): boolean =>
 /**
  * {@link docs/base-api/validators/fields}
  */
-export const fields = <T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T> =>
+export const fields = <T extends ObjectLike>(spec: FieldsSpec, error?: ValidatorError): Validator<T> =>
   (
     validateFieldsSpec(spec)
       ? (
-        (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
+        (value: T, onError?: ValidatorErrorCallback, meta?: MetaData): T =>
           (
             extendMeta(meta, value, V_FIELDS, [spec]),
 

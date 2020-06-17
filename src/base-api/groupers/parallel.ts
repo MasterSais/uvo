@@ -1,5 +1,5 @@
 import { G_PRLL } from '@lib/base-api/names';
-import { ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { isValidatorsSequence } from '@lib/base-api/utilities/types';
 import { throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -10,7 +10,7 @@ export const parallel = <T>(...validators: Array<Validator<T>>): Validator<T> =>
   (
     isValidatorsSequence(validators)
       ? (
-        (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
+        (value: T, onError?: ValidatorErrorCallback, meta?: MetaData): T =>
           validators.reduce((validated: T, nextValidator: Validator<T>) =>
             (
               validated !== null

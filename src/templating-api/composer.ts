@@ -2,13 +2,13 @@ import { Validator } from '@lib/base-api/types';
 import { makeSequence } from '@lib/base-api/utilities/factories';
 import { extractSequence, extractValidator } from '@lib/templating-api/extractors';
 import { CNT } from '@lib/templating-api/lexemes';
-import { CompilerMeta, Errors, Injections, ValidatorData } from '@lib/templating-api/types';
+import { CompilerMeta, ValidatorErrors, Injections, ValidatorData } from '@lib/templating-api/types';
 
 const wrapValidator = (validator: Validator<any>, containers: Array<Validator<any>>) => (
   containers.reduce((wrapped, wrappee) => wrappee(wrapped), validator)
 );
 
-export const composer = <T, R>(semanticTree: Array<ValidatorData>): ((injections?: Injections, errors?: Errors) => Validator<T, R>) => {
+export const composer = <T, R>(semanticTree: Array<ValidatorData>): ((injections?: Injections, errors?: ValidatorErrors) => Validator<T, R>) => {
   const validators: Array<Validator<any>> = [];
 
   const containers: Array<Validator<any>> = [];

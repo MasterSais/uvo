@@ -1,5 +1,5 @@
 import { V_ISBOOL } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 /**
@@ -7,7 +7,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * 
  * @template {via `provide`}
  * 
- * @scheme {bool(error?: Error): Validator<boolean>}
+ * @scheme {bool(error?: ValidatorError): Validator<boolean>}
  * 
  * @desc Checks for boolean type.
  * 
@@ -18,7 +18,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * {@link docs/base-api/validator-result}
  */
 export const bool = (
-  (error?: Error) => isFactory(V_ISBOOL)(
+  (error?: ValidatorError) => isFactory(V_ISBOOL)(
     (value: boolean) => typeof value === 'boolean', error
   )
 );

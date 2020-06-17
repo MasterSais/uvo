@@ -1,5 +1,5 @@
 import { V_POS } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 /**
@@ -7,7 +7,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * 
  * @template {via `provide`}
  * 
- * @scheme {positive(error?: Error): Validator<number>}
+ * @scheme {positive(error?: ValidatorError): Validator<number>}
  * 
  * @desc Checks number to be positive.
  * 
@@ -18,7 +18,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * {@link docs/base-api/validator-result}
  */
 export const positive = (
-  (error?: Error) => isFactory(V_POS)(
+  (error?: ValidatorError) => isFactory(V_POS)(
     (value: number) => Number.isFinite(value) && value > 0, error
   )
 );

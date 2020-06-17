@@ -2,7 +2,7 @@ import { withErrors } from '@lib/base-api/containers/with-errors';
 import { withMeta } from '@lib/base-api/containers/with-meta';
 import { getRef } from '@lib/base-api/spreaders/get-ref';
 import { setVRef } from '@lib/base-api/spreaders/set-v-ref';
-import { Error, MetaData } from '@lib/base-api/types';
+import { ValidatorError, MetaData } from '@lib/base-api/types';
 import { array } from '@lib/base-api/validators/array';
 import { gte } from '@lib/base-api/validators/is';
 import { minLen } from '@lib/base-api/validators/length';
@@ -44,7 +44,7 @@ describe('common error processing › template', () => {
       ) ~error($0) ~meta
     `)(
       [
-        (error: Error, { validator, path }: MetaData) => `${validator}:${path.join('.')}:${error}`
+        (error: ValidatorError, { validator, path }: MetaData) => `${validator}:${path.join('.')}:${error}`
       ],
       [
         'numberErr', 'gteErr', 'stringErr', 'minLenErr', 'arrayErr', 'objectErr'
@@ -66,7 +66,7 @@ describe('common error processing › template › short', () => {
       ) ~e($0) ~m
     `)(
       [
-        (error: Error, { validator, path }: MetaData) => `${validator}:${path.join('.')}:${error}`
+        (error: ValidatorError, { validator, path }: MetaData) => `${validator}:${path.join('.')}:${error}`
       ],
       [
         'numberErr', 'gteErr', 'stringErr', 'minLenErr', 'arrayErr', 'objectErr'

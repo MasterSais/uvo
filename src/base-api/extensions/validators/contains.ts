@@ -1,5 +1,5 @@
 import { V_CNTS } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 /**
@@ -7,7 +7,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * 
  * @template {via `provide`}
  * 
- * @scheme {contains(seed: any, error?: Error): Validator<string | Array<any>>}
+ * @scheme {contains(seed: any, error?: ValidatorError): Validator<string | Array<any>>}
  * 
  * @desc Checks if the string or array contains the seed.
  * 
@@ -18,7 +18,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * {@link docs/base-api/validator-result}
  */
 export const contains = (
-  (seed: any, error?: Error) => isFactory(V_CNTS, seed)(
+  (seed: any, error?: ValidatorError) => isFactory(V_CNTS, seed)(
     (value: string | Array<any>, sub: any) => value && value.indexOf && value.indexOf(sub) >= 0, error
   )
 );

@@ -1,4 +1,4 @@
-import { Error, MetaData, Validator } from '@lib/base-api/types';
+import { ValidatorError, MetaData, Validator } from '@lib/base-api/types';
 
 export const notNullError = () => 'error';
 
@@ -50,9 +50,9 @@ export const baseCasesWithParams = <T = any, R = T>(validator: (...args: any) =>
   );
 
 export const withErrorCases = <T = any, R = T>(validator: Validator<T, R>, values: [[T, R?], [T]?], meta?: MetaData, processor?: (value: T) => R) => {
-  let error: Error = null;
+  let error: ValidatorError = null;
 
-  const errorSetter = (err: Error, meta: MetaData) => error = (
+  const errorSetter = (err: ValidatorError, meta: MetaData) => error = (
     typeof err === typeof Function
       ? (err as Function)(meta)
       : err

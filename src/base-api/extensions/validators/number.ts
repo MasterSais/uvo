@@ -1,5 +1,5 @@
 import { V_ISNUM } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 /**
@@ -7,7 +7,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * 
  * @template {via `provide`}
  * 
- * @scheme {number(error?: Error): Validator<string>}
+ * @scheme {number(error?: ValidatorError): Validator<string>}
  * 
  * @desc Checks for number type.
  * 
@@ -18,7 +18,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * {@link docs/base-api/validator-result}
  */
 export const number = (
-  (error?: Error) => isFactory(V_ISNUM)(
+  (error?: ValidatorError) => isFactory(V_ISNUM)(
     (value: number) => typeof value === 'number', error
   )
 );

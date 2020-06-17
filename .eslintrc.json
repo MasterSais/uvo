@@ -24,8 +24,16 @@
     "@typescript-eslint/quotes": ["warn", "single"],
     "@typescript-eslint/semi": ["warn", "always"],
     "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/ban-types": 0,
+    "@typescript-eslint/restrict-plus-operands": 0,
+    "@typescript-eslint/no-implied-eval": 0,
+    "@typescript-eslint/no-unsafe-return": 0,
+    "@typescript-eslint/no-unsafe-call": 0,
+    "@typescript-eslint/no-unsafe-member-access": 0,
+    "@typescript-eslint/no-unsafe-assignment": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/require-await": 0,
-    "@typescript-eslint/prefer-string-starts-ends-with": 0
+    "@typescript-eslint/prefer-string-starts-ends-with": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0
   }
 }

@@ -3,7 +3,7 @@
  * 
  * @template {`@length(=...)` `@l(=...)` `@length(!=...)` `@l(!=...)`}
  * 
- * @scheme {length<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>}
+ * @scheme {length<T extends Lengthy>(len: number | (() => number), error?: ValidatorError): Validator<T>}
  * 
  * @desc Compares length with 'len' param. Requires to be an object like or string.
  * 

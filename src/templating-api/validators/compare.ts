@@ -1,4 +1,4 @@
-import { Error, Validator } from '@lib/base-api/types';
+import { ValidatorError, Validator } from '@lib/base-api/types';
 import { lengthFactory, makeSequence } from '@lib/base-api/utilities/factories';
 import { defined, empty, equal, gte, lte, oneOf, regex } from '@lib/base-api/validators/is';
 import { length, maxLen, minLen } from '@lib/base-api/validators/length';
@@ -42,11 +42,11 @@ const constComparators = {
   '!=emp': empty.not
 };
 
-const extractConstantComparator = (p1: ValidatorData, p2: ValidatorData, error: Error) => (
+const extractConstantComparator = (p1: ValidatorData, p2: ValidatorData, error: ValidatorError) => (
   constComparators[p1.value + p2.value] && constComparators[p1.value + p2.value](error)
 );
 
-const comparatorBuilder = (comparators: Record<string, (param: any, error: Error) => Validator<any>>) => (meta: CompilerMeta, { params, error }: ValidatorData) => {
+const comparatorBuilder = (comparators: Record<string, (param: any, error: ValidatorError) => Validator<any>>) => (meta: CompilerMeta, { params, error }: ValidatorData) => {
   const validators = [];
 
   for (let i = 0; i < params.length; i += 3) {

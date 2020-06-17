@@ -9,7 +9,7 @@ Uvo wants to be a flexible and comprehensive library, so `uvo/extended` will ext
 |Bundles (minified)|ESM|CJS|UMD|
 |:-:|:-:|:-:|:-:|
 |Base API|~6.8kb|~6.8kb|~6.5kb|
-|Templating API|~11.1kb|~11.1kb|~11.3kb|
+|Templating API|~9.7kb|~9.7kb|~9.9kb|
 |Extended API|~2.9kb|~3kb|~2.9kb|
 |Extended Template API|~4.8kb|~5kb|~5kb|
 
@@ -393,7 +393,7 @@ Async API in deed:
 ```js
 template( `@array( @number ) ~promise` );
 
-// Errors
+// ValidatorErrors
 template(`
   @async!0 : @object(
     id : @async : @number,

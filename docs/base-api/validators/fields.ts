@@ -1,7 +1,7 @@
 /**
  * @name {fields}
  * 
- * @scheme {fields<T extends ObjectLike>(spec: FieldsSpec, error?: Error): Validator<T>}
+ * @scheme {fields<T extends ObjectLike>(spec: FieldsSpec, error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks for fields in the input object.
  * 

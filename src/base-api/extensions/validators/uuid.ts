@@ -1,5 +1,5 @@
 import { V_UUID } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 const uuidRegEx = /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i;
@@ -9,7 +9,7 @@ const uuidRegEx = /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}
  * 
  * @template {via `provide`}
  * 
- * @scheme {uuid(error?: Error): Validator<string>}
+ * @scheme {uuid(error?: ValidatorError): Validator<string>}
  * 
  * @desc UUID validation.
  * 
@@ -20,7 +20,7 @@ const uuidRegEx = /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}
  * {@link docs/base-api/validator-result}
  */
 export const uuid = (
-  (error?: Error) => isFactory(V_UUID)(
+  (error?: ValidatorError) => isFactory(V_UUID)(
     (value: string) => value && uuidRegEx.test(value), error
   )
 );

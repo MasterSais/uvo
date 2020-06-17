@@ -1,5 +1,5 @@
 import { V_UPP } from '@lib/base-api/extensions/names';
-import { Error } from '@lib/base-api/types';
+import { ValidatorError } from '@lib/base-api/types';
 import { isFactory } from '@lib/base-api/utilities/factories';
 
 /**
@@ -7,7 +7,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * 
  * @template {via `provide`}
  * 
- * @scheme {uppercase(error?: Error): Validator<string>}
+ * @scheme {uppercase(error?: ValidatorError): Validator<string>}
  * 
  * @desc Checks string to be in an upper case.
  * 
@@ -18,7 +18,7 @@ import { isFactory } from '@lib/base-api/utilities/factories';
  * {@link docs/base-api/validator-result}
  */
 export const uppercase = (
-  (error?: Error) => isFactory(V_UPP)(
+  (error?: ValidatorError) => isFactory(V_UPP)(
     (value: string) => value.toUpperCase() === value, error
   )
 );

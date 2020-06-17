@@ -3,7 +3,7 @@
  * 
  * @template {`@length(>=...)` `@l(>=...)`}
  * 
- * @scheme {minLen<T extends Lengthy>(len: number | (() => number), error?: Error): Validator<T>}
+ * @scheme {minLen<T extends Lengthy>(len: number | (() => number), error?: ValidatorError): Validator<T>}
  * 
  * @desc Checks length to be equal to 'len' param. Requires to be an object like or string.
  * 

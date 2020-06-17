@@ -7,10 +7,10 @@
  * 
  * @param {MetaData=} meta Metadata for error.
  * 
- * @param {Relevance=} relevance Error's relevancy status.
+ * @param {Relevance=} relevance ValidatorError's relevancy status.
  * 
  * @return {void}
  */
 
 //#example
-type ErrorCallback = (error: Error, meta?: MetaData, relevance?: Relevance) => void;
+type ValidatorErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
