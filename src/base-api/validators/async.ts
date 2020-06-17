@@ -1,5 +1,5 @@
 import { V_ASYNC } from '@lib/base-api/names';
-import { ValidatorError, ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ValidatorError, ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { makeAsync } from '@lib/base-api/utilities/factories';
 import { callee, isPromise } from '@lib/base-api/utilities/types';
 import { applyError, extendMeta, postAsyncToMeta } from '@lib/base-api/utilities/utilities';
@@ -14,7 +14,7 @@ export const async = <T>(name?: string, error: ValidatorError = internalErrorPro
     error = callee(error),
 
     makeAsync(
-      (value: Promise<T>, onError?: ValidatorErrorCallback, meta?: MetaData): Promise<T> =>
+      (value: Promise<T>, onError?: ErrorCallback, meta?: MetaData): Promise<T> =>
         (
           extendMeta(meta, value, V_ASYNC),
 

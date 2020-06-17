@@ -1,7 +1,10 @@
 # `Base API`
-## `Validators`
-Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.
-### `array`
+
+## `Validators`
+
+Checks input with some conditions. Returns input value on success, otherwise 'null' will be returned.
+
+### `array`
 
 ```js
 array(itemSpec?: Array<Validator<any>> | Validator<any>, error?: ValidatorError): Validator<Array<any>, Array<any>>
@@ -450,8 +453,10 @@ v.string.check()([1, 2]);
 ```
 
 ## `Processors`
-Processes input value. No input types check. Recommended to use validators before.
-### `keysMap`
+
+Processes input value. No input types check. Recommended to use validators before.
+
+### `keysMap`
 
 ```js
 keysMap<T extends ObjectLike>(mapper: (key: string) => string): Validator<T, T>
@@ -533,8 +538,10 @@ v.valueMap(['yes', true], [/no|nope/, (value: string) => `${value}?`])('nope');
 ```
 
 ## `Groupers`
-Groups validators in a specific way.
-### `consecutive`
+
+Groups validators in a specific way.
+
+### `consecutive`
 
 ```js
 consecutive<T>(...validators: Array<Validator<any, T>>): Validator<any, T>
@@ -656,8 +663,10 @@ niUnchi(8.3);
 ```
 
 ## `Containers`
-Embraces validators with additional data processing.
-### `withErrors`
+
+Embraces validators with additional data processing.
+
+### `withErrors`
 
 ```js
 withErrors<T, R>(validator: Validator<T, R>, commonErrorProcessor?: ((error?: ValidatorError, meta?: MetaData) => ValidatorError)): Validator<T, Result<R>>
@@ -755,7 +764,7 @@ unchi(11.2);
 ### `withOnError`
 
 ```js
-withOnError<T, R>(errorProcessor: ValidatorErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>
+withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>
 ```
 Provides custom error handler.    Type: container. Embraces validators. Provides additional input processing.
 
@@ -831,8 +840,10 @@ try {
 ```
 
 ## `Spreaders`
-Spreads data through a validators scheme. Almost all spreaders requires meta schema to be provided with 'withMeta'.
-### `dynamic`
+
+Spreads data through a validators scheme. Almost all spreaders requires meta schema to be provided with 'withMeta'.
+
+### `dynamic`
 
 ```js
 dynamic<T>(preValidator: (value: T) => Validator<T> | Array<Validator<T>>): Validator<T>
@@ -1022,7 +1033,8 @@ v.withMeta(
 ```
 
 ## `Logs`
-`withMeta` container provides logs capturing via `onLogs` parameter.
+
+`withMeta` container provides logs capturing via `onLogs` parameter.
 
 ```js
 import * as v from 'uvo';
@@ -1047,14 +1059,16 @@ v.withMeta(
 //   ['maxLen', 'MasterSais', [25]]
 // ]
 ```
-## `Custom validators`
-You can create your own validator or processor.
+
+## `Custom validators`
+
+You can create your own validator or processor.
 
 Base validator template:
 ```js
 yourValidatorName(...yourProbableParams: Array<any>, error?: ValidatorError): Validator<any> =>
   (
-    (value: any, onError?: ValidatorErrorCallback, meta?: MetaData): any =>
+    (value: any, onError?: ErrorCallback, meta?: MetaData): any =>
       (
         ... check input value
       )
@@ -1066,7 +1080,7 @@ Simple example:
 ```js
 const gte = (bound: number, error?: ValidatorError): Validator<number> =>
   (
-    (value: number, onError?: ValidatorErrorCallback, meta?: MetaData): number =>
+    (value: number, onError?: ErrorCallback, meta?: MetaData): number =>
       (
         value >= bound
       )
@@ -1093,8 +1107,10 @@ const simpleOne = (
   )
 );
 ```
-## `Examples`
-All examples use advanced object schema 'object2' as recommended solution.
+
+## `Examples`
+
+All examples use advanced object schema 'object2' as recommended solution.
 
 Schema with custom user errors
   
@@ -1257,15 +1273,18 @@ v.withMeta( // for deps api.
   ])
 )
 ```
-## `Types`
-The main types used in the library.
-### `ErrorCallback`
+
+## `Types`
+
+The main types used in the library.
+
+### `ErrorCallback`
 
 
 Calls on validation error.
 
 ```js
-type ValidatorErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
+type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
 ```
 
 ### `Error`
@@ -1354,14 +1373,17 @@ type Result<T> = {
 Validates value.
 
 ```js
-type Validator<T> = (value: T, onError?: ValidatorErrorCallback, meta?: MetaData) => T;
+type Validator<T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => T;
 ```
 
 # `Templating API`
-Templating api provides string based validators creation. Much more compact and flexible against base API.
+
+Templating api provides string based validators creation. Much more compact and flexible against base API.
 All errors and injections are placed in separated structures.
-## `Keys`
-### `array`
+
+## `Keys`
+
+### `array`
 
 
 Checks value to be an array. `a` - short version.
@@ -1773,8 +1795,10 @@ tml`@a @unique`();
 ```
 
 # `Extended API`
-## `Validators`
-### `alpha`
+
+## `Validators`
+
+### `alpha`
 
 ```js
 alpha(error?: ValidatorError): Validator<string>
@@ -1980,7 +2004,8 @@ uuid(error?: ValidatorError): Validator<string>
 UUID validation.    Type: validator. Returns input value on success.
 
 ## `Processors`
-### `clamp`
+
+### `clamp`
 
 ```js
 clamp<T>(min: T, max: T): Validator<T, T>

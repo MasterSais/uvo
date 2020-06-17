@@ -1,5 +1,5 @@
 import { C_FLB } from '@lib/base-api/names';
-import { ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { callee, isValidatorsSequence } from '@lib/base-api/utilities/types';
 import { onAsync, passValidators, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -10,7 +10,7 @@ export const withFallback = <T, R>(fallback: R | ((initialValue: T, meta?: MetaD
   (
     isValidatorsSequence(validators)
       ? (
-        (value: T | R, onError?: ValidatorErrorCallback, meta?: MetaData): R => {
+        (value: T | R, onError?: ErrorCallback, meta?: MetaData): R => {
           const result = passValidators(value, onError, meta, validators);
 
           return (

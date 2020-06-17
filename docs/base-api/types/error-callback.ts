@@ -13,4 +13,4 @@
  */
 
 //#example
-type ValidatorErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
+type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;

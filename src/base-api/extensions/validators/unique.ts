@@ -1,5 +1,5 @@
 import { V_UQ } from '@lib/base-api/extensions/names';
-import { ValidatorError, ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ValidatorError, ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { isArray, isDefined, isFunction } from '@lib/base-api/utilities/types';
 import { applyError, extendMeta, setMetaPath } from '@lib/base-api/utilities/utilities';
 
@@ -12,7 +12,7 @@ export const unique = <T>(field?: string | number | ((value: T) => any), error?:
   const mapper = (isMapperFunction ? field : (value: T) => (field ? value[field as string] : value)) as Function;
 
   return (
-    (data: Array<T>, onError?: ValidatorErrorCallback, meta?: MetaData): Array<T> => {
+    (data: Array<T>, onError?: ErrorCallback, meta?: MetaData): Array<T> => {
       const valuesMap = {};
 
       extendMeta(meta, data, V_UQ, [data]);

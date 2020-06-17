@@ -1,5 +1,5 @@
 import { C_ERR } from '@lib/base-api/names';
-import { ValidatorError, ValidatorErrorCallback, MetaData, Relevance, Result, Validator } from '@lib/base-api/types';
+import { ValidatorError, ErrorCallback, MetaData, Relevance, Result, Validator } from '@lib/base-api/types';
 import { callee, isFunction } from '@lib/base-api/utilities/types';
 import { onAsync, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -10,13 +10,13 @@ export const withErrors = <T, R>(validator: Validator<T, R>, commonErrorProcesso
   (
     isFunction(validator)
       ? (
-        (value: T, _onError?: ValidatorErrorCallback, meta?: MetaData): Result<R> => {
+        (value: T, _onError?: ErrorCallback, meta?: MetaData): Result<R> => {
           const errors: Array<{ error: any; relevance: Relevance }> = [];
 
           const addError = (error?: any, relevance?: Relevance) =>
             error && errors.push({ error, relevance: relevance || { value: true } });
 
-          const errorProcessor: ValidatorErrorCallback = (error?: ValidatorError, meta?: MetaData, relevance?: Relevance) => (
+          const errorProcessor: ErrorCallback = (error?: ValidatorError, meta?: MetaData, relevance?: Relevance) => (
             error = callee(error)(meta),
 
             addError(

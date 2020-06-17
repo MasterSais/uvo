@@ -1,5 +1,5 @@
 import { S_SDP } from '@lib/base-api/names';
-import { ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { callee, isDefined, isString } from '@lib/base-api/utilities/types';
 import { postToMeta, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -8,7 +8,7 @@ import { postToMeta, throwValidatorError } from '@lib/base-api/utilities/utiliti
  */
 export const setRef = <T>(field?: string, extValue?: any | ((value: T, meta?: MetaData) => any)): Validator<T> =>
   (
-    (value: T, _onError?: ValidatorErrorCallback, meta?: MetaData): T =>
+    (value: T, _onError?: ErrorCallback, meta?: MetaData): T =>
       meta
         ? (
           postToMeta(

@@ -1,5 +1,5 @@
 import { V_OBJ } from '@lib/base-api/names';
-import { ValidatorError, ValidatorErrorCallback, MetaData, ObjectLike, ObjectSpec, Validator } from '@lib/base-api/types';
+import { ValidatorError, ErrorCallback, MetaData, ObjectLike, ObjectSpec, Validator } from '@lib/base-api/types';
 import { makeSequence } from '@lib/base-api/utilities/factories';
 import { isObject, toArray } from '@lib/base-api/utilities/types';
 import { applyError, asyncActor, extendMeta, setMetaPath, throwValidatorError } from '@lib/base-api/utilities/utilities';
@@ -16,7 +16,7 @@ const mapObjectValidators = (spec?: ObjectSpec): Array<[string, Validator<any, a
 export const object = <T extends ObjectLike, R = T>(spec?: ObjectSpec, error?: ValidatorError): Validator<T, R> => {
   const validators: Array<[string, Validator<any, any>]> = mapObjectValidators(spec);
 
-  return (data: T, onError?: ValidatorErrorCallback, meta?: MetaData): R => {
+  return (data: T, onError?: ErrorCallback, meta?: MetaData): R => {
     const [actAsync, proceedAsync] = asyncActor();
 
     extendMeta(meta, data, V_OBJ);

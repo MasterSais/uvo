@@ -1,5 +1,5 @@
 import { C_MET } from '@lib/base-api/names';
-import { ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { isFunction } from '@lib/base-api/utilities/types';
 import { onAsync, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -10,7 +10,7 @@ export const withMeta = <T, R>(validator: Validator<T, R>, onLogs?: (logs: Array
   (
     isFunction(validator)
       ? (
-        (value: T, onError?: ValidatorErrorCallback): R => {
+        (value: T, onError?: ErrorCallback): R => {
           const logs: Array<[string, any, Array<any>]> = [];
 
           const meta: MetaData = { path: [], _deps: {}, _logs: logs, params: [], _asyncStack: {} };

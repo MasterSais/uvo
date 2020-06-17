@@ -1,7 +1,7 @@
 /**
  * @name {withOnError}
  * 
- * @scheme {withOnError<T, R>(errorProcessor: ValidatorErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>}
+ * @scheme {withOnError<T, R>(errorProcessor: ErrorCallback, ...validators: Array<Validator<any, T>>): Validator<T, R>}
  * 
  * @desc Provides custom error handler.
  * 

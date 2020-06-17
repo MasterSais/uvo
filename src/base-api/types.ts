@@ -39,7 +39,7 @@ export declare type Relevance = {
 /**
  * {@link docs/base-api/types/error-callback}
  */
-export declare type ValidatorErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
+export declare type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
 
 /**
  * {@link docs/base-api/types/result}
@@ -52,7 +52,7 @@ export declare type Result<T> = {
 /**
  * {@link docs/base-api/types/validator}
  */
-export declare type Validator<T, R = T> = (value: T, onError?: ValidatorErrorCallback, meta?: MetaData) => R;
+export declare type Validator<T, R = T> = (value: T, onError?: ErrorCallback, meta?: MetaData) => R;
 
 /**
  * Function with invertible supplement.

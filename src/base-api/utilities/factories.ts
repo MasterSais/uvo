@@ -1,4 +1,4 @@
-import { Async, ValidatorError, ValidatorErrorCallback, Invertible, Lengthy, MetaData, Validator } from '@lib/base-api/types';
+import { Async, ValidatorError, ErrorCallback, Invertible, Lengthy, MetaData, Validator } from '@lib/base-api/types';
 import { callee, isDefined, isFunction, isLengthy, isNumber } from '@lib/base-api/utilities/types';
 import { applyError, extendMeta, passValidators, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -13,7 +13,7 @@ export const makeAsync = <T>(validator: T): Async<T> => (
 export const makeSequence = <T>(validators: Array<Validator<any>>) => (
   // Presume sequnce to be async.
   makeAsync(
-    (value: any, onError?: ValidatorErrorCallback, meta?: MetaData): T =>
+    (value: any, onError?: ErrorCallback, meta?: MetaData): T =>
       passValidators(value, onError, meta, validators)
   )
 );
@@ -34,7 +34,7 @@ export const isFactory = (validator: string, param?: any) =>
           ? (
             param = callee(param),
 
-            (value: T, onError?: ValidatorErrorCallback, meta?: MetaData): T => {
+            (value: T, onError?: ErrorCallback, meta?: MetaData): T => {
               const paramData = param();
 
               extendMeta(meta, value, validator, isDefined(paramData) ? [paramData] : []);

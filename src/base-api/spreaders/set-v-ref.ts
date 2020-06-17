@@ -1,5 +1,5 @@
 import { S_SVDP } from '@lib/base-api/names';
-import { ValidatorErrorCallback, MetaData, Validator } from '@lib/base-api/types';
+import { ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
 import { isString, isValidatorsSequence } from '@lib/base-api/utilities/types';
 import { passValidators, postToMeta, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -10,7 +10,7 @@ export const setVRef = <T>(field: string, ...validators: Array<Validator<T>>): V
   (
     (isString(field) && isValidatorsSequence(validators))
       ? (
-        (value: T, onError?: ValidatorErrorCallback, meta?: MetaData): T =>
+        (value: T, onError?: ErrorCallback, meta?: MetaData): T =>
           meta
             ? (
               postToMeta(validators, field, meta),

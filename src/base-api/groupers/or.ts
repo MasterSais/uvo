@@ -1,5 +1,5 @@
 import { G_OR } from '@lib/base-api/names';
-import { ValidatorError, ValidatorErrorCallback, MetaData, Relevance, Validator } from '@lib/base-api/types';
+import { ValidatorError, ErrorCallback, MetaData, Relevance, Validator } from '@lib/base-api/types';
 import { isValidatorsSequence } from '@lib/base-api/utilities/types';
 import { throwValidatorError } from '@lib/base-api/utilities/utilities';
 
@@ -10,7 +10,7 @@ export const or = (...validators: Array<Validator<any, any>>): Validator<any, an
   (
     isValidatorsSequence(validators)
       ? (
-        (value: unknown, onError?: ValidatorErrorCallback, meta?: MetaData): unknown => {
+        (value: unknown, onError?: ErrorCallback, meta?: MetaData): unknown => {
           let processed = null;
 
           const relevance: Relevance = { value: false };
