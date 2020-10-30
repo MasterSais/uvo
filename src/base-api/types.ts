@@ -72,7 +72,7 @@ export declare type Primitive = string | number | boolean;
 /**
  * {@link docs/base-api/types/fields-spec}
  */
-export declare type FieldsSpec = string | Array<string>;
+export declare type FieldsSpec = string | Array<any>;
 
 /**
  * {@link docs/base-api/types/object-spec}
