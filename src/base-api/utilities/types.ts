@@ -10,7 +10,7 @@ export const isDefined = (value: any): boolean => value !== undefined;
 
 export const isPromise = (value: any): boolean => value && value.then;
 
-export const isFinite = (global || window).isFinite as ((value: any) => boolean);
+export const isFinite = (window || global).isFinite as ((value: any) => boolean);
 
 export const isFiniteNumber = Number.isFinite as ((value: any) => boolean);
 
