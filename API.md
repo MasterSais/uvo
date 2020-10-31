@@ -1328,7 +1328,7 @@ type ObjectSpec = Record<string, Array<Validator<any, any>> | Validator<any, any
 ### `Relevance`
 
 
-Error's relevancy status.
+ValidatorError's relevancy status.
 
 ```js
 type Relevance = {
@@ -1476,7 +1476,7 @@ template(`@default($0, @number)`)([() => 10]);
 ### `errors`
 
 
-Errors for scheme. Use `!` after validator.
+ValidatorErrors for scheme. Use `!` after validator.
 
 ```js
 import { template, tml } from 'uvo/template';

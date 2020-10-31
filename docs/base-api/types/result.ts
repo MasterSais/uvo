@@ -7,7 +7,7 @@
  * 
  * @property {any} result - Validation result.
  * 
- * @property {Array} errors - Errors list.
+ * @property {Array} errors - ValidatorErrors list.
  */
 
 //#example

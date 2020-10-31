@@ -7,7 +7,7 @@
  * 
  * @param {MetaData=} meta Metadata for error.
  * 
- * @param {Relevance=} relevance Error's relevancy status.
+ * @param {Relevance=} relevance ValidatorError's relevancy status.
  * 
  * @return {void}
  */

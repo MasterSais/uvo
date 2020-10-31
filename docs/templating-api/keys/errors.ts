@@ -1,7 +1,7 @@
 /**
  * @name {errors}
  * 
- * @desc Errors for scheme. Use `!` after validator. 
+ * @desc ValidatorErrors for scheme. Use `!` after validator. 
  */
 
 //#example

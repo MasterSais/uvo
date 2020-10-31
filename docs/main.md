@@ -406,7 +406,7 @@ Async API in deed:
 ```js
 template( `@array( @number ) ~promise` );
 
-// Errors
+// ValidatorErrors
 template(`
   @async!0 : @object(
     id : @async : @number,

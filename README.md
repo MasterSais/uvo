@@ -12,7 +12,7 @@ size:et-umd]: extended-template/umd/index.min.js
 
 |Bundles (minified)|ESM|CJS|UMD|
 |:-:|:-:|:-:|:-:|
-|Base API|~6.9kb|~6.8kb|~6.6kb|
+|Base API|~6.8kb|~6.8kb|~6.5kb|
 |Templating API|~10.4kb|~10.4kb|~10.6kb|
 |Extended API|~2.9kb|~3kb|~2.9kb|
 |Extended Template API|[size:et-esm]|[size:et-cjs]|[size:et-umd]|
@@ -397,7 +397,7 @@ Async API in deed:
 ```js
 template( `@array( @number ) ~promise` );
 
-// Errors
+// ValidatorErrors
 template(`
   @async!0 : @object(
     id : @async : @number,

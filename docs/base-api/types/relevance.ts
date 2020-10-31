@@ -1,7 +1,7 @@
 /**
  * @name {Relevance}
  * 
- * @desc Error's relevancy status.
+ * @desc ValidatorError's relevancy status.
  * 
  * @typedef {Object} Relevance
  * 

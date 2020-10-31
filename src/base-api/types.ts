@@ -71,10 +71,14 @@ export declare type Async<T> = T & { async: boolean };
  */
 export declare type Primitive = string | number | boolean;
 
+type FieldsSpec_3 = string | [('&' | '|' | '^'), string, string, ...Array<string>];
+type FieldsSpec_2 = string | [('&' | '|' | '^'), FieldsSpec_3, FieldsSpec_3, ...Array<FieldsSpec_3>];
+type FieldsSpec_1 = string | [('&' | '|' | '^'), FieldsSpec_2, FieldsSpec_2, ...Array<FieldsSpec_2>];
+
 /**
  * {@link docs/base-api/types/fields-spec}
  */
-export declare type FieldsSpec = string | [('&' | '|' | '^'), FieldsSpec | string, FieldsSpec | string, ...Array<FieldsSpec | string>];
+export declare type FieldsSpec = string | [('&' | '|' | '^'), FieldsSpec_1, FieldsSpec_1, ...Array<FieldsSpec_1>];
 
 /**
  * {@link docs/base-api/types/object-spec}

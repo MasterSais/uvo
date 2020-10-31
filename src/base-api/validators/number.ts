@@ -1,6 +1,6 @@
 import { V_NUM } from '@lib/base-api/names';
 import { ValidatorError, ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
-import { isBoolean, isFinite, isNumber, isString } from '@lib/base-api/utilities/types';
+import { isBoolean, isFiniteAny, isNumber, isString } from '@lib/base-api/utilities/types';
 import { applyError, extendMeta } from '@lib/base-api/utilities/utilities';
 
 /**
@@ -12,7 +12,7 @@ export const number = <T extends any>(error?: ValidatorError): Validator<T, numb
       (
         extendMeta(meta, value, V_NUM),
         (
-          isFinite(value) &&
+          isFiniteAny(value) &&
           (
             isNumber(value)
             || isString(value) && ((value as string).trim() !== '')

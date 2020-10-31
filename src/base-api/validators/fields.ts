@@ -4,17 +4,17 @@ import { isArray, isEmpty, isObject, isString } from '@lib/base-api/utilities/ty
 import { applyError, extendMeta, throwValidatorError } from '@lib/base-api/utilities/utilities';
 
 const fieldsMap = {
-  op: <T extends ObjectLike>(value: T, names: Array<FieldsSpec | string>): number =>
+  op: <T extends ObjectLike>(value: T, names: Array<FieldsSpec>): number =>
     names.reduce((result: number, field) =>
       result + Number(isString(field) ? !isEmpty(value[field as string]) : fieldsMap[field[0]](value, field.slice(1))), 0),
 
-  '&': <T extends ObjectLike>(value: T, names: Array<FieldsSpec | string>): boolean =>
+  '&': <T extends ObjectLike>(value: T, names: Array<FieldsSpec>): boolean =>
     fieldsMap.op(value, names) === names.length,
 
-  '|': <T extends ObjectLike>(value: T, names: Array<FieldsSpec | string>): boolean =>
+  '|': <T extends ObjectLike>(value: T, names: Array<FieldsSpec>): boolean =>
     fieldsMap.op(value, names) > 0,
 
-  '^': <T extends ObjectLike>(value: T, names: Array<FieldsSpec | string>): boolean =>
+  '^': <T extends ObjectLike>(value: T, names: Array<FieldsSpec>): boolean =>
     fieldsMap.op(value, names) === 1
 };
 
