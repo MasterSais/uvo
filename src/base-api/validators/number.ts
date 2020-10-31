@@ -1,6 +1,6 @@
 import { V_NUM } from '@lib/base-api/names';
 import { ValidatorError, ErrorCallback, MetaData, Validator } from '@lib/base-api/types';
-import { isArray, isFinite } from '@lib/base-api/utilities/types';
+import { isArray, isFiniteAny } from '@lib/base-api/utilities/types';
 import { applyError, extendMeta } from '@lib/base-api/utilities/utilities';
 
 /**
@@ -15,7 +15,7 @@ export const number = <T>(error?: ValidatorError): Validator<T, number> =>
           value !== null
           && value as any !== String()
           && !isArray(value)
-          && isFinite(value)
+          && isFiniteAny(value)
         )
           ? +value
           : applyError(error, onError, meta)
