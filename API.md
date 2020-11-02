@@ -1265,7 +1265,7 @@ v.withMeta( // for deps api.
 Calls on validation error.
 
 ```js
-type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
+type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => ValidatorError;
 ```
 
 ### `Error`
