@@ -16,3 +16,8 @@ export const cases3: Array<any> = [
   [[], [10, 20], { result: [10, 20], errors: null }],
   [[], ['abc', 'abs'], { result: [null, null], errors: ['Not a number', 'Not a number'] }]
 ];
+
+export const cases4: Array<any> = [
+  [[], [10, 20], { result: [10, 20], errors: null }],
+  [[], ['abc', 'abs'], { result: undefined, errors: null }]
+];

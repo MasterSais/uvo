@@ -10,7 +10,7 @@ import { object2 } from '@lib/base-api/validators/object2';
 import { string } from '@lib/base-api/validators/string';
 import { template } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
-import { cases1, cases2, cases3 } from './cases';
+import { cases1, cases2, cases3, cases4 } from './cases';
 
 describe('or errors form', () =>
   baseCasesWithParams(() => (
@@ -20,6 +20,17 @@ describe('or errors form', () =>
       )
     )
   ), cases3, [])
+);
+
+describe('or errors form 2', () =>
+  baseCasesWithParams(() => (
+    withErrors(
+      or(
+        array(number('Not a number')),
+        () => undefined
+      )
+    )
+  ), cases4, [])
 );
 
 describe('errors form', () =>
