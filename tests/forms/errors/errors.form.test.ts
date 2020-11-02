@@ -1,3 +1,4 @@
+import { array, or } from '@lib/base-api';
 import { withErrors } from '@lib/base-api/containers/with-errors';
 import { integer } from '@lib/base-api/extensions/validators/integer';
 import { parallel } from '@lib/base-api/groupers/parallel';
@@ -9,7 +10,17 @@ import { object2 } from '@lib/base-api/validators/object2';
 import { string } from '@lib/base-api/validators/string';
 import { template } from '@lib/templating-api/template';
 import { baseCasesWithParams } from '@test/utilities';
-import { cases1, cases2 } from './cases';
+import { cases1, cases2, cases3 } from './cases';
+
+describe('or errors form', () =>
+  baseCasesWithParams(() => (
+    withErrors(
+      or(
+        array(number('Not a number'))
+      )
+    )
+  ), cases3, [])
+);
 
 describe('errors form', () =>
   baseCasesWithParams(() => (

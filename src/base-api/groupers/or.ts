@@ -12,17 +12,18 @@ export const or = (...validators: Array<Validator<any, any>>): Validator<any, an
       ? (
         (value: unknown, onError?: ErrorCallback, meta?: MetaData): unknown => {
           let processed = null;
+          let noErrors = true;
 
           const relevance: Relevance = { value: false };
 
           validators.find((nextValidator: Validator<unknown, unknown>) =>
             (
-              processed = nextValidator(value, onError ? (error: ValidatorError, meta?: MetaData) => onError(error, meta, relevance) : null, meta),
-              processed !== null
+              processed = nextValidator(value, onError ? (error: ValidatorError, meta?: MetaData) => (noErrors = !onError(error, meta, relevance)) : null, meta),
+              processed !== null && noErrors
             )
           );
 
-          if (processed === null) {
+          if (processed === null || !noErrors) {
             relevance.value = true;
           }
 

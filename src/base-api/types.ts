@@ -39,7 +39,7 @@ export declare type Relevance = {
 /**
  * {@link docs/base-api/types/error-callback}
  */
-export declare type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
+export declare type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => ValidatorError;
 
 /**
  * {@link docs/base-api/types/result}

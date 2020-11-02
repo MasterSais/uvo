@@ -17,7 +17,7 @@ export const defined = (
   )
 );
 
-const EMPTY_VALUES = [null, undefined, ''];
+const EMPTY_VALUES: Array<any> = [null, undefined, ''];
 
 /**
  * {@link docs/base-api/validators/empty}
@@ -26,7 +26,7 @@ export const empty = makeInvertible<(<T>(error?: ValidatorError) => Validator<T>
   (
     (invert: boolean) => (
       <T>(error?: ValidatorError) => isFactory(invertError(V_EM, invert), EMPTY_VALUES)(
-        (value: T) => invertCondition(EMPTY_VALUES.indexOf(value as any) >= 0, invert), error
+        (value: T) => invertCondition(EMPTY_VALUES.indexOf(value) >= 0, invert), error
       )
     )
   )

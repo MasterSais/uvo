@@ -9,8 +9,8 @@
  * 
  * @param {Relevance=} relevance ValidatorError's relevancy status.
  * 
- * @return {void}
+ * @return {ValidatorError}
  */
 
 //#example
-type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => void;
+type ErrorCallback = (error: ValidatorError, meta?: MetaData, relevance?: Relevance) => ValidatorError;
