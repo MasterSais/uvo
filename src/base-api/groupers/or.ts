@@ -18,6 +18,7 @@ export const or = (...validators: Array<Validator<any, any>>): Validator<any, an
 
           validators.find((nextValidator: Validator<unknown, unknown>) =>
             (
+              noErrors = true,
               processed = nextValidator(value, onError ? (error: ValidatorError, meta?: MetaData) => (noErrors = !onError(error, meta, relevance)) : null, meta),
               processed !== null && noErrors
             )
